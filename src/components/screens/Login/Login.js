@@ -4,8 +4,12 @@ import {
   StyleSheet, Text, View, Image, Button, TouchableHighlight, StatusBar
 } from 'react-native'
 
+import StyledInput from '../../ui/Input';
+
 import LogoApp from '../../../assets/img/logo1.png'
 import Background from '../../../assets/img/background.png';
+import EmailIcon from '../../../assets/img/Email.png';
+import PasswordIcon from '../../../assets/img/password.png';
 
 import { white } from 'ansi-colors';
 export default class Login extends Component {
@@ -34,24 +38,11 @@ export default class Login extends Component {
           <StatusBar hidden />
           <Image style={styles.Logo1} source={LogoApp}></Image>
 
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/Email.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="Email"
-              placeholderTextColor="white"
-              keyboardType="email-address"
-            />
-          </View>
+          <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} />
 
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/password.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="Password"
-              placeholderTextColor="white"
-              secureTextEntry={true}
-            />
+          <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} />
 
-          </View>
+
           <View style={styles.checkk}>
             <CheckBox style={styles.CheckBox}
               value={this.state.check} onChange={() => this.CheckBoxTest()}
@@ -109,33 +100,6 @@ const styles = StyleSheet.create({
 
   },
 
-  inputContainer: {
-    backgroundColor: 'transparent',
-    // borderRadius:30,
-    width: 300,
-    height: 60,
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    top: -25,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    opacity: 0.5,
-
-  },
-  inputs: {
-    height: 45,
-    marginLeft: 16,
-    borderBottomColor: '#FFFFFF',
-    flex: 1,
-    color: 'white'
-  },
-  inputIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 15,
-    justifyContent: 'center'
-  },
   buttonContainer: {
     height: 50,
     flexDirection: 'row',
