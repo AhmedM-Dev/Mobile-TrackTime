@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "Mobile_TrackTime-tvOS.app"
-               BlueprintName = "Mobile_TrackTime-tvOS"
-               ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+               BuildableName = "trackTime-tvOS.app"
+               BlueprintName = "trackTime-tvOS"
+               ReferencedContainer = "container:trackTime.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Mobile_TrackTime-tvOSTests.xctest"
-               BlueprintName = "Mobile_TrackTime-tvOSTests"
-               ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+               BuildableName = "trackTime-tvOSTests.xctest"
+               BlueprintName = "trackTime-tvOSTests"
+               ReferencedContainer = "container:trackTime.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Mobile_TrackTime-tvOSTests.xctest"
-               BlueprintName = "Mobile_TrackTime-tvOSTests"
-               ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+               BuildableName = "trackTime-tvOSTests.xctest"
+               BlueprintName = "trackTime-tvOSTests"
+               ReferencedContainer = "container:trackTime.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Mobile_TrackTime-tvOS.app"
-            BlueprintName = "Mobile_TrackTime-tvOS"
-            ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+            BuildableName = "trackTime-tvOS.app"
+            BlueprintName = "trackTime-tvOS"
+            ReferencedContainer = "container:trackTime.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Mobile_TrackTime-tvOS.app"
-            BlueprintName = "Mobile_TrackTime-tvOS"
-            ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+            BuildableName = "trackTime-tvOS.app"
+            BlueprintName = "trackTime-tvOS"
+            ReferencedContainer = "container:trackTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Mobile_TrackTime-tvOS.app"
-            BlueprintName = "Mobile_TrackTime-tvOS"
-            ReferencedContainer = "container:Mobile_TrackTime.xcodeproj">
+            BuildableName = "trackTime-tvOS.app"
+            BlueprintName = "trackTime-tvOS"
+            ReferencedContainer = "container:trackTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

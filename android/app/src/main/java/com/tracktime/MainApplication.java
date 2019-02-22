@@ -1,4 +1,4 @@
-package com.mobile_tracktime;
+package com.tracktime;
 
 import android.app.Application;
 
