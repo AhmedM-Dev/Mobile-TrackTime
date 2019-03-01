@@ -1,158 +1,94 @@
-import React, { Component } from 'react'
-import {
-  Linking, ImageBackground, TextInput,
-  StyleSheet, Text, View, Image, Button, TouchableHighlight, StatusBar
-} from 'react-native'
-import LogoApp from '../../../assets/img/logo2.png'
-export default class Signup extends Component {
+import React, { Component } from 'react';
+import { TouchableHighlight, TextInput, StatusBar, ImageBackground, Image, Platform, StyleSheet, Text, View } from 'react-native';
+import StyledInput from '../../ui/Input';
+import LogoApp from '../../../assets/img/appNAme.png'
+import Background from '../../../assets/img/background.jpg';
+import EmailIcon from '../../../assets/img/Email.png';
+import PasswordIcon from '../../../assets/img/password.png';
+import logoName from '../../../assets/img/name.png';
 
+
+export default class App extends Component {
 
   render() {
     return (
 
-      <ImageBackground source={require('../../../assets/img/background.png')}
-        style={styles.container}>
-        <View style={styles.container}>
+      <ImageBackground style={styles.container} source={Background}>
 
-          <StatusBar hidden />
-          <Image style={styles.Logo1} source={LogoApp}></Image>
+        <StatusBar hidden />
+        <Image style={styles.logoStyle} source={LogoApp}></Image>
 
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/name.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="User name"
-              placeholderTextColor="white"
-            />
-          </View>
+        <Text style={styles.Ui}>Uploade your Image </Text>
 
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/Email.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="Email"
-              placeholderTextColor="white"
-              keyboardType="email-address"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/password.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="Password"
-              placeholderTextColor="white"
-              secureTextEntry={true}
-            />
-
-          </View>
+        <StyledInput image={logoName} text={'User name'} textColor={'white'} />
+        <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
+        <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+        <StyledInput image={PasswordIcon} text={'Confirm password'} textColor={'white'} secureTextEntry={true} />
 
 
-          <View style={styles.inputContainer}>
-            <Image style={styles.inputIcon} source={require('../../../assets/img/password.png')} />
-            <TextInput style={styles.inputs}
-              placeholder="Confirm password"
-              placeholderTextColor="white"
-              secureTextEntry={true}
-            />
 
-          </View>
+        <TouchableHighlight style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Sign up</Text>
+        </TouchableHighlight>
 
-          <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} >
-            <Text style={styles.loginText}>Sign up</Text>
-          </TouchableHighlight>
 
-          <Text style={styles.Su}> Already have an account ?
-             <Text style={{ color: '#025F8D' }}
-              onPress={() => Linking.openURL()}>
-              <Text>  </Text>
-              Log IN
+        <Text style={styles.dh}> Already have an account ?
+             <Text style={{ color: '#6EB4F0' }}
+            onPress={() => this.props.navigation.navigate('login')}>
+            <Text>  </Text>
+            Log in
               </Text>
-          </Text>
-
-
-
-        </View>
+        </Text>
 
 
       </ImageBackground>
-
-
 
     );
   }
 }
 
 const styles = StyleSheet.create({
-
-
-  backgroundImage: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'cover'
-  },
-
-
-  Logo1: {
-    top: -40,
-  },
-
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
-
-  },
-
-  inputContainer: {
-    backgroundColor: 'transparent',
-    // borderRadius:30,
-    width: 300,
-    height: 60,
-    marginBottom: 20,
-    flexDirection: 'row',
     alignItems: 'center',
-    top: -25,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    opacity: 0.7,
+    backgroundColor: '#F5FCFF',
+  },
 
+
+  logoStyle: {
+    top: 30,
   },
-  inputs: {
-    height: 45,
-    marginLeft: 16,
-    borderBottomColor: '#FFFFFF',
-    flex: 1,
-    color: 'white'
+
+  Ui: {
+    top: 40,
+    fontSize: 30,
   },
-  inputIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 15,
-    justifyContent: 'center'
-  },
+
   buttonContainer: {
     height: 50,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-    width: 150,
-    borderRadius: 50,
-    top: 40,
+    width: 300,
+    top: 480,
+    position: 'absolute',
+    backgroundColor: '#6EB4F0',
+    borderWidth: 1,
+    borderColor: '#6EB4F0',
 
   },
-  loginButton: {
-    backgroundColor: "#252525",
-    borderWidth: 2,
-    borderColor: 'white',
-  },
-  loginText: {
+
+  dh: {
+    position: 'absolute',
+    top: 540,
     color: 'white',
+    fontSize: 18,
   },
 
-  Su: {
-    top: 50,
-    color: 'black'
+  buttonText: {
+    color: 'white',
+    fontSize: 16
   },
-
 
 });

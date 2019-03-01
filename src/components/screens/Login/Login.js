@@ -1,18 +1,14 @@
-import React, { Component } from 'react'
-import {
-  Linking, CheckBox, ImageBackground, TextInput, ScrollView, Platform,
-  StyleSheet, Text, View, Image, Button, TouchableHighlight, StatusBar
-} from 'react-native'
-
+import React, { Component } from 'react';
+import { CheckBox, TouchableHighlight, TextInput, ImageBackground, Image, StatusBar, Platform, StyleSheet, Text, View } from 'react-native';
 import StyledInput from '../../ui/Input';
 
-import LogoApp from '../../../assets/img/logo1.png'
-import Background from '../../../assets/img/background.png';
+import LogoApp from '../../../assets/img/appNAme.png'
+import LogoApp2 from '../../../assets/img/fullLogo.png'
+import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 
-import { white } from 'ansi-colors';
-export default class Login extends Component {
+export default class App extends Component {
   constructor() {
 
     super();
@@ -30,74 +26,57 @@ export default class Login extends Component {
   }
   render() {
     return (
-
-      <ImageBackground source={Background}
-        style={styles.container}>
-        <View style={styles.container}>
-
-          <StatusBar hidden />
-          <Image style={styles.Logo1} source={LogoApp}></Image>
-
-          <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} />
-
-          <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} />
-
-
-          <View style={styles.checkk}>
-            <CheckBox style={styles.CheckBox}
-              value={this.state.check} onChange={() => this.CheckBoxTest()}
-            />
-
-            <Text>     </Text>
-
-            <Text style={styles.remember}>Remember me</Text>
-          </View>
-
-          <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} >
-            <Text style={styles.loginText}>Log in</Text>
-          </TouchableHighlight>
-
-          <Text style={styles.Su}> Don't have an account ?
-             <Text style={{ color: '#025F8D' }}
-              onPress={() => Linking()}>
-              <Text>  </Text>
-              Sign UP
-              </Text>
-          </Text>
-
-
+      //  <View style={styles.container}>
+      <ImageBackground style={styles.container} source={Background}>
+        <StatusBar hidden />
+        {/* <Image style={styles.logoStyle} source={LogoApp}></Image>
+         <Image style={styles.logoStyle2} source={LogoApp2}></Image> */}
+        <View style={styles.inputPos}>
+          <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
+          <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
 
         </View>
+        <View style={styles.checkPos}>
+          <CheckBox style={styles.CheckBox}
+            value={this.state.check} onChange={() => this.CheckBoxTest()} />
+          <Text style={styles.remember}>Remember me</Text>
+        </View>
+
+        <TouchableHighlight style={styles.buttonContainer} >
+          <Text style={styles.buttonText} onPress={() => this.props.navigation.navigate('Dashboard')} > Log in</Text>
+        </TouchableHighlight>
 
 
+        <Text style={styles.dh}> Don't have an account ?
+             <Text style={{ color: '#6EB4F0' }}
+            onPress={() => this.props.navigation.navigate('Signup')}>
+            <Text>  </Text>
+            Sign up
+              </Text>
+        </Text>
+
+        {/* </View> */}
       </ImageBackground>
-
-
-
     );
   }
 }
 
 const styles = StyleSheet.create({
-
-
-  backgroundImage: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'cover'
-  },
-
-
-  Logo1: {
-    top: -40,
-  },
-
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
 
+  },
+
+  logoStyle: {
+    top: 200,
+    position: 'absolute',
+  },
+
+  logoStyle2: {
+    top: 20,
+    position: 'absolute'
   },
 
   buttonContainer: {
@@ -106,38 +85,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-    width: 150,
-    borderRadius: 50,
-    top: 40,
+    width: 300,
+    top: 480,
+    position: 'absolute',
+    backgroundColor: '#6EB4F0',
+    borderWidth: 1,
+    borderColor: '#6EB4F0',
 
   },
-  loginButton: {
-    backgroundColor: "#252525",
-    borderWidth: 2,
-    borderColor: 'white',
-  },
-  loginText: {
+
+  dh: {
+    position: 'absolute',
+    top: 540,
     color: 'white',
+    fontSize: 18,
   },
 
-  Su: {
-    top: 50,
-    color: 'black'
+  buttonText: {
+    color: 'white',
+    fontSize: 16
   },
-  checkk: {
+  inputPos: {
+    position: 'absolute',
+    top: 220,
+  },
+
+
+
+  checkPos: {
     alignItems: 'center',
-    top: -15,
+    position: 'absolute',
+    top: 435,
     flexDirection: 'row',
+
 
   },
   remember: {
-    color: 'white',
-    opacity: 0.5
+    color: 'black',
+    fontSize: 18,
   },
-  CheckBox: {
-    opacity: 0.5,
-
-
-  }
-
 });
