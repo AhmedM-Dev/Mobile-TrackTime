@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Login from './src/components/screens/Login/Login'
+import Login from './src/components/screens/Login';
 import { createStackNavigator, createAppContainer } from 'react-navigation'
-import Signup from './src/components/screens/Signup/Signup';
+import Signup from './src/components/screens/Signup';
 
 import Dashboard from './src/components/screens/Dashboard';
 
