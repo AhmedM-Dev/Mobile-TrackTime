@@ -16,24 +16,25 @@ export default class App extends Component {
       <ImageBackground style={styles.container} source={Background}>
 
         <StatusBar hidden />
+
         <Image style={styles.logoStyle} source={LogoApp}></Image>
 
-        <Text style={styles.Ui}>Uploade your Image </Text>
+        <Text style={styles.Ui}>Upload your Image </Text>
 
-        <StyledInput image={logoName} text={'User name'} textColor={'white'} />
-        <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
-        <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
-        <StyledInput image={PasswordIcon} text={'Confirm password'} textColor={'white'} secureTextEntry={true} />
+        <View style={styles.inputPos}>
 
+          <StyledInput image={logoName} text={'User name'} textColor={'white'} />
+          <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
+          <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+          <StyledInput image={PasswordIcon} text={'Confirm password'} textColor={'white'} secureTextEntry={true} />
 
+        </View>
 
-        <TouchableHighlight style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Sign up</Text>
-        </TouchableHighlight>
 
 
         <Text style={styles.dh}> Already have an account ?
-             <Text style={{ color: '#6EB4F0' }}
+             <Text style={{ color: 'white' , fontWeight:'bold' }}
             onPress={() => this.props.navigation.navigate('login')}>
             <Text>  </Text>
             Log in
@@ -56,39 +57,41 @@ const styles = StyleSheet.create({
 
 
   logoStyle: {
-    top: 30,
+    top: 40,
   },
 
   Ui: {
-    top: 40,
+    top: 60,
     fontSize: 30,
   },
 
-  buttonContainer: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-    width: 300,
-    top: 480,
+ 
+  inputPos: {
     position: 'absolute',
-    backgroundColor: '#6EB4F0',
-    borderWidth: 1,
-    borderColor: '#6EB4F0',
-
+    top: 200,
   },
 
   dh: {
     position: 'absolute',
-    top: 540,
+    top: 600,
     color: 'white',
     fontSize: 18,
   },
 
-  buttonText: {
-    color: 'white',
-    fontSize: 16
+    buttonText: {
+      height: 50,
+      color: 'white',
+      fontSize: 18,
+      width: 300,
+      backgroundColor: '#2D5DC8',
+      borderWidth: 1,
+      borderRadius: 30,
+      borderColor: '#2D5DC8',
+      textAlign: 'center',
+      position: 'absolute',
+      top: 530,
+      padding: 10
+    
   },
 
 });

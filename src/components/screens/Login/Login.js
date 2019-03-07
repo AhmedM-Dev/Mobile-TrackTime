@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import { CheckBox, TouchableHighlight, TextInput, ImageBackground, Image, StatusBar, Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  CheckBox,
+  TextInput,
+  ImageBackground,
+  Image,
+  StatusBar,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+}from 'react-native';
 import StyledInput from '../../ui/Input';
 
 import LogoApp from '../../../assets/img/appNAme.png'
-import LogoApp2 from '../../../assets/img/fullLogo.png'
+import LogoApp2 from '../../../assets/img/log.png'
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
@@ -26,36 +37,45 @@ export default class App extends Component {
   }
   render() {
     return (
-      //  <View style={styles.container}>
       <ImageBackground style={styles.container} source={Background}>
-        <StatusBar hidden />
-        {/* <Image style={styles.logoStyle} source={LogoApp}></Image>
-         <Image style={styles.logoStyle2} source={LogoApp2}></Image> */}
+
+<StatusBar hidden />
+
+        {/* <Image style={styles.logoStyle} source={LogoApp2}></Image> */}
+        {/* <Image style={styles.logoStyle2} source={LogoApp2}></Image>  */}
+
         <View style={styles.inputPos}>
           <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
           <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
-
         </View>
+
+        {/*         
         <View style={styles.checkPos}>
           <CheckBox style={styles.CheckBox}
             value={this.state.check} onChange={() => this.CheckBoxTest()} />
           <Text style={styles.remember}>Remember me</Text>
-        </View>
+        </View> */}
 
-        <TouchableHighlight style={styles.buttonContainer} >
-          <Text style={styles.buttonText} onPress={() => this.props.navigation.navigate('Dashboard')} > Log in</Text>
-        </TouchableHighlight>
+        <Text style={styles.buttonText}
+          onPress={() => this.props.navigation.navigate('Dashboard')} >
+          Log in
+          </Text> 
 
+         {/* <Button
+          title='Log in'
+            buttonStyle={{ height: 50, width: 300, backgroundColor: '#2D5DC8', borderRadius: 30 }}
+            textStyle={{  fontSize: 18 }}
+            onPress={() => this.props.navigation.navigate('Dashboard')}
+          /> */}
 
         <Text style={styles.dh}> Don't have an account ?
-             <Text style={{ color: '#6EB4F0' }}
+             <Text style={{ color: 'white', fontWeight: 'bold' }}
             onPress={() => this.props.navigation.navigate('Signup')}>
             <Text>  </Text>
             Sign up
               </Text>
         </Text>
 
-        {/* </View> */}
       </ImageBackground>
     );
   }
@@ -70,8 +90,9 @@ const styles = StyleSheet.create({
   },
 
   logoStyle: {
-    top: 200,
+    top: 30,
     position: 'absolute',
+    left: 25,
   },
 
   logoStyle2: {
@@ -79,35 +100,33 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
 
-  buttonContainer: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-    width: 300,
-    top: 480,
-    position: 'absolute',
-    backgroundColor: '#6EB4F0',
-    borderWidth: 1,
-    borderColor: '#6EB4F0',
-
-  },
 
   dh: {
     position: 'absolute',
-    top: 540,
+    top: 600,
     color: 'white',
     fontSize: 18,
   },
 
   buttonText: {
+    height: 50,
     color: 'white',
-    fontSize: 16
+    fontSize: 18,
+    width: 300,
+    backgroundColor: '#2D5DC8',
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#2D5DC8',
+    textAlign: 'center',
+    position: 'absolute',
+    top: 530,
+    padding: 10
   },
+
+
   inputPos: {
     position: 'absolute',
-    top: 220,
+    top: 320,
   },
 
 
@@ -115,13 +134,13 @@ const styles = StyleSheet.create({
   checkPos: {
     alignItems: 'center',
     position: 'absolute',
-    top: 435,
+    top: 550,
     flexDirection: 'row',
-
 
   },
   remember: {
     color: 'black',
     fontSize: 18,
+
   },
 });

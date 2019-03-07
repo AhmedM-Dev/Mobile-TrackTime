@@ -20,16 +20,17 @@ export default StyledInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        backgroundColor: 'black',
-        opacity: 0.6,
+        backgroundColor: 'gray',
+        opacity: 0.8,
         width: 300,
         height: 60,
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor: 'black',
+        borderColor: 'gray',
         borderWidth: 1,
-        top:65,
+        borderRadius : 30
+
     
       },
      
