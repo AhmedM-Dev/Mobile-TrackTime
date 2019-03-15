@@ -35,7 +35,7 @@ export default class App extends Component {
 
         <Text style={styles.dh}> Already have an account ?
              <Text style={{ color: 'white' , fontWeight:'bold' }}
-            onPress={() => this.props.navigation.navigate('login')}>
+            onPress={() => this.props.navigation.navigate('Login')}>
             <Text>  </Text>
             Log in
               </Text>
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
       fontSize: 18,
       width: 300,
       backgroundColor: '#2D5DC8',
-      borderWidth: 1,
       borderRadius: 30,
       borderColor: '#2D5DC8',
       textAlign: 'center',
       position: 'absolute',
       top: 530,
-      padding: 10
+      padding: 10,
+      borderWidth :1
     
   },
 

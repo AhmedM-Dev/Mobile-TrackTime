@@ -1,176 +1,296 @@
 import React from 'react';
 import {
-    StatusBar, Image, StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback,
+    Image, StyleSheet
 } from 'react-native';
 import {
     Container,
-    Header,
     Content,
     Card,
     CardItem,
-    Thumbnail,
     Text,
     Button,
-    Icon,
     Left,
     Body,
     Right,
-    View
+    View,
+    Picker,
+    Footer,
+    FooterTab,
+    Badge, Icon
 } from 'native-base';
 
-import clock from '../../../assets/img/clock.png'
+// import Icon from 'react-native-vector-icons/FontAwesome'
 
+import detailsIcon from '../../../assets/img/details.png'
+import blueIcon from '../../../assets/img/blue.png'
+import redIcon from '../../../assets/img/red.png'
+import menuIcon from '../../../assets/img/menu.png'
+import homeIcon from '../../../assets/img/home.png'
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
+import { Header } from 'react-native-elements';
+import { white } from 'ansi-colors';
+
+import theme from '../../../theme/fontFamily';
 
 
-import { ProgressCircle } from 'react-native-svg-charts'
-
-import {
-    RkText,
-    RkStyleSheet,
-    RkTheme,
-} from 'react-native-ui-kitten';
-import {
-
-    DoughnutChart
-
-} from '../../charts/doughnutChart';
-
-
+// diag4
 export default class Dashboard extends React.Component {
-    // diag4
+
+    constructor() {
+        super();
+        this.state = {
+            PickerValue: ''
+        }
+    };
 
     render() {
-
+        let index = 0;
+        const dataY = [
+            { key: index++, section: true, label: 'Fruits' },
+            { key: index++, label: 'Red Apples' },
+            { key: index++, label: 'Cherries' },
+            { key: index++, label: 'Cranberries', accessibilityLabel: 'Tap here for cranberries' },
+            // etc...
+            // Can also add additional custom keys which are passed to the onChange callback
+            { key: index++, label: 'Vegetable', customKey: 'Not a fruit' }
+        ];
         // diag1
 
         let sampleData = [
             {
                 seriesName: 'series1',
                 data: [
-                    { x: '2018-02-01', y: 30 },
-                    { x: '2018-02-02', y: 200 },
-                    { x: '2018-02-03', y: 170 },
-                    { x: '2018-02-04', y: 250 },
-                    { x: '2018-02-05', y: 10 }
+                    { x: 'January', y: 30 },
+                    { x: 'February', y: 40 },
+                    { x: 'march', y: 30 },
+                    { x: 'April', y: 20 },
+                    { x: 'may', y: 10 },
+                    { x: 'June', y: 10 },
+                    { x: 'July', y: 10 },
+                    { x: 'August', y: 30 },
+                    { x: 'September', y: 30 },
+                    { x: 'October', y: 30 },
+                    { x: 'November', y: 30 },
+                    { x: 'December', y: 30 },
+
                 ],
-                color: '#297AB1'
+                color: '#6894C7'
             },
             {
                 seriesName: 'series2',
                 data: [
-                    { x: '2018-02-01', y: 20 },
-                    { x: '2018-02-02', y: 100 },
-                    { x: '2018-02-03', y: 140 },
-                    { x: '2018-02-04', y: 550 },
-                    { x: '2018-02-05', y: 40 }
+                    { x: 'January', y: 400 },
+                    { x: 'February', y: 300 },
+                    { x: 'march', y: 503 },
+                    { x: 'April', y: 170 },
+                    { x: 'may', y: 400 },
+                    { x: 'June', y: 200 },
+                    { x: 'July', y: 100 },
+                    { x: 'August', y: 500 },
+                    { x: 'September', y: 370 },
+                    { x: 'October', y: 320 },
+                    { x: 'November', y: 240 },
+                    { x: 'December =', y: 340 },
                 ],
-                color: '#B19ADF'
+                color: '#C95C5C'
             }
         ]
 
-        // diag 2
-        const chartConfig = {
-            backgroundGradientFrom: '#1E2923',
-            backgroundGradientTo: '#08130D',
-            color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-            strokeWidth: 2 // optional, default 3
-        }
-        const screenWidth = Dimensions.get('window').width
+
+        // diag2
+
+        let sampleDataa = [
+            {
+                value: 50,
+                label: 'Refused',
+                color: '#E4B5B5',
+            }, {
+                value: 40,
+                label: 'Annuled',
+                color: '#AACDD8'
+            }, {
+                value: 25,
+                label: 'Accepted',
+                color: '#9BBB80'
+            },
+            {
+                value: 10,
+                label: 'On hold',
+                color: '#BF1F43'
+            }
+
+        ]
 
         // diag4
 
+        const dataaaa = [0.4, 0.6, 0.8]
+
         return (
 
-
-            <Container >
-                <StatusBar hidden />
+            <Container style={{ backgroundColor: '#DDE3F3' }}>
 
                 <Header
-                    leftComponent={{ icon: 'menu', color: '#fff' }}
-                    centerComponent={{ text: 'Dashboard', style: { color: '#fff' } }}
-                    rightComponent={{ icon: 'home', color: '#fff' }}
+                    statusBarProps={{ hidden: true }}
+                    leftComponent={{
+                        icon: "menu",
+                        color: '#fff',
+                        onPress: () => alert('menu'),
+                    }
+                    }
+
+                    centerComponent={{
+                        text: 'Dashboard',
+                        style: { color: '#fff', fontSize: 18 }
+                    }}
+
+                    rightComponent={{
+                        icon: 'home',
+                        color: '#fff',
+                        onPress: () => alert('home')
+                    }
+                    }
+                    backgroundColor="#052D8F"
+
                 />
 
-                <Content >
+                <View style={styles.autorisationList}>
+                    <Picker
+                        selectedValue={this.state.language}
+                        style={{ height: 50, width: 300 }}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({ language: itemValue })
 
-                    <Card>
-                        <CardItem>
-                            <Left>
-                                <Thumbnail source={{ uri: 'Image URL' }} />
-                                <Body>
-                                    <Text>TrackTime</Text>
-                                    <Text note>GeekyAnts</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                        <CardItem cardBody>
-                            {/* <Image source={{ uri: 'Image URL' }} style={{ height: 200, width: null, flex: 1 }} /> */}
-                            <PureChart data={sampleData} type='line' />
-                        </CardItem>
-                        <CardItem>
-                            <Left>
-                                <Button transparent>
-                                    <Icon active name="thumbs-up" />
-                                    <Text>12 Likes</Text>
-                                </Button>
-                            </Left>
-                            <Body>
-                                <Button transparent>
-                                    <Icon active name="chatbubbles" />
-                                    <Text>4 Comments</Text>
-                                </Button>
-                            </Body>
-                            <Right>
-                                <Text>11h ago</Text>
-                            </Right>
-                        </CardItem>
-                    </Card>
-
-                    <Card style={styles.cardStyle}  >
-                        <CardItem style={styles.cardAlign}>
-                            <Speedometer
-                                value={50}
-                                totalValue={150}
-                                size={250}
-                                outerColor="#E4E6F5"
-                                internalColor="#B19ADF"
-                                showText
-                                text="50.00"
-                                textStyle={{ color: '#297AB1' }}
-                                showLabels
-                                labelStyle={{ color: '#297AB1' }}
-                                showPercent
-                                percentStyle={{ color: '#B19ADF' }}
-                            /></CardItem>
-                    </Card>
+                        }>
+                        <Picker.Item label="Current year" value="2019" />
+                        <Picker.Item label="2018" value="2018" />
+                        <Picker.Item label="2017" value="2017" />
+                        <Picker.Item label="All years" value="All years" />
 
 
+                    </Picker>
+                </View>
 
-
+                <Content  >
 
                     <Card style={styles.cardStyle} >
-                        <Image source={clock} style={styles.clockAlign} ></Image>
-                        <ProgressCircle
-                            style={{ height: 200 }}
-                            progress={0.7}
-                            progressColor={'#B19ADF'}
-                        />
+
+                        <Text style={{ fontSize: 18, marginTop: 15, left: -100, }}> Summary </Text>
+
+                        <CardItem>
+                            <CardItem style={{ flexDirection: 'row' }}>
+                                <Button badge vertical style={{ backgroundColor: 'white', width: 140, marginRight: 4 }}>
+                                    <Badge style={{ backgroundColor: '#63BB93' }}><Text>12365</Text></Badge>
+                                    <Text style={{ color: 'black' }}>Hours worked</Text>
+                                </Button>
+                                <Button badge vertical style={{ backgroundColor: 'white', width: 140 }}>
+                                    <Badge style={{ backgroundColor: '#63BB93' }} ><Text>468</Text></Badge>
+                                    <Text style={{ color: 'black' }} >Days worked</Text>
+                                </Button>
+
+                            </CardItem>
+                        </CardItem>
+                        <CardItem style={{ flexDirection: 'row', }}>
+                            <Button badge vertical style={{ marginTop: -30, marginLeft: 4, marginRight: 4, backgroundColor: 'white', width: 220 }}>
+                                <Badge style={{ backgroundColor: '#63BB93' }}><Text>8</Text></Badge>
+                                <Text style={{ color: 'black' }} >Average working hours</Text>
+                            </Button>
+                            <Button badge vertical style={{ marginTop: -30, backgroundColor: 'white', width: 90 }}>
+                                <Badge style={{ backgroundColor: '#FF8C8C' }}><Text>256</Text></Badge>
+                                <Text style={{ color: 'black' }} >Delays</Text>
+                            </Button>
+                        </CardItem>
+                        <CardItem cardBody style={styles.s}>
+                            <PureChart data={sampleData} type='line' />
+                        </CardItem>
+
+
+                        <CardItem>
+                            <Left>
+                                <Button transparent>
+                                    <Image source={blueIcon} />
+                                    <Text style={{ color: '#6894C7' }}>Days worked</Text>
+                                </Button>
+                            </Left>
+
+                            <Body>
+                                <Button transparent>
+                                    <Image source={redIcon} />
+                                    <Text style={{ color: '#C95C5C' }}>Hours worked</Text>
+                                </Button>
+                            </Body>
+
+                            <Right>
+                                <Button backgroundColor='#F1F4FA' style={{
+                                    borderRadius: 20
+                                }} >
+                                    <Image source={detailsIcon} style={{ right: -10 }} />
+                                    <Text style={{ color: '#6FBADE' }}>Details </Text>
+                                </Button>
+
+                            </Right>
+                        </CardItem>
+
                     </Card>
 
-                    <Card>
 
-                            {/* <DoughnutChart /> */}
+                    <Card style={styles.cardStyle}>
 
+                        <CardItem>
+                            <Text style={{ fontSize: 18, left: -80 }}>Authorizations</Text>
+                        </CardItem>
+
+                        <CardItem >
+                            <PureChart data={sampleDataa} type='pie' />
+
+                        </CardItem>
+
+                    </Card>
+                    <Card style={styles.cardStyle}  >
+                        <CardItem>
+                            <Text style={{ fontSize: 18, left: -100 }}>Average grade</Text>
+                        </CardItem>
+                        <CardItem >
+                            <Speedometer
+                                value={13}
+                                totalValue={20}
+                                size={250}
+                                outerColor="#C2ECD4"
+                                internalColor="#327951"
+                                showText
+                                text="13.00"
+                                textStyle={{ color: '#297AB1' }}
+                                showLabels
+                                labelStyle={{ color: '#327951' }}
+                                showPercent
+                                percentStyle={{ color: '#327951' }}
+                            /></CardItem>
                     </Card>
 
                 </Content>
 
+                <Footer style={{ backgroundColor: '#052D8F' }}>
+                    <FooterTab theme={theme} style={{ backgroundColor: '#052D8F' }} >
 
+                        <Button badge vertical style={{ backgroundColor: '#052D8F' }}>
+                            <Badge><Text>2</Text></Badge>
+                            <Icon name="home" />
+                        </Button>
 
+                        <Button vertical style={{ backgroundColor: '#052D8F' }} >
+                            <Icon name="camera" />
+                        </Button>
 
+                        <Button active badge vertical style={{ backgroundColor: '#052D8F' }} >
+                            <Badge ><Text>2</Text></Badge>
+                            <Icon active name="navigate" />
+                        </Button>
 
+                        <Button vertical style={{ backgroundColor: '#052D8F' }} >
+                            <Icon name="person" />
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
         );
     }
@@ -179,45 +299,34 @@ export default class Dashboard extends React.Component {
 
 const styles = StyleSheet.create({
 
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    gauge: {
-        position: 'absolute',
-        width: 100,
-        height: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    gaugeText: {
-        backgroundColor: 'transparent',
-        color: '#000',
-        fontSize: 24,
-    },
-
-
     cardStyle: {
-        paddingTop: 15,
-        paddingBottom: 15,
 
-    },
-    cardAlign: {
-        justifyContent: 'center',
         alignContent: 'center',
-        alignItems: 'center'
-    },
-
-    clockAlign: {
-        width: 190,
-        height: 190,
-        position: 'absolute',
-        top: 20,
-        left: 83
+        alignItems: 'center',
+        borderRadius: 5
 
     },
 
+    autorisationList: {
+        borderWidth: 4,
+        width: 300,
+        alignItems: 'center',
+        margin: 15,
+        backgroundColor: 'white',
+        borderColor: '#DDE3F3',
+        left: -16,
+        marginBottom: -2,
+        marginTop: 2,
+        width: 362
+    },
+
+    s: {
+        position: 'relative',
+        left: -20,
+        paddingTop: 10,
+        paddingRight: 10,
+        width: 300,
+    },
 }
 );
 

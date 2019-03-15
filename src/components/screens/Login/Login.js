@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  CheckBox,
-  TextInput,
   ImageBackground,
-  Image,
-  StatusBar,
-  Platform,
   StyleSheet,
   Text,
   View
@@ -38,8 +32,6 @@ export default class App extends Component {
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
-
-<StatusBar hidden />
 
         {/* <Image style={styles.logoStyle} source={LogoApp2}></Image> */}
         {/* <Image style={styles.logoStyle2} source={LogoApp2}></Image>  */}
@@ -123,13 +115,10 @@ const styles = StyleSheet.create({
     padding: 10
   },
 
-
   inputPos: {
     position: 'absolute',
     top: 320,
   },
-
-
 
   checkPos: {
     alignItems: 'center',
