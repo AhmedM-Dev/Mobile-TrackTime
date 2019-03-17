@@ -7,6 +7,8 @@ import {
 }from 'react-native';
 import StyledInput from '../../ui/Input';
 
+
+
 import LogoApp from '../../../assets/img/appNAme.png'
 import LogoApp2 from '../../../assets/img/log.png'
 import Background from '../../../assets/img/background.jpg';
@@ -14,6 +16,13 @@ import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 
 export default class App extends Component {
+
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: 'pink'
+    }
+  }
+
   constructor() {
 
     super();

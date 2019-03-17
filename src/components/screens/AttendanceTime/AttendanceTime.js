@@ -45,15 +45,49 @@ export default class AttendanceTime extends React.Component {
                         <Image source={clock} style={styles.clockAlign} ></Image>
                         <ProgressCircle
                             style={{ height: 200 }}
-                            startAngle={-1}
-                            endAngle={(PI / 30) * 45}
+                            startAngle={(PI / 30) * -15}
+                            endAngle={(PI / 30) * 33}
                             progress={1}
                             progressColor={'#4FA275'}
                         />
                         <ProgressCircle
-                            style={{ height: 210, position: 'relative', top: -205 }}
+                            style={{ height: 200, position: 'relative', top: -200 }}
                             startAngle={(PI / 30) * 5.5}
-                            endAngle={(PI/30) * 10}
+                            endAngle={(PI/30) * 11}
+                            progress={1}
+                            progressColor={'orange'}
+                        />
+                    </Card>
+                    <Card style={styles.cardStyle} >
+                        <Image source={clock} style={styles.clockAlign} ></Image>
+                        <ProgressCircle
+                            style={{ height: 200 }}
+                            startAngle={(PI / 30) * -15}
+                            endAngle={(PI / 30) * 33}
+                            progress={1}
+                            progressColor={'#4FA275'}
+                        />
+                        <ProgressCircle
+                            style={{ height: 200, position: 'relative', top: -200 }}
+                            startAngle={(PI / 30) * 5.5}
+                            endAngle={(PI/30) * 11}
+                            progress={1}
+                            progressColor={'orange'}
+                        />
+                    </Card>
+                    <Card style={styles.cardStyle} >
+                        <Image source={clock} style={styles.clockAlign} ></Image>
+                        <ProgressCircle
+                            style={{ height: 200 }}
+                            startAngle={(PI / 30) * -15}
+                            endAngle={(PI / 30) * 33}
+                            progress={1}
+                            progressColor={'#4FA275'}
+                        />
+                        <ProgressCircle
+                            style={{ height: 200, position: 'relative', top: -200 }}
+                            startAngle={(PI / 30) * 5.5}
+                            endAngle={(PI/30) * 11}
                             progress={1}
                             progressColor={'orange'}
                         />
@@ -79,7 +113,7 @@ const styles = StyleSheet.create({
     cardStyle: {
         paddingTop: 15,
         paddingBottom: 15,
-
+        height: 230
     },
     cardAlign: {
         justifyContent: 'center',
