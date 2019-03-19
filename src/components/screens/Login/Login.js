@@ -14,26 +14,71 @@ import PasswordIcon from '../../../assets/img/password.png';
 import Logo from '../../../assets/img/l.png';
 import checkedIcon from '../../../assets/img/checkedIcon.png'
 import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
+
+import axios from 'axios';
+
 export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      check: false
-    }
+  state = {
+    check: false,
+    isConnected: false,
+    email: '',
+    pass: ''
   }
-  CheckBoxTest() {
+
+  CheckBoxTest = () => {
     this.setState({
       check: !this.state.check
     })
   }
+
+  handleAuthentication = () => {
+    axios.post("http://10.42.0.245:5000/tracktime/api/auth", {
+      email: "ahmed.tux@protonmail.com",
+      pass: "ahmed1989"
+    })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          check: this.state.check,
+          isConnected: true
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  handleTyping = (e) => {
+    console.log("TARGET", e.target.value);
+    // this.setState({
+    //   check: false,
+    //   isConnected: false,
+    //   email: '',
+    //   pass: ''
+    // })
+  }
+
+  componentWillMount() {
+    if (this.state.isConnected) {
+      this.props.navigation.navigate('Dashboard');
+    }
+  }
+
+  componentDidUpdate() {
+    console.log("UPDATED");
+    if (this.state.isConnected) {
+      this.props.navigation.navigate('Dashboard');
+    }
+  }
+
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
         <StatusBar hidden />
-        {/* <Image source={Logo} style={{ top: 30 }}></Image> */}
+        <Image source={Logo} style={{ top: 30 }}></Image>
         <View style={styles.inputPos}>
-          <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require/>
-          <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+          <StyledInput value={this.state.email} onChange={this.handleTyping} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
+          <StyledInput value={this.state.pass} onChange={this.handleTyping}  name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
         </View>
         <View style={styles.checkPos}>
           <CheckBox
@@ -55,8 +100,8 @@ export default class App extends Component {
             top: 250,
             padding: 10,
           }}
-          title=" Log in"
-          onPress={() => this.props.navigation.navigate('Dashboard')} />
+          title="Log in"
+          onPress={() => this.handleAuthentication()} />
         <Text style={styles.dh}> Don't have an account ?
              <Text style={{ color: 'white', fontWeight: 'bold' }}
             onPress={() => this.props.navigation.navigate('Signup')}>
@@ -99,6 +144,6 @@ const styles = StyleSheet.create({
   remember: {
     color: 'black',
     fontSize: 14,
-    left:-10
+    left: -10
   },
 });

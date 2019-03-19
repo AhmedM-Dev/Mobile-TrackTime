@@ -115,7 +115,7 @@ export default class AttendanceTime extends React.Component {
                             progressColor={'#009688'}
                         />
                         <ProgressCircle
-                            style={{ height: 210, position: 'relative', top: -205, right: -70 }}
+                            style={{ height: 200, position: 'relative', top: -200, right: -70 }}
                             startAngle={(PI / 30) * 5}
                             endAngle={(PI / 30) * 10}
                             progress={1}

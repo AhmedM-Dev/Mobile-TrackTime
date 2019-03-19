@@ -6,7 +6,10 @@ export default StyledInput = (props) => {
         
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={props.image} />
-          <TextInput style={styles.inputs}
+          <TextInput 
+            name={props.name}
+            onChange={props.onChange}
+            style={styles.inputs}
             placeholder={props.text}
             placeholderTextColor={props.textColor}
             keyboardType={props.keyboardType}
