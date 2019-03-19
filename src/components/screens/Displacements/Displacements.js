@@ -1,23 +1,36 @@
-import React from 'react';
-import { StatusBar, StyleSheet, View, Text, Picker } from 'react-native';
-import { Container, Icon, Title, Content, Card, Header } from 'native-base';
+import React from 'react'
+import { StatusBar, View, StyleSheet, Text } from 'react-native'
+import { Container, Header, Icon, Title, Accordion, Card, Picker, Content } from 'native-base'
 import { Button } from 'react-native-elements'
-import DatePicker from 'react-native-datepicker';
 import Textarea from 'react-native-textarea';
 import timeIcon from '../../../assets/img/Time.png'
 import dateIcon from '../../../assets/img/date.png'
+import DatePicker from 'react-native-datepicker';
 
-export default class Events extends React.Component {
+export default class Displacements extends React.Component {
+
     constructor() {
         super();
         this.state = {
             PickerValue: ''
         }
-
     };
+
     render() {
+        const dataArray = [
+            {
+                title: "Local ",
+                content: "kfel frekf,rel f,epofre ,fperorf, f,rekejfnekjnfekr ferjfnerjfre fjenj fernfjorne jfeo"
+            },
+            {
+                title: "Abroad", content:
+                    "hhhhhhhhhhhhhhhh hhhhhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhhhhhh hhhhhhh hhhhhhhhhhh hhhhh"
+            },
+        ];
+
         return (
-            <Container style={{ backgroundColor: '#DDE3F3' }} >
+            <Container style={{ backgroundColor: '#DDE3F3' }}>
+
                 <StatusBar hidden />
 
                 <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}
@@ -30,7 +43,7 @@ export default class Events extends React.Component {
                         onPress={() => alert('menu')}
                     />
 
-                    <Title style={{ top: 15 }}>New request</Title>
+                    <Title style={{ top: 15 }}>My Displacements</Title>
 
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
@@ -38,41 +51,61 @@ export default class Events extends React.Component {
                     }}
                         onPress={() => alert('home')}
                     />
-
                 </Header>
+
                 <Content>
-                    <Card style={styles.cardStyle}>
+                    <Card style={{ alignItems: 'center' }}>
+                        <Accordion
+                            icon="add"
+                            expandedIcon="remove"
+                            dataArray={dataArray}
+                            style={{ margin: 20, width: 320 }}
+                        //  headerStyle={{ backgroundColor: "#99AFAE" }}
+                        //  contentStyle={{ backgroundColor: "#ddecf8" }}
+                        />
+
+
+                        <Text style={{ fontSize: 22, marginBottom: 20 }}>  Create a new Displacement</Text>
+
                         <View>
-                            <Text style={styles.categoryStyle} >
-                                Category
-                  </Text>
-                            <View style={styles.autorisationList}>
+                            <Text style={styles.textStyle} >
+                                Type
+                </Text>
+                            <View style={styles.list}>
                                 <Picker
-                                    selectedValue={this.state.language}
+                                    selectedValue={this.state.type}
                                     style={{ height: 50, width: 300 }}
                                     onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ language: itemValue })
+                                        this.setState({ type: itemValue })
                                     }>
-                                    <Picker.Item label="Paid leave" value="Paid leave" />
-                                    <Picker.Item label="Additional days" value="Additional days" />
-                                    <Picker.Item label="Unpaid leave" value="Unpaid leave" />
-                                    <Picker.Item label="Sick leave" value="Sick leave" />
-                                    <Picker.Item label="Paternity leave" value="Paternity leave" />
-                                    <Picker.Item label="Maternity leave" value="Maternity leave" />
-                                    <Picker.Item label="Wedding leave" value="Wedding" />
-                                    <Picker.Item label="Son's circumcision " value="circumcision " />
-                                    <Picker.Item label="Son's/Daughter's wedding" value="wedding" />
-                                    <Picker.Item label="Spouse's death" value="death" />
-                                    <Picker.Item label="Mother's/Father's death" value="death" />
-                                    <Picker.Item label="Son's/Daughter's death" value="death" />
-                                    <Picker.Item label="Brother's/Sister's death" value="death" />
-                                    <Picker.Item label="Grandfather's/Grandmother's death" value="death" />
-                                    <Picker.Item label="Other" value="Other" />
+                                    <Picker.Item label="Local" value="Local" />
+                                    <Picker.Item label="Abroad" value="Abroad" />
                                 </Picker>
                             </View>
                         </View>
+
+
                         <View>
-                            <Text style={{ top: -5, left: 5 }}>
+                            <Text style={styles.textStyle} >
+                                Conductor
+                </Text>
+                            <View style={styles.list}>
+                                <Picker
+                                    selectedValue={this.state.conductor}
+                                    style={{ height: 50, width: 300 }}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ conductor: itemValue })
+                                    }>
+                                    <Picker.Item label="aaaa" value="aaaa" />
+                                    <Picker.Item label="bbbb" value="bbbb" />
+                                    <Picker.Item label="cccc" value="cccc" />
+                                </Picker>
+                            </View>
+                        </View>
+
+
+                        <View>
+                            <Text style={{ left: 10, top: -5 }}>
                                 From
                   </Text>
                             <DatePicker
@@ -125,9 +158,9 @@ export default class Events extends React.Component {
                             />
                         </View>
                         <View>
-                            <Text style={{ left: 5, top: 20 }}>
+                            <Text style={{ left: 10, top: 20 }}>
                                 To
-                  </Text>
+                             </Text>
                             <DatePicker
                                 style={{ width: 300, top: 25 }}
                                 date={this.state.dateE}
@@ -153,7 +186,7 @@ export default class Events extends React.Component {
                                 onDateChange={(date) => { this.setState({ dateE: date }) }}
                             />
                             <DatePicker
-                                style={{ width: 300, top: 40 }}
+                                style={{ width: 300, top: 40, marginBottom: 60 }}
                                 date={this.state.timeE}
                                 placeholder="Select time"
                                 mode="time"
@@ -177,66 +210,80 @@ export default class Events extends React.Component {
                                 onDateChange={(time) => { this.setState({ timeE: time }); }}
                             />
                         </View>
-                        <View > 
-                            <Text style={{ top: 60, left: 5 }}> Notif </Text>
-                            <Textarea
-                                style={styles.textareaContainer}
-                                onChangeText={this.onChange}
-                                defaultValue={this.state.text}
-                                placeholderTextColor={'black'}
+
+
+
+                        <View>
+                            <Text style={styles.textStyle} >
+                                Type
+                </Text>
+                            <View style={styles.list}>
+                                <Picker
+                                    selectedValue={this.state.type2}
+                                    style={{ height: 50, width: 300 }}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ type2: itemValue })
+                                    }>
+                                    <Picker.Item label="Administration" value="Administration" />
+                                    <Picker.Item label="Customer" value="Customer" />
+                                    <Picker.Item label="Business development" value="Business development" />
+                                    <Picker.Item label="Visa" value="Visa" />
+                                    <Picker.Item label="Other" value="Other" />
+                                </Picker>
+                            </View>
+
+
+                            <View>
+                                <Text style={styles.textStyle} >Destination adress</Text>
+                                <Textarea
+                                    style={styles.textareaContainer}
+                                    onChangeText={this.onChange}
+                                    defaultValue={this.state.text}
+                                    placeholderTextColor={'black'}
+                                />
+                            </View>
+                        </View>
+
+
+                        <View style={{ flexDirection: 'row' , position:'absolute' , bottom:50}}>
+                            <Button
+                                buttonStyle={{ width: 150, marginRight:20,top: 10, width: 140, backgroundColor: '#052D8F' }}
+                                title="Save"
                             />
-
+                             <Button
+                                buttonStyle={{ width: 150,  top: 10, width: 140, backgroundColor: '#CA2626' }}
+                                title="Cancel"
+                            />
                         </View>
-                        <View style={styles.buttonPos}>
-                                <Button
-                                    buttonStyle={{ width: 150, marginBottom: 30, marginRight: 20, top: 10, width: 140, backgroundColor: '#052D8F' }}
-                                    title="Save"
-                                    onPress={() => [this.props.navigation.navigate(''), alert('Request sent')]}
-                                />
-                                <Button
-                                    buttonStyle={{ width: 150, marginBottom: 30, top: 10, width: 140, backgroundColor: '#CA2626' }}
-                                    title="Cancel"
-                                    onPress={() => this.props.navigation.navigate('')} 
-                                />
 
-                        </View>
                     </Card>
                 </Content>
             </Container>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
-    cardStyle: {
-        height: 575,
-        padding: 15,
-        alignItems: 'center',
-    },
-    buttonPos: {
-        flexDirection: 'row',
-        position: 'absolute',
-        bottom: 5,
-    },
-    autorisationList: {
+
+    list: {
         borderWidth: 1,
         width: 300,
         alignItems: 'center',
         borderColor: 'black',
         margin: 15
+
     },
-    categoryStyle: {
+    textStyle: {
         left: 18
     },
     textareaContainer: {
         borderWidth: 1,
         width: 300,
-        height: 80,
-        position: 'relative',
-        top: 70,
-        borderColor: 'gray'
+        height: 40,
+        borderColor: 'gray',
+        marginTop: 10,
+        left: 15,
     },
-    DatePicker: {
-        padding: 10,
-    }
-});
+}
+)

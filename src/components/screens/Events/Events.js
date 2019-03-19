@@ -11,7 +11,7 @@ const cards = [
   {
     text: 'Card two',
     name: 'two',
-    image: require('../../../assets/img/clock2.png'),
+    image: require('../../../assets/img/clock.png'),
 
   }
 ];

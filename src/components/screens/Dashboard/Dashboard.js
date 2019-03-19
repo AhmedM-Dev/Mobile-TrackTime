@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Image, StyleSheet
+    Image, StyleSheet , StatusBar
 } from 'react-native';
 import {
     Container,
@@ -16,7 +16,8 @@ import {
     Picker,
     Footer,
     FooterTab,
-    Badge, Icon
+    Badge, Icon, Header, Title,
+    
 } from 'native-base';
 
 // import Icon from 'react-native-vector-icons/FontAwesome'
@@ -24,13 +25,8 @@ import {
 import detailsIcon from '../../../assets/img/details.png'
 import blueIcon from '../../../assets/img/blue.png'
 import redIcon from '../../../assets/img/red.png'
-import menuIcon from '../../../assets/img/menu.png'
-import homeIcon from '../../../assets/img/home.png'
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
-import { Header } from 'react-native-elements';
-import { white } from 'ansi-colors';
-
 import theme from '../../../theme/fontFamily';
 
 
@@ -104,11 +100,11 @@ export default class Dashboard extends React.Component {
             {
                 value: 50,
                 label: 'Refused',
-                color: '#E4B5B5',
+                color: '#BF1F43',
             }, {
                 value: 40,
-                label: 'Annuled',
-                color: '#AACDD8'
+                label: 'Annulled',
+                color: '#E4B5B5'
             }, {
                 value: 25,
                 label: 'Accepted',
@@ -117,7 +113,7 @@ export default class Dashboard extends React.Component {
             {
                 value: 10,
                 label: 'On hold',
-                color: '#BF1F43'
+                color: '#AACDD8'
             }
 
         ]
@@ -129,30 +125,24 @@ export default class Dashboard extends React.Component {
         return (
 
             <Container style={{ backgroundColor: '#DDE3F3' }}>
+        <StatusBar hidden />
 
-                <Header
-                    statusBarProps={{ hidden: true }}
-                    leftComponent={{
-                        icon: "menu",
-                        color: '#fff',
-                        onPress: () => alert('menu'),
-                    }
-                    }
-
-                    centerComponent={{
-                        text: 'Dashboard',
-                        style: { color: '#fff', fontSize: 18 }
+                <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}>
+                    <Icon name='md-menu' style={{
+                        color: 'white', position: 'absolute',
+                        left: 20, top: 10
                     }}
+                        onPress={() => alert('menu')}
+                    />
+                    <Title style={{ top: 15 }}>Dashboard</Title>
 
-                    rightComponent={{
-                        icon: 'home',
-                        color: '#fff',
-                        onPress: () => alert('home')
-                    }
-                    }
-                    backgroundColor="#052D8F"
-
-                />
+                    <Icon name='md-menu' style={{
+                        color: 'white', position: 'absolute',
+                        right: 20, top: 10
+                    }}
+                        onPress={() => alert('home')}
+                    />
+                </Header>
 
                 <View style={styles.autorisationList}>
                     <Picker
@@ -220,7 +210,7 @@ export default class Dashboard extends React.Component {
                                 </Button>
                             </Body>
 
-                            <Right>
+                            {/* <Right>
                                 <Button backgroundColor='#F1F4FA' style={{
                                     borderRadius: 20
                                 }} >
@@ -228,7 +218,7 @@ export default class Dashboard extends React.Component {
                                     <Text style={{ color: '#6FBADE' }}>Details </Text>
                                 </Button>
 
-                            </Right>
+                            </Right> */}
                         </CardItem>
 
                     </Card>

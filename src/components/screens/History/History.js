@@ -1,37 +1,77 @@
 import React from 'react';
 import { StatusBar, Image, StyleSheet, View, Text, Picker } from 'react-native';
-import { Container, Header, Content, Card, Accordion } from 'native-base';
+import { Container, Header, Content, Card, Icon, Title , } from 'native-base';
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import PureChart from 'react-native-pure-chart';
+
 export default class Events extends React.Component {
   constructor() {
     super();
     this.state = {
       PickerValue: ''
-
     }
 
   };
+
+  
   render() {
+
+   
+    let sampleDataa = [
+      {
+          value: 50,
+          label: 'Refused',
+          color: '#BF1F43',
+      }, {
+          value: 40,
+          label: 'Annulled',
+          color: '#E4B5B5'
+      }, {
+          value: 25,
+          label: 'Accepted',
+          color: '#9BBB80'
+      },
+      {
+          value: 10,
+          label: 'On hold',
+          color: '#AACDD8'
+      }
+
+  ]
+
     return (
-      <Container >
+      <Container style={{ backgroundColor: '#DDE3F3' }} >
         <StatusBar hidden />
 
-        <Header
-          leftComponent={{ icon: 'menu', color: '#fff' }}
-          centerComponent={{ text: 'New request', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'home', color: '#fff' }}
-        />
+
+        <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}
+        >
+
+          <Icon name='md-menu' style={{
+            color: 'white', position: 'absolute',
+            left: 20, top: 10
+          }}
+            onPress={() => alert('menu')}
+          />
+
+          <Title style={{ top: 15 }}>My leave history</Title>
+
+          <Icon name='md-menu' style={{
+            color: 'white', position: 'absolute',
+            right: 20, top: 10
+          }}
+            onPress={() => alert('home')}
+          />
+        </Header>
 
         <Content>
-          <Accordion headerStyle={{ backgroundColor: '#fff' }} />
           <Card style={styles.cardStyle}>
 
             <View>
-              <Text style={styles.AnneeStyle} >
-                Année:
-</Text>
-              <View style={styles.autorisationList}>
+              <Text style={styles.textStyle} >
+                Year:
+                </Text>
+              <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language1}
                   style={{ height: 50, width: 300 }}
@@ -39,8 +79,9 @@ export default class Events extends React.Component {
                     this.setState({ language1: itemValue })
                   }>
                   <Picker.Item label="All Years" value="All Years" />
-                  <Picker.Item label="2018" value="2018" />
-                  <Picker.Item label="2019" value="2019" />
+                  <Picker.Item label="2019" value="2018" />
+                  <Picker.Item label="2018" value="2019" />
+                  <Picker.Item label="2017" value="2017" />
 
                 </Picker>
               </View>
@@ -49,10 +90,10 @@ export default class Events extends React.Component {
 
 
             <View>
-              <Text style={styles.AnneeStyle} >
+              <Text style={styles.textStyle} >
                 Status:
-</Text>
-              <View style={styles.autorisationList}>
+             </Text>
+              <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language}
                   style={{ height: 50, width: 300 }}
@@ -60,12 +101,10 @@ export default class Events extends React.Component {
                     this.setState({ language: itemValue })
                   }>
                   <Picker.Item label="All Status" value="All Status" />
-                  <Picker.Item label="Waiting" value="Waiting" />
+                  <Picker.Item label="On hold" value="Waiting" />
                   <Picker.Item label="Accepted" value="Accepted" />
                   <Picker.Item label="Declined" value="Declined" />
-                  <Picker.Item label="Canceled" value="Canceled" />
-                  <Picker.Item label="Expired" value="Expired" />
-
+                  <Picker.Item label="Annulled" value="Canceled" />
                 </Picker>
               </View>
 
@@ -73,16 +112,17 @@ export default class Events extends React.Component {
 
 
             <View>
-              <Text style={styles.categoryStyle} >
+              <Text style={styles.textStyle} >
                 Category
                   </Text>
-              <View style={styles.autorisationList}>
+              <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language3}
                   style={{ height: 50, width: 300 }}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ language3: itemValue })
                   }>
+                  <Picker.Item label="All" value="All" />
                   <Picker.Item label="Paid leave" value="Paid leave" />
                   <Picker.Item label="Additional days" value="Additional days" />
                   <Picker.Item label="Unpaid leave" value="Unpaid leave" />
@@ -104,9 +144,12 @@ export default class Events extends React.Component {
 
             </View>
             <Button
-              buttonStyle={{ width: 150 }}
+              buttonStyle={{ width: 150  , marginBottom:30 ,top : 10 ,width:300 , backgroundColor:'#052D8F' }}
               title="FILTER"
             />
+               <PureChart data={sampleDataa} type='pie'  />
+
+             
 
           </Card>
         </Content>
@@ -116,21 +159,19 @@ export default class Events extends React.Component {
 }
 const styles = StyleSheet.create({
   cardStyle: {
-    height: 570,
     padding: 15,
     alignItems: 'center',
 
   },
-  autorisationList: {
+  list: {
     borderWidth: 1,
     width: 300,
-
     alignItems: 'center',
     borderColor: 'black',
     margin: 15
 
   },
-  AnneeStyle: {
+  textStyle: {
     left: 18
   },
 }
