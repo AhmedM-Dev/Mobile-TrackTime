@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image, TextInput } from 'react-native';
 
 export default StyledInput = (props) => {
@@ -8,7 +8,8 @@ export default StyledInput = (props) => {
           <Image style={styles.inputIcon} source={props.image} />
           <TextInput 
             name={props.name}
-            onChange={props.onChange}
+            value={props.value}
+            onChangeText={(text) => props.onChange(text)}
             style={styles.inputs}
             placeholder={props.text}
             placeholderTextColor={props.textColor}

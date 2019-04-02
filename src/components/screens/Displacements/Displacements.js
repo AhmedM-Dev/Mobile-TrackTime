@@ -1,7 +1,17 @@
 import React from 'react'
-import { StatusBar, View, StyleSheet, Text } from 'react-native'
-import { Container, Header, Icon, Title, Accordion, Card, Picker, Content } from 'native-base'
-import { Button } from 'react-native-elements'
+import { StatusBar, StyleSheet, Image} from 'react-native'
+import {
+    Container,
+    Content,
+    Card,
+    Text,
+    View,
+    Picker,
+    Footer,
+    Button,
+    FooterTab,
+    Badge, Icon, Header, Title, Accordion
+} from 'native-base'
 import Textarea from 'react-native-textarea';
 import timeIcon from '../../../assets/img/Time.png'
 import dateIcon from '../../../assets/img/date.png'
@@ -15,15 +25,16 @@ export default class Displacements extends React.Component {
             PickerValue: ''
         }
     };
-
+  
     render() {
         const dataArray = [
             {
                 title: "Local ",
-                content: "kfel frekf,rel f,epofre ,fperorf, f,rekejfnekjnfekr ferjfnerjfre fjenj fernfjorne jfeo"
+                content: "hhhhhhhhhhhhh hhhhhhhhhhhhh hhhhhhhhhhhhhh hhhhhhhhhhh hhhhhhhhhh hhhhhhhhhhhh hhh"
             },
             {
-                title: "Abroad", content:
+                title: "Abroad",
+                 content:
                     "hhhhhhhhhhhhhhhh hhhhhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhhhhhh hhhhhhh hhhhhhhhhhh hhhhh"
             },
         ];
@@ -33,23 +44,20 @@ export default class Displacements extends React.Component {
 
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}
-                >
-
+                <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
-                        left: 20, top: 10
+                        left: 20, top: 15
                     }}
-                        onPress={() => alert('menu')}
+                        onPress={() => this.props.navigation.openDrawer()}
                     />
-
                     <Title style={{ top: 15 }}>My Displacements</Title>
 
-                    <Icon name='md-menu' style={{
+                    <Icon name='home' style={{
                         color: 'white', position: 'absolute',
-                        right: 20, top: 10
+                        right: 20, top: 15
                     }}
-                        onPress={() => alert('home')}
+                        onPress={() => this.props.navigation.navigate('Dashboard')}
                     />
                 </Header>
 
@@ -117,8 +125,6 @@ export default class Displacements extends React.Component {
                                 format="DD-MM-YYYY"
                                 minDate="01-01-2019"
                                 maxDate="31-12-2019"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
                                 customStyles={{
                                     dateIcon: {
                                         position: 'absolute',
@@ -142,7 +148,7 @@ export default class Displacements extends React.Component {
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
-
+                                headerBackground="red"
                                 customStyles={{
                                     dateIcon: {
                                         position: 'absolute',
@@ -245,19 +251,38 @@ export default class Displacements extends React.Component {
                         </View>
 
 
-                        <View style={{ flexDirection: 'row' , position:'absolute' , bottom:50}}>
-                            <Button
-                                buttonStyle={{ width: 150, marginRight:20,top: 10, width: 140, backgroundColor: '#052D8F' }}
-                                title="Save"
-                            />
-                             <Button
-                                buttonStyle={{ width: 150,  top: 10, width: 140, backgroundColor: '#CA2626' }}
-                                title="Cancel"
-                            />
+                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 50 , left:30}}>
+                            <Button  light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}>
+                                <Text style={{color:'white', left:35}}>Save</Text>
+                            </Button>
+                            <Button  light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353' , }}>
+                                <Text style={{color:'white' , left:30}} >Cancel</Text>
+                            </Button>
                         </View>
 
                     </Card>
                 </Content>
+                <Footer style={{ backgroundColor: '#072F88' }}>
+                    <FooterTab style={{ backgroundColor: '#072F88', }} >
+
+                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                            <Icon name="md-log-out" style={{ color: 'white' }} />
+                        </Button>
+                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} 
+                        onPress={() =>this.props.navigation.navigate('Settings')}>
+                            <Icon name="settings" style={{ color: 'white' }} />
+                        </Button>
+                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                            <Badge><Text>7</Text></Badge>
+                            <Icon active name="md-chatbubbles" />
+                        </Button>
+                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                            <Badge><Text>2</Text></Badge>
+                            <Icon active name="md-notifications" />
+                        </Button>
+
+                    </FooterTab>
+                </Footer>
             </Container>
 
         )

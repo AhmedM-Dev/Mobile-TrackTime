@@ -4,8 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar, Image
+  StatusBar, 
+  Image , 
+  Icon ,
+  ToastAndroid,
+  AsyncStorage
 } from 'react-native';
+
 import { CheckBox, Button } from 'react-native-elements'
 import StyledInput from '../../ui/Input';
 import Background from '../../../assets/img/background.jpg';
@@ -18,6 +23,12 @@ import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
 import axios from 'axios';
 
 export default class App extends Component {
+  // static navigationOptions ={
+  //   drawerIcon : (
+  //     <Icon name="md-log-out"  />
+  //   )
+  // }
+
   state = {
     check: false,
     isConnected: false,
@@ -31,31 +42,42 @@ export default class App extends Component {
     })
   }
 
-  handleAuthentication = () => {
-    axios.post("http://10.42.0.245:5000/tracktime/api/auth", {
-      email: "ahmed.tux@protonmail.com",
-      pass: "ahmed1989"
+  handleAuthentication = async () => {
+    axios.post("http://19cab676.ngrok.io/tracktime/api/auth", {
+      email: this.state.email,
+      pass: this.state.pass
     })
-      .then((res) => {
-        console.log(res);
+      .then((response) => {
+        console.log("USER:", response.data.user.user);
+        await AsyncStorage.setItem("user", response.data.user.user.email);
         this.setState({
-          check: this.state.check,
+          check: this.state.check, 
           isConnected: true
-        })
+        });
+
+        ToastAndroid.show("Successfully authenticated!", ToastAndroid.SHORT);
       })
       .catch((error) => {
         console.log(error);
-      })
+        // alert("Authentication failed !");
+        ToastAndroid.show("Authentication failed !", ToastAndroid.LONG);
+      });
   }
 
-  handleTyping = (e) => {
-    console.log("TARGET", e.target.value);
-    // this.setState({
-    //   check: false,
-    //   isConnected: false,
-    //   email: '',
-    //   pass: ''
-    // })
+  handleEmailChange = (text) => {
+    console.log("EMAIL:", text);
+    this.setState({
+      ...this.state,
+      email: text
+    });
+  }
+
+  handlePassChange = (text) => {
+    console.log("PASS:", text);
+    this.setState({
+      ...this.state,
+      pass: text
+    });
   }
 
   componentWillMount() {
@@ -71,14 +93,15 @@ export default class App extends Component {
     }
   }
 
+
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
         <StatusBar hidden />
-        <Image source={Logo} style={{ top: 30 }}></Image>
+        {/* <Image source={Logo} style={{ top: 30 }}></Image> */}
         <View style={styles.inputPos}>
-          <StyledInput value={this.state.email} onChange={this.handleTyping} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
-          <StyledInput value={this.state.pass} onChange={this.handleTyping}  name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+          <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
+          <StyledInput value={this.state.pass} onChange={this.handlePassChange}  name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
         </View>
         <View style={styles.checkPos}>
           <CheckBox
@@ -93,12 +116,14 @@ export default class App extends Component {
           buttonStyle={{
             height: 50,
             width: 300,
-            backgroundColor: '#235982',
+            backgroundColor: '#1253D1',
             borderWidth: 1,
             borderRadius: 30,
-            borderColor: '#235982',
-            top: 250,
+            borderColor: '#1253D1',
+            top: 530,
+            left:-150,
             padding: 10,
+            position:'absolute',
           }}
           title="Log in"
           onPress={() => this.handleAuthentication()} />
@@ -143,6 +168,7 @@ const styles = StyleSheet.create({
   },
   remember: {
     color: 'black',
+    opacity: 0.6 ,
     fontSize: 14,
     left: -10
   },

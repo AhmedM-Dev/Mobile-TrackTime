@@ -3,6 +3,11 @@ package com.tracktime;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
+import com.wheelpicker.WheelPickerPackage;
+import com.zyu.ReactNativeWheelPickerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.cardio.RNCardIOPackage;
 import com.horcrux.svg.SvgPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ImagePickerPackage(),
+            new WheelPickerPackage(),
+            new ReactNativeWheelPickerPackage(),
+            new VectorIconsPackage(),
+            new RNCardIOPackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage()
       );

@@ -1,7 +1,15 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Text, Picker } from 'react-native';
-import { Container, Icon, Title, Content, Card, Header } from 'native-base';
-import { Button } from 'react-native-elements'
+import { StatusBar, StyleSheet } from 'react-native';
+import {  Container,
+    Content,
+    Card,
+    Text,
+    View,
+    Picker,
+    Footer,
+    Button,
+    FooterTab,
+    Badge, Icon, Header, Title, Accordion} from 'native-base';
 import DatePicker from 'react-native-datepicker';
 import Textarea from 'react-native-textarea';
 import timeIcon from '../../../assets/img/Time.png'
@@ -20,26 +28,23 @@ export default class Events extends React.Component {
             <Container style={{ backgroundColor: '#DDE3F3' }} >
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}
-                >
-
+                <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
-                        left: 20, top: 10
+                        left: 20, top: 15
                     }}
-                        onPress={() => alert('menu')}
+                        onPress={() => this.props.navigation.openDrawer()}
                     />
-
                     <Title style={{ top: 15 }}>New request</Title>
 
-                    <Icon name='md-menu' style={{
+                    <Icon name='home' style={{
                         color: 'white', position: 'absolute',
-                        right: 20, top: 10
+                        right: 20, top: 15
                     }}
-                        onPress={() => alert('home')}
+                        onPress={() => this.props.navigation.navigate('Dashboard')}
                     />
-
                 </Header>
+
                 <Content>
                     <Card style={styles.cardStyle}>
                         <View>
@@ -177,7 +182,7 @@ export default class Events extends React.Component {
                                 onDateChange={(time) => { this.setState({ timeE: time }); }}
                             />
                         </View>
-                        <View > 
+                        <View >
                             <Text style={{ top: 60, left: 5 }}> Notif </Text>
                             <Textarea
                                 style={styles.textareaContainer}
@@ -187,21 +192,39 @@ export default class Events extends React.Component {
                             />
 
                         </View>
-                        <View style={styles.buttonPos}>
-                                <Button
-                                    buttonStyle={{ width: 150, marginBottom: 30, marginRight: 20, top: 10, width: 140, backgroundColor: '#052D8F' }}
-                                    title="Save"
-                                    onPress={() => [this.props.navigation.navigate(''), alert('Request sent')]}
-                                />
-                                <Button
-                                    buttonStyle={{ width: 150, marginBottom: 30, top: 10, width: 140, backgroundColor: '#CA2626' }}
-                                    title="Cancel"
-                                    onPress={() => this.props.navigation.navigate('')} 
-                                />
-
+                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20 , left:30 }}>
+                            <Button light 
+                            style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
+                            // onPress={() => [this.props.navigation.navigate(''), alert('Request sent')]
+                            >
+                                <Text style={{ color: 'white', left: 35 }}>Save</Text>
+                            </Button>
+                            <Button light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
+                                <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
+                            </Button>
                         </View>
                     </Card>
                 </Content>
+                <Footer style={{ backgroundColor: '#072F88' }}>
+                    <FooterTab style={{ backgroundColor: '#072F88', }} >
+
+                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }}>
+                             <Icon name="md-log-out" style={{ color: 'white' }} /> 
+                        </Button>
+                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} onPress={() =>this.props.navigation.navigate('Settings')} >
+                            <Icon name="settings" style={{ color: 'white' }} />
+                        </Button>
+                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                            <Badge><Text>7</Text></Badge>
+                            <Icon active name="md-chatbubbles" />
+                        </Button>
+                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                            <Badge><Text>2</Text></Badge>
+                            <Icon active name="md-notifications" />
+                        </Button>
+
+                    </FooterTab>
+                </Footer>
             </Container>
         )
     }

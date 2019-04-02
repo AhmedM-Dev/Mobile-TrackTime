@@ -1,50 +1,90 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon } from 'native-base';
-const cards = [
-  {
-    text: ' After work ',
-    name: 'One',
-    image: require('../../../assets/img/afterWork.png'),
-  },
-  
-  {
-    text: 'Card two',
-    name: 'two',
-    image: require('../../../assets/img/clock.png'),
-
-  }
-];
-export default class NewRequest  extends Component {
+import { Image, StatusBar } from 'react-native';
+import {
+  Container,
+  Header,
+  View,
+  Card,
+  CardItem,
+  Thumbnail,
+  Text,
+  Left,
+  Body,
+  Icon,
+  Title,
+  Content,
+  Button,
+  Right,
+  Footer,
+  FooterTab,
+  Badge
+} from 'native-base';
+import eventsLogo from '../../../assets/img/eventsLogo.png'
+import afterWork from '../../../assets/img/afterWork.png'
+export default class NewRequest extends Component {
   render() {
+
+    
     return (
-      <Container>
-        <Header />
-        <View>
-          <DeckSwiper
-            dataSource={cards}
-            renderItem={item =>
-              <Card style={{ elevation: 3 }}>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={item.image} />
-                    <Body>
-                      <Text>{item.text}</Text>
-                      <Text note>NativeBase</Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem cardBody>
-                  <Image style={{ height: 300, flex: 1 }} source={item.image} />
-                </CardItem>
-                <CardItem>
-                  <Icon name="heart" style={{ color: '#ED4A6A' }} />
-                  <Text>{item.name}</Text>
-                </CardItem>
-              </Card>
-            }
+      <Container style={{ backgroundColor: '#DDE3F3' }} >
+        <StatusBar hidden />
+        <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}>
+          <Icon name='md-menu' style={{
+            color: 'white', position: 'absolute',
+            left: 20, top: 10
+          }}
+            onPress={() => this.props.navigation.openDrawer()}
           />
-        </View>
+          <Title style={{ top: 15 }}>Events</Title>
+
+          <Icon name='home' style={{
+            color: 'white', position: 'absolute',
+            right: 20, top: 10
+          }}
+            onPress={() => this.props.navigation.navigate('Dashboard')}
+          />
+        </Header>
+        <Content>
+          {/* <Card style={{ flex: 0 }}>
+            <CardItem button onPress={() => alert("This is Card Header")}>
+              <Left>
+                <Thumbnail source={eventsLogo} />
+                <Body>
+                  <Text>After work party</Text>
+                  <Text note>July 15, 2019</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem style={{top:-20}}  >
+              <Body>
+                <Image source={afterWork} style={{ height: 200, width: 320, flex: 1 }} />
+              </Body>
+            </CardItem>
+          </Card> */}
+        </Content>
+
+        <Footer style={{ backgroundColor: '#072F88' }}>
+          <FooterTab style={{ backgroundColor: '#072F88', }} >
+
+            <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Icon name="md-log-out" style={{ color: 'white' }} />
+            </Button>
+            <Button vertical style={{ backgroundColor: '#072F88', height: 50 }}
+              onPress={() => this.props.navigation.navigate('Settings')}>
+              <Icon name="settings" style={{ color: 'white' }} />
+            </Button>
+            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Badge ><Text>7</Text></Badge>
+              <Icon active name="md-chatbubbles" />
+            </Button>
+            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Badge ><Text>2</Text></Badge>
+              <Icon active name="md-notifications" />
+            </Button>
+
+          </FooterTab>
+        </Footer>
+
       </Container>
     );
   }

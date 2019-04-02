@@ -8,6 +8,7 @@ import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 import logoName from '../../../assets/img/name.png';
 export default class App extends Component {
+  
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
@@ -24,10 +25,10 @@ export default class App extends Component {
           buttonStyle={{
             height: 50,
             width: 300,
-            backgroundColor: '#235982',
+            backgroundColor: '#1253D1',
             borderWidth: 1,
             borderRadius: 30,
-            borderColor: '#235982',
+            borderColor: '#1253D1',
             top: 430,
             padding: 10,
           }}
@@ -35,7 +36,7 @@ export default class App extends Component {
           onPress={() => this.props.navigation.navigate('Dashboard')} />
                 <Text style={styles.dh}> Already have an account ?
              <Text style={{ color: 'white' , fontWeight:'bold' }}
-            onPress={() => this.props.navigation.navigate('Login')}>
+            onPress={() => this.props.navigation.navigate('Logout')}>
             <Text>  </Text>
             Log in
               </Text>

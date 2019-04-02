@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Image, StyleSheet , StatusBar
+    Image, StyleSheet, StatusBar, AsyncStorage
 } from 'react-native';
 import {
     Container,
@@ -17,7 +17,7 @@ import {
     Footer,
     FooterTab,
     Badge, Icon, Header, Title,
-    
+
 } from 'native-base';
 
 // import Icon from 'react-native-vector-icons/FontAwesome'
@@ -27,8 +27,6 @@ import blueIcon from '../../../assets/img/blue.png'
 import redIcon from '../../../assets/img/red.png'
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
-import theme from '../../../theme/fontFamily';
-
 
 // diag4
 export default class Dashboard extends React.Component {
@@ -39,6 +37,14 @@ export default class Dashboard extends React.Component {
             PickerValue: ''
         }
     };
+
+    getConnectedUser = async () => {
+        await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
+    }
+
+    componentDidMount () {
+        this.getConnectedUser();
+    }
 
     render() {
         let index = 0;
@@ -125,22 +131,21 @@ export default class Dashboard extends React.Component {
         return (
 
             <Container style={{ backgroundColor: '#DDE3F3' }}>
-        <StatusBar hidden />
+                <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#072F87', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
-                        left: 20, top: 10
+                        left: 20, top: 15
                     }}
-                        onPress={() => alert('menu')}
+                        onPress={() => this.props.navigation.openDrawer()}
                     />
                     <Title style={{ top: 15 }}>Dashboard</Title>
 
-                    <Icon name='md-menu' style={{
+                    <Icon name='home' style={{
                         color: 'white', position: 'absolute',
-                        right: 20, top: 10
+                        right: 20, top: 15
                     }}
-                        onPress={() => alert('home')}
                     />
                 </Header>
 
@@ -169,7 +174,7 @@ export default class Dashboard extends React.Component {
 
                         <CardItem>
                             <CardItem style={{ flexDirection: 'row' }}>
-                                <Button badge vertical style={{ backgroundColor: 'white', width: 140, marginRight: 4 }}>
+                                <Button badge vertical style={{ backgroundColor: 'white', width: 142, marginRight: 4 }}>
                                     <Badge style={{ backgroundColor: '#63BB93' }}><Text>12365</Text></Badge>
                                     <Text style={{ color: 'black' }}>Hours worked</Text>
                                 </Button>
@@ -186,7 +191,7 @@ export default class Dashboard extends React.Component {
                                 <Text style={{ color: 'black' }} >Average working hours</Text>
                             </Button>
                             <Button badge vertical style={{ marginTop: -30, backgroundColor: 'white', width: 90 }}>
-                                <Badge style={{ backgroundColor: '#FF8C8C' }}><Text>256</Text></Badge>
+                                <Badge style={{ backgroundColor: '#DC5E5E' }}><Text>256</Text></Badge>
                                 <Text style={{ color: 'black' }} >Delays</Text>
                             </Button>
                         </CardItem>
@@ -259,64 +264,63 @@ export default class Dashboard extends React.Component {
 
                 </Content>
 
-                <Footer style={{ backgroundColor: '#052D8F' }}>
-                    <FooterTab theme={theme} style={{ backgroundColor: '#052D8F' }} >
+                <Footer style={{ backgroundColor: '#072F87' }}>
+                    <FooterTab style={{ backgroundColor: '#072F88', }} >
 
-                        <Button badge vertical style={{ backgroundColor: '#052D8F' }}>
-                            <Badge><Text>2</Text></Badge>
-                            <Icon name="home" />
+                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }}>
+                            <Icon name="md-log-out" style={{ color: 'white' }}/>
                         </Button>
+                    <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} 
+                     onPress={() => this.props.navigation.navigate('Setting')} onPress={() =>this.props.navigation.navigate('Settings')} >
+                                <Icon name="settings" style={{ color: 'white' }} />
+                            </Button>
+                            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                                <Badge ><Text>7</Text></Badge>
+                                <Icon active name="md-chatbubbles" />
+                            </Button>
+                            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+                                <Badge ><Text>2</Text></Badge>
+                                <Icon active name="md-notifications" />
+                            </Button>
 
-                        <Button vertical style={{ backgroundColor: '#052D8F' }} >
-                            <Icon name="camera" />
-                        </Button>
-
-                        <Button active badge vertical style={{ backgroundColor: '#052D8F' }} >
-                            <Badge ><Text>2</Text></Badge>
-                            <Icon active name="navigate" />
-                        </Button>
-
-                        <Button vertical style={{ backgroundColor: '#052D8F' }} >
-                            <Icon name="person" />
-                        </Button>
                     </FooterTab>
                 </Footer>
             </Container>
-        );
-    }
-}
-
-
+                );
+            }
+        }
+        
+        
 const styles = StyleSheet.create({
 
-    cardStyle: {
+                    cardStyle: {
 
-        alignContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5
-
-    },
-
+                    alignContent: 'center',
+                alignItems: 'center',
+                borderRadius: 5
+        
+            },
+        
     autorisationList: {
-        borderWidth: 4,
-        width: 300,
-        alignItems: 'center',
-        margin: 15,
-        backgroundColor: 'white',
-        borderColor: '#DDE3F3',
-        left: -16,
-        marginBottom: -2,
-        marginTop: 2,
-        width: 362
-    },
-
+                    borderWidth: 4,
+                width: 300,
+                alignItems: 'center',
+                margin: 15,
+                backgroundColor: 'white',
+                borderColor: '#DDE3F3',
+                left: -16,
+                marginBottom: -2,
+                marginTop: 2,
+                width: 362
+            },
+        
     s: {
-        position: 'relative',
-        left: -20,
-        paddingTop: 10,
-        paddingRight: 10,
-        width: 300,
-    },
-}
-);
-
+                    position: 'relative',
+                left: -20,
+                paddingTop: 10,
+                paddingRight: 10,
+                width: 300,
+            },
+        }
+        );
+        

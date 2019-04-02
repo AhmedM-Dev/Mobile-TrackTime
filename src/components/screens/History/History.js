@@ -1,9 +1,19 @@
 import React from 'react';
-import { StatusBar, Image, StyleSheet, View, Text, Picker } from 'react-native';
-import { Container, Header, Content, Card, Icon, Title , } from 'native-base';
-import { Button } from 'react-native-elements';
+import { StatusBar, Image, StyleSheet, ImageBackground } from 'react-native';
+import {
+  Container,
+  Content,
+  Card,
+  Text,
+  Button,
+  View,
+  Picker,
+  Footer,
+  FooterTab,
+  Badge, Icon, Header, Title,
+} from 'native-base';
 import PureChart from 'react-native-pure-chart';
-
+import bg from '../../../assets/img/bg.jpg'
 export default class Events extends React.Component {
   constructor() {
     super();
@@ -12,65 +22,61 @@ export default class Events extends React.Component {
     }
 
   };
+ 
 
-  
   render() {
 
-   
+
     let sampleDataa = [
       {
-          value: 50,
-          label: 'Refused',
-          color: '#BF1F43',
+        value: 50,
+        label: 'Refused',
+        color: '#BF1F43',
       }, {
-          value: 40,
-          label: 'Annulled',
-          color: '#E4B5B5'
+        value: 40,
+        label: 'Annulled',
+        color: '#E4B5B5'
       }, {
-          value: 25,
-          label: 'Accepted',
-          color: '#9BBB80'
+        value: 25,
+        label: 'Accepted',
+        color: '#9BBB80'
       },
       {
-          value: 10,
-          label: 'On hold',
-          color: '#AACDD8'
+        value: 10,
+        label: 'On hold',
+        color: '#AACDD8'
       }
 
-  ]
+    ]
 
     return (
       <Container style={{ backgroundColor: '#DDE3F3' }} >
         <StatusBar hidden />
 
 
-        <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}
-        >
-
+        <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
           <Icon name='md-menu' style={{
             color: 'white', position: 'absolute',
-            left: 20, top: 10
+            left: 20, top: 15
           }}
-            onPress={() => alert('menu')}
+            onPress={() => this.props.navigation.openDrawer()}
           />
-
           <Title style={{ top: 15 }}>My leave history</Title>
 
-          <Icon name='md-menu' style={{
+          <Icon name='home' style={{
             color: 'white', position: 'absolute',
-            right: 20, top: 10
+            right: 20, top: 15
           }}
-            onPress={() => alert('home')}
+            onPress={() => this.props.navigation.navigate('Dashboard')}
           />
         </Header>
 
-        <Content>
-          <Card style={styles.cardStyle}>
 
+
+        <Content>
+          <Card style={styles.cardStyle} >
             <View>
-              <Text style={styles.textStyle} >
-                Year:
-                </Text>
+
               <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language1}
@@ -90,9 +96,7 @@ export default class Events extends React.Component {
 
 
             <View>
-              <Text style={styles.textStyle} >
-                Status:
-             </Text>
+
               <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language}
@@ -108,13 +112,12 @@ export default class Events extends React.Component {
                 </Picker>
               </View>
 
+
             </View>
 
 
             <View>
-              <Text style={styles.textStyle} >
-                Category
-                  </Text>
+
               <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.language3}
@@ -122,7 +125,7 @@ export default class Events extends React.Component {
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ language3: itemValue })
                   }>
-                  <Picker.Item label="All" value="All" />
+                  <Picker.Item label="All categories" value="All" />
                   <Picker.Item label="Paid leave" value="Paid leave" />
                   <Picker.Item label="Additional days" value="Additional days" />
                   <Picker.Item label="Unpaid leave" value="Unpaid leave" />
@@ -142,17 +145,41 @@ export default class Events extends React.Component {
                 </Picker>
               </View>
 
+              <Button rounded light style={{ width: 300 , top:10}}>
+                <Icon name='md-checkmark' style={{color:'gray'}}/>
+                <Text>FILTER</Text>
+              </Button>
+
             </View>
-            <Button
-              buttonStyle={{ width: 150  , marginBottom:30 ,top : 10 ,width:300 , backgroundColor:'#052D8F' }}
-              title="FILTER"
-            />
-               <PureChart data={sampleDataa} type='pie'  />
 
-             
 
+            <View style={{marginTop:40}}>
+              <PureChart data={sampleDataa} type='pie' /></View>
+
+              
           </Card>
+
         </Content>
+        <Footer style={{ backgroundColor: '#072F88' }}>
+          <FooterTab style={{ backgroundColor: '#072F88', }} >
+
+            <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Icon name="md-log-out" style={{ color: 'white' }} />
+            </Button>
+            <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} onPress={() =>this.props.navigation.navigate('Settings')} >
+              <Icon name="settings" style={{ color: 'white' }} />
+            </Button>
+            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Badge><Text>7</Text></Badge>
+              <Icon active name="md-chatbubbles" />
+            </Button>
+            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
+              <Badge><Text>2</Text></Badge>
+              <Icon active name="md-notifications" />
+            </Button>
+
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }
@@ -166,9 +193,13 @@ const styles = StyleSheet.create({
   list: {
     borderWidth: 1,
     width: 300,
+    height:50,
+    paddingLeft:20,
+    borderRadius:200,
     alignItems: 'center',
-    borderColor: 'black',
-    margin: 15
+    borderColor: 'gray',
+    marginTop: 10,
+    backgroundColor:'white'
 
   },
   textStyle: {
