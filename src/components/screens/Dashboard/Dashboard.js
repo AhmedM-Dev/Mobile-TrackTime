@@ -19,8 +19,7 @@ import {
     Badge, Icon, Header, Title,
 
 } from 'native-base';
-
-// import Icon from 'react-native-vector-icons/FontAwesome'
+import { API_URL } from "../../../../config";
 
 import detailsIcon from '../../../assets/img/details.png'
 import blueIcon from '../../../assets/img/blue.png'
@@ -28,43 +27,84 @@ import redIcon from '../../../assets/img/red.png'
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
 
-// diag4
+import getHoursOfWork from "../../../utils/timeDiff";
+
+import axios from "axios";
+
 export default class Dashboard extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            PickerValue: ''
-        }
-    };
-
-    getConnectedUser = async () => {
-        await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
+    state = {
+        connectedUser: null,
+        PickerValue: '',
+        daysWorked: 0,
+        workedHours: 0,
+        delays: 0,
+        averageWorkHours: 0
     }
 
-    componentDidMount () {
-        this.getConnectedUser();
+    // getConnectedUser = async () => {
+    //     await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
+    // }
+
+    // static async getDerivedStateFromProps(props, state) {
+    //     if (await AsyncStorage.getItem("user") !== state.connectedUser) {
+    //         return {
+    //             ...state,
+    //             connectedUser: await AsyncStorage.getItem("user")
+    //         };
+    //     }
+    //     return null;
+    // }
+
+    componentDidMount() {
+
+        getHoursOfWork(["10:57:47", "12:29:39", "14:58:48", "19:55:37"]);
+
+
+        AsyncStorage.getItem("user")
+            .then(value => {
+                this.setState({
+                    ...this.state,
+                    connectedUser: JSON.parse(value)
+                });
+            })
+            .done();
+
+        axios.get("http://10.42.0.150:5000/tracktime/api/attendances?userId=1" + (this.state.connectedUser && this.state.connectedUser.userId))
+            .then((response) => {
+                console.log("ATTENDANCES:", response.data.attendances);
+
+                let hoursSum = 0;
+
+                response.data.attendances.map(day => {
+                    console.log("EACH DAY:", getHoursOfWork(day.attendances));
+                    
+                    if (new Date("2018-02-02 " + day.attendances[0]).getHours() > 9) {
+                        this.setState({
+                            ...this.state,
+                            delays: this.state.delays + 1
+                        });
+                    }
+                    hoursSum += getHoursOfWork(day.attendances).getHours() * 3600 + getHoursOfWork(day.attendances).getMinutes() * 60 + getHoursOfWork(day.attendances).getSeconds();
+                });
+
+                console.log("TOTAL:", hoursSum / 3600);
+
+                this.setState({
+                    ...this.state,
+                    daysWorked: response.data.attendances.length,
+                    workedHours: (hoursSum / 3600).toFixed(2)
+                })
+            });
     }
 
     render() {
-        let index = 0;
-        const dataY = [
-            { key: index++, section: true, label: 'Fruits' },
-            { key: index++, label: 'Red Apples' },
-            { key: index++, label: 'Cherries' },
-            { key: index++, label: 'Cranberries', accessibilityLabel: 'Tap here for cranberries' },
-            // etc...
-            // Can also add additional custom keys which are passed to the onChange callback
-            { key: index++, label: 'Vegetable', customKey: 'Not a fruit' }
-        ];
         // diag1
 
         let sampleData = [
             {
                 seriesName: 'series1',
                 data: [
-                    { x: 'January', y: 30 },
-                    { x: 'February', y: 40 },
                     { x: 'march', y: 30 },
                     { x: 'April', y: 20 },
                     { x: 'may', y: 10 },
@@ -109,7 +149,7 @@ export default class Dashboard extends React.Component {
                 color: '#BF1F43',
             }, {
                 value: 40,
-                label: 'Annulled',
+                label: 'Canceled',
                 color: '#E4B5B5'
             }, {
                 value: 25,
@@ -142,11 +182,11 @@ export default class Dashboard extends React.Component {
                     />
                     <Title style={{ top: 15 }}>Dashboard</Title>
 
-                    <Icon name='home' style={{
-                        color: 'white', position: 'absolute',
-                        right: 20, top: 15
-                    }}
-                    />
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
+                    </View>
+
                 </Header>
 
                 <View style={styles.autorisationList}>
@@ -175,11 +215,11 @@ export default class Dashboard extends React.Component {
                         <CardItem>
                             <CardItem style={{ flexDirection: 'row' }}>
                                 <Button badge vertical style={{ backgroundColor: 'white', width: 142, marginRight: 4 }}>
-                                    <Badge style={{ backgroundColor: '#63BB93' }}><Text>12365</Text></Badge>
+                                    <Badge style={{ backgroundColor: '#63BB93' }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
                                     <Text style={{ color: 'black' }}>Hours worked</Text>
                                 </Button>
                                 <Button badge vertical style={{ backgroundColor: 'white', width: 140 }}>
-                                    <Badge style={{ backgroundColor: '#63BB93' }} ><Text>468</Text></Badge>
+                                    <Badge style={{ backgroundColor: '#63BB93' }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
                                     <Text style={{ color: 'black' }} >Days worked</Text>
                                 </Button>
 
@@ -187,11 +227,11 @@ export default class Dashboard extends React.Component {
                         </CardItem>
                         <CardItem style={{ flexDirection: 'row', }}>
                             <Button badge vertical style={{ marginTop: -30, marginLeft: 4, marginRight: 4, backgroundColor: 'white', width: 220 }}>
-                                <Badge style={{ backgroundColor: '#63BB93' }}><Text>8</Text></Badge>
+                                <Badge style={{ backgroundColor: '#63BB93' }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
                                 <Text style={{ color: 'black' }} >Average working hours</Text>
                             </Button>
                             <Button badge vertical style={{ marginTop: -30, backgroundColor: 'white', width: 90 }}>
-                                <Badge style={{ backgroundColor: '#DC5E5E' }}><Text>256</Text></Badge>
+                                <Badge style={{ backgroundColor: '#DC5E5E' }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
                                 <Text style={{ color: 'black' }} >Delays</Text>
                             </Button>
                         </CardItem>
@@ -222,7 +262,6 @@ export default class Dashboard extends React.Component {
                                     <Image source={detailsIcon} style={{ right: -10 }} />
                                     <Text style={{ color: '#6FBADE' }}>Details </Text>
                                 </Button>
-
                             </Right> */}
                         </CardItem>
 
@@ -264,63 +303,42 @@ export default class Dashboard extends React.Component {
 
                 </Content>
 
-                <Footer style={{ backgroundColor: '#072F87' }}>
-                    <FooterTab style={{ backgroundColor: '#072F88', }} >
 
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }}>
-                            <Icon name="md-log-out" style={{ color: 'white' }}/>
-                        </Button>
-                    <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} 
-                     onPress={() => this.props.navigation.navigate('Setting')} onPress={() =>this.props.navigation.navigate('Settings')} >
-                                <Icon name="settings" style={{ color: 'white' }} />
-                            </Button>
-                            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                                <Badge ><Text>7</Text></Badge>
-                                <Icon active name="md-chatbubbles" />
-                            </Button>
-                            <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                                <Badge ><Text>2</Text></Badge>
-                                <Icon active name="md-notifications" />
-                            </Button>
-
-                    </FooterTab>
-                </Footer>
             </Container>
-                );
-            }
-        }
-        
-        
+        );
+    }
+}
+
+
 const styles = StyleSheet.create({
 
-                    cardStyle: {
+    cardStyle: {
 
-                    alignContent: 'center',
-                alignItems: 'center',
-                borderRadius: 5
-        
-            },
-        
+        alignContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5
+
+    },
+
     autorisationList: {
-                    borderWidth: 4,
-                width: 300,
-                alignItems: 'center',
-                margin: 15,
-                backgroundColor: 'white',
-                borderColor: '#DDE3F3',
-                left: -16,
-                marginBottom: -2,
-                marginTop: 2,
-                width: 362
-            },
-        
+        borderWidth: 4,
+        width: 300,
+        alignItems: 'center',
+        margin: 15,
+        backgroundColor: 'white',
+        borderColor: '#DDE3F3',
+        left: -16,
+        marginBottom: -2,
+        marginTop: 2,
+        width: 362
+    },
+
     s: {
-                    position: 'relative',
-                left: -20,
-                paddingTop: 10,
-                paddingRight: 10,
-                width: 300,
-            },
-        }
-        );
-        
+        position: 'relative',
+        left: -20,
+        paddingTop: 10,
+        paddingRight: 10,
+        width: 300,
+    },
+}
+);

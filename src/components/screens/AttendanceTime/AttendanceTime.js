@@ -45,12 +45,10 @@ export default class AttendanceTime extends React.Component {
                     />
                     <Title style={{ top: 15 }}>Attendance time</Title>
 
-                    <Icon name='home' style={{
-                        color: 'white', position: 'absolute',
-                        right: 20, top: 15
-                    }}
-                        onPress={() => this.props.navigation.navigate('Dashboard')}
-                    />
+                    <View style={{position:'absolute' ,right:20}}>
+                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    </View>
                 </Header>
                 <View style={{
                     backgroundColor: 'white',
@@ -136,27 +134,6 @@ export default class AttendanceTime extends React.Component {
                     </Card>
 
                 </Content>
-                <Footer style={{ backgroundColor: '#072F88' }}>
-                    <FooterTab style={{ backgroundColor: '#072F88', }} >
-
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Icon name="md-log-out" style={{ color: 'white' }} />
-                        </Button>
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} 
-                        onPress={() =>this.props.navigation.navigate('Settings')} >
-                            <Icon name="settings" style={{ color: 'white' }} />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge ><Text>7</Text></Badge>
-                            <Icon active name="md-chatbubbles" />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge ><Text>2</Text></Badge>
-                            <Icon active name="md-notifications" />
-                        </Button>
-
-                    </FooterTab>
-                </Footer>
             </Container>
         )
     }

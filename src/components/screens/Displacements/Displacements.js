@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, StyleSheet, Image} from 'react-native'
+import { StatusBar, StyleSheet, Image } from 'react-native'
 import {
     Container,
     Content,
@@ -25,7 +25,7 @@ export default class Displacements extends React.Component {
             PickerValue: ''
         }
     };
-  
+
     render() {
         const dataArray = [
             {
@@ -34,7 +34,7 @@ export default class Displacements extends React.Component {
             },
             {
                 title: "Abroad",
-                 content:
+                content:
                     "hhhhhhhhhhhhhhhh hhhhhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhhhhhh hhhhhhh hhhhhhhhhhh hhhhh"
             },
         ];
@@ -53,12 +53,10 @@ export default class Displacements extends React.Component {
                     />
                     <Title style={{ top: 15 }}>My Displacements</Title>
 
-                    <Icon name='home' style={{
-                        color: 'white', position: 'absolute',
-                        right: 20, top: 15
-                    }}
-                        onPress={() => this.props.navigation.navigate('Dashboard')}
-                    />
+                    <View style={{position:'absolute' ,right:20}}>
+                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    </View>
                 </Header>
 
                 <Content>
@@ -96,7 +94,7 @@ export default class Displacements extends React.Component {
                         <View>
                             <Text style={styles.textStyle} >
                                 Conductor
-                </Text>
+                             </Text>
                             <View style={styles.list}>
                                 <Picker
                                     selectedValue={this.state.conductor}
@@ -130,11 +128,12 @@ export default class Displacements extends React.Component {
                                         position: 'absolute',
                                         left: 0,
                                         top: 4,
-                                        marginLeft: 0
+                                        marginLeft: 0,
                                     },
                                     dateInput: {
+                                        borderRadius: 100,
                                         marginLeft: 36,
-                                    }
+                                    },
                                 }}
                                 onDateChange={(date) => { this.setState({ dateB: date }) }}
                             />
@@ -154,11 +153,12 @@ export default class Displacements extends React.Component {
                                         position: 'absolute',
                                         left: 0,
                                         top: 4,
-                                        marginLeft: 0
+                                        marginLeft: 0,
                                     },
                                     dateInput: {
+                                        borderRadius: 100,
                                         marginLeft: 36,
-                                    }
+                                    },
                                 }}
                                 onDateChange={(time) => { this.setState({ timeB: time }); }}
                             />
@@ -183,11 +183,12 @@ export default class Displacements extends React.Component {
                                         position: 'absolute',
                                         left: 0,
                                         top: 4,
-                                        marginLeft: 0
+                                        marginLeft: 0,
                                     },
                                     dateInput: {
+                                        borderRadius: 100,
                                         marginLeft: 36,
-                                    }
+                                    },
                                 }}
                                 onDateChange={(date) => { this.setState({ dateE: date }) }}
                             />
@@ -207,11 +208,12 @@ export default class Displacements extends React.Component {
                                         position: 'absolute',
                                         left: 0,
                                         top: 4,
-                                        marginLeft: 0
+                                        marginLeft: 0,
                                     },
                                     dateInput: {
+                                        borderRadius: 100,
                                         marginLeft: 36,
-                                    }
+                                    },
                                 }}
                                 onDateChange={(time) => { this.setState({ timeE: time }); }}
                             />
@@ -251,38 +253,17 @@ export default class Displacements extends React.Component {
                         </View>
 
 
-                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 50 , left:30}}>
-                            <Button  light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}>
-                                <Text style={{color:'white', left:35}}>Save</Text>
+                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 50, left: 30 }}>
+                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}>
+                                <Text style={{ color: 'white', left: 35 }}>Save</Text>
                             </Button>
-                            <Button  light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353' , }}>
-                                <Text style={{color:'white' , left:30}} >Cancel</Text>
+                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
+                                <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
                             </Button>
                         </View>
 
                     </Card>
                 </Content>
-                <Footer style={{ backgroundColor: '#072F88' }}>
-                    <FooterTab style={{ backgroundColor: '#072F88', }} >
-
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Icon name="md-log-out" style={{ color: 'white' }} />
-                        </Button>
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} 
-                        onPress={() =>this.props.navigation.navigate('Settings')}>
-                            <Icon name="settings" style={{ color: 'white' }} />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge><Text>7</Text></Badge>
-                            <Icon active name="md-chatbubbles" />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge><Text>2</Text></Badge>
-                            <Icon active name="md-notifications" />
-                        </Button>
-
-                    </FooterTab>
-                </Footer>
             </Container>
 
         )
@@ -296,8 +277,8 @@ const styles = StyleSheet.create({
         width: 300,
         alignItems: 'center',
         borderColor: 'black',
-        margin: 15
-
+        margin: 15,
+        borderRadius:100,
     },
     textStyle: {
         left: 18
@@ -309,6 +290,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         marginTop: 10,
         left: 15,
+        borderRadius:100,
+        padding:10
     },
 }
 )

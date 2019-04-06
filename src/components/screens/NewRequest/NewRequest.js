@@ -37,12 +37,10 @@ export default class Events extends React.Component {
                     />
                     <Title style={{ top: 15 }}>New request</Title>
 
-                    <Icon name='home' style={{
-                        color: 'white', position: 'absolute',
-                        right: 20, top: 15
-                    }}
-                        onPress={() => this.props.navigation.navigate('Dashboard')}
-                    />
+                    <View style={{position:'absolute' ,right:20}}>
+                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    </View>
                 </Header>
 
                 <Content>
@@ -100,6 +98,7 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
+                                        borderRadius:100
                                     }
                                 }}
                                 onDateChange={(date) => { this.setState({ dateB: date }) }}
@@ -124,6 +123,8 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
+                                        borderRadius:100
+
                                     }
                                 }}
                                 onDateChange={(time) => { this.setState({ timeB: time }); }}
@@ -153,6 +154,8 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
+                                        borderRadius:100
+
                                     }
                                 }}
                                 onDateChange={(date) => { this.setState({ dateE: date }) }}
@@ -177,6 +180,8 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
+                                        borderRadius:100
+
                                     }
                                 }}
                                 onDateChange={(time) => { this.setState({ timeE: time }); }}
@@ -194,37 +199,17 @@ export default class Events extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20 , left:30 }}>
                             <Button light 
-                            style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
+                            style={{borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
                             // onPress={() => [this.props.navigation.navigate(''), alert('Request sent')]
                             >
                                 <Text style={{ color: 'white', left: 35 }}>Save</Text>
                             </Button>
-                            <Button light style={{ width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
+                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
                                 <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
                             </Button>
                         </View>
                     </Card>
                 </Content>
-                <Footer style={{ backgroundColor: '#072F88' }}>
-                    <FooterTab style={{ backgroundColor: '#072F88', }} >
-
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }}>
-                             <Icon name="md-log-out" style={{ color: 'white' }} /> 
-                        </Button>
-                        <Button vertical style={{ backgroundColor: '#072F88', height: 50 }} onPress={() =>this.props.navigation.navigate('Settings')} >
-                            <Icon name="settings" style={{ color: 'white' }} />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge><Text>7</Text></Badge>
-                            <Icon active name="md-chatbubbles" />
-                        </Button>
-                        <Button active badge vertical style={{ backgroundColor: '#072F88', height: 50 }} >
-                            <Badge><Text>2</Text></Badge>
-                            <Icon active name="md-notifications" />
-                        </Button>
-
-                    </FooterTab>
-                </Footer>
             </Container>
         )
     }
@@ -246,7 +231,8 @@ const styles = StyleSheet.create({
         width: 300,
         alignItems: 'center',
         borderColor: 'black',
-        margin: 15
+        margin: 15,
+        borderRadius:100
     },
     categoryStyle: {
         left: 18
@@ -257,7 +243,10 @@ const styles = StyleSheet.create({
         height: 80,
         position: 'relative',
         top: 70,
-        borderColor: 'gray'
+        borderColor: 'gray',
+        borderRadius:40,
+        paddingLeft:20,
+        paddingRight:20
     },
     DatePicker: {
         padding: 10,

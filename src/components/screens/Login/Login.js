@@ -32,8 +32,8 @@ export default class App extends Component {
   state = {
     check: false,
     isConnected: false,
-    email: '',
-    pass: ''
+    email: "ahmed.tux@protonmail.com",
+    pass: "ahmed1989"
   }
 
   CheckBoxTest = () => {
@@ -42,58 +42,64 @@ export default class App extends Component {
     })
   }
 
+  
   handleAuthentication = async () => {
-    axios.post("http://19cab676.ngrok.io/tracktime/api/auth", {
+    axios.post("http://10.42.0.150:5000/tracktime/api/auth", {
       email: this.state.email,
       pass: this.state.pass
     })
-      .then((response) => {
-        console.log("USER:", response.data.user.user);
-        await AsyncStorage.setItem("user", response.data.user.user.email);
+    .then((response) => {
+      
+      axios.get("http://10.42.0.150:5000/tracktime/api/users?email=" + response.data.user.user.email)
+      .then(async (userByEmail) => {
+        
         this.setState({
           check: this.state.check, 
           isConnected: true
         });
-
+        
         ToastAndroid.show("Successfully authenticated!", ToastAndroid.SHORT);
+        
+        await AsyncStorage.setItem("user", JSON.stringify(userByEmail.data.user));
       })
-      .catch((error) => {
-        console.log(error);
-        // alert("Authentication failed !");
+      .done();
+      
+      
+      
+    })
+    .catch((error) => {
+      // alert("Authentication failed !");
         ToastAndroid.show("Authentication failed !", ToastAndroid.LONG);
       });
-  }
+    }
 
-  handleEmailChange = (text) => {
-    console.log("EMAIL:", text);
-    this.setState({
-      ...this.state,
-      email: text
-    });
-  }
-
-  handlePassChange = (text) => {
-    console.log("PASS:", text);
-    this.setState({
-      ...this.state,
+    handleEmailChange = (text) => {
+      this.setState({
+        ...this.state,
+        email: text
+      });
+    }
+    
+    handlePassChange = (text) => {
+      this.setState({
+        ...this.state,
       pass: text
     });
   }
-
+  
   componentWillMount() {
     if (this.state.isConnected) {
       this.props.navigation.navigate('Dashboard');
     }
   }
-
+  
   componentDidUpdate() {
-    console.log("UPDATED");
     if (this.state.isConnected) {
       this.props.navigation.navigate('Dashboard');
     }
   }
-
-
+  
+  
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>

@@ -5752,6 +5752,11 @@ react-native-input-xg@^0.0.2:
   dependencies:
     react-native-stylesheet-xg "^1.1.0"
 
+react-native-interactive-card@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-interactive-card/-/react-native-interactive-card-1.0.4.tgz#41d538b9db9bebc2532428cb06da3da241887da4"
+  integrity sha1-QdU4udub68JTJCjLBto9okGIfaQ=
+
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
@@ -5835,6 +5840,11 @@ react-native-ratings@^6.3.0:
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
+
+react-native-reanimated@^1.0.0-alpha.12:
+  version "1.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.0.0-alpha.12.tgz#535c84a9e87c919417aee0fa68f360b3bb9556b0"
+  integrity sha512-jZDPxz8IjpoZ7VAW5X6WJhemmpuLkX6Y9lxKuHJAXls1EwRYkyXIPwvSG34umeqqYSE8Hl3A5TS4pfLORoqm/A==
 
 react-native-rheostat@^0.1.0:
   version "0.1.0"
@@ -5921,6 +5931,13 @@ react-native-svg@^9.2.4:
   version "9.2.4"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.2.4.tgz#a30ee42535b39097e7b68dfa6dcf5c1c8cce97f1"
   integrity sha512-Gox4iASgWpwgXpmaLgEvzwftjkrT8hIEnxnJvIypZaFlME9fdcgulv4AKcnwTFLxyIrbuuIaY1/GmbU4hejkjg==
+
+react-native-swiper@^1.5.14:
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.14.tgz#1c6f949ca377186300f972bb0f30d24062c899aa"
+  integrity sha512-Kn0fxKooN7Shwu1qJYHB+Y8ssXXnvrIwReHXU5jCdyYNfz2QbBv0Cv3sa2Mqzr+XgzORCFFIokc8uCCUITDrVA==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.3.2"

@@ -19,7 +19,7 @@ import AttendanceTimeIcon from './assets/img/attendanceTime.png'
 import DisplacementsLogo from './assets/img/DisplacementsLogo.png';
 import pmLogo from './assets/img/pm.png'
 import eventsLogo from './assets/img/eventsLogo.png'
-export default class App extends React.Component {
+export default class App extends React.Component  {
   render() {
     return (
       <AppContainer />
@@ -29,9 +29,9 @@ export default class App extends React.Component {
 const CustomDrawerComponent = (props) => (
   <SafeAreaView style={{ flex: 1 }}>
     <ImageBackground style={{ height: 160, alignItems: 'center', justifyContent: 'center' }} source={bgm}>
-      <Image source={userPic} style={{ borderRadius: 100, height: 150, width: 150 }}></Image>
+      <Image source={userPic} style={{ borderRadius: 100, height: 145, width: 145 , borderWidth:2, borderColor:'#FFFCFD'}}></Image>
     </ImageBackground>
-    <ScrollView style={{ backgroundColor: 'white' }}>
+    <ScrollView style={{ backgroundColor: '#FFFCFD' }}>
       <DrawerItems {...props}
       />
     </ScrollView>
@@ -136,3 +136,4 @@ const AppDrawNavigator = createDrawerNavigator(
 );
 
 const AppContainer = createAppContainer(AppDrawNavigator);
+
