@@ -41,95 +41,92 @@ export default class Dashboard extends React.Component {
         workedHours: 0,
         delays: 0,
         averageWorkHours: 0,
-        byMonth: new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        byMonth: null,
     }
 
     // getConnectedUser = async () => {
     //     await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
     // }
 
-    static getDerivedStateFromProps(props, state) {
-        if (state.connectedUser === null) {
-            AsyncStorage.getItem("user").then(user => {
-                console.log("LOGGED", user);
-                return {
-                    ...state,
-                    connectedUser: user
-                }
-            }).done();
-        }
-        return null;
-    }
+    componentWillMount() {
+        AsyncStorage.getItem("user").then(user => {
+            console.log("LOGGED", JSON.parse(user));
 
-    componentDidMount() {
+            let connected = JSON.parse(user);
 
-        console.log("USER ID", this.state.connectedUser);
+            axios.get(API_URL + "attendances?userId=" + (connected && connected.userId))
+                .then((response) => {
+                    console.log("ATTENDANCES:", response.data.attendances);
 
-        axios.get(API_URL + "attendances?userId=" + (this.state.connectedUser && this.state.connectedUser.userId))
-            .then((response) => {
-                console.log("ATTENDANCES:", response.data.attendances);
+                    let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-                // let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    byMonth.map((month, i) => {
+                        let hd = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i));
 
-                // byMonth.map((month, i) => {
-                //     byMonth[i] = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i))
-                // });
+                        byMonth[i] = {
+                            ...hd,
+                            workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
+                        }
 
-                // console.log("BY MONTH:", byMonth);
+                    });
 
-                this.setState({
-                    ...this.state,
-                    daysWorked: response.data.attendances.length,
-                    workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
-                    delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays
-                })
-            });
+                    console.log("BY MONTH:", byMonth);
 
+                    let graphData = [
+                        {
+                            seriesName: 'days',
+                            data: [
+                                { x: 'January', y: byMonth[0].workedDays },
+                                { x: 'February', y: byMonth[1].workedDays },
+                                { x: 'march', y: byMonth[2].workedDays },
+                                { x: 'April', y: byMonth[3].workedDays },
+                                { x: 'may', y: byMonth[4].workedDays },
+                                { x: 'June', y: byMonth[5].workedDays },
+                                { x: 'July', y: byMonth[6].workedDays },
+                                { x: 'August', y: byMonth[7].workedDays },
+                                { x: 'September', y: byMonth[8].workedDays },
+                                { x: 'October', y: byMonth[9].workedDays },
+                                { x: 'November', y: byMonth[10].workedDays },
+                                { x: 'December', y: byMonth[11].workedDays },
 
+                            ],
+                            color: '#6894C7'
+                        },
+                        {
+                            seriesName: 'hours',
+                            data: [
+                                { x: 'January', y: byMonth[0].workedHours },
+                                { x: 'February', y: byMonth[1].workedHours },
+                                { x: 'march', y: byMonth[2].workedHours },
+                                { x: 'April', y: byMonth[3].workedHours },
+                                { x: 'may', y: byMonth[4].workedHours },
+                                { x: 'June', y: byMonth[5].workedHours },
+                                { x: 'July', y: byMonth[6].workedHours },
+                                { x: 'August', y: byMonth[7].workedHours },
+                                { x: 'September', y: byMonth[8].workedHours },
+                                { x: 'October', y: byMonth[9].workedHours },
+                                { x: 'November', y: byMonth[10].workedHours },
+                                { x: 'December', y: byMonth[11].workedHours },
+                            ],
+                            color: '#C95C5C'
+                        }
+                    ];
+
+                    this.setState({
+                        ...this.state,
+                        byMonth: byMonth,
+                        daysWorked: response.data.attendances.length,
+                        workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
+                        delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays,
+                        connectedUser: JSON.parse(user),
+                        graphData: graphData
+                    })
+                });
+        }).done();
     }
 
     render() {
         // diag1
-
-        let sampleData = [
-            {
-                seriesName: 'series1',
-                data: [
-                    { x: 'march', y: 30 },
-                    { x: 'April', y: 20 },
-                    { x: 'may', y: 10 },
-                    { x: 'June', y: 10 },
-                    { x: 'July', y: 10 },
-                    { x: 'August', y: 30 },
-                    { x: 'September', y: 30 },
-                    { x: 'October', y: 30 },
-                    { x: 'November', y: 30 },
-                    { x: 'December', y: 30 },
-
-                ],
-                color: '#6894C7'
-            },
-            {
-                seriesName: 'series2',
-                data: [
-                    { x: 'January', y: 400 },
-                    { x: 'February', y: 300 },
-                    { x: 'march', y: 503 },
-                    { x: 'April', y: 170 },
-                    { x: 'may', y: 400 },
-                    { x: 'June', y: 200 },
-                    { x: 'July', y: 100 },
-                    { x: 'August', y: 500 },
-                    { x: 'September', y: 370 },
-                    { x: 'October', y: 320 },
-                    { x: 'November', y: 240 },
-                    { x: 'December =', y: 340 },
-                ],
-                color: '#C95C5C'
-            }
-        ]
-
-
         // diag2
 
         let sampleDataa = [
@@ -226,7 +223,7 @@ export default class Dashboard extends React.Component {
                             </Button>
                         </CardItem>
                         <CardItem cardBody style={styles.s}>
-                            <PureChart data={sampleData} type='line' />
+                            {this.state.graphData && <PureChart data={this.state.graphData} type='line' />}
                         </CardItem>
 
 

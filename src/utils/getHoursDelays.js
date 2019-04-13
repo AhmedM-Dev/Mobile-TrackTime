@@ -2,15 +2,10 @@ import getHoursOfWork from "./timeDiff";
 
 const getHoursDelays = (attendances) => {
 
-
-    console.log("received attendances",attendances);
-
     let hoursSum = 0;
     let delays = 0;
 
     attendances.map(day => {
-        console.log("EACH DAY:", getHoursOfWork(day.attendances));
-        
         if (new Date("2018-02-02 " + day.attendances[0]).getHours() > 9) {
             delays++;
         }
@@ -18,7 +13,7 @@ const getHoursDelays = (attendances) => {
     });
 
     return {
-        workedHours: (hoursSum / 3600).toFixed(2),
+        workedHours: parseFloat((hoursSum / 3600).toFixed(2)),
         delays: delays
     }
 }

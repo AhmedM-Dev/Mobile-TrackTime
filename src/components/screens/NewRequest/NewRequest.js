@@ -1,6 +1,7 @@
 import React from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
-import {  Container,
+import { StatusBar, StyleSheet, AsyncStorage } from 'react-native';
+import {
+    Container,
     Content,
     Card,
     Text,
@@ -9,20 +10,77 @@ import {  Container,
     Footer,
     Button,
     FooterTab,
-    Badge, Icon, Header, Title, Accordion} from 'native-base';
+    Badge, Icon, Header, Title, Accordion
+} from 'native-base';
 import DatePicker from 'react-native-datepicker';
 import Textarea from 'react-native-textarea';
-import timeIcon from '../../../assets/img/Time.png'
-import dateIcon from '../../../assets/img/date.png'
+import timeIcon from '../../../assets/img/Time.png';
+import dateIcon from '../../../assets/img/date.png';
+
+import axios from "axios";
+
+import { API_URL } from "../../../../config";
 
 export default class Events extends React.Component {
     constructor() {
         super();
         this.state = {
-            PickerValue: ''
+            PickerValue: '',
+            startDate: null,
+            startTime: null,
+            endDate: null,
+            endTime: null,
+            category: "Paid leave",
+            motif: null
         }
-
     };
+
+    handleCreateRequest = () => {
+        // alert(JSON.stringify(this.state));
+
+        axios.post(API_URL + "requests", {
+            userId: this.state.connectedUser.userId,
+            ...this.state
+        })
+            .then((response) => {
+                alert(response.data);
+            }).done();
+    }
+
+    handleCategoryChange = (category) => {
+        this.setState({
+            ...this.state,
+            category: category
+        });
+    }
+
+    handleDateChange = (type, value) => {
+        this.setState({
+            ...this.state,
+            startDate: type === "startdate" ? value : this.state.startDate,
+            startTime: type === "starttime" ? value : this.state.startTime,
+            endDate: type === "enddate" ? value : this.state.endDate,
+            endTime: type === "endtime" ? value : this.state.endTime
+        })
+    }
+
+    handleMotifChange = (text) => {
+        this.setState({
+            ...this.state,
+            motif: text
+        });
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem("user").then(user => {
+            console.log("LOGGED", JSON.parse(user));
+
+            this.setState({
+                connectedUser: JSON.parse(user)
+            });
+        })
+    }
+
     render() {
         return (
             <Container style={{ backgroundColor: '#DDE3F3' }} >
@@ -37,9 +95,9 @@ export default class Events extends React.Component {
                     />
                     <Title style={{ top: 15 }}>New request</Title>
 
-                    <View style={{position:'absolute' ,right:20}}>
-                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
-                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
                 </Header>
 
@@ -51,10 +109,10 @@ export default class Events extends React.Component {
                   </Text>
                             <View style={styles.autorisationList}>
                                 <Picker
-                                    selectedValue={this.state.language}
+                                    selectedValue={this.state.category}
                                     style={{ height: 50, width: 300 }}
                                     onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ language: itemValue })
+                                        this.handleCategoryChange(itemValue)
                                     }>
                                     <Picker.Item label="Paid leave" value="Paid leave" />
                                     <Picker.Item label="Additional days" value="Additional days" />
@@ -80,7 +138,7 @@ export default class Events extends React.Component {
                   </Text>
                             <DatePicker
                                 style={{ width: 300 }}
-                                date={this.state.dateB}
+                                date={this.state.startDate}
                                 mode="date"
                                 iconSource={dateIcon}
                                 placeholder="Select date"
@@ -98,14 +156,15 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
-                                        borderRadius:100
+                                        borderRadius: 100
                                     }
                                 }}
-                                onDateChange={(date) => { this.setState({ dateB: date }) }}
+                                onDateChange={(date) => { this.handleDateChange("startdate", date) }}
                             />
+
                             <DatePicker
                                 style={{ width: 300, top: 10 }}
-                                date={this.state.timeB}
+                                date={this.state.startTime}
                                 placeholder="Select time"
                                 iconSource={timeIcon}
                                 mode="time"
@@ -123,11 +182,11 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
-                                        borderRadius:100
+                                        borderRadius: 100
 
                                     }
                                 }}
-                                onDateChange={(time) => { this.setState({ timeB: time }); }}
+                                onDateChange={(time) => { this.handleDateChange("starttime", time) }}
                             />
                         </View>
                         <View>
@@ -136,7 +195,7 @@ export default class Events extends React.Component {
                   </Text>
                             <DatePicker
                                 style={{ width: 300, top: 25 }}
-                                date={this.state.dateE}
+                                date={this.state.endDate}
                                 mode="date"
                                 iconSource={dateIcon}
                                 placeholder="Select date"
@@ -154,15 +213,15 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
-                                        borderRadius:100
+                                        borderRadius: 100
 
                                     }
                                 }}
-                                onDateChange={(date) => { this.setState({ dateE: date }) }}
+                                onDateChange={(date) => { this.handleDateChange("enddate", date) }}
                             />
                             <DatePicker
                                 style={{ width: 300, top: 40 }}
-                                date={this.state.timeE}
+                                date={this.state.endTime}
                                 placeholder="Select time"
                                 mode="time"
                                 format="HH:mm"
@@ -180,31 +239,31 @@ export default class Events extends React.Component {
                                     },
                                     dateInput: {
                                         marginLeft: 36,
-                                        borderRadius:100
+                                        borderRadius: 100
 
                                     }
                                 }}
-                                onDateChange={(time) => { this.setState({ timeE: time }); }}
+                                onDateChange={(time) => { this.handleDateChange("endtime", time) }}
                             />
                         </View>
                         <View >
-                            <Text style={{ top: 60, left: 5 }}> Notif </Text>
+                            <Text style={{ top: 60, left: 5 }}> Motif </Text>
                             <Textarea
                                 style={styles.textareaContainer}
-                                onChangeText={this.onChange}
+                                onChangeText={(text) => this.handleMotifChange(text)}
                                 defaultValue={this.state.text}
                                 placeholderTextColor={'black'}
                             />
 
                         </View>
-                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20 , left:30 }}>
-                            <Button light 
-                            style={{borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
-                            // onPress={() => [this.props.navigation.navigate(''), alert('Request sent')]
+                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20, left: 30 }}>
+                            <Button light
+                                style={{ borderRadius: 100, width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
+                                onPress={() => this.handleCreateRequest()}
                             >
                                 <Text style={{ color: 'white', left: 35 }}>Save</Text>
                             </Button>
-                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
+                            <Button light style={{ borderRadius: 100, width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
                                 <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
                             </Button>
                         </View>
@@ -232,7 +291,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: 'black',
         margin: 15,
-        borderRadius:100
+        borderRadius: 100
     },
     categoryStyle: {
         left: 18
@@ -244,9 +303,9 @@ const styles = StyleSheet.create({
         position: 'relative',
         top: 70,
         borderColor: 'gray',
-        borderRadius:40,
-        paddingLeft:20,
-        paddingRight:20
+        borderRadius: 40,
+        paddingLeft: 20,
+        paddingRight: 20
     },
     DatePicker: {
         padding: 10,
