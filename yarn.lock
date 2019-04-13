@@ -5641,6 +5641,13 @@ react-native-calendars@^1.22.0:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
+react-native-card-list@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-card-list/-/react-native-card-list-0.1.0.tgz#4ebcd81b2f25b39edcb6f508494c374edc75c203"
+  integrity sha1-TrzYGy8ls57ctvUISUw3Ttx1wgM=
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-chart-kit@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-2.2.1.tgz#3c6d219d8821246c929ffba379d442fc46cb4e43"

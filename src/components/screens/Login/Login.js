@@ -16,24 +16,22 @@ import StyledInput from '../../ui/Input';
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
-import Logo from '../../../assets/img/l.png';
+import Logo from '../../../assets/img/log.png';
 import checkedIcon from '../../../assets/img/checkedIcon.png'
 import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
 
 import axios from 'axios';
 
+import { API_URL } from "../../../../config";
+
 export default class App extends Component {
-  // static navigationOptions ={
-  //   drawerIcon : (
-  //     <Icon name="md-log-out"  />
-  //   )
-  // }
+
 
   state = {
     check: false,
     isConnected: false,
-    email: "ahmed.tux@protonmail.com",
-    pass: "ahmed1989"
+    email: "asma.bahmed19@hotmail.com",
+    pass: "92333520"
   }
 
   CheckBoxTest = () => {
@@ -44,19 +42,23 @@ export default class App extends Component {
 
   
   handleAuthentication = async () => {
-    axios.post("http://10.42.0.150:5000/tracktime/api/auth", {
+    axios.post(API_URL + "auth", {
       email: this.state.email,
       pass: this.state.pass
     })
     .then((response) => {
+
+      console.log("USER:", response.data);
       
-      axios.get("http://10.42.0.150:5000/tracktime/api/users?email=" + response.data.user.user.email)
+      axios.get(API_URL+"users?email=" + response.data.user.user.email)
       .then(async (userByEmail) => {
         
         this.setState({
           check: this.state.check, 
           isConnected: true
         });
+
+        console.log("USER BY EMAIL:", userByEmail);
         
         ToastAndroid.show("Successfully authenticated!", ToastAndroid.SHORT);
         
@@ -104,7 +106,7 @@ export default class App extends Component {
     return (
       <ImageBackground style={styles.container} source={Background}>
         <StatusBar hidden />
-        {/* <Image source={Logo} style={{ top: 30 }}></Image> */}
+        <Image source={Logo} style={{ top: 30 }}></Image>
         <View style={styles.inputPos}>
           <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
           <StyledInput value={this.state.pass} onChange={this.handlePassChange}  name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
@@ -126,10 +128,9 @@ export default class App extends Component {
             borderWidth: 1,
             borderRadius: 30,
             borderColor: '#1253D1',
-            top: 530,
-            left:-150,
+            top: 250,
             padding: 10,
-            position:'absolute',
+            position:'relative',
           }}
           title="Log in"
           onPress={() => this.handleAuthentication()} />

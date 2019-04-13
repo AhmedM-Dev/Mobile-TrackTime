@@ -1,6 +1,3 @@
-const IP = "10.42.0.150";
+const IP = "908b2e97.ngrok.io";
 
-const config = {
-    API_URL: "http://" + IP + ":5000/tracktime/api/",
-    TEST_URL: ""
-}
+export const API_URL= "http://" + IP + "/tracktime/api/";

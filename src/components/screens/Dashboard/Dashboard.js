@@ -28,6 +28,7 @@ import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
 
 import getHoursOfWork from "../../../utils/timeDiff";
+import getHoursDelays from "../../../utils/getHoursDelays";
 
 import axios from "axios";
 
@@ -39,63 +40,52 @@ export default class Dashboard extends React.Component {
         daysWorked: 0,
         workedHours: 0,
         delays: 0,
-        averageWorkHours: 0
+        averageWorkHours: 0,
+        byMonth: new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
     }
 
     // getConnectedUser = async () => {
     //     await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
     // }
 
-    // static async getDerivedStateFromProps(props, state) {
-    //     if (await AsyncStorage.getItem("user") !== state.connectedUser) {
-    //         return {
-    //             ...state,
-    //             connectedUser: await AsyncStorage.getItem("user")
-    //         };
-    //     }
-    //     return null;
-    // }
+    static getDerivedStateFromProps(props, state) {
+        if (state.connectedUser === null) {
+            AsyncStorage.getItem("user").then(user => {
+                console.log("LOGGED", user);
+                return {
+                    ...state,
+                    connectedUser: user
+                }
+            }).done();
+        }
+        return null;
+    }
 
     componentDidMount() {
 
-        getHoursOfWork(["10:57:47", "12:29:39", "14:58:48", "19:55:37"]);
+        console.log("USER ID", this.state.connectedUser);
 
-
-        AsyncStorage.getItem("user")
-            .then(value => {
-                this.setState({
-                    ...this.state,
-                    connectedUser: JSON.parse(value)
-                });
-            })
-            .done();
-
-        axios.get("http://10.42.0.150:5000/tracktime/api/attendances?userId=1" + (this.state.connectedUser && this.state.connectedUser.userId))
+        axios.get(API_URL + "attendances?userId=" + (this.state.connectedUser && this.state.connectedUser.userId))
             .then((response) => {
                 console.log("ATTENDANCES:", response.data.attendances);
 
-                let hoursSum = 0;
+                // let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-                response.data.attendances.map(day => {
-                    console.log("EACH DAY:", getHoursOfWork(day.attendances));
-                    
-                    if (new Date("2018-02-02 " + day.attendances[0]).getHours() > 9) {
-                        this.setState({
-                            ...this.state,
-                            delays: this.state.delays + 1
-                        });
-                    }
-                    hoursSum += getHoursOfWork(day.attendances).getHours() * 3600 + getHoursOfWork(day.attendances).getMinutes() * 60 + getHoursOfWork(day.attendances).getSeconds();
-                });
+                // byMonth.map((month, i) => {
+                //     byMonth[i] = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i))
+                // });
 
-                console.log("TOTAL:", hoursSum / 3600);
+                // console.log("BY MONTH:", byMonth);
 
                 this.setState({
                     ...this.state,
                     daysWorked: response.data.attendances.length,
-                    workedHours: (hoursSum / 3600).toFixed(2)
+                    workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
+                    delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays
                 })
             });
+
+
     }
 
     render() {

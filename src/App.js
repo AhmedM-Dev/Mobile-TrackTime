@@ -121,6 +121,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+      
     Signup: {
       screen: Signup,
       navigationOptions: ({ navigation }) => ({
@@ -129,6 +130,8 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
   },
+   
+
   {
     initialRouteName: "Logout",
     contentComponent: CustomDrawerComponent

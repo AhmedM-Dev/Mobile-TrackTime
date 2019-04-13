@@ -16,6 +16,27 @@ import Swiper from 'react-native-swiper';
 
 import eventsLogo from '../../../assets/img/eventsLogo.png'
 import afterWork from '../../../assets/img/afterWork.png'
+import { CardList } from 'react-native-card-list';
+const cards = [
+  {
+    id: "0",
+    title: "Starry Night",
+    picture: require('../../../assets/img/eventsLogo.png'),
+    content: <Text>Starry Night</Text>
+  },
+  {
+    id: "1",
+    title: "Wheat Field",
+    picture: require('../../../assets/img/eventsLogo.png'),
+    content: <Text>Wheat Field with Cypresses</Text>
+  },
+  {
+    id: "2",
+    title: "Bedroom in Arles",
+    picture: require('../../../assets/img/userPic.jpg'),
+    content: <Text>Bedroom in Arles</Text>
+  }
+]
 export default class NewRequest extends Component {
   render() {
 
@@ -23,6 +44,7 @@ export default class NewRequest extends Component {
     return (
       <Container style={{ backgroundColor: '#DDE3F3' }} >
         <StatusBar hidden />
+        
         <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}>
           <Icon name='md-menu' style={{
             color: 'white', position: 'absolute',
@@ -37,7 +59,13 @@ export default class NewRequest extends Component {
             <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
           </View>
         </Header>
-          <Swiper
+     
+     
+        <View style={styles.container}>
+        <CardList cards={cards} />
+      </View>
+     
+          {/* <Swiper
             style={styles.wrapper}
             smoothTransition
             loop
@@ -64,7 +92,7 @@ export default class NewRequest extends Component {
             <View style={styles.slide}>
               <Text style={styles.text}>7</Text>
             </View>
-          </Swiper>
+          </Swiper> */}
 
       </Container>
     );
@@ -72,25 +100,31 @@ export default class NewRequest extends Component {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: '#009688',
-  },
-  slide: {
+  // wrapper: {
+  //   backgroundColor: '#009688',
+  // },
+  // slide: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: '#FFFCFD',
+  // },
+  // poster:{
+  // position:'absolute',
+  // top:20,
+  // alignSelf:'center',
+  // width:340
+  // },
+  // text: {
+  //   color: 'black',
+  //   fontSize: 30,
+  //   fontWeight: 'bold',
+  // },
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFCFD',
-  },
-  poster:{
-  position:'absolute',
-  top:20,
-  alignSelf:'center',
-  width:340
-  },
-  text: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
+    backgroundColor: '#F5FCFF',
+  }
 
 })

@@ -22,6 +22,7 @@
     "react-native-awesome-card-io": "^0.8.2",
     "react-native-calendar-strip-slide-navigation": "^0.0.3",
     "react-native-calendars": "^1.22.0",
+    "react-native-card-list": "^0.1.0",
     "react-native-chart-kit": "^2.2.1",
     "react-native-d3multiline-chart": "^1.0.18",
     "react-native-datepicker": "^1.7.2",
