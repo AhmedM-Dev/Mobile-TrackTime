@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, StyleSheet, Image } from 'react-native'
+import { StatusBar, StyleSheet, AsyncStorage, Image } from 'react-native'
 import {
     Container,
     Content,
@@ -12,77 +12,147 @@ import {
     FooterTab,
     Badge, Icon, Header, Title, Accordion
 } from 'native-base'
+import axios from "axios";
 import Textarea from 'react-native-textarea';
 import timeIcon from '../../../assets/img/Time.png'
 import dateIcon from '../../../assets/img/date.png'
 import DatePicker from 'react-native-datepicker';
+import { API_URL } from "../../../../config";
 
 export default class Displacements extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            PickerValue: ''
+            travelType: '',
+            conductor: '',
+            startDate: null,
+            startTime: null,
+            endDate: null,
+            endTime: null,
+            type: '',
+            destinationAdress: ''
         }
     };
 
+    resetAll = () => {
+        this.setState({
+            travelType: '',
+            conductor: '',
+            startDate: null,
+            startTime: null,
+            endDate: null,
+            endTime: null,
+            type: '',
+            destinationAdress: ''
+        })
+    }
+
+    handleCreateTravel = () => {
+        // alert(JSON.stringify(this.state));
+
+        axios.post(API_URL + "travels", {
+            userId: this.state.connectedUser.userId,
+            ...this.state
+        })
+            .then((response) => {
+                alert(response.data);
+            }).done();
+    }
+
+    handleTravelTypeChange = (travelType) => {
+        this.setState({
+            ...this.state,
+            travelType: travelType
+        });
+    }
+
+    handleTypeChange = (type) => {
+        this.setState({
+            ...this.state,
+            type: type
+        });
+    }
+
+    handleConductorChange = (conductor) => {
+        this.setState({
+            ...this.state,
+            conductor: conductor
+        });
+    }
+
+    handleDateChange = (type, value) => {
+        this.setState({
+            ...this.state,
+            startDate: type === "startdate" ? value : this.state.startDate,
+            startTime: type === "starttime" ? value : this.state.startTime,
+            endDate: type === "enddate" ? value : this.state.endDate,
+            endTime: type === "endtime" ? value : this.state.endTime
+        })
+    }
+
+
+
+    handleDestinationAdressChange = (text) => {
+        this.setState({
+            ...this.state,
+            destinationAdress: text
+        });
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem("user").then(user => {
+            console.log("LOGGED", JSON.parse(user));
+
+            this.setState({
+                connectedUser: JSON.parse(user)
+            });
+        })
+    }
+
+
     render() {
-        const dataArray = [
-            {
-                title: "Local ",
-                content: "hhhhhhhhhhhhh hhhhhhhhhhhhh hhhhhhhhhhhhhh hhhhhhhhhhh hhhhhhhhhh hhhhhhhhhhhh hhh"
-            },
-            {
-                title: "Abroad",
-                content:
-                    "hhhhhhhhhhhhhhhh hhhhhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhhhhhh hhhhhhh hhhhhhhhhhh hhhhh"
-            },
-        ];
+
 
         return (
-            <Container style={{ backgroundColor: '#DDE3F3' }}>
+            <Container style={{ backgroundColor: '#13446E' }}>
 
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
                     }}
                         onPress={() => this.props.navigation.openDrawer()}
                     />
-                    <Title style={{ top: 15 }}>My Displacements</Title>
+                    <Title style={{ top: 15 }}>My Travels</Title>
 
-                    <View style={{position:'absolute' ,right:20}}>
-                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
-                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
                 </Header>
 
+                <View style={{ flexDirection: 'row', alignSelf: 'center', height: 50, marginTop: 10 }}>
+                    <View style={{ width: 170, backgroundColor: '#4986B9' }}></View>
+                    <View style={{ width: 170, backgroundColor: '#4986B9' }}></View>
+                </View>
                 <Content>
-                    <Card style={{ alignItems: 'center' }}>
-                        <Accordion
-                            icon="add"
-                            expandedIcon="remove"
-                            dataArray={dataArray}
-                            style={{ margin: 20, width: 320 }}
-                        //  headerStyle={{ backgroundColor: "#99AFAE" }}
-                        //  contentStyle={{ backgroundColor: "#ddecf8" }}
-                        />
-
-
-                        <Text style={{ fontSize: 22, marginBottom: 20 }}>  Create a new Displacement</Text>
-
-                        <View>
+                    <View style={{ width: 340, backgroundColor: '#4986B9', alignSelf: 'center' }}>
+                        <View >
                             <Text style={styles.textStyle} >
                                 Type
-                </Text>
+                          </Text>
                             <View style={styles.list}>
                                 <Picker
-                                    selectedValue={this.state.type}
-                                    style={{ height: 50, width: 300 }}
+                                    selectedValue={this.state.travelType}
+                                    style={{
+                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#245E8F', color: 'white',
+                                        borderColor: '#245E8F'
+                                    }}
                                     onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ type: itemValue })
+                                        this.handleTravelTypeChange(itemValue)
                                     }>
                                     <Picker.Item label="Local" value="Local" />
                                     <Picker.Item label="Abroad" value="Abroad" />
@@ -98,9 +168,12 @@ export default class Displacements extends React.Component {
                             <View style={styles.list}>
                                 <Picker
                                     selectedValue={this.state.conductor}
-                                    style={{ height: 50, width: 300 }}
+                                    style={{
+                                        height: 50, width: 300, backgroundColor: '#245E8F',
+                                        borderColor: '#245E8F', color: 'white'
+                                    }}
                                     onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ conductor: itemValue })
+                                        this.handleConductorChange(itemValue)
                                     }>
                                     <Picker.Item label="aaaa" value="aaaa" />
                                     <Picker.Item label="bbbb" value="bbbb" />
@@ -111,14 +184,14 @@ export default class Displacements extends React.Component {
 
 
                         <View>
-                            <Text style={{ left: 10, top: -5 }}>
+                            <Text style={styles.textStyle}>
                                 From
                   </Text>
                             <DatePicker
-                                style={{ width: 300 }}
-                                date={this.state.dateB}
+                                style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                                date={this.state.startDate}
                                 mode="date"
-                                iconSource={dateIcon}
+                                iconSource={null}
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"
                                 minDate="01-01-2019"
@@ -131,17 +204,18 @@ export default class Displacements extends React.Component {
                                         marginLeft: 0,
                                     },
                                     dateInput: {
-                                        borderRadius: 100,
-                                        marginLeft: 36,
+                                        marginTop: 10,
+                                        backgroundColor: '#245E8F',
+                                        borderColor: '#245E8F'
+
                                     },
                                 }}
-                                onDateChange={(date) => { this.setState({ dateB: date }) }}
-                            />
+                                onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
                             <DatePicker
-                                style={{ width: 300, top: 10 }}
-                                date={this.state.timeB}
+                                style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                                date={this.state.startTime}
                                 placeholder="Select time"
-                                iconSource={timeIcon}
+                                iconSource={null}
                                 mode="time"
                                 format="HH:mm"
                                 confirmBtnText="Confirm"
@@ -156,22 +230,23 @@ export default class Displacements extends React.Component {
                                         marginLeft: 0,
                                     },
                                     dateInput: {
-                                        borderRadius: 100,
-                                        marginLeft: 36,
+                                        marginTop: 10,
+                                        backgroundColor: '#245E8F',
+                                        borderColor: '#245E8F'
                                     },
                                 }}
-                                onDateChange={(time) => { this.setState({ timeB: time }); }}
+                                onDateChange={(time) => { this.handleDateChange("starttime", time) }}
                             />
                         </View>
                         <View>
-                            <Text style={{ left: 10, top: 20 }}>
+                            <Text style={styles.textStyle}>
                                 To
                              </Text>
                             <DatePicker
-                                style={{ width: 300, top: 25 }}
-                                date={this.state.dateE}
+                                style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                                date={this.state.endDate}
                                 mode="date"
-                                iconSource={dateIcon}
+                                iconSource={null}
                                 placeholder="Select date"
                                 format="DD-MM-YYYY"
                                 minDate="01-01-2019"
@@ -186,22 +261,23 @@ export default class Displacements extends React.Component {
                                         marginLeft: 0,
                                     },
                                     dateInput: {
-                                        borderRadius: 100,
-                                        marginLeft: 36,
+                                        marginTop: 10,
+                                        backgroundColor: '#245E8F',
+                                        borderColor: '#245E8F'
                                     },
                                 }}
-                                onDateChange={(date) => { this.setState({ dateE: date }) }}
+                                onDateChange={(date) => { this.handleDateChange("enddate", date) }}
                             />
                             <DatePicker
-                                style={{ width: 300, top: 40, marginBottom: 60 }}
-                                date={this.state.timeE}
+                                style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                                date={this.state.endTime}
                                 placeholder="Select time"
                                 mode="time"
                                 format="HH:mm"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 minuteInterval={10}
-                                iconSource={timeIcon}
+                                iconSource={null}
 
                                 customStyles={{
                                     dateIcon: {
@@ -211,11 +287,12 @@ export default class Displacements extends React.Component {
                                         marginLeft: 0,
                                     },
                                     dateInput: {
-                                        borderRadius: 100,
-                                        marginLeft: 36,
+                                        marginTop: 10,
+                                        backgroundColor: '#245E8F',
+                                        borderColor: '#245E8F'
                                     },
                                 }}
-                                onDateChange={(time) => { this.setState({ timeE: time }); }}
+                                onDateChange={(time) => { this.handleDateChange("endtime", time) }}
                             />
                         </View>
 
@@ -227,10 +304,13 @@ export default class Displacements extends React.Component {
                 </Text>
                             <View style={styles.list}>
                                 <Picker
-                                    selectedValue={this.state.type2}
-                                    style={{ height: 50, width: 300 }}
+                                    selectedValue={this.state.type}
+                                    style={{
+                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#245E8F', color: 'white',
+                                        borderColor: '#245E8F'
+                                    }}
                                     onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ type2: itemValue })
+                                        this.handleTypeChange(itemValue)
                                     }>
                                     <Picker.Item label="Administration" value="Administration" />
                                     <Picker.Item label="Customer" value="Customer" />
@@ -245,24 +325,27 @@ export default class Displacements extends React.Component {
                                 <Text style={styles.textStyle} >Destination adress</Text>
                                 <Textarea
                                     style={styles.textareaContainer}
-                                    onChangeText={this.onChange}
-                                    defaultValue={this.state.text}
+                                    onChangeText={(text) => this.handleDestinationAdressChange(text)} defaultValue={this.state.text}
                                     placeholderTextColor={'black'}
+                                    defaultValue={this.state.destinationAdress}
+
                                 />
                             </View>
                         </View>
 
 
-                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 50, left: 30 }}>
-                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}>
+                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 40, alignSelf: 'center' }}>
+                            <Button light
+                                style={{ width: 150, marginRight: 20, width: 140, backgroundColor: '#2C9562' }}
+                                onPress={() => this.handleCreateTravel()}                                >
                                 <Text style={{ color: 'white', left: 35 }}>Save</Text>
                             </Button>
-                            <Button light style={{ borderRadius:100,width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
+                            <Button light style={{ width: 150, width: 140, backgroundColor: '#D15433', }}
+                                onPress={() => this.resetAll()} >
                                 <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
                             </Button>
                         </View>
-
-                    </Card>
+                    </View>
                 </Content>
             </Container>
 
@@ -273,25 +356,27 @@ export default class Displacements extends React.Component {
 const styles = StyleSheet.create({
 
     list: {
-        borderWidth: 1,
         width: 300,
         alignItems: 'center',
-        borderColor: 'black',
-        margin: 15,
-        borderRadius:100,
+        borderColor: '#245E8F',
+        color: 'white',
+        alignSelf: 'center'
     },
     textStyle: {
-        left: 18
+        left: 40,
+        color: 'white',
+        marginTop: 10
     },
     textareaContainer: {
-        borderWidth: 1,
         width: 300,
         height: 40,
-        borderColor: 'gray',
         marginTop: 10,
-        left: 15,
-        borderRadius:100,
-        padding:10
+        padding: 10,
+        alignSelf: 'center',
+        alignItems: 'center',
+        backgroundColor: '#245E8F',
+        borderColor: '#245E8F',
+        color: 'white'
     },
 }
 )

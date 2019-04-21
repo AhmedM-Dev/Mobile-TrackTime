@@ -19,24 +19,49 @@ import {
     Badge, Icon, Header, Title,
 
 } from 'native-base';
+import SearchableDropdown from 'react-native-searchable-dropdown';
 import { API_URL } from "../../../../config";
-
-import detailsIcon from '../../../assets/img/details.png'
-import blueIcon from '../../../assets/img/blue.png'
-import redIcon from '../../../assets/img/red.png'
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
-
 import getHoursOfWork from "../../../utils/timeDiff";
 import getHoursDelays from "../../../utils/getHoursDelays";
 
 import axios from "axios";
 
-export default class Dashboard extends React.Component {
+var items = [
+    {
+        id: 'Current year',
+        name: 'Current year',
+    },
+    {
+        id: '2018',
+        name: '2018',
+    },
+    {
+        id: 'All years' ,
+        name: 'All years',
+    },
 
+];
+
+option = {
+    xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line'
+    }]
+};
+
+export default class Dashboard extends React.Component {
     state = {
         connectedUser: null,
-        PickerValue: '',
+        year: 'Current year',
         daysWorked: 0,
         workedHours: 0,
         delays: 0,
@@ -44,9 +69,9 @@ export default class Dashboard extends React.Component {
         byMonth: null,
     }
 
-    // getConnectedUser = async () => {
-    //     await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
-    // }
+    getConnectedUser = async () => {
+        await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
+    }
 
     componentWillMount() {
         AsyncStorage.getItem("user").then(user => {
@@ -67,12 +92,15 @@ export default class Dashboard extends React.Component {
                             ...hd,
                             workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
                         }
-
+                        
                     });
-
+                    
                     console.log("BY MONTH:", byMonth);
-
+                    
                     let graphData = [
+                        // chartConfig={
+                        //     backgroundColor: 'red'
+                        //   },
                         {
                             seriesName: 'days',
                             data: [
@@ -90,12 +118,13 @@ export default class Dashboard extends React.Component {
                                 { x: 'December', y: byMonth[11].workedDays },
 
                             ],
-                            color: '#6894C7'
+                            color: '#FEFF9D'
+                            
                         },
                         {
                             seriesName: 'hours',
                             data: [
-                                { x: 'January', y: byMonth[0].workedHours },
+                                { x: 'January', y: byMonth[0].workedHours},
                                 { x: 'February', y: byMonth[1].workedHours },
                                 { x: 'march', y: byMonth[2].workedHours },
                                 { x: 'April', y: byMonth[3].workedHours },
@@ -108,8 +137,26 @@ export default class Dashboard extends React.Component {
                                 { x: 'November', y: byMonth[10].workedHours },
                                 { x: 'December', y: byMonth[11].workedHours },
                             ],
-                            color: '#C95C5C'
-                        }
+                            color: '#E7B5D6'
+                        },
+                        {
+                            seriesName: 'delays',
+                            data: [
+                                { x: 'January', y: byMonth[0].delays},
+                                { x: 'February', y: byMonth[1].delays },
+                                { x: 'march', y: byMonth[2].delays },
+                                { x: 'April', y: byMonth[3].delays },
+                                { x: 'may', y: byMonth[4].delays },
+                                { x: 'June', y: byMonth[5].delays },
+                                { x: 'July', y: byMonth[6].delays },
+                                { x: 'August', y: byMonth[7].delays },
+                                { x: 'September', y: byMonth[8].delays },
+                                { x: 'October', y: byMonth[9].delays },
+                                { x: 'November', y: byMonth[10].delays },
+                                { x: 'December', y: byMonth[11].delays },
+                            ],
+                            color: '#F2CE90'
+                        },
                     ];
 
                     this.setState({
@@ -120,47 +167,43 @@ export default class Dashboard extends React.Component {
                         delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays,
                         connectedUser: JSON.parse(user),
                         graphData: graphData
-                    })
+                                            })
                 });
         }).done();
     }
 
     render() {
-        // diag1
-        // diag2
+
 
         let sampleDataa = [
             {
                 value: 50,
                 label: 'Refused',
-                color: '#BF1F43',
+                color: '#E04415',
             }, {
                 value: 40,
                 label: 'Canceled',
-                color: '#E4B5B5'
+                color: '#CBC93B'
             }, {
                 value: 25,
                 label: 'Accepted',
-                color: '#9BBB80'
+                color: '#1A9E00'
             },
             {
                 value: 10,
                 label: 'On hold',
-                color: '#AACDD8'
+                color: '#15BFC2'
             }
 
         ]
 
-        // diag4
-
-        const dataaaa = [0.4, 0.6, 0.8]
 
         return (
 
-            <Container style={{ backgroundColor: '#DDE3F3' }}>
+            <Container style={{ backgroundColor: '#13446E' }}>
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#072F87', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -168,66 +211,110 @@ export default class Dashboard extends React.Component {
                         onPress={() => this.props.navigation.openDrawer()}
                     />
                     <Title style={{ top: 15 }}>Dashboard</Title>
-
                     <View style={{ position: 'absolute', right: 20 }}>
                         <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
                         <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
-
                 </Header>
-
-                <View style={styles.autorisationList}>
+                {/* <View>
                     <Picker
-                        selectedValue={this.state.language}
-                        style={{ height: 50, width: 300 }}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ language: itemValue })
+                        selectedValue={this.state.year}
+                        style={{ height: 50, width: 300 , alignSelf:'center'}}
+                        textStyle={{ color: "white" }}
 
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({ year: itemValue })
                         }>
                         <Picker.Item label="Current year" value="2019" />
                         <Picker.Item label="2018" value="2018" />
-                        <Picker.Item label="2017" value="2017" />
                         <Picker.Item label="All years" value="All years" />
+                        
+                        
+                        </Picker>
+                    </View> */}
 
-
-                    </Picker>
-                </View>
-
+                <SearchableDropdown
+                    // onTextChange={(itemValue, itemIndex) =>
+                    //     this.setState({ year: itemValue })}
+                    onItemSelect={
+                        (itemValue, itemIndex) =>
+                        this.setState({ year: JSON.stringify((itemValue.id)) })   
+                    }
+                    containerStyle={{ padding: 5 }}
+                    textInputStyle={{
+                        padding: 12,
+                        borderWidth: 1,
+                        borderColor: '#13446E',
+                        fontSize: 18,
+                        width: 340,
+                        alignSelf: 'center',
+                        color: 'white',
+                        backgroundColor: '#245E8F'
+                    }}
+                    itemStyle={{
+                        padding: 10,
+                        marginTop: 2,
+                        backgroundColor: '#4986B9',
+                        borderColor: '#245E8F',
+                        borderWidth: 1,
+                        width: 340,
+                        alignSelf: 'center',
+                    }}
+                    itemTextStyle={{ color: 'white' }}
+                    itemsContainerStyle={{ maxHeight: 140 }}
+                    items={items}
+                    // defaultIndex={3}
+                    placeholder="Current year"
+                    resetValue={false}
+                    underlineColorAndroid="transparent"
+                    />
+                    { console.log("year : " + this.state.year) }
                 <Content  >
 
-                    <Card style={styles.cardStyle} >
+                    <View  >
 
-                        <Text style={{ fontSize: 18, marginTop: 15, left: -100, }}> Summary </Text>
 
-                        <CardItem>
-                            <CardItem style={{ flexDirection: 'row' }}>
-                                <Button badge vertical style={{ backgroundColor: 'white', width: 142, marginRight: 4 }}>
-                                    <Badge style={{ backgroundColor: '#63BB93' }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
-                                    <Text style={{ color: 'black' }}>Hours worked</Text>
-                                </Button>
-                                <Button badge vertical style={{ backgroundColor: 'white', width: 140 }}>
-                                    <Badge style={{ backgroundColor: '#63BB93' }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
-                                    <Text style={{ color: 'black' }} >Days worked</Text>
-                                </Button>
 
-                            </CardItem>
-                        </CardItem>
-                        <CardItem style={{ flexDirection: 'row', }}>
-                            <Button badge vertical style={{ marginTop: -30, marginLeft: 4, marginRight: 4, backgroundColor: 'white', width: 220 }}>
-                                <Badge style={{ backgroundColor: '#63BB93' }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
-                                <Text style={{ color: 'black' }} >Average working hours</Text>
+                        <View style={{ flexDirection: 'row' , alignSelf:'center' }}>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 170, marginRight: 5, marginBottom: 10 , left:4 , top:5}}>
+                                <Badge style={{ backgroundColor: '#2EC41F' , top:-10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
+                                <Text style={{ color: 'white' }}>Hours worked</Text>
                             </Button>
-                            <Button badge vertical style={{ marginTop: -30, backgroundColor: 'white', width: 90 }}>
-                                <Badge style={{ backgroundColor: '#DC5E5E' }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
-                                <Text style={{ color: 'black' }} >Delays</Text>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 164, marginRight: 5, marginBottom: 10 ,left:4 , top:5}}>
+                                <Badge style={{ backgroundColor: '#2EC41F' , top:-10
+                            }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
+                                <Text style={{ color: 'white' }} >Days worked</Text>
                             </Button>
-                        </CardItem>
-                        <CardItem cardBody style={styles.s}>
-                            {this.state.graphData && <PureChart data={this.state.graphData} type='line' />}
-                        </CardItem>
 
 
-                        <CardItem>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', alignSelf:'center'  }}>
+                            <Button badge vertical style={{ marginRight: 6, marginBottom: 10, backgroundColor: '#245E8F', width: 230 , top:5}}>
+                                <Badge style={{ backgroundColor: '#2EC41F', top: -10 }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
+                                <Text style={{ color: 'white' }} >Average working hours</Text>
+                            </Button>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', marginBottom: 10, width: 104 ,top:5}}>
+                                <Badge style={{ backgroundColor: '#E82C2C', top: -10 }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
+                                <Text style={{ color: 'white' }} >Delays</Text>
+                            </Button>
+                        </View>
+
+
+                       <Card  style={styles.lineChart} >
+                            {this.state.graphData && <PureChart data={this.state.graphData} 
+                            type='bar' 
+                            backgroundColor='#245E8F' 
+                            />}
+                            <View style={{flexDirection:'row' , alignSelf:'center'}}>
+                             <Text style={{color:'#FEFF9D' ,marginRight:20 }}> Days worked</Text>
+                             <Text style={{color:'#E7B5D6' , marginBottom:10 , marginRight:20}}> Hours worked</Text>
+                             <Text style={{color:'#F2CE90' , marginBottom:10}}> Delays</Text>
+                            </View>
+                        </Card> 
+                        
+
+                        {/* <CardItem>
                             <Left>
                                 <Button transparent>
                                     <Image source={blueIcon} />
@@ -240,9 +327,9 @@ export default class Dashboard extends React.Component {
                                     <Image source={redIcon} />
                                     <Text style={{ color: '#C95C5C' }}>Hours worked</Text>
                                 </Button>
-                            </Body>
+                            </Body> */}
 
-                            {/* <Right>
+                        {/* <Right>
                                 <Button backgroundColor='#F1F4FA' style={{
                                     borderRadius: 20
                                 }} >
@@ -250,28 +337,21 @@ export default class Dashboard extends React.Component {
                                     <Text style={{ color: '#6FBADE' }}>Details </Text>
                                 </Button>
                             </Right> */}
-                        </CardItem>
+                        {/* </CardItem> */}
 
-                    </Card>
-
+                    </View>
 
                     <Card style={styles.cardStyle}>
-
-                        <CardItem>
-                            <Text style={{ fontSize: 18, left: -80 }}>Authorizations</Text>
-                        </CardItem>
-
-                        <CardItem >
-                            <PureChart data={sampleDataa} type='pie' />
-
-                        </CardItem>
-
+                        <Text style={{ fontSize: 18, left: -80, marginTop: 10, color: 'white', marginBottom: 20 }}>Authorizations</Text>
+                        <PureChart data={sampleDataa} type='pie' />
+                        <View style={{ height: 20 }}></View>
                     </Card>
-                    <Card style={styles.cardStyle}  >
-                        <CardItem>
-                            <Text style={{ fontSize: 18, left: -100 }}>Average grade</Text>
-                        </CardItem>
-                        <CardItem >
+
+
+
+                    {/* <View style={styles.cardStyle}  >
+                        <Text style={{ fontSize: 18, marginTop:10 , marginBottom:10,color:'white' , left:-80}}>Average grade</Text>
+                        <View >
                             <Speedometer
                                 value={13}
                                 totalValue={20}
@@ -285,8 +365,8 @@ export default class Dashboard extends React.Component {
                                 labelStyle={{ color: '#327951' }}
                                 showPercent
                                 percentStyle={{ color: '#327951' }}
-                            /></CardItem>
-                    </Card>
+                            /></View>
+                    </View> */}
 
                 </Content>
 
@@ -303,29 +383,22 @@ const styles = StyleSheet.create({
 
         alignContent: 'center',
         alignItems: 'center',
-        borderRadius: 5
+        alignSelf: 'center',
+        width: 340,
+        backgroundColor: '#245E8F',
+        borderColor: '#245E8F'
+    },
+
+    lineChart:{
+        backgroundColor: '#245E8F',
+        borderColor: '#245E8F',
+        paddingTop:10,
+        paddingBottom:10,
+        paddingRight:20,
+        width:340,
+        alignSelf:'center',
 
     },
 
-    autorisationList: {
-        borderWidth: 4,
-        width: 300,
-        alignItems: 'center',
-        margin: 15,
-        backgroundColor: 'white',
-        borderColor: '#DDE3F3',
-        left: -16,
-        marginBottom: -2,
-        marginTop: 2,
-        width: 362
-    },
-
-    s: {
-        position: 'relative',
-        left: -20,
-        paddingTop: 10,
-        paddingRight: 10,
-        width: 300,
-    },
 }
 );

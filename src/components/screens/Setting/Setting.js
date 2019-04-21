@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, StatusBar, ImageBackground, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SettingsList from 'react-native-setting-list';
-import { Container, Header, Icon, Title, Content , Button} from 'native-base';
+import { Container, Header, Icon, Title, Content, Button } from 'native-base';
 import userPic from '../../../assets/img/userPic.jpg'
 import bgst from '../../../assets/img/bgst.jpg'
 import langIcon from '../../../assets/img/langIcon.png'
@@ -76,72 +76,83 @@ export default class App extends Component {
 
         </ImageBackground>
 
-        <View style={{ backgroundColor: 'white', height:510, width: 340, left: 10, top: -60 , borderTopLeftRadius:20,borderTopRightRadius:20}}>
+        <View style={{ backgroundColor: 'white', height: 510, width: 340, left: 10, top: -60, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
           <Content>
             <View >
-              <Image source={this.state.avatarSource} style={{ marginTop:15, marginBottom:10 ,alignSelf:'center',height: 150, width: 150, borderRadius: 100 }} />
+              <Image source={this.state.avatarSource} style={{ marginTop: 15, marginBottom: 10, alignSelf: 'center', height: 150, width: 150, borderRadius: 100, borderWidth:2, borderColor:'#104E77' }} />
               <Icon name="md-camera"
                 onPress={this.myfun}
-                style={{ position: "absolute", top: 100, color: "#3A5793", left: 230 }} />
+                style={{ position: "absolute", top: 100, color: "#3A5793", left: 235 }} />
 
             </View>
-            
-            <SettingsList borderColor='#DDE3F3' defaultItemSize={50}  >
-            
+
+            <SettingsList borderColor='#DDE3F3' defaultItemSize={50} >
+
               <SettingsList.Item
                 hasNavArrow={false}
                 title='Account settings'
-                titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center' , fontSize:16 }}
+                titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center', fontSize: 16 }}
                 itemWidth={50}
                 borderHide={'Both'}
                 backgroundColor={'white'}
-                
-                />
-                <Text style={{left:15 , top:-10}}>Manage informations about you</Text>
-                
+
+              />
+              <Text style={{ left: 15, top: -10 }}>Manage informations about you</Text>
+
               <SettingsList.Item
                 icon={
-                  <Image style={styles.iconStyle} source={NameIcon}  />
+                  <Image style={styles.iconStyle} source={NameIcon} />
                 }
                 hasNavArrow={false}
                 itemWidth={50}
                 titleStyle={{ color: 'black', fontSize: 16 }}
-                title='User name'
+                title='First name'
                 borderHide={'Both'}
-                />
-                 
+              />
+
               <SettingsList.Item
                 icon={
-                  
-                  <Image style={styles.iconStyle} source={PasswordIcon}  />
-                  
+                  <Image style={styles.iconStyle} source={NameIcon} />
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: 'black', fontSize: 16 }}
+                title='Last name'
+                borderHide={'Both'}
+              />
+
+              <SettingsList.Item
+                icon={
+
+                  <Image style={styles.iconStyle} source={PasswordIcon} />
+
                 }
                 hasNavArrow={false}
                 itemWidth={50}
                 titleStyle={{ color: 'black', fontSize: 16 }}
                 title='Password'
                 borderHide={'Both'}
-                />
+              />
               <SettingsList.Item
                 icon={
-                  
-                  <Image style={styles.iconStyle} source={EmailIcon}  />
-                  
+
+                  <Image style={styles.iconStyle} source={EmailIcon} />
+
                 }
                 hasNavArrow={false}
                 itemWidth={50}
                 titleStyle={{ color: 'black', fontSize: 16 }}
                 title='Email'
                 borderHide={'Both'}
-                />
+              />
               <SettingsList.Item
                 hasNavArrow={false}
                 title='Application settings'
-                titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center' , fontSize:16 }}
+                titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center', fontSize: 16 }}
                 itemWidth={50}
                 borderHide={'Both'}
                 backgroundColor={'white'}
-                />
+              />
 
               <SettingsList.Item
                 icon={
@@ -152,9 +163,9 @@ export default class App extends Component {
                 titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
                 title='Language'
                 borderHide={'Both'}
-                />
+              />
 
-<SettingsList.Item
+              <SettingsList.Item
                 icon={
                   <Image style={styles.iconStyle} source={themeIcon} />
                 }
@@ -163,33 +174,33 @@ export default class App extends Component {
                 titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
                 title='Theme'
                 borderHide={'Both'}
-                />
-                <SettingsList.Item
-                                icon={
-                                  <Image style={styles.iconStyle} source={unsubscribeIcon} />
-                                }
-                                hasNavArrow={false}
-                                itemWidth={50}
-                                titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
-                                title='Unsubscribe'
-                                borderHide={'Both'}
-                                />
+              />
+              <SettingsList.Item
+                icon={
+                  <Image style={styles.iconStyle} source={unsubscribeIcon} />
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
+                title='Unsubscribe'
+                borderHide={'Both'}
+              />
 
 
             </SettingsList>
           </Content>
-                          
-                        </View>
 
-
-          <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20 , left:10 }}>
-                            <Button light 
-                            style={{ width: 340, top: 10, width: 340, backgroundColor: '#3A5793' }}
-                            >
-                                <Text style={{ color: 'white', left: 135 }}>Save updates</Text>
-                            </Button>
         </View>
-       
+
+
+        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20, left: 10 }}>
+          <Button light
+            style={{ width: 340, top: 10, width: 340, backgroundColor: '#3A5793' }}
+          >
+            <Text style={{ color: 'white', left: 135 }}>Save updates</Text>
+          </Button>
+        </View>
+
 
       </Container>
     );

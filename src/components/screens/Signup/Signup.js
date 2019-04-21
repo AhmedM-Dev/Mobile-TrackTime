@@ -2,21 +2,22 @@ import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
 import {Button} from 'react-native-elements'
 import StyledInput from '../../ui/Input';
-import LogoApp from '../../../assets/img/appNAme.png'
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 import logoName from '../../../assets/img/name.png';
+import {Icon} from 'native-base'
 export default class App extends Component {
   
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
         <StatusBar hidden />
-        <Image style={styles.logoStyle} source={LogoApp}></Image>
-        <Text style={styles.Ui}>Upload your Image </Text>
+      {/* <Icon name={'return-left'} style={{top:20,left}}></Icon> */}
+        {/* <Image style={styles.logoStyle} source={LogoApp}></Image> */}
         <View style={styles.inputPos}>
-          <StyledInput image={logoName} text={'User name'} textColor={'white'} />
+        <StyledInput image={logoName} text={'First name'} textColor={'white'} />
+          <StyledInput image={logoName} text={'Last name'} textColor={'white'} />
           <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" />
           <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
           <StyledInput image={PasswordIcon} text={'Confirm password'} textColor={'white'} secureTextEntry={true} />
@@ -25,19 +26,19 @@ export default class App extends Component {
           buttonStyle={{
             height: 50,
             width: 300,
-            backgroundColor: '#1253D1',
+            backgroundColor: '#19678F',
             borderWidth: 1,
             borderRadius: 30,
-            borderColor: '#1253D1',
-            top: 430,
+            borderColor: '#19678F',
+            top: 480,
             padding: 10,
           }}
           title=" Sign up"
-          onPress={() => this.props.navigation.navigate('Dashboard')} />
+          onPress={() => this.props.navigation.navigate('Avatar')} />
                 <Text style={styles.dh}> Already have an account ?
-             <Text style={{ color: 'white' , fontWeight:'bold' }}
+             <Text style={{ color: '#B3D8E3' , fontWeight:'bold' }}
             onPress={() => this.props.navigation.navigate('Logout')}>
-            <Text>  </Text>
+            <Text> </Text>
             Log in
               </Text>
         </Text>
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   logoStyle: {
-    top: 40,
+    top: 45,
   },
   Ui: {
     top: 60,
@@ -60,27 +61,14 @@ const styles = StyleSheet.create({
   },
   inputPos: {
     position: 'absolute',
-    top: 200,
+    top: 80,
   },
   dh: {
     position: 'absolute',
-    top: 600,
+    top: 570,
     color: 'white',
     fontSize: 18,
   },
-    buttonText: {
-      height: 50,
-      color: 'white',
-      fontSize: 18,
-      width: 300,
-      backgroundColor: '#235982',
-      borderRadius: 30,
-      borderColor: '#235982',
-      textAlign: 'center',
-      position: 'absolute',
-      top: 530,
-      padding: 10,
-      borderWidth :1
-  },
+   
 
 });

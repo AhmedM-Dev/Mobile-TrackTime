@@ -12,10 +12,10 @@ import {
     Picker,
     Footer,
     FooterTab,
-    Badge, 
+    Badge,
     Icon,
-     Header,
-      Title,
+    Header,
+    Title,
 } from 'native-base';
 import { ProgressCircle } from 'react-native-svg-charts'
 import clock from '../../../assets/img/clock.png'
@@ -28,15 +28,15 @@ export default class AttendanceTime extends React.Component {
         super(props);
         this.state = { date: '15-05-2018' };
     }
-   
+
     render() {
         return (
-            <Container style={{ backgroundColor: '#DDE3F3' }}>
+            <Container style={{ backgroundColor: '#13446E' }}>
 
                 <StatusBar hidden />
 
 
-                <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -45,37 +45,37 @@ export default class AttendanceTime extends React.Component {
                     />
                     <Title style={{ top: 15 }}>Attendance time</Title>
 
-                    <View style={{position:'absolute' ,right:20}}>
-                        <Badge style={{top:10 , right:-10 , zIndex:1}}><Text>2</Text></Badge>
-                        <Icon active name="md-notifications"  style={{ color:'white' , top:-10 }}/>
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
                 </Header>
-                <View style={{
-                    backgroundColor: 'white',
-                    width: 360, padding: 10, borderWidth: 4, height: 180,
-                    borderColor: '#DDE3F3', alignItems: 'center', alignContent: 'center'
-                }}>
+
+                <View style={{flexDirection:'row' , alignSelf:'center'  , marginBottom:10}}>
+                <View style={{marginRight:5}}>
+
                     <DatePicker
-                        style={{ width: 300, marginBottom: 10 }}
+                        style={{ width: 225, marginBottom: 5,marginTop: 10 }}
                         date={this.state.date1}
                         mode="date"
-                        placeholder="From date"
+                        placeholder="Select start date"
                         format="DD-MM-YYYY"
                         minDate="01-01-2004"
                         maxDate="31-12-2019"
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
-                        iconSource={dateIcon}
+                        iconSource={null}
                         customStyles={{
                             dateIcon: {
                                 position: 'absolute',
-                                left: 0,
+                                left: 20,
                                 top: 4,
                                 marginLeft: 0,
                             },
                             dateInput: {
-                                borderRadius: 100,
-                                marginLeft: 36,
+                                backgroundColor:'#245E8F',
+                                borderColor:'#245E8F' ,
+                                
                             },
                         }}
                         onDateChange={date => {
@@ -83,14 +83,14 @@ export default class AttendanceTime extends React.Component {
                         }}
                     />
                     <DatePicker
-                        style={{ width: 300, marginBottom: 10 }}
+                        style={{ width: 225, }}
                         date={this.state.date2}
                         mode="date"
-                        placeholder="To date"
+                        placeholder="Select end date"
                         format="DD-MM-YYYY"
                         minDate="01-01-2004"
                         maxDate="31-12-2019"
-                        iconSource={dateIcon}
+                        iconSource={null}
                         customStyles={{
                             dateIcon: {
                                 position: 'absolute',
@@ -99,58 +99,64 @@ export default class AttendanceTime extends React.Component {
                                 marginLeft: 0,
                             },
                             dateInput: {
-                                marginLeft: 36,
-                                borderRadius: 100
+                                backgroundColor:'#245E8F',
+                                borderColor:'#245E8F'
                             },
                         }}
-
+                        
                         onDateChange={date => {
                             this.setState({ date2: date });
                         }}
-                    />
+                        />
+                        </View>
 
-                    <Button rounded light style={{ width: 300, left: 15 }}>
-                        <Icon name='md-checkmark' style={{ color: 'gray' }} />
-                        <Text>FILTER</Text>
+                    <Button style={{ width: 110, height:85 , backgroundColor:'#4986B9' , marginTop:10}}>
+                        <Text style={{left:15}}>FILTER</Text>
                     </Button>
                 </View>
+
+
                 <Content>
-                    <Card style={styles.cardStyle} >
+                    <View  style={styles.cardStyle}>
                         <Image source={clock} style={styles.clockAlign} ></Image>
+
                         <ProgressCircle
-                            style={{ height: 200, right: -70 }}
+                            style={{ height: 200, right: -58  , top:2}}
                             startAngle={-((PI / 30) * 15)}
                             endAngle={((PI / 30) * 35)}
                             progress={1}
-                            progressColor={'#55B285'}
+                            progressColor={'#2AA92A'}
                         />
                         <ProgressCircle
-                            style={{ height: 200, position: 'relative', top: -200, right: -70 }}
+                            style={{ height: 200, position: 'relative', top: -198, right: -58 }}
                             startAngle={(PI / 30) * 5}
                             endAngle={(PI / 30) * 10}
                             progress={1}
-                            progressColor={'#E05353'}
+                            progressColor={'#FF0000'}
                         />
-                    </Card>
-
+                    </View>
                 </Content>
             </Container>
         )
     }
 };
 const styles = StyleSheet.create({
+    cardStyle: {
+        alignSelf: 'center',
+        width: 340,
+         backgroundColor: '#245E8F',
+        borderColor: '#245E8F',
+        padding:15
+    },
+
     clockAlign: {
         width: 193,
         height: 193,
         position: 'absolute',
-        top: 18.5,
-        right: 10
+        top: 20,
+        right: 15
     },
-    cardStyle: {
-        paddingTop: 15,
-        paddingBottom: 15,
-        height: 250
-    },
+    
 });
 
 

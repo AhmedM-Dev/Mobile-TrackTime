@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, AsyncStorage } from 'react-native';
+import { StatusBar, StyleSheet, AsyncStorage, ImageBackground } from 'react-native';
 import {
     Container,
     Content,
@@ -31,9 +31,21 @@ export default class Events extends React.Component {
             endDate: null,
             endTime: null,
             category: "Paid leave",
-            motif: null
+            motif: ''
         }
     };
+
+    resetAll = () => {
+        this.setState({
+            PickerValue: '',
+            startDate: null,
+            startTime: null,
+            endDate: null,
+            endTime: null,
+            category: "Paid leave",
+            motif: ''
+        })
+      }
 
     handleCreateRequest = () => {
         // alert(JSON.stringify(this.state));
@@ -83,10 +95,10 @@ export default class Events extends React.Component {
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#DDE3F3' }} >
+            <Container style={{ backgroundColor: '#13446E' }} >
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#072F88', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -102,172 +114,175 @@ export default class Events extends React.Component {
                 </Header>
 
                 <Content>
-                    <Card style={styles.cardStyle}>
-                        <View>
-                            <Text style={styles.categoryStyle} >
-                                Category
-                  </Text>
-                            <View style={styles.autorisationList}>
-                                <Picker
-                                    selectedValue={this.state.category}
-                                    style={{ height: 50, width: 300 }}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        this.handleCategoryChange(itemValue)
-                                    }>
-                                    <Picker.Item label="Paid leave" value="Paid leave" />
-                                    <Picker.Item label="Additional days" value="Additional days" />
-                                    <Picker.Item label="Unpaid leave" value="Unpaid leave" />
-                                    <Picker.Item label="Sick leave" value="Sick leave" />
-                                    <Picker.Item label="Paternity leave" value="Paternity leave" />
-                                    <Picker.Item label="Maternity leave" value="Maternity leave" />
-                                    <Picker.Item label="Wedding leave" value="Wedding" />
-                                    <Picker.Item label="Son's circumcision " value="circumcision " />
-                                    <Picker.Item label="Son's/Daughter's wedding" value="wedding" />
-                                    <Picker.Item label="Spouse's death" value="death" />
-                                    <Picker.Item label="Mother's/Father's death" value="death" />
-                                    <Picker.Item label="Son's/Daughter's death" value="death" />
-                                    <Picker.Item label="Brother's/Sister's death" value="death" />
-                                    <Picker.Item label="Grandfather's/Grandmother's death" value="death" />
-                                    <Picker.Item label="Other" value="Other" />
-                                </Picker>
+
+                            <View >
+                                <Text style={styles.textStyle} >
+                                    Category <Text style={{color:'red' , zIndex:555}}> * </Text>
+                                 </Text>
+                                <View style={styles.autorisationList}>
+                                    <Picker
+                                        selectedValue={this.state.category}
+                                        style={{ height: 50, width: 300 , color:'white' , alignSelf:'center' , }}
+                                        onValueChange={(itemValue, itemIndex) =>
+                                            this.handleCategoryChange(itemValue)
+                                        }>
+                                        <Picker.Item label="Paid leave" value="Paid leave" />
+                                        <Picker.Item label="Additional days" value="Additional days" />
+                                        <Picker.Item label="Unpaid leave" value="Unpaid leave" />
+                                        <Picker.Item label="Sick leave" value="Sick leave" />
+                                        <Picker.Item label="Paternity leave" value="Paternity leave" />
+                                        <Picker.Item label="Maternity leave" value="Maternity leave" />
+                                        <Picker.Item label="Wedding leave" value="Wedding leave" />
+                                        <Picker.Item label="Son's circumcision " value="Son's circumcision " />
+                                        <Picker.Item label="Son's/Daughter's wedding" value="Son's/Daughter's wedding" />
+                                        <Picker.Item label="Spouse's death" value="Spouse's death" />
+                                        <Picker.Item label="Mother's/Father's death" value="Mother's/Father's death" />
+                                        <Picker.Item label="Son's/Daughter's death" value="Son's/Daughter's death" />
+                                        <Picker.Item label="Brother's/Sister's death" value="Brother's/Sister's death" />
+                                        <Picker.Item label="Grandfather's/Grandmother's death" value="Grandfather's/Grandmother's death" />
+                                        <Picker.Item label="Other" value="Other" />
+                                    </Picker>
+                                </View>
                             </View>
-                        </View>
-                        <View>
-                            <Text style={{ top: -5, left: 5 }}>
-                                From
-                  </Text>
-                            <DatePicker
-                                style={{ width: 300 }}
-                                date={this.state.startDate}
-                                mode="date"
-                                iconSource={dateIcon}
-                                placeholder="Select date"
-                                format="DD-MM-YYYY"
-                                minDate="01-01-2019"
-                                maxDate="31-12-2019"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0
-                                    },
-                                    dateInput: {
-                                        marginLeft: 36,
-                                        borderRadius: 100
-                                    }
-                                }}
-                                onDateChange={(date) => { this.handleDateChange("startdate", date) }}
-                            />
+                            <View >
+                                <Text style={styles.textStyle}>
+                                    From <Text style={{color:'red' , zIndex:555}}> * </Text>
+                               </Text>
+                                <DatePicker
+                                    style={{ width: 300, alignSelf: 'center', marginBottom: 10 ,  }}
+                                    date={this.state.startDate}
+                                    mode="date"
+                                    iconSource={null}
+                                    placeholder="Select date"
+                                    format="DD-MM-YYYY"
+                                    minDate="01-01-2019"
+                                    textStyle={
+{                                        color:'white'
+}                                    }
+                                    maxDate="31-12-2019"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 20,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            backgroundColor: '#245E8F',
+                                            borderColor: '#245E8F',
+                                            marginTop:10,
+                                        }
+                                    }}
+                                    onDateChange={(date) => { this.handleDateChange("startdate", date) }}
+                                />
 
-                            <DatePicker
-                                style={{ width: 300, top: 10 }}
-                                date={this.state.startTime}
-                                placeholder="Select time"
-                                iconSource={timeIcon}
-                                mode="time"
-                                format="HH:mm"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                minuteInterval={10}
+                                <DatePicker
+                                    style={{ width: 300, alignSelf: 'center' }}
+                                    date={this.state.startTime}
+                                    placeholder="Select time"
+                                    iconSource={null}
+                                    mode="time"
+                                    format="HH:mm"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    minuteInterval={10}
 
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0
-                                    },
-                                    dateInput: {
-                                        marginLeft: 36,
-                                        borderRadius: 100
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            backgroundColor: '#245E8F',
+                                            borderColor: '#245E8F'
+                                        }
+                                    }}
+                                    onDateChange={(time) => { this.handleDateChange("starttime", time) }}
+                                />
+                            </View>
+                            <View >
+                                <Text style={styles.textStyle}>
+                                    To <Text style={{color:'red' , zIndex:555}}> * </Text>
+                              </Text>
+                                <DatePicker
+                                    style={{ width: 300, alignSelf: 'center', marginBottom: 10, marginTop: 10 }}
+                                    date={this.state.endDate}
+                                    mode="date"
+                                    iconSource={null}
+                                    placeholder="Select date"
+                                    format="DD-MM-YYYY"
+                                    minDate="01-01-2019"
+                                    maxDate="31-12-2019"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            backgroundColor: '#245E8F',
+                                            borderColor: '#245E8F'
+                                        }
+                                    }}
+                                    onDateChange={(date) => { this.handleDateChange("enddate", date) }}
+                                />
+                                <DatePicker
+                                    style={{ width: 300, alignSelf: 'center' }}
+                                    date={this.state.endTime}
+                                    placeholder="Select time"
+                                    mode="time"
+                                    format="HH:mm"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    minuteInterval={10}
+                                    iconSource={null}
 
-                                    }
-                                }}
-                                onDateChange={(time) => { this.handleDateChange("starttime", time) }}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ left: 5, top: 20 }}>
-                                To
-                  </Text>
-                            <DatePicker
-                                style={{ width: 300, top: 25 }}
-                                date={this.state.endDate}
-                                mode="date"
-                                iconSource={dateIcon}
-                                placeholder="Select date"
-                                format="DD-MM-YYYY"
-                                minDate="01-01-2019"
-                                maxDate="31-12-2019"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0
-                                    },
-                                    dateInput: {
-                                        marginLeft: 36,
-                                        borderRadius: 100
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 4,
+                                            marginLeft: 0
+                                        },
+                                        dateInput: {
+                                            backgroundColor: '#245E8F',
+                                            borderColor: '#245E8F'
+                                        }
+                                    }}
+                                    onDateChange={(time) => { this.handleDateChange("endtime", time) }}
+                                />
+                            </View>
+                            <View >
+                                <Text style={styles.textStyle}>
+                                Motif </Text>
+                                <Textarea
+                                    style={styles.textareaContainer}
+                                    onChangeText={(text) => this.handleMotifChange(text)}
+                                    defaultValue={this.state.motif}
+                                    placeholderTextColor={'black'}
+                                />
 
-                                    }
-                                }}
-                                onDateChange={(date) => { this.handleDateChange("enddate", date) }}
-                            />
-                            <DatePicker
-                                style={{ width: 300, top: 40 }}
-                                date={this.state.endTime}
-                                placeholder="Select time"
-                                mode="time"
-                                format="HH:mm"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                minuteInterval={10}
-                                iconSource={timeIcon}
+                            </View>
 
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: 4,
-                                        marginLeft: 0
-                                    },
-                                    dateInput: {
-                                        marginLeft: 36,
-                                        borderRadius: 100
-
-                                    }
-                                }}
-                                onDateChange={(time) => { this.handleDateChange("endtime", time) }}
-                            />
-                        </View>
-                        <View >
-                            <Text style={{ top: 60, left: 5 }}> Motif </Text>
-                            <Textarea
-                                style={styles.textareaContainer}
-                                onChangeText={(text) => this.handleMotifChange(text)}
-                                defaultValue={this.state.text}
-                                placeholderTextColor={'black'}
-                            />
-
-                        </View>
-                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20, left: 30 }}>
-                            <Button light
-                                style={{ borderRadius: 100, width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#55B285' }}
-                                onPress={() => this.handleCreateRequest()}
-                            >
-                                <Text style={{ color: 'white', left: 35 }}>Save</Text>
-                            </Button>
-                            <Button light style={{ borderRadius: 100, width: 150, marginRight: 20, top: 10, width: 140, backgroundColor: '#E05353', }}>
-                                <Text style={{ color: 'white', left: 30 }} >Cancel</Text>
-                            </Button>
-                        </View>
-                    </Card>
+                            <View style={{ flexDirection: 'row', position: 'absolute', bottom: 10, alignSelf:'center' }}>
+                                <Button light
+                                    style={{ width: 150, marginRight: 20, width: 140, backgroundColor: '#2C9562' }}
+                                    onPress={() => this.handleCreateRequest()}
+                                >
+                                    <Text style={{ color: 'white', left: 35 }}>Send</Text>
+                                </Button>
+                                <Button light style={{ width: 150,  width: 140, backgroundColor: '#D15433',}}
+                                             onPress={() => this.resetAll()}  >
+                                    <Text style={{ color: 'white', left: 30 }} >Reset</Text>
+                                </Button>
+                            </View>
                 </Content>
             </Container>
         )
@@ -275,39 +290,41 @@ export default class Events extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+
     cardStyle: {
-        height: 575,
-        padding: 15,
-        alignItems: 'center',
+        marginTop:10,
+        padding:10,
+        alignSelf: 'center',
+        width: 340,
+        backgroundColor: '#245E8F',
+        borderColor: '#245E8F'
     },
-    buttonPos: {
-        flexDirection: 'row',
-        position: 'absolute',
-        bottom: 5,
-    },
+
     autorisationList: {
         borderWidth: 1,
         width: 300,
-        alignItems: 'center',
-        borderColor: 'black',
-        margin: 15,
-        borderRadius: 100
+        margin: 10,
+        borderColor:'#245E8F',
+        backgroundColor:'#245E8F',
+        alignSelf:'center',
     },
-    categoryStyle: {
-        left: 18
+    textStyle: {
+        left: 40,
+        color:'white',
+        marginTop:10
     },
     textareaContainer: {
         borderWidth: 1,
         width: 300,
         height: 80,
         position: 'relative',
-        top: 70,
-        borderColor: 'gray',
-        borderRadius: 40,
-        paddingLeft: 20,
-        paddingRight: 20
+        marginTop:10,
+        padding: 5,
+        backgroundColor: '#245E8F',
+        borderColor: '#245E8F',
+        alignSelf: 'center',
+        color:'white'
     },
-    DatePicker: {
-        padding: 10,
-    }
+
 });

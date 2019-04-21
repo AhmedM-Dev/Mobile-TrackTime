@@ -10,6 +10,7 @@ import {
   Content,
   Badge
 } from 'native-base';
+import { SharedElement } from 'react-native-motion';
 
 import Swiper from 'react-native-swiper';
 
@@ -45,7 +46,7 @@ export default class NewRequest extends Component {
       <Container style={{ backgroundColor: '#DDE3F3' }} >
         <StatusBar hidden />
         
-        <Header style={{ backgroundColor: '#052D8F', flexDirection: 'row' }}>
+        <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
           <Icon name='md-menu' style={{
             color: 'white', position: 'absolute',
             left: 20, top: 15
@@ -60,10 +61,14 @@ export default class NewRequest extends Component {
           </View>
         </Header>
      
-     
+     <Content>
+
+       
+     </Content>
+{/*      
         <View style={styles.container}>
         <CardList cards={cards} />
-      </View>
+      </View> */}
      
           {/* <Swiper
             style={styles.wrapper}

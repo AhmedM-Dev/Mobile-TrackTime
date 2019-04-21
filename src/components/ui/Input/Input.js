@@ -24,14 +24,14 @@ export default StyledInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        backgroundColor: 'gray',
-        opacity: 0.8,
+        backgroundColor: '#AFCDDE',
+        opacity: 0.4,
         width: 300,
-        height: 60,
+        height: 55,
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor: 'gray',
+        borderColor: '#AFCDDE',
         borderWidth: 1,
         borderRadius : 30
 
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
       },
       
       inputIcon: {
-        width: 30,
-        height: 30,
+        width: 20,
+        height: 20,
         marginLeft: 15,
         justifyContent: 'center'
       },
