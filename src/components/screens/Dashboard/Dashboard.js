@@ -1,32 +1,18 @@
 import React from 'react';
-import {
-    Image, StyleSheet, StatusBar, AsyncStorage
-} from 'react-native';
-import {
-    Container,
-    Content,
-    Card,
-    CardItem,
-    Text,
-    Button,
-    Left,
-    Body,
-    Right,
-    View,
-    Picker,
-    Footer,
-    FooterTab,
-    Badge, Icon, Header, Title,
-
-} from 'native-base';
+import axios from "axios";
+import { StyleSheet, StatusBar, AsyncStorage } from 'react-native';
+import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import { API_URL } from "../../../../config";
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
-import getHoursOfWork from "../../../utils/timeDiff";
-import getHoursDelays from "../../../utils/getHoursDelays";
 
-import axios from "axios";
+import getHoursDelays from "../../../utils/getHoursDelays";
+import getHoursOfWork from "../../../utils/timeDiff";
+
+import { API_URL } from "../../../../config";
+
+import HttpClient from '../../../services/HttpClient';
+import { fetchDataFromAsyncStorage } from '../../../services/services';
 
 var items = [
     {
@@ -38,7 +24,7 @@ var items = [
         name: '2018',
     },
     {
-        id: 'All years' ,
+        id: 'All years',
         name: 'All years',
     },
 
@@ -74,10 +60,14 @@ export default class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        AsyncStorage.getItem("user").then(user => {
-            console.log("LOGGED", JSON.parse(user));
+        console.log("fetchDataFromAsyncStorage", fetchDataFromAsyncStorage('user'));
+        fetchDataFromAsyncStorage('user')
+        .then(user => {
+            console.log("LOGGED", user);
+            
+            let connected = user;
 
-            let connected = JSON.parse(user);
+            console.log("CONNECTED:", connected.userId);
 
             axios.get(API_URL + "attendances?userId=" + (connected && connected.userId))
                 .then((response) => {
@@ -92,11 +82,11 @@ export default class Dashboard extends React.Component {
                             ...hd,
                             workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
                         }
-                        
+
                     });
-                    
+
                     console.log("BY MONTH:", byMonth);
-                    
+
                     let graphData = [
                         // chartConfig={
                         //     backgroundColor: 'red'
@@ -119,12 +109,12 @@ export default class Dashboard extends React.Component {
 
                             ],
                             color: '#FEFF9D'
-                            
+
                         },
                         {
                             seriesName: 'hours',
                             data: [
-                                { x: 'January', y: byMonth[0].workedHours},
+                                { x: 'January', y: byMonth[0].workedHours },
                                 { x: 'February', y: byMonth[1].workedHours },
                                 { x: 'march', y: byMonth[2].workedHours },
                                 { x: 'April', y: byMonth[3].workedHours },
@@ -142,7 +132,7 @@ export default class Dashboard extends React.Component {
                         {
                             seriesName: 'delays',
                             data: [
-                                { x: 'January', y: byMonth[0].delays},
+                                { x: 'January', y: byMonth[0].delays },
                                 { x: 'February', y: byMonth[1].delays },
                                 { x: 'march', y: byMonth[2].delays },
                                 { x: 'April', y: byMonth[3].delays },
@@ -165,11 +155,12 @@ export default class Dashboard extends React.Component {
                         daysWorked: response.data.attendances.length,
                         workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
                         delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays,
-                        connectedUser: JSON.parse(user),
+                        connectedUser: user,
                         graphData: graphData
-                                            })
+                    })
                 });
-        }).done();
+        })
+        .catch(error => console.log(error));
     }
 
     render() {
@@ -238,7 +229,7 @@ export default class Dashboard extends React.Component {
                     //     this.setState({ year: itemValue })}
                     onItemSelect={
                         (itemValue, itemIndex) =>
-                        this.setState({ year: JSON.stringify((itemValue.id)) })   
+                            this.setState({ year: JSON.stringify((itemValue.id)) })
                     }
                     containerStyle={{ padding: 5 }}
                     textInputStyle={{
@@ -267,52 +258,53 @@ export default class Dashboard extends React.Component {
                     placeholder="Current year"
                     resetValue={false}
                     underlineColorAndroid="transparent"
-                    />
-                    { console.log("year : " + this.state.year) }
+                />
+
                 <Content  >
 
                     <View  >
 
 
 
-                        <View style={{ flexDirection: 'row' , alignSelf:'center' }}>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 170, marginRight: 5, marginBottom: 10 , left:4 , top:5}}>
-                                <Badge style={{ backgroundColor: '#2EC41F' , top:-10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 170, marginRight: 5, marginBottom: 10, left: 4, top: 5 }}>
+                                <Badge style={{ backgroundColor: '#2EC41F', top: -10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
                                 <Text style={{ color: 'white' }}>Hours worked</Text>
                             </Button>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 164, marginRight: 5, marginBottom: 10 ,left:4 , top:5}}>
-                                <Badge style={{ backgroundColor: '#2EC41F' , top:-10
-                            }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 164, marginRight: 5, marginBottom: 10, left: 4, top: 5 }}>
+                                <Badge style={{
+                                    backgroundColor: '#2EC41F', top: -10
+                                }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Days worked</Text>
                             </Button>
 
 
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignSelf:'center'  }}>
-                            <Button badge vertical style={{ marginRight: 6, marginBottom: 10, backgroundColor: '#245E8F', width: 230 , top:5}}>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                            <Button badge vertical style={{ marginRight: 6, marginBottom: 10, backgroundColor: '#245E8F', width: 230, top: 5 }}>
                                 <Badge style={{ backgroundColor: '#2EC41F', top: -10 }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Average working hours</Text>
                             </Button>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', marginBottom: 10, width: 104 ,top:5}}>
+                            <Button badge vertical style={{ backgroundColor: '#245E8F', marginBottom: 10, width: 104, top: 5 }}>
                                 <Badge style={{ backgroundColor: '#E82C2C', top: -10 }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Delays</Text>
                             </Button>
                         </View>
 
 
-                       <Card  style={styles.lineChart} >
-                            {this.state.graphData && <PureChart data={this.state.graphData} 
-                            type='bar' 
-                            backgroundColor='#245E8F' 
+                        <Card style={styles.lineChart} >
+                            {this.state.graphData && <PureChart data={this.state.graphData}
+                                type='bar'
+                                backgroundColor='#245E8F'
                             />}
-                            <View style={{flexDirection:'row' , alignSelf:'center'}}>
-                             <Text style={{color:'#FEFF9D' ,marginRight:20 }}> Days worked</Text>
-                             <Text style={{color:'#E7B5D6' , marginBottom:10 , marginRight:20}}> Hours worked</Text>
-                             <Text style={{color:'#F2CE90' , marginBottom:10}}> Delays</Text>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                <Text style={{ color: '#FEFF9D', marginRight: 20 }}> Days worked</Text>
+                                <Text style={{ color: '#E7B5D6', marginBottom: 10, marginRight: 20 }}> Hours worked</Text>
+                                <Text style={{ color: '#F2CE90', marginBottom: 10 }}> Delays</Text>
                             </View>
-                        </Card> 
-                        
+                        </Card>
+
 
                         {/* <CardItem>
                             <Left>
@@ -389,14 +381,14 @@ const styles = StyleSheet.create({
         borderColor: '#245E8F'
     },
 
-    lineChart:{
+    lineChart: {
         backgroundColor: '#245E8F',
         borderColor: '#245E8F',
-        paddingTop:10,
-        paddingBottom:10,
-        paddingRight:20,
-        width:340,
-        alignSelf:'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingRight: 20,
+        width: 340,
+        alignSelf: 'center',
 
     },
 

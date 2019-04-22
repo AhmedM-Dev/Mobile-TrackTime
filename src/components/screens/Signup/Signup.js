@@ -7,7 +7,7 @@ import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 import logoName from '../../../assets/img/name.png';
 import {Icon} from 'native-base'
-export default class App extends Component {
+export default class Signup extends Component {
   
   render() {
     return (

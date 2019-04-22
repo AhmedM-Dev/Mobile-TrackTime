@@ -1,34 +1,25 @@
 import React, { Component } from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  Image,
-  Icon,
-  ToastAndroid,
-  AsyncStorage
-} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, StatusBar, Image, Icon, ToastAndroid, ActivityIndicator } from 'react-native';
+import { CheckBox, Button } from 'react-native-elements'
+import axios from 'axios';
+
+import StyledInput from '../../ui/Input';
+
 import LogoApp from '../../../assets/img/appNAme.png'
 import companyLogo from '../../../assets/img/proxym.png'
-import { CheckBox, Button } from 'react-native-elements'
-import StyledInput from '../../ui/Input';
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
 import checkedIcon from '../../../assets/img/checkedIcon.png'
 import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
 
-import axios from 'axios';
+import { authenticate, storeDataToAsyncStorage } from '../../../services/services';
 
-import { API_URL } from "../../../../config";
-
-export default class App extends Component {
-
+export default class Login extends Component {
 
   state = {
     check: false,
+    loading: false,
     isConnected: false,
     email: "asma.bahmed19@hotmail.com",
     pass: "92333520",
@@ -37,37 +28,23 @@ export default class App extends Component {
   CheckBoxTest = () => {
     this.setState({
       check: !this.state.check
-    })
+    }, () => {
+      storeDataToAsyncStorage('rememberMe', this.state.check);
+    });
   }
 
+  handleAuthentication = () => {
+    this.setState({ loading: true });
 
-  handleAuthentication = async () => {
-    axios.post(API_URL + "auth", {
-      email: this.state.email,
-      pass: this.state.pass
-    })
-      .then((response) => {
-
-        console.log("USER:", response.data);
-
-        axios.get(API_URL + "users?email=" + response.data.user.user.email)
-          .then(async (userByEmail) => {
-
-            this.setState({
-              check: this.state.check,
-              isConnected: true
-            });
-
-            console.log("USER BY EMAIL:", userByEmail);
-
-            ToastAndroid.show("Successfully authenticated!", ToastAndroid.SHORT);
-
-            await AsyncStorage.setItem("user", JSON.stringify(userByEmail.data.user));
-          });
+    authenticate(this.state.email, this.state.pass)
+      .then(res => {
+        this.setState({ isConnected: true, loading: false });
+        ToastAndroid.show("Successfully authenticated!", ToastAndroid.LONG);
+        this.props.navigation.navigate('Dashboard');
       })
-      .catch((error) => {
-        // alert("Authentication failed !");
-        ToastAndroid.show("Authentication failed !", ToastAndroid.LONG);
+      .catch(error => {
+        this.setState({ isConnected: false, loading: false });
+        ToastAndroid.show(error.response.data.error, ToastAndroid.LONG);
       });
   }
 
@@ -85,31 +62,14 @@ export default class App extends Component {
     });
   }
 
-  componentWillMount() {
-    if (this.props.navigation.state.params && this.props.navigation.state.params.action) {
-      AsyncStorage.removeItem("user")
-        .then(res => console.info("Logging out user..."))
-        .catch(err => console.error(err));
-    } else {
-      AsyncStorage.getItem("user")
-        .then(user => {
-          this.props.navigation.navigate('Dashboard');
-        })
-        .catch(error => {
-          console.info("No user in AsyncStorage.");
-        });
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.state.isConnected) {
-      this.props.navigation.navigate('Dashboard');
-    }
-  }
-
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
+        {this.state.loading &&
+          <View style={styles.loading}>
+            <ActivityIndicator size={80} color="#0000ff" />
+          </View>
+        }
         <StatusBar hidden />
         <View style={{ flexDirection: 'row', top: 100 }}>
           <Image source={companyLogo} style={{ height: 50, width: 50, marginRight: 15 }}></Image>
@@ -154,6 +114,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
 
+  },
+
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+    backgroundColor: 'white',
+    opacity: 0.5
   },
 
   dh: {

@@ -12,7 +12,7 @@ const options = {
     chooseFromLibraryButtonTitle: 'Choose from library',
   };
 
-export default class App extends Component {
+export default class Avatar extends Component {
     constructor(props) {
         super(props);
         this.state = {

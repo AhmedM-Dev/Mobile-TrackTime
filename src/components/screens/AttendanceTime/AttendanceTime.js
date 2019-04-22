@@ -35,7 +35,6 @@ export default class AttendanceTime extends React.Component {
 
                 <StatusBar hidden />
 
-
                 <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
