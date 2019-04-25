@@ -95,10 +95,10 @@ export default class Events extends React.Component {
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#13446E' }} >
+            <Container style={{ backgroundColor: '#021630' }} >
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -170,8 +170,8 @@ export default class Events extends React.Component {
                                             marginLeft: 0
                                         },
                                         dateInput: {
-                                            backgroundColor: '#245E8F',
-                                            borderColor: '#245E8F',
+                                            backgroundColor: '#345B8E',
+                                            borderColor: '#345B8E',
                                             marginTop:10,
                                         }
                                     }}
@@ -197,8 +197,8 @@ export default class Events extends React.Component {
                                             marginLeft: 0
                                         },
                                         dateInput: {
-                                            backgroundColor: '#245E8F',
-                                            borderColor: '#245E8F'
+                                            backgroundColor: '#345B8E',
+                                            borderColor: '#345B8E'
                                         }
                                     }}
                                     onDateChange={(time) => { this.handleDateChange("starttime", time) }}
@@ -227,8 +227,8 @@ export default class Events extends React.Component {
                                             marginLeft: 0
                                         },
                                         dateInput: {
-                                            backgroundColor: '#245E8F',
-                                            borderColor: '#245E8F'
+                                            backgroundColor: '#345B8E',
+                                            borderColor: '#345B8E'
                                         }
                                     }}
                                     onDateChange={(date) => { this.handleDateChange("enddate", date) }}
@@ -252,8 +252,8 @@ export default class Events extends React.Component {
                                             marginLeft: 0
                                         },
                                         dateInput: {
-                                            backgroundColor: '#245E8F',
-                                            borderColor: '#245E8F'
+                                            backgroundColor: '#345B8E',
+                                            borderColor: '#345B8E'
                                         }
                                     }}
                                     onDateChange={(time) => { this.handleDateChange("endtime", time) }}
@@ -297,16 +297,16 @@ const styles = StyleSheet.create({
         padding:10,
         alignSelf: 'center',
         width: 340,
-        backgroundColor: '#245E8F',
-        borderColor: '#245E8F'
+        backgroundColor: '#345B8E',
+        borderColor: '#345B8E'
     },
 
     autorisationList: {
         borderWidth: 1,
         width: 300,
         margin: 10,
-        borderColor:'#245E8F',
-        backgroundColor:'#245E8F',
+        borderColor:'#345B8E',
+        backgroundColor:'#345B8E',
         alignSelf:'center',
     },
     textStyle: {
@@ -321,8 +321,8 @@ const styles = StyleSheet.create({
         position: 'relative',
         marginTop:10,
         padding: 5,
-        backgroundColor: '#245E8F',
-        borderColor: '#245E8F',
+        backgroundColor: '#345B8E',
+        borderColor: '#345B8E',
         alignSelf: 'center',
         color:'white'
     },

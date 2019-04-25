@@ -19,7 +19,7 @@ import dateIcon from '../../../assets/img/date.png'
 import DatePicker from 'react-native-datepicker';
 import { API_URL } from "../../../../config";
 
-export default class Displacements extends React.Component {
+export default class createTravel extends React.Component {
 
     constructor() {
         super();
@@ -115,11 +115,11 @@ export default class Displacements extends React.Component {
 
 
         return (
-            <Container style={{ backgroundColor: '#13446E' }}>
+            <Container style={{ backgroundColor: '#021630' }}>
 
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -134,12 +134,8 @@ export default class Displacements extends React.Component {
                     </View>
                 </Header>
 
-                <View style={{ flexDirection: 'row', alignSelf: 'center', height: 50, marginTop: 10 }}>
-                    <View style={{ width: 170, backgroundColor: '#4986B9' }}></View>
-                    <View style={{ width: 170, backgroundColor: '#4986B9' }}></View>
-                </View>
                 <Content>
-                    <View style={{ width: 340, backgroundColor: '#4986B9', alignSelf: 'center' }}>
+                    <View style={{ width: 340, backgroundColor: '#082955', alignSelf: 'center' }}>
                         <View >
                             <Text style={styles.textStyle} >
                                 Type
@@ -148,8 +144,8 @@ export default class Displacements extends React.Component {
                                 <Picker
                                     selectedValue={this.state.travelType}
                                     style={{
-                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#245E8F', color: 'white',
-                                        borderColor: '#245E8F'
+                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#021630', color: 'white',
+                                        borderColor: '#021630'
                                     }}
                                     onValueChange={(itemValue, itemIndex) =>
                                         this.handleTravelTypeChange(itemValue)
@@ -169,8 +165,8 @@ export default class Displacements extends React.Component {
                                 <Picker
                                     selectedValue={this.state.conductor}
                                     style={{
-                                        height: 50, width: 300, backgroundColor: '#245E8F',
-                                        borderColor: '#245E8F', color: 'white'
+                                        height: 50, width: 300, backgroundColor: '#021630',
+                                        borderColor: '#021630', color: 'white'
                                     }}
                                     onValueChange={(itemValue, itemIndex) =>
                                         this.handleConductorChange(itemValue)
@@ -205,8 +201,8 @@ export default class Displacements extends React.Component {
                                     },
                                     dateInput: {
                                         marginTop: 10,
-                                        backgroundColor: '#245E8F',
-                                        borderColor: '#245E8F'
+                                        backgroundColor: '#021630',
+                                        borderColor: '#021630'
 
                                     },
                                 }}
@@ -231,8 +227,8 @@ export default class Displacements extends React.Component {
                                     },
                                     dateInput: {
                                         marginTop: 10,
-                                        backgroundColor: '#245E8F',
-                                        borderColor: '#245E8F'
+                                        backgroundColor: '#021630',
+                                        borderColor: '#021630'
                                     },
                                 }}
                                 onDateChange={(time) => { this.handleDateChange("starttime", time) }}
@@ -262,8 +258,8 @@ export default class Displacements extends React.Component {
                                     },
                                     dateInput: {
                                         marginTop: 10,
-                                        backgroundColor: '#245E8F',
-                                        borderColor: '#245E8F'
+                                        backgroundColor: '#021630',
+                                        borderColor: '#021630'
                                     },
                                 }}
                                 onDateChange={(date) => { this.handleDateChange("enddate", date) }}
@@ -288,8 +284,8 @@ export default class Displacements extends React.Component {
                                     },
                                     dateInput: {
                                         marginTop: 10,
-                                        backgroundColor: '#245E8F',
-                                        borderColor: '#245E8F'
+                                        backgroundColor: '#021630',
+                                        borderColor: '#021630'
                                     },
                                 }}
                                 onDateChange={(time) => { this.handleDateChange("endtime", time) }}
@@ -306,8 +302,8 @@ export default class Displacements extends React.Component {
                                 <Picker
                                     selectedValue={this.state.type}
                                     style={{
-                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#245E8F', color: 'white',
-                                        borderColor: '#245E8F'
+                                        height: 50, width: 300, marginTop: 10, backgroundColor: '#021630', color: 'white',
+                                        borderColor: '#021630'
                                     }}
                                     onValueChange={(itemValue, itemIndex) =>
                                         this.handleTypeChange(itemValue)
@@ -358,7 +354,7 @@ const styles = StyleSheet.create({
     list: {
         width: 300,
         alignItems: 'center',
-        borderColor: '#245E8F',
+        borderColor: '#021630',
         color: 'white',
         alignSelf: 'center'
     },
@@ -374,9 +370,11 @@ const styles = StyleSheet.create({
         padding: 10,
         alignSelf: 'center',
         alignItems: 'center',
-        backgroundColor: '#245E8F',
-        borderColor: '#245E8F',
+        backgroundColor: '#021630',
+        borderColor: '#021630',
         color: 'white'
     },
 }
 )
+
+export default createTravel;

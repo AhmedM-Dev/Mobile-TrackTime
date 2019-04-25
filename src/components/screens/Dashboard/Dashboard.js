@@ -47,7 +47,7 @@ option = {
 export default class Dashboard extends React.Component {
     state = {
         connectedUser: null,
-        year: 'Current year',
+        year: '2009',
         daysWorked: 0,
         workedHours: 0,
         delays: 0,
@@ -66,101 +66,101 @@ export default class Dashboard extends React.Component {
             console.log("LOGGED", user);
             
             let connected = user;
-
+            
             console.log("CONNECTED:", connected.userId);
-
+            
             axios.get(API_URL + "attendances?userId=" + (connected && connected.userId))
-                .then((response) => {
-                    console.log("ATTENDANCES:", response.data.attendances);
+            .then((response) => {
+                console.log("ATTENDANCES:", response.data.attendances);
+                
+                let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                
+                byMonth.map((month, i) => {
+                    let hd = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i));
+                    
+                    byMonth[i] = {
+                        ...hd,
+                                workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
+                            }
 
-                    let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                        });
 
-                    byMonth.map((month, i) => {
-                        let hd = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i));
-
-                        byMonth[i] = {
-                            ...hd,
-                            workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
-                        }
-
+                        console.log("BY MONTH:", byMonth);
+                        
+                        let graphData = [
+                            // chartConfig={
+                                //     backgroundColor: 'red'
+                                //   },
+                                {
+                                    seriesName: 'days',
+                                data: [
+                                    { x: 'January', y: byMonth[0].workedDays },
+                                    { x: 'February', y: byMonth[1].workedDays },
+                                    { x: 'march', y: byMonth[2].workedDays },
+                                    { x: 'April', y: byMonth[3].workedDays },
+                                    { x: 'may', y: byMonth[4].workedDays },
+                                    { x: 'June', y: byMonth[5].workedDays },
+                                    { x: 'July', y: byMonth[6].workedDays },
+                                    { x: 'August', y: byMonth[7].workedDays },
+                                    { x: 'September', y: byMonth[8].workedDays },
+                                    { x: 'October', y: byMonth[9].workedDays },
+                                    { x: 'November', y: byMonth[10].workedDays },
+                                    { x: 'December', y: byMonth[11].workedDays },
+                                    
+                                ],
+                                color: '#FFA14F'
+                                
+                            },
+                            {
+                                seriesName: 'hours',
+                                data: [
+                                    { x: 'January', y: byMonth[0].workedHours },
+                                    { x: 'February', y: byMonth[1].workedHours },
+                                    { x: 'march', y: byMonth[2].workedHours },
+                                    { x: 'April', y: byMonth[3].workedHours },
+                                    { x: 'may', y: byMonth[4].workedHours },
+                                    { x: 'June', y: byMonth[5].workedHours },
+                                    { x: 'July', y: byMonth[6].workedHours },
+                                    { x: 'August', y: byMonth[7].workedHours },
+                                    { x: 'September', y: byMonth[8].workedHours },
+                                    { x: 'October', y: byMonth[9].workedHours },
+                                    { x: 'November', y: byMonth[10].workedHours },
+                                    { x: 'December', y: byMonth[11].workedHours },
+                                ],
+                                color: '#AA669A'
+                            },
+                            {
+                                seriesName: 'delays',
+                                data: [
+                                    { x: 'January', y: byMonth[0].delays },
+                                    { x: 'February', y: byMonth[1].delays },
+                                    { x: 'march', y: byMonth[2].delays },
+                                    { x: 'April', y: byMonth[3].delays },
+                                    { x: 'may', y: byMonth[4].delays },
+                                    { x: 'June', y: byMonth[5].delays },
+                                    { x: 'July', y: byMonth[6].delays },
+                                    { x: 'August', y: byMonth[7].delays },
+                                    { x: 'September', y: byMonth[8].delays },
+                                    { x: 'October', y: byMonth[9].delays },
+                                    { x: 'November', y: byMonth[10].delays },
+                                    { x: 'December', y: byMonth[11].delays },
+                                ],
+                                color: '#BE4242'
+                            },
+                        ];
+                        
+                        this.setState({
+                            ...this.state,
+                            byMonth: byMonth,
+                            daysWorked: response.data.attendances.length,
+                            workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
+                            delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays,
+                            connectedUser: user,
+                            graphData: graphData
+                        })
                     });
-
-                    console.log("BY MONTH:", byMonth);
-
-                    let graphData = [
-                        // chartConfig={
-                        //     backgroundColor: 'red'
-                        //   },
-                        {
-                            seriesName: 'days',
-                            data: [
-                                { x: 'January', y: byMonth[0].workedDays },
-                                { x: 'February', y: byMonth[1].workedDays },
-                                { x: 'march', y: byMonth[2].workedDays },
-                                { x: 'April', y: byMonth[3].workedDays },
-                                { x: 'may', y: byMonth[4].workedDays },
-                                { x: 'June', y: byMonth[5].workedDays },
-                                { x: 'July', y: byMonth[6].workedDays },
-                                { x: 'August', y: byMonth[7].workedDays },
-                                { x: 'September', y: byMonth[8].workedDays },
-                                { x: 'October', y: byMonth[9].workedDays },
-                                { x: 'November', y: byMonth[10].workedDays },
-                                { x: 'December', y: byMonth[11].workedDays },
-
-                            ],
-                            color: '#FEFF9D'
-
-                        },
-                        {
-                            seriesName: 'hours',
-                            data: [
-                                { x: 'January', y: byMonth[0].workedHours },
-                                { x: 'February', y: byMonth[1].workedHours },
-                                { x: 'march', y: byMonth[2].workedHours },
-                                { x: 'April', y: byMonth[3].workedHours },
-                                { x: 'may', y: byMonth[4].workedHours },
-                                { x: 'June', y: byMonth[5].workedHours },
-                                { x: 'July', y: byMonth[6].workedHours },
-                                { x: 'August', y: byMonth[7].workedHours },
-                                { x: 'September', y: byMonth[8].workedHours },
-                                { x: 'October', y: byMonth[9].workedHours },
-                                { x: 'November', y: byMonth[10].workedHours },
-                                { x: 'December', y: byMonth[11].workedHours },
-                            ],
-                            color: '#E7B5D6'
-                        },
-                        {
-                            seriesName: 'delays',
-                            data: [
-                                { x: 'January', y: byMonth[0].delays },
-                                { x: 'February', y: byMonth[1].delays },
-                                { x: 'march', y: byMonth[2].delays },
-                                { x: 'April', y: byMonth[3].delays },
-                                { x: 'may', y: byMonth[4].delays },
-                                { x: 'June', y: byMonth[5].delays },
-                                { x: 'July', y: byMonth[6].delays },
-                                { x: 'August', y: byMonth[7].delays },
-                                { x: 'September', y: byMonth[8].delays },
-                                { x: 'October', y: byMonth[9].delays },
-                                { x: 'November', y: byMonth[10].delays },
-                                { x: 'December', y: byMonth[11].delays },
-                            ],
-                            color: '#F2CE90'
-                        },
-                    ];
-
-                    this.setState({
-                        ...this.state,
-                        byMonth: byMonth,
-                        daysWorked: response.data.attendances.length,
-                        workedHours: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours,
-                        delays: getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).delays,
-                        connectedUser: user,
-                        graphData: graphData
-                    })
-                });
-        })
-        .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
     }
 
     render() {
@@ -170,20 +170,20 @@ export default class Dashboard extends React.Component {
             {
                 value: 50,
                 label: 'Refused',
-                color: '#E04415',
+                color: '#C25A5A',
             }, {
                 value: 40,
                 label: 'Canceled',
-                color: '#CBC93B'
+                color: '#C2C25A'
             }, {
                 value: 25,
                 label: 'Accepted',
-                color: '#1A9E00'
+                color: '#5AC26B'
             },
             {
                 value: 10,
                 label: 'On hold',
-                color: '#15BFC2'
+                color: '#5AAAC2'
             }
 
         ]
@@ -191,10 +191,10 @@ export default class Dashboard extends React.Component {
 
         return (
 
-            <Container style={{ backgroundColor: '#13446E' }}>
+            <Container style={{ backgroundColor: '#021630' }}>
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -207,26 +207,34 @@ export default class Dashboard extends React.Component {
                         <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
                 </Header>
-                {/* <View>
+                <View>
                     <Picker
                         selectedValue={this.state.year}
-                        style={{ height: 50, width: 300 , alignSelf:'center'}}
-                        textStyle={{ color: "white" }}
-
+                        style={{ height: 50, 
+                            width: 340 , 
+                            alignSelf:'center',
+                            marginTop:10,
+                            marginBottom:10,
+                            borderWidth: 1,
+                            borderColor: '#021630',
+                            color:'white' , 
+                            backgroundColor:'#082955'}}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({ year: itemValue })
                         }>
-                        <Picker.Item label="Current year" value="2019" />
-                        <Picker.Item label="2018" value="2018" />
-                        <Picker.Item label="All years" value="All years" />
+                        <Picker.Item label="Current year" value="2019" color="#021630" 
+                            style={{alignSelf:"center" , backgroundColor:'red'}} />
+                        <Picker.Item label="2018" value="2018" color="#021630"/>
+                        <Picker.Item label="All years" value="All years" color="#021630" />
+                        
                         
                         
                         </Picker>
-                    </View> */}
+                    </View>
 
-                <SearchableDropdown
-                    // onTextChange={(itemValue, itemIndex) =>
-                    //     this.setState({ year: itemValue })}
+                {/* <SearchableDropdown
+                    onTextChange={(itemValue, itemIndex) =>
+                        this.setState({ year: itemValue })}
                     onItemSelect={
                         (itemValue, itemIndex) =>
                             this.setState({ year: JSON.stringify((itemValue.id)) })
@@ -235,18 +243,18 @@ export default class Dashboard extends React.Component {
                     textInputStyle={{
                         padding: 12,
                         borderWidth: 1,
-                        borderColor: '#13446E',
+                        borderColor: '#021630',
                         fontSize: 18,
                         width: 340,
                         alignSelf: 'center',
                         color: 'white',
-                        backgroundColor: '#245E8F'
+                        backgroundColor: '#082955'
                     }}
                     itemStyle={{
                         padding: 10,
                         marginTop: 2,
                         backgroundColor: '#4986B9',
-                        borderColor: '#245E8F',
+                        borderColor: '#082955',
                         borderWidth: 1,
                         width: 340,
                         alignSelf: 'center',
@@ -258,7 +266,7 @@ export default class Dashboard extends React.Component {
                     placeholder="Current year"
                     resetValue={false}
                     underlineColorAndroid="transparent"
-                />
+                /> */}
 
                 <Content  >
 
@@ -267,13 +275,19 @@ export default class Dashboard extends React.Component {
 
 
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 170, marginRight: 5, marginBottom: 10, left: 4, top: 5 }}>
-                                <Badge style={{ backgroundColor: '#2EC41F', top: -10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
+                            <Button badge vertical style={{
+                                backgroundColor: '#082955', borderRadius: 20
+                                , width: 170, marginRight: 5, marginBottom: 10, left: 4, top: 5
+                            }}>
+                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
                                 <Text style={{ color: 'white' }}>Hours worked</Text>
                             </Button>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', width: 164, marginRight: 5, marginBottom: 10, left: 4, top: 5 }}>
+                            <Button badge vertical style={{
+                                borderRadius: 20,
+                                backgroundColor: '#082955', width: 164, marginRight: 5, marginBottom: 10, left: 4, top: 5
+                            }}>
                                 <Badge style={{
-                                    backgroundColor: '#2EC41F', top: -10
+                                    backgroundColor: '#3F7930', top: -10
                                 }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Days worked</Text>
                             </Button>
@@ -282,11 +296,15 @@ export default class Dashboard extends React.Component {
                         </View>
 
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                            <Button badge vertical style={{ marginRight: 6, marginBottom: 10, backgroundColor: '#245E8F', width: 230, top: 5 }}>
-                                <Badge style={{ backgroundColor: '#2EC41F', top: -10 }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
+                            <Button badge vertical style={{
+                                marginRight: 6, marginBottom: 10, backgroundColor: '#082955', width: 230, top: 5, borderRadius: 20
+                            }}>
+                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Average working hours</Text>
                             </Button>
-                            <Button badge vertical style={{ backgroundColor: '#245E8F', marginBottom: 10, width: 104, top: 5 }}>
+                            <Button badge vertical style={{
+                                backgroundColor: '#082955', marginBottom: 10, width: 104, top: 5, borderRadius: 20
+                            }}>
                                 <Badge style={{ backgroundColor: '#E82C2C', top: -10 }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Delays</Text>
                             </Button>
@@ -296,12 +314,13 @@ export default class Dashboard extends React.Component {
                         <Card style={styles.lineChart} >
                             {this.state.graphData && <PureChart data={this.state.graphData}
                                 type='bar'
-                                backgroundColor='#245E8F'
+                                backgroundColor='#082955'
+                                height={150}
                             />}
-                            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                                <Text style={{ color: '#FEFF9D', marginRight: 20 }}> Days worked</Text>
-                                <Text style={{ color: '#E7B5D6', marginBottom: 10, marginRight: 20 }}> Hours worked</Text>
-                                <Text style={{ color: '#F2CE90', marginBottom: 10 }}> Delays</Text>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center' , marginTop:10, marginBottom: 10 , left:10}}>
+                                <Text style={{ color: '#FFA14F', marginRight: 15 }}> Days worked</Text>
+                                <Text style={{ color: '#AA669A',  marginRight: 15 }}> Hours worked</Text>
+                                <Text style={{ color: '#BE4242' }}> Delays</Text>
                             </View>
                         </Card>
 
@@ -377,18 +396,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         width: 340,
-        backgroundColor: '#245E8F',
-        borderColor: '#245E8F'
+        backgroundColor: '#082955',
+        borderColor: '#082955',
+        borderRadius: 20
     },
 
     lineChart: {
-        backgroundColor: '#245E8F',
-        borderColor: '#245E8F',
-        paddingTop: 10,
+        backgroundColor: '#082955',
+        borderColor: '#082955',
+        paddingTop: 25,
         paddingBottom: 10,
         paddingRight: 20,
         width: 340,
         alignSelf: 'center',
+        borderRadius: 20
+
 
     },
 

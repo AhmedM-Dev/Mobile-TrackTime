@@ -1,7 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, AsyncStorage, Button } from 'react-native'
+import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, AsyncStorage, Text, } from 'react-native'
 import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation'
-import { Icon, View } from 'native-base';
+import { Icon, Badge, View } from 'native-base';
+import { Button } from 'react-native-elements'
+
 
 import Login from './components/screens/Login';
 import Signup from './components/screens/Signup';
@@ -13,7 +15,7 @@ import AttendanceTime from './components/screens/AttendanceTime';
 import Setting from './components/screens/Setting';
 import History from './components/screens/History';
 import Avatar from './components/screens/Avatar';
-import Displacements from './components/screens/Displacements';
+import Displacements from './components/screens/Travels';
 import Pm from './components/screens/Pm';
 
 import { logout } from './services/services';
@@ -25,9 +27,33 @@ import eventsLogo from './assets/img/eventsLogo.png'
 import leaveIcon from './assets/img/leaveIcon.png'
 import AttendanceTimeIcon from './assets/img/attendanceTime.png'
 import DisplacementsLogo from './assets/img/DisplacementsLogo.png';
-import logoutIcon from './assets/img/sign-out.svg';
+import { fetchDataFromAsyncStorage } from './services/services';
+
 
 export default class App extends React.Component {
+
+
+
+
+  state = {
+    jobTitle: '',
+    firstName: '',
+    lastName: ''
+  }
+  componentWillMount() {
+    console.log("fetchDataFromAsyncStorage", fetchDataFromAsyncStorage('user'));
+    fetchDataFromAsyncStorage('user')
+      .then(user => {
+        let connected = user;
+        this.setState({
+          jobTitle: connected.job_title,
+          firstName: connected.first_name,
+          lastName: connected.last_name,
+        })
+        console.log("JOB : " + this.state.jobTitle)
+      })
+      .catch(error => console.log(error));
+  }
   render() {
     return (
       <AppContainer />
@@ -59,14 +85,59 @@ const CustomDrawerComponent = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground style={{ height: 160, alignItems: 'center', justifyContent: 'center' }} source={bgm}>
+      <ImageBackground style={{height: 180, alignItems:'center',  flexDirection:'row', justifyContent: 'center' }} source={bgm}>
         <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
-          <Image source={userPic} style={{ borderRadius: 100, height: 140, width: 140, borderWidth: 2, borderColor: '#104E77' }}></Image>
+          <Image source={userPic} style={{
+            borderRadius: 100,
+            height: 140,
+            width: 140,
+            borderWidth: 2,
+            borderColor: '#104E77',
+            left:-10,
+            marginRight:10
+          }}></Image>
         </TouchableHighlight>
+    <View style={{width:80}}>
+    <Text style={{ color: 'white' }}>Asma  </Text>
+    <Text style={{ color: 'white' }}>ben Ahmed</Text>
+        <Text style={{ color: '#AFC9D6' }}>Admin </Text>
+    </View>
       </ImageBackground>
-      <ScrollView style={{ backgroundColor: '#F2F7F9' }}>
-        <DrawerItems {...props} />
-        <Button title="Logout" onPress={() => _signOutAsync()} />
+      <ScrollView style={{ backgroundColor: '#021630' }}
+      >
+        <DrawerItems {...props}
+          // activeTintColor='red' 
+          activeBackgroundColor='#092448'
+          // inactiveTintColor='red'
+          //  inactiveBackgroundColor='transparent' 
+          inactiveLabelStyle={{ color: '#D2D1D1' }}
+          activeLabelStyle={{ color: 'white' }}
+        // activeLabelStyle={{color: 'red'}}
+        />
+
+
+        <Button
+          icon={
+            <Icon
+              name="md-log-out"
+              style={{ color: "#D4E8EE", marginRight: 10, fontSize: 18 }}
+            />
+          }
+          buttonStyle={{
+            backgroundColor: "#03234B",
+            borderRadius: 0,
+            width: 270,
+            alignSelf: 'center',
+          }}
+          titleStyle={{
+            color: '#D4E8EE',
+            top: -1
+          }}
+          title="Logout"
+          onPress={() => _signOutAsync()}
+        />
+
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -75,13 +146,16 @@ const CustomDrawerComponent = (props) => {
 /**
  * Creating Drawer Navigator
  */
+
+
+
 const AppDrawNavigator = createDrawerNavigator(
   {
     'Dashboard': {
       screen: Dashboard,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Icon name="md-home" />
+          <Icon name="md-home" style={{ color: 'white', fontSize: 22 }} />
         )
       })
     },
@@ -89,8 +163,9 @@ const AppDrawNavigator = createDrawerNavigator(
     'Leave History': {
       screen: History,
       navigationOptions: ({ navigation }) => ({
+
         drawerIcon: (
-          <Image source={leaveIcon} style={{ height: 25, width: 25 }} />
+          <Image source={leaveIcon} style={{ height: 22, width: 22 }} />
         )
       })
     },
@@ -99,7 +174,7 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: AttendanceTime,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Image source={AttendanceTimeIcon} style={{ height: 32, width: 32 }} />
+          <Image source={AttendanceTimeIcon} style={{ height: 18, width: 18 }} />
         )
       })
     },
@@ -108,7 +183,7 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: Displacements,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Image source={DisplacementsLogo} style={{ height: 26, width: 26 }} />
+          <Image source={DisplacementsLogo} style={{ height: 18, width: 18 }} />
         )
       })
     },
@@ -117,7 +192,7 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: NewRequest,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Icon name="md-add" />
+          <Icon name="md-add" style={{ color: 'white', fontSize: 22 }} />
         )
       })
     },
@@ -126,17 +201,20 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: Pm,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Image source={pmLogo} style={{ width: 32, height: 32 }} />
+          <Icon name="md-construct" size={20} style={{ color: 'white', fontSize: 22 }} />
         )
       })
     },
 
     'Events': {
       screen: Events,
+
       navigationOptions: ({ navigation }) => ({
+
         drawerIcon: (
-          <Image source={eventsLogo} style={{ width: 35, height: 35 }} />
-        )
+          <Image source={eventsLogo} style={{ width: 22, height: 22 }} />
+        ),
+
       })
     },
 
@@ -144,7 +222,7 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: Setting,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
-          <Icon name="md-settings" size={20} />
+          <Icon name="md-settings" size={20} style={{ color: 'white', fontSize: 22 }} />
         )
 
       })
@@ -167,9 +245,11 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
   },
+
   {
     initialRouteName: "Dashboard",
     contentComponent: CustomDrawerComponent
+
   },
 );
 

@@ -31,11 +31,11 @@ export default class AttendanceTime extends React.Component {
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#13446E' }}>
+            <Container style={{ backgroundColor: '#021630' }}>
 
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
                         color: 'white', position: 'absolute',
                         left: 20, top: 15
@@ -72,8 +72,8 @@ export default class AttendanceTime extends React.Component {
                                 marginLeft: 0,
                             },
                             dateInput: {
-                                backgroundColor:'#245E8F',
-                                borderColor:'#245E8F' ,
+                                backgroundColor:'#082955',
+                                borderColor:'#082955' ,
                                 
                             },
                         }}
@@ -98,8 +98,8 @@ export default class AttendanceTime extends React.Component {
                                 marginLeft: 0,
                             },
                             dateInput: {
-                                backgroundColor:'#245E8F',
-                                borderColor:'#245E8F'
+                                backgroundColor:'#082955',
+                                borderColor:'#082955'
                             },
                         }}
                         
@@ -109,8 +109,8 @@ export default class AttendanceTime extends React.Component {
                         />
                         </View>
 
-                    <Button style={{ width: 110, height:85 , backgroundColor:'#4986B9' , marginTop:10}}>
-                        <Text style={{left:15}}>FILTER</Text>
+                    <Button style={{ width: 110, height:85 , backgroundColor:'#0E6655' , marginTop:10 ,}}>
+                    <Icon name="md-done-all" style={{color:'white' , fontSize:40  , left:20}}></Icon>
                     </Button>
                 </View>
 
@@ -124,14 +124,14 @@ export default class AttendanceTime extends React.Component {
                             startAngle={-((PI / 30) * 15)}
                             endAngle={((PI / 30) * 35)}
                             progress={1}
-                            progressColor={'#2AA92A'}
+                            progressColor={'#1D8348'}
                         />
                         <ProgressCircle
                             style={{ height: 200, position: 'relative', top: -198, right: -58 }}
                             startAngle={(PI / 30) * 5}
                             endAngle={(PI / 30) * 10}
                             progress={1}
-                            progressColor={'#FF0000'}
+                            progressColor={'#C0392B'}
                         />
                     </View>
                 </Content>
@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
     cardStyle: {
         alignSelf: 'center',
         width: 340,
-         backgroundColor: '#245E8F',
-        borderColor: '#245E8F',
+         backgroundColor: '#082955',
+        borderColor: '#082955',
         padding:15
     },
 

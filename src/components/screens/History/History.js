@@ -15,17 +15,87 @@ import {
   FooterTab,
   Badge, Icon, Header, Title,
 } from 'native-base';
+import SearchableDropdown from 'react-native-searchable-dropdown';
 
 
 import PureChart from 'react-native-pure-chart';
 import bg from '../../../assets/img/bg.jpg'
+
+var categories = [
+  {
+      id: 'All categories',
+      name: 'All categories',
+  },
+  {
+      id: 'Paid leave',
+      name: 'Paid leave',
+  },
+  {
+      id: 'Additional days',
+      name: 'Additional days',
+  },
+  {
+    id: 'Unpaid leave',
+    name: 'Unpaid leave',
+},
+{
+  id: 'Sick leave',
+  name: 'Sick leave',
+},
+{
+  id: 'Paternity leave',
+  name: 'Paternity leave',
+},
+{
+  id: 'Maternity leave',
+  name: 'Maternity leave',
+},
+{
+  id: 'Wedding leave',
+  name: 'Wedding leave',
+},
+{
+  id: "Son's circumcision ",
+  name: "Son's circumcision ",
+},
+{
+  id: "Son's/Daughter's wedding",
+  name: "Son's/Daughter's wedding",
+},
+{
+  id: "Spouse's death",
+  name: "Spouse's death",
+},
+{
+  id: "Mother's/Father's death",
+  name: "Mother's/Father's death",
+},
+{
+  id: "Son's/Daughter's death",
+  name: "Son's/Daughter's death",
+},
+{
+  id: "Brother's/Sister's death",
+  name:"Brother's/Sister's death",
+},
+{
+  id: "Grandfather's/Grandmother's death",
+  name: "Grandfather's/Grandmother's death",
+},
+{
+  id: "Other",
+  name: "Other",
+},
+];
+
+
 export default class Events extends React.Component {
   constructor() {
     super();
     this.state = {
-      year: '',
-      status: '',
-      category: ''
+      year: 'All years',
+      status: 'All status',
+      category: 'All categories'
     }
 
   };
@@ -57,11 +127,11 @@ export default class Events extends React.Component {
   ]
 
     return (
-      <Container style={{ backgroundColor: '#13446E' }} >
+      <Container style={{ backgroundColor: '#021630' }} >
         <StatusBar hidden />
 
 
-        <Header style={{ backgroundColor: '#13446E', flexDirection: 'row' }}>
+        <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
           <Icon name='md-menu' style={{
             color: 'white', position: 'absolute',
             left: 20, top: 15
@@ -89,7 +159,7 @@ export default class Events extends React.Component {
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ year: itemValue })
                   }>
-                  <Picker.Item label="All Years" value="All Years" />
+                  <Picker.Item label="All years" value="All years" />
                   <Picker.Item label="2019" value="2018" />
                   <Picker.Item label="2017" value="2017" />
 
@@ -108,7 +178,7 @@ export default class Events extends React.Component {
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ status: itemValue })
                   }>
-                  <Picker.Item label="All Status" value="All Status" />
+                  <Picker.Item label="All status" value="All status" />
                   <Picker.Item label="On hold" value="Waiting" />
                   <Picker.Item label="Accepted" value="Accepted" />
                   <Picker.Item label="Declined" value="Declined" />
@@ -122,8 +192,7 @@ export default class Events extends React.Component {
 
             <View>
 
-              <View style={styles.list}>
-                <Picker
+                {/* <Picker
                   selectedValue={this.state.category}
                   style={{ height: 50, width: 300 , color:'white' }}
                   onValueChange={(itemValue, itemIndex) =>
@@ -146,19 +215,61 @@ export default class Events extends React.Component {
                   <Picker.Item label="Grandfather's/Grandmother's death" value="Grandfather's/Grandmother's death" />
                   <Picker.Item label="Other" value="Other" />
 
-                </Picker>
-              </View>
+                </Picker> */}
+                  <SearchableDropdown
+                  listType="ListView"
+                    onTextChange={(itemValue, itemIndex) =>
+                        this.setState({ category: itemValue })}
+                    onItemSelect={
+                        (itemValue, itemIndex) =>
+                            this.setState({ category: JSON.stringify((itemValue.id)) })
+                    }
+                    containerStyle={{ marginTop:1}}
+                    textInputStyle={{
+                        borderWidth: 1,
+                        borderColor: '#021630',
+                        fontSize: 18,
+                        width: 342,
+                        alignSelf: 'center',
+                        color: 'white',
+                        backgroundColor: '#082955',
+                       paddingLeft:27 
+                    }}
+                    itemStyle={{
+                        padding: 3,
+                        paddingLeft:30,
+                        backgroundColor: '#082955',
+                        width: 340,
+                        alignSelf: 'center',
+                        margin:-2  ,
+                          }}
+                    itemTextStyle={{ color: '#CEE4EE' }}
+                    itemsContainerStyle={{ maxHeight: 220 , 
+                                          alignSelf:'center',
+                                           width:340 ,
+                                           marginBottom:5,
+                                           borderWidth:1,
+                                           borderColor:'#082955',
+                                           marginTop:-2
+                                          }}
+                    items={categories}
+                    // defaultIndex={3}
+                    placeholder="All categories"
+                    resetValue={false}
+                    underlineColorAndroid="transparent"
+                />
 
-              <Button style={{ width: 340, top:5 , alignSelf:'center' , backgroundColor:'#4986B9'  }}>
-                <Text style={{left:15}}>FILTER</Text>
+              <Button style={{ width: 340 ,flexDirection:'row' ,alignSelf:'center' , backgroundColor:'#0E6655' , borderRadius:0 , marginTop:2 }}>
+                <Icon name="md-done-all" style={{color:'white', left:15 }}></Icon>
+                <Text style={{ left :-200}}>FILTER</Text>
               </Button>
 
             </View>
 
 
-            <View style={styles.cardStyle}>
+            {/* <View style={styles.cardStyle}>
               <PureChart data={sampleDataa} type='pie' />
-              </View>
+              </View> */}
 
 
 
@@ -177,8 +288,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     width: 340,
-    backgroundColor: '#245E8F',
-    borderColor: '#245E8F',
+    backgroundColor: '#082955',
+    borderColor: '#082955',
     padding:10
 },
   list: {
@@ -187,9 +298,9 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 20,
     alignSelf: 'center',
-    borderColor: '#245E8F',
+    borderColor: '#082955',
     marginTop: 2,
-    backgroundColor: '#245E8F', 
+    backgroundColor: '#082955', 
 
   },
   textStyle: {

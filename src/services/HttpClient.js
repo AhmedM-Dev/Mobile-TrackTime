@@ -7,7 +7,7 @@ export default class HttpClient {
         this.baseURL = API_URL;
         this.axiosClient = axios.create({
             baseURL: this.baseURL,
-            timeout: 1000
+            timeout: 10000
         });
     }
 
