@@ -12,7 +12,43 @@ import { API_URL } from "../../../../config";
 import Textarea from 'react-native-textarea';
 import DatePicker from 'react-native-datepicker';
 
+import { fetchDataFromAsyncStorage } from '../../../services/services';
 export class checkTravels extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            myTravels: ['None']
+        }
+    };
+
+    fetchTravels = () => {
+        fetchDataFromAsyncStorage('user')
+            .then(user => {
+                axios.get(`${API_URL}travels?userId=${user.userId}`)
+                    .then(response => {
+                        console.log("TRAVELS:", response.data.travels);
+                        this.setState({
+                            myTravels: response.data.travels
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            })
+            .catch(error => {
+                console.log("No user found");
+            });
+    }
+
+    componentDidUpdate() {
+        this.fetchTravels();
+    }
+
+    componentWillMount() {
+        this.fetchTravels();
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -31,7 +67,18 @@ export class checkTravels extends Component {
                         <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
                         <Icon size={27} active name="md-notifications" style={{ color: 'white', top: -10 }} />
                     </View>
+
                 </Header>
+
+                <Content>
+                    <View>
+                        {
+                            this.state.myTravels && this.state.myTravels.map((item, index) => {
+                                return <Text key={index} style={{ color: 'white' }}>{item.destinationAdress}</Text>
+                            })
+                        }
+                    </View>
+                </Content>
 
             </View>
         );
@@ -74,8 +121,9 @@ export class createTravel extends Component {
             ...this.state
         })
             .then((response) => {
-                console.log(response.data);
-            }).done();
+                console.log("Navigating back to checkTravels.");
+                this.props.navigation.navigate('checkTravels');
+            }).catch(error => alert(error));
     }
 
     handleTravelTypeChange = (travelType) => {
@@ -405,8 +453,6 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         margin: 10,
         alignSelf: 'center'
-
-
     },
     textStyle: {
         left: 40,
