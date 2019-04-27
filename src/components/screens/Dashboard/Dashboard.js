@@ -6,6 +6,8 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import PureChart from 'react-native-pure-chart';
 import Speedometer from 'react-native-speedometer-chart';
 
+import NotificationsBell from "../../ui/NotificationsBell";
+
 import getHoursDelays from "../../../utils/getHoursDelays";
 import getHoursOfWork from "../../../utils/timeDiff";
 
@@ -206,10 +208,11 @@ export default class Dashboard extends React.Component {
                         onPress={() => this.props.navigation.openDrawer()}
                     />
                     <Title style={{ top: 15 }}>Dashboard</Title>
-                    <View style={{ position: 'absolute', right: 20 }}>
+                    {/* <View style={{ position: 'absolute', right: 20 }}>
                         <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
                         <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
-                    </View>
+                    </View> */}
+                    <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} />
                 </Header>
                 <View>
                     <Picker
