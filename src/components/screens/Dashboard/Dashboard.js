@@ -47,7 +47,7 @@ option = {
 export default class Dashboard extends React.Component {
     state = {
         connectedUser: null,
-        year: '2009',
+        year: new Date().getFullYear(),
         daysWorked: 0,
         workedHours: 0,
         delays: 0,
@@ -55,44 +55,42 @@ export default class Dashboard extends React.Component {
         byMonth: null,
     }
 
-    getConnectedUser = async () => {
-        await console.log("CONNECTED USER:", AsyncStorage.getItem("user"));
-    }
-
-    componentWillMount() {
-        console.log("fetchDataFromAsyncStorage", fetchDataFromAsyncStorage('user'));
+    fetchAttendees = (yearFilter) => {
+        this.setState({
+            year: yearFilter
+        });
+        
         fetchDataFromAsyncStorage('user')
-        .then(user => {
-            console.log("LOGGED", user);
-            
-            let connected = user;
-            
-            console.log("CONNECTED:", connected.userId);
-            
-            axios.get(API_URL + "attendances?userId=" + (connected && connected.userId))
-            .then((response) => {
-                console.log("ATTENDANCES:", response.data.attendances);
-                
-                let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                
-                byMonth.map((month, i) => {
-                    let hd = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i));
-                    
-                    byMonth[i] = {
-                        ...hd,
+            .then(user => {
+
+                let connected = user;
+
+                const http = axios.create({
+                    baseURL: this.baseURL,
+                    timeout: 10000
+                });
+
+                http.get(`${API_URL}attendances?${yearFilter ? 'year=' + yearFilter : null}&userId=${(connected && connected.userId)}`)
+                    .then((response) => {
+
+                        let byMonth = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+                        byMonth.map((month, i) => {
+                            let hd = getHoursDelays(response.data.attendances.filter(item => new Date(item.date).getMonth() == i));
+
+                            byMonth[i] = {
+                                ...hd,
                                 workedDays: response.data.attendances.filter(item => new Date(item.date).getMonth() == i).length
                             }
 
                         });
 
-                        console.log("BY MONTH:", byMonth);
-                        
                         let graphData = [
                             // chartConfig={
-                                //     backgroundColor: 'red'
-                                //   },
-                                {
-                                    seriesName: 'days',
+                            //     backgroundColor: 'red'
+                            //   },
+                            {
+                                seriesName: 'days',
                                 data: [
                                     { x: 'January', y: byMonth[0].workedDays },
                                     { x: 'February', y: byMonth[1].workedDays },
@@ -106,10 +104,10 @@ export default class Dashboard extends React.Component {
                                     { x: 'October', y: byMonth[9].workedDays },
                                     { x: 'November', y: byMonth[10].workedDays },
                                     { x: 'December', y: byMonth[11].workedDays },
-                                    
+
                                 ],
                                 color: '#FFA14F'
-                                
+
                             },
                             {
                                 seriesName: 'hours',
@@ -148,7 +146,9 @@ export default class Dashboard extends React.Component {
                                 color: '#BE4242'
                             },
                         ];
-                        
+
+                        console.log(getHoursDelays(response.data.attendances) && getHoursDelays(response.data.attendances).workedHours);
+
                         this.setState({
                             ...this.state,
                             byMonth: byMonth,
@@ -161,6 +161,10 @@ export default class Dashboard extends React.Component {
                     });
             })
             .catch(error => console.log(error));
+    }
+
+    componentDidMount() {
+        this.fetchAttendees(this.state.year);
     }
 
     render() {
@@ -210,27 +214,27 @@ export default class Dashboard extends React.Component {
                 <View>
                     <Picker
                         selectedValue={this.state.year}
-                        style={{ height: 50, 
-                            width: 340 , 
-                            alignSelf:'center',
-                            marginTop:10,
-                            marginBottom:10,
+                        style={{
+                            height: 50,
+                            width: 340,
+                            alignSelf: 'center',
+                            marginTop: 10,
+                            marginBottom: 10,
                             borderWidth: 1,
                             borderColor: '#021630',
-                            color:'white' , 
-                            backgroundColor:'#082955'}}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ year: itemValue })
-                        }>
-                        <Picker.Item label="Current year" value="2019" color="#021630" 
-                            style={{alignSelf:"center" , backgroundColor:'red'}} />
-                        <Picker.Item label="2018" value="2018" color="#021630"/>
-                        <Picker.Item label="All years" value="All years" color="#021630" />
-                        
-                        
-                        
-                        </Picker>
-                    </View>
+                            color: 'white',
+                            backgroundColor: '#082955'
+                        }}
+                        onValueChange={(itemValue, itemIndex) => this.fetchAttendees(itemValue)}>
+                        <Picker.Item label="Current year" value="2019" color="#021630"
+                            style={{ alignSelf: "center", backgroundColor: 'red' }} />
+                        <Picker.Item label="2018" value="2018" color="#021630" />
+                        <Picker.Item label="All years" value={null} color="#021630" />
+
+
+
+                    </Picker>
+                </View>
 
                 {/* <SearchableDropdown
                     onTextChange={(itemValue, itemIndex) =>
@@ -279,7 +283,9 @@ export default class Dashboard extends React.Component {
                                 backgroundColor: '#082955', borderRadius: 20
                                 , width: 170, marginRight: 5, marginBottom: 10, left: 4, top: 5
                             }}>
-                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}><Text>{this.state.workedHours && this.state.workedHours}</Text></Badge>
+                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}>
+                                    <Text>{this.state.workedHours}</Text>
+                                </Badge>
                                 <Text style={{ color: 'white' }}>Hours worked</Text>
                             </Button>
                             <Button badge vertical style={{
@@ -317,9 +323,9 @@ export default class Dashboard extends React.Component {
                                 backgroundColor='#082955'
                                 height={150}
                             />}
-                            <View style={{ flexDirection: 'row', alignSelf: 'center' , marginTop:10, marginBottom: 10 , left:10}}>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 10, left: 10 }}>
                                 <Text style={{ color: '#FFA14F', marginRight: 15 }}> Days worked</Text>
-                                <Text style={{ color: '#AA669A',  marginRight: 15 }}> Hours worked</Text>
+                                <Text style={{ color: '#AA669A', marginRight: 15 }}> Hours worked</Text>
                                 <Text style={{ color: '#BE4242' }}> Delays</Text>
                             </View>
                         </Card>

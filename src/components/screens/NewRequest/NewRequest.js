@@ -48,14 +48,14 @@ export default class Events extends React.Component {
       }
 
     handleCreateRequest = () => {
-        // alert(JSON.stringify(this.state));
+        // console.log(JSON.stringify(this.state));
 
         axios.post(API_URL + "requests", {
             userId: this.state.connectedUser.userId,
             ...this.state
         })
             .then((response) => {
-                alert(response.data);
+                console.log(response.data);
             }).done();
     }
 
@@ -85,7 +85,6 @@ export default class Events extends React.Component {
 
     componentWillMount() {
         AsyncStorage.getItem("user").then(user => {
-            console.log("LOGGED", JSON.parse(user));
 
             this.setState({
                 connectedUser: JSON.parse(user)

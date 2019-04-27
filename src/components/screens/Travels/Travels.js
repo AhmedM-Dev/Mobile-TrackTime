@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
-  StatusBar,
-  AsyncStorage
+    StyleSheet,
+    StatusBar,
+    AsyncStorage
 } from "react-native";
-import{Text , View, Badge,Title,Header, Content, Picker,Button} from 'native-base'
+import { Text, View, Badge, Title, Header, Content, Picker, Button } from 'native-base'
 import { createBottomTabNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'
 import axios from "axios";
@@ -13,29 +13,29 @@ import Textarea from 'react-native-textarea';
 import DatePicker from 'react-native-datepicker';
 
 export class checkTravels extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-<StatusBar hidden />
+    render() {
+        return (
+            <View style={styles.container}>
+                <StatusBar hidden />
 
-<Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
-    <Icon name='md-menu' size={27} style={{
-        color: 'white', position: 'absolute',
-        left: 20, top: 15
-    }}
-        onPress={() => this.props.navigation.openDrawer()}
-    />
-    <Title style={{ top: 15 }}>My Travels</Title>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
+                    <Icon name='md-menu' size={27} style={{
+                        color: 'white', position: 'absolute',
+                        left: 20, top: 15
+                    }}
+                        onPress={() => this.props.navigation.openDrawer()}
+                    />
+                    <Title style={{ top: 15 }}>My Travels</Title>
 
-    <View style={{ position: 'absolute', right: 20 }}>
-        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-        <Icon size={27} active name="md-notifications" style={{ color: 'white', top: -10 }} />
-    </View>
-</Header>
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon size={27} active name="md-notifications" style={{ color: 'white', top: -10 }} />
+                    </View>
+                </Header>
 
-      </View>
-    );
-  }
+            </View>
+        );
+    }
 }
 
 export class createTravel extends Component {
@@ -67,14 +67,14 @@ export class createTravel extends Component {
     }
 
     handleCreateTravel = () => {
-        // alert(JSON.stringify(this.state));
+        // console.log(JSON.stringify(this.state));
 
         axios.post(API_URL + "travels", {
             userId: this.state.connectedUser.userId,
             ...this.state
         })
             .then((response) => {
-                alert(response.data);
+                console.log(response.data);
             }).done();
     }
 
@@ -120,33 +120,32 @@ export class createTravel extends Component {
 
     componentWillMount() {
         AsyncStorage.getItem("user").then(user => {
-            console.log("LOGGED", JSON.parse(user));
 
             this.setState({
                 connectedUser: JSON.parse(user)
             });
         })
     }
-  render() {
-    return (
-      <View style={styles.container}>
-      <StatusBar hidden />
+    render() {
+        return (
+            <View style={styles.container}>
+                <StatusBar hidden />
 
-<Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
-    <Icon name='md-menu' size={27} style={{
-        color: 'white', position: 'absolute',
-        left: 20, top: 15
-    }}
-        onPress={() => this.props.navigation.openDrawer()}
-    />
-    <Title style={{ top: 15 }}>My Travels</Title>
+                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
+                    <Icon name='md-menu' size={27} style={{
+                        color: 'white', position: 'absolute',
+                        left: 20, top: 15
+                    }}
+                        onPress={() => this.props.navigation.openDrawer()}
+                    />
+                    <Title style={{ top: 15 }}>My Travels</Title>
 
-    <View style={{ position: 'absolute', right: 20 }}>
-        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-        <Icon size={27} active name="md-notifications" style={{ color: 'white', top: -10 }} />
-    </View>
-</Header>
-<Content>
+                    <View style={{ position: 'absolute', right: 20 }}>
+                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
+                        <Icon size={27} active name="md-notifications" style={{ color: 'white', top: -10 }} />
+                    </View>
+                </Header>
+                <Content>
                     <View >
                         <Text style={styles.textStyle} >
                             Type
@@ -155,7 +154,7 @@ export class createTravel extends Component {
                             <Picker
                                 selectedValue={this.state.travelType}
                                 style={{
-                                    height: 50, width: 300,  backgroundColor: '#345B8E', color: 'white',
+                                    height: 50, width: 300, backgroundColor: '#345B8E', color: 'white',
                                     borderColor: '#345B8E'
                                 }}
                                 onValueChange={(itemValue, itemIndex) =>
@@ -313,7 +312,7 @@ export class createTravel extends Component {
                             <Picker
                                 selectedValue={this.state.type}
                                 style={{
-                                    height: 50, width: 300,  backgroundColor: '#345B8E', color: 'white',
+                                    height: 50, width: 300, backgroundColor: '#345B8E', color: 'white',
                                     borderColor: '#345B8E'
                                 }}
                                 onValueChange={(itemValue, itemIndex) =>
@@ -353,74 +352,74 @@ export class createTravel extends Component {
                     </View>
                 </Content>
 
-      </View>
-    );
-  }
+            </View>
+        );
+    }
 }
 export default createBottomTabNavigator({
-  checkTravels: {
-    screen: checkTravels,
-    navigationOptions: {
-      tabBarLabel: 'Check my travels',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="md-eye" color={tintColor} size={24} />
-      )
+    checkTravels: {
+        screen: checkTravels,
+        navigationOptions: ({ navigation }) => ({
+            tabBarLabel: 'Check my travels',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="md-eye" color={tintColor} size={24} />
+            )
+        })
+    },
+    createTravel: {
+        screen: createTravel,
+        navigationOptions: ({ navigation }) => ({
+            tabBarLabel: 'Create a new travel',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="md-create" color={tintColor} size={24} />
+            )
+        })
     }
-  },
-  createTravel: {
-    screen: createTravel,
-    navigationOptions: {
-      tabBarLabel: 'Create a new travel',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="md-create" color={tintColor} size={24} />
-      )
-    }
-  }
 
 
 }, {
-    initialRouteName: 'checkTravels',
-    order: ['checkTravels', 'createTravel'],
-    swipeEnabled: true,
-    animationEnabled: true,
-    navigationOptions: {
-      tabBarVisible: true
-    },
-    tabBarOptions: {
-      activeTintColor: '#D6EAF8',
-      inactiveTintColor: 'white' , 
-      activeBackgroundColor:'#092448',
-      inactiveBackgroundColor:'#021630',
-    },
-  });
+        initialRouteName: 'checkTravels',
+        order: ['checkTravels', 'createTravel'],
+        swipeEnabled: true,
+        animationEnabled: true,
+        navigationOptions: {
+            tabBarVisible: true
+        },
+        tabBarOptions: {
+            activeTintColor: '#D6EAF8',
+            inactiveTintColor: 'white',
+            activeBackgroundColor: '#092448',
+            inactiveBackgroundColor: '#021630',
+        },
+    });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:'#021630'
-  },
-  list: {
-    borderWidth: 1,
-    width: 300,
-    alignItems: 'center',
-    borderColor: 'black',
-    margin: 10,
-    alignSelf:'center'
+    container: {
+        flex: 1,
+        backgroundColor: '#021630'
+    },
+    list: {
+        borderWidth: 1,
+        width: 300,
+        alignItems: 'center',
+        borderColor: 'black',
+        margin: 10,
+        alignSelf: 'center'
 
 
-},
-textStyle: {
-    left: 40,
-    color:'white',
-    marginTop:10
-},
-textareaContainer: {
-    borderWidth: 1,
-    width: 300,
-    height: 40,
-    borderColor: '#345B8E',
-    backgroundColor:'#345B8E',
-    marginTop: 10,
-    alignSelf:'center'
-},
+    },
+    textStyle: {
+        left: 40,
+        color: 'white',
+        marginTop: 10
+    },
+    textareaContainer: {
+        borderWidth: 1,
+        width: 300,
+        height: 40,
+        borderColor: '#345B8E',
+        backgroundColor: '#345B8E',
+        marginTop: 10,
+        alignSelf: 'center'
+    },
 });

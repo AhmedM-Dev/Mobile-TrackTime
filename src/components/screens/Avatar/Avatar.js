@@ -22,7 +22,6 @@ export default class Avatar extends Component {
       }
       myfun = () => {
         ImagePicker.showImagePicker(options, (response) => {
-          console.log('Response = ', response);
     
           if (response.didCancel) {
             console.log('User cancelled image picker');
@@ -48,8 +47,7 @@ export default class Avatar extends Component {
         }, [
             { name: 'image', filename: 'avatar.png', data: this.state.pic }
           ]).then((resp) => {
-            console.log(resp);
-            alert('your image uploaded successfully');
+            console.log('your image uploaded successfully');
             this.setState({ avatarSource: null })
           })
       }    

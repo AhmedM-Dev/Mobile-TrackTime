@@ -49,15 +49,16 @@ export default class createTravel extends React.Component {
     }
 
     handleCreateTravel = () => {
-        // alert(JSON.stringify(this.state));
+        // console.log(JSON.stringify(this.state));
 
         axios.post(API_URL + "travels", {
             userId: this.state.connectedUser.userId,
             ...this.state
         })
             .then((response) => {
-                alert(response.data);
-            }).done();
+                this.props.navigation.navigate('checkTravels');
+                // console.log(response.data);
+            });
     }
 
     handleTravelTypeChange = (travelType) => {
@@ -102,7 +103,6 @@ export default class createTravel extends React.Component {
 
     componentWillMount() {
         AsyncStorage.getItem("user").then(user => {
-            console.log("LOGGED", JSON.parse(user));
 
             this.setState({
                 connectedUser: JSON.parse(user)
@@ -182,7 +182,7 @@ export default class createTravel extends React.Component {
                         <View>
                             <Text style={styles.textStyle}>
                                 From
-                  </Text>
+                            </Text>
                             <DatePicker
                                 style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
                                 date={this.state.startDate}
@@ -297,7 +297,7 @@ export default class createTravel extends React.Component {
                         <View>
                             <Text style={styles.textStyle} >
                                 Type
-                </Text>
+                            </Text>
                             <View style={styles.list}>
                                 <Picker
                                     selectedValue={this.state.type}

@@ -41,7 +41,6 @@ export default class App extends React.Component {
     lastName: ''
   }
   componentWillMount() {
-    console.log("fetchDataFromAsyncStorage", fetchDataFromAsyncStorage('user'));
     fetchDataFromAsyncStorage('user')
       .then(user => {
         let connected = user;
@@ -50,7 +49,6 @@ export default class App extends React.Component {
           firstName: connected.first_name,
           lastName: connected.last_name,
         })
-        console.log("JOB : " + this.state.jobTitle)
       })
       .catch(error => console.log(error));
   }
