@@ -31,9 +31,11 @@ export class checkTravels extends Component {
                         this.setState({
                             myTravels: response.data.travels
                         });
+                        return response.data.travels;
                     })
                     .catch(error => {
                         console.log(error);
+                        return null;
                     });
             })
             .catch(error => {
@@ -41,9 +43,9 @@ export class checkTravels extends Component {
             });
     }
 
-    componentDidUpdate() {
-        this.fetchTravels();
-    }
+    // componentDidUpdate() {
+        
+    // }
 
     componentWillMount() {
         this.fetchTravels();
@@ -74,7 +76,9 @@ export class checkTravels extends Component {
                     <View>
                         {
                             this.state.myTravels && this.state.myTravels.map((item, index) => {
-                                return <Text key={index} style={{ color: 'white' }}>{item.destinationAdress}</Text>
+                                return (
+                                    <Text key={index} style={{ color: 'white' }}>{item.destinationAdress}</Text>
+                                )
                             })
                         }
                     </View>
