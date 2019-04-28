@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, AsyncStorage, ImageBackground } from 'react-native';
+import { StatusBar, StyleSheet, ImageBackground } from 'react-native';
 import {
     Container,
     Content,
@@ -14,6 +14,8 @@ import {
 } from 'native-base';
 import DatePicker from 'react-native-datepicker';
 import Textarea from 'react-native-textarea';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import timeIcon from '../../../assets/img/Time.png';
 import dateIcon from '../../../assets/img/date.png';
 

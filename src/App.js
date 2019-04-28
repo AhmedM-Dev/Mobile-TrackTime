@@ -1,9 +1,11 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, AsyncStorage, Text, } from 'react-native'
-import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation'
+import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, Text, } from 'react-native';
+import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation';
 import { Icon, Badge, View } from 'native-base';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
+import { Provider } from 'react-redux';
 
+import store from '../src/store';
 
 import Login from './components/screens/Login';
 import Signup from './components/screens/Signup';
@@ -31,15 +33,6 @@ import { fetchDataFromAsyncStorage } from './services/services';
 
 
 export default class App extends React.Component {
-
-
-
-
-  state = {
-    jobTitle: '',
-    firstName: '',
-    lastName: ''
-  }
   componentWillMount() {
     fetchDataFromAsyncStorage('user')
       .then(user => {
@@ -52,9 +45,12 @@ export default class App extends React.Component {
       })
       .catch(error => console.log(error));
   }
+
   render() {
     return (
-      <AppContainer />
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
     )
   }
 }
@@ -83,7 +79,7 @@ const CustomDrawerComponent = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground style={{height: 180, alignItems:'center',  flexDirection:'row', justifyContent: 'center' }} source={bgm}>
+      <ImageBackground style={{ height: 180, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} source={bgm}>
         <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
           <Image source={userPic} style={{
             borderRadius: 100,
@@ -91,15 +87,15 @@ const CustomDrawerComponent = (props) => {
             width: 140,
             borderWidth: 2,
             borderColor: '#104E77',
-            left:-10,
-            marginRight:10
+            left: -10,
+            marginRight: 10
           }}></Image>
         </TouchableHighlight>
-    <View style={{width:80}}>
-    <Text style={{ color: 'white' }}>Asma  </Text>
-    <Text style={{ color: 'white' }}>ben Ahmed</Text>
-        <Text style={{ color: '#AFC9D6' }}>Admin </Text>
-    </View>
+        <View style={{ width: 80 }}>
+          <Text style={{ color: 'white' }}>Asma  </Text>
+          <Text style={{ color: 'white' }}>ben Ahmed</Text>
+          <Text style={{ color: '#AFC9D6' }}>Admin </Text>
+        </View>
       </ImageBackground>
       <ScrollView style={{ backgroundColor: '#021630' }}
       >

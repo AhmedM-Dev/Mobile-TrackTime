@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {
     StyleSheet,
-    StatusBar,
-    AsyncStorage
+    StatusBar
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View, Badge, Title, Header, Content, Picker, Button } from 'native-base'
 import { createBottomTabNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons'

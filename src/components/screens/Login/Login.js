@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, Text, View, StatusBar, Image, Icon, ToastAndroid, ActivityIndicator } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements'
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 import StyledInput from '../../ui/Input';
 
@@ -14,8 +14,11 @@ import checkedIcon from '../../../assets/img/checkedIcon.png'
 import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
 
 import { authenticate, storeDataToAsyncStorage } from '../../../services/services';
+import { authenticateWithRedux } from '../../../store/actions';
 
-export default class Login extends Component {
+import styles from './styles';
+
+class Login extends Component {
 
   state = {
     check: false,
@@ -35,6 +38,8 @@ export default class Login extends Component {
 
   handleAuthentication = () => {
     this.setState({ loading: true });
+
+
 
     authenticate(this.state.email, this.state.pass)
       .then(res => {
@@ -108,50 +113,16 @@ export default class Login extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
 
-  },
 
-  loading: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 10,
-    backgroundColor: 'white',
-    opacity: 0.5
-  },
+const mapStateToProps = state => {
+  return {
+      user: state.authReducer.user
+  }
+}
 
-  dh: {
-    position: 'absolute',
-    top: 550,
-    color: 'white',
-    fontSize: 18,
-  },
-  inputPos: {
-    position: 'absolute',
-    top: 230,
-  },
-  checkPos: {
-    alignItems: 'center',
-    position: 'absolute',
-    top: 480,
-    flexDirection: 'row',
-  },
-  remember: {
-    color: 'white',
-    opacity: 0.6,
-    fontSize: 14,
-    left: -10
-  },
-  logoStyle: {
-    top: 100,
-  },
+const mapDispatchToProps = dispatch => ({
+  authenticateWithRedux(payload) { dispatch(authenticateWithRedux(payload)) },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

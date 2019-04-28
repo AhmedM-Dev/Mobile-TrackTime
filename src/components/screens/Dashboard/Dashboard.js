@@ -1,10 +1,14 @@
 import React from 'react';
 import axios from "axios";
-import { StyleSheet, StatusBar, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, StatusBar } from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import PureChart from 'react-native-pure-chart';
-import Speedometer from 'react-native-speedometer-chart';
+import AsyncStorage from '@react-native-community/async-storage';
+// import PureChart from 'react-native-pure-chart';
+
+import { Defs, LinearGradient, Stop } from 'react-native-svg'
+import { LineChart, Grid } from 'react-native-svg-charts'
 
 import NotificationsBell from "../../ui/NotificationsBell";
 
@@ -13,8 +17,7 @@ import getHoursOfWork from "../../../utils/timeDiff";
 
 import { API_URL } from "../../../../config";
 
-import HttpClient from '../../../services/HttpClient';
-import { fetchDataFromAsyncStorage } from '../../../services/services';
+import { getAttendances } from './actions';
 
 var items = [
     {
@@ -46,7 +49,7 @@ option = {
     }]
 };
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
     state = {
         connectedUser: null,
         year: new Date().getFullYear(),
@@ -57,11 +60,22 @@ export default class Dashboard extends React.Component {
         byMonth: null,
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.user !== state.connectedUser) {
+            console.table(props.user);
+            return {
+                ...state,
+                connectedUser: props.user
+            }
+        }
+        return null;
+    }
+
     fetchAttendees = (yearFilter) => {
         this.setState({
             year: yearFilter
         });
-        
+
         fetchDataFromAsyncStorage('user')
             .then(user => {
 
@@ -166,12 +180,15 @@ export default class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchAttendees(this.state.year);
+        // this.fetchAttendees(this.state.year);
+        this.props.getAttendances({
+            userId: this.state.connectedUser.userId,
+            year: this.state.year
+        });
     }
 
     render() {
-
-
+        console.log("USER", this.props.user);
         let sampleDataa = [
             {
                 value: 50,
@@ -194,6 +211,17 @@ export default class Dashboard extends React.Component {
 
         ]
 
+        const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+
+        const Gradient = () => (
+            <Defs key={'gradient'}>
+                <LinearGradient id={'gradient'} x1={'0'} y={'0%'} x2={'100%'} y2={'0%'}>
+                    <Stop offset={'0%'} stopColor={'rgb(134, 65, 244)'} />
+                    <Stop offset={'100%'} stopColor={'rgb(66, 194, 244)'} />
+                </LinearGradient>
+            </Defs>
+        )
+
 
         return (
 
@@ -207,12 +235,8 @@ export default class Dashboard extends React.Component {
                     }}
                         onPress={() => this.props.navigation.openDrawer()}
                     />
-                    <Title style={{ top: 15 }}>Dashboard</Title>
-                    {/* <View style={{ position: 'absolute', right: 20 }}>
-                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
-                    </View> */}
-                    <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} />
+                    <Title style={{ top: 15 }}>{this.props.user && this.props.user.userId}</Title>
+                    {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
                 </Header>
                 <View>
                     <Picker
@@ -297,7 +321,7 @@ export default class Dashboard extends React.Component {
                             }}>
                                 <Badge style={{
                                     backgroundColor: '#3F7930', top: -10
-                                }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
+                                }} ><Text>{this.props.attendances && this.props.attendances.length}</Text></Badge>
                                 <Text style={{ color: 'white' }} >Days worked</Text>
                             </Button>
 
@@ -321,11 +345,25 @@ export default class Dashboard extends React.Component {
 
 
                         <Card style={styles.lineChart} >
-                            {this.state.graphData && <PureChart data={this.state.graphData}
+                            {/* {this.state.graphData && <PureChart data={this.state.graphData}
                                 type='bar'
                                 backgroundColor='#082955'
                                 height={150}
-                            />}
+                            />} */}
+
+                            <LineChart
+                                style={{ height: 200 }}
+                                data={data}
+                                contentInset={{ top: 20, bottom: 20 }}
+                                svg={{
+                                    strokeWidth: 2,
+                                    stroke: 'url(#gradient)',
+                                }}
+                            >
+                                <Grid />
+                                <Gradient />
+                            </LineChart>
+
                             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 10, left: 10 }}>
                                 <Text style={{ color: '#FFA14F', marginRight: 15 }}> Days worked</Text>
                                 <Text style={{ color: '#AA669A', marginRight: 15 }}> Hours worked</Text>
@@ -363,34 +401,10 @@ export default class Dashboard extends React.Component {
 
                     <Card style={styles.cardStyle}>
                         <Text style={{ fontSize: 18, left: -80, marginTop: 10, color: 'white', marginBottom: 20 }}>Authorizations</Text>
-                        <PureChart data={sampleDataa} type='pie' />
+                        {/* <PureChart data={sampleDataa} type='pie' /> */}
                         <View style={{ height: 20 }}></View>
                     </Card>
-
-
-
-                    {/* <View style={styles.cardStyle}  >
-                        <Text style={{ fontSize: 18, marginTop:10 , marginBottom:10,color:'white' , left:-80}}>Average grade</Text>
-                        <View >
-                            <Speedometer
-                                value={13}
-                                totalValue={20}
-                                size={250}
-                                outerColor="#C2ECD4"
-                                internalColor="#327951"
-                                showText
-                                text="13.00"
-                                textStyle={{ color: '#297AB1' }}
-                                showLabels
-                                labelStyle={{ color: '#327951' }}
-                                showPercent
-                                percentStyle={{ color: '#327951' }}
-                            /></View>
-                    </View> */}
-
                 </Content>
-
-
             </Container>
         );
     }
@@ -425,3 +439,16 @@ const styles = StyleSheet.create({
 
 }
 );
+
+const mapStateToProps = state => {
+    return {
+        user: state.authReducer.user,
+        attendances: state.dashboardReducer.attendancesReducer.attendances
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    getAttendances(payload) { dispatch(getAttendances(payload)) },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

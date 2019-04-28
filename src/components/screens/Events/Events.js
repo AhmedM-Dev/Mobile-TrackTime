@@ -10,7 +10,6 @@ import {
   Content,
   Badge
 } from 'native-base';
-import { SharedElement } from 'react-native-motion';
 
 import Swiper from 'react-native-swiper';
 

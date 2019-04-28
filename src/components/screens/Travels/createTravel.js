@@ -1,5 +1,6 @@
 import React from 'react'
-import { StatusBar, StyleSheet, AsyncStorage, Image } from 'react-native'
+import { StatusBar, StyleSheet, Image } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 import {
     Container,
     Content,
@@ -11,7 +12,8 @@ import {
     Button,
     FooterTab,
     Badge, Icon, Header, Title, Accordion
-} from 'native-base'
+} from 'native-base';
+
 import axios from "axios";
 import Textarea from 'react-native-textarea';
 import timeIcon from '../../../assets/img/Time.png'

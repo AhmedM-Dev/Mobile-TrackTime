@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Image, TextInput } from 'react-native';
 
 export default StyledInput = (props) => {
