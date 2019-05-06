@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { API_URL } from '../../config';
 
@@ -9,7 +10,21 @@ export default class HttpClient {
             baseURL: this.baseURL,
             timeout: 10000
         });
+
+        this.axiosClient.interceptors.request.use(async (req) => {
+            const user = await AsyncStorage.getItem('user');
+            if (user) {
+                req.headers = { "auth-token": JSON.parse(user).token };
+                console.log("HttpClient intercepted req:", req);
+            }
+            
+            return req;
+        }, error => {
+            console.log("Error HttpClient:", error);
+            return error;
+        });
     }
+
 
     setHeaders(headers) {
         this.headers = headers;

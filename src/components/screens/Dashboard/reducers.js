@@ -2,12 +2,12 @@ import { combineReducers } from "redux";
 
 import types from './types';
 
-export const attendancesReducer = (state = [], action) => {
+export const statsReducer = (state = {}, action) => {
     switch (action.type) {
-        case types.GET_ATTENDANCES:
+        case types.GET_STATS:
             return {
                 ...state,
-                attendances: action.payload
+                stats: action.payload
             };
 
         default:
@@ -16,5 +16,5 @@ export const attendancesReducer = (state = [], action) => {
 }
 
 export default combineReducers({
-    attendancesReducer
+    statsReducer
 });

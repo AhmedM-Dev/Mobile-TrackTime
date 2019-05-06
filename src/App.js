@@ -31,21 +31,12 @@ import AttendanceTimeIcon from './assets/img/attendanceTime.png'
 import DisplacementsLogo from './assets/img/DisplacementsLogo.png';
 import { fetchDataFromAsyncStorage } from './services/services';
 
+const UserContext = React.createContext({
+  user: {},
+  attendances: [],
+});
 
 export default class App extends React.Component {
-  componentWillMount() {
-    fetchDataFromAsyncStorage('user')
-      .then(user => {
-        let connected = user;
-        this.setState({
-          jobTitle: connected.job_title,
-          firstName: connected.first_name,
-          lastName: connected.last_name,
-        })
-      })
-      .catch(error => console.log(error));
-  }
-
   render() {
     return (
       <Provider store={store}>
@@ -130,8 +121,6 @@ const CustomDrawerComponent = (props) => {
           title="Logout"
           onPress={() => _signOutAsync()}
         />
-
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -212,7 +201,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-    'Settings': {
+    'Settings': {                                                                                                                                                                                                                                                                                                                                                                                                                                                      
       screen: Setting,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (

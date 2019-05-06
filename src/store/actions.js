@@ -7,22 +7,21 @@ import HttpClient from '../services/HttpClient';
 const http = new HttpClient();
 
 export const authenticateWithRedux = payload => dispatch => {
-    http.post('http://192.168.1.16:5000/tracktime/api/auth', {
-        email: 'ahmed.tux@protonmail.com',
-        pass: 'ahmed1989'
-    })
-    .then(async response => {
-        dispatch({
-            type: types.AUTHENTICATE,
-            user: response.data.user
-        });
+    dispatch({
+        type: types.AUTHENTICATE
+    });
 
-        await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
+    authenticate(payload.email, payload.pass)
+    .then(response => {
+        dispatch({
+            type: types.AUTHENTICATE_SUCCESS,
+            user: response
+        });
     })
     .catch(error => {
         dispatch({
-            type: types.ADD_ERROR,
-            error
+            type: types.AUTHENTICATE_FAILED,
+            error: error.response.data.error
         });
     });
 }

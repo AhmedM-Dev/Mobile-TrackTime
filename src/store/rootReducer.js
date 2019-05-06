@@ -2,7 +2,6 @@ import { combineReducers } from "redux";
 
 import dashboardReducer from "../components/screens/Dashboard/reducers";
 
-
 import types from './types';
 
 export const errors = (state = [], action) => {
@@ -26,7 +25,22 @@ export const authReducer = (state = { user: {} }, action) => {
         case types.AUTHENTICATE:
             return {
                 ...state,
+                logging: true
+            }
+
+        case types.AUTHENTICATE_SUCCESS:
+            return {
+                ...state,
+                logging: false,
+                authenticated: true,
                 user: action.user
+            }
+
+        case types.AUTHENTICATE_FAILED:
+            return {
+                ...state,
+                logging: false,
+                error: action.error,
             }
 
         case types.GET_USER_FROM_ASYNCSTORAGE_TO_STORE:
@@ -40,8 +54,28 @@ export const authReducer = (state = { user: {} }, action) => {
     }
 }
 
+export const loadingReducer = (state = false, action) => {
+    switch (action.type) {
+        case types.LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case types.LOADING_SUCCESS:
+            return {
+                ...state,
+                loading: false
+            }
+
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     errors,
     authReducer,
+    loadingReducer,
     dashboardReducer
 });

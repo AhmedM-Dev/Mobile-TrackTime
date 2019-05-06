@@ -16,6 +16,7 @@ export const authenticate = async (email, pass) => {
             pass: pass
         })
             .then(async userFromApi => {
+                console.log("userFromApi", userFromApi);
                 await AsyncStorage.setItem('user', JSON.stringify(userFromApi.data.user));
                 return Promise.resolve(userFromApi.data.user);
             })

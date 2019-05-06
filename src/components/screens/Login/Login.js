@@ -23,9 +23,8 @@ class Login extends Component {
   state = {
     check: false,
     loading: false,
-    isConnected: false,
-    email: "asma.bahmed19@hotmail.com",
-    pass: "92333520",
+    email: "ahmed.tux@protonmail.com",
+    pass: "ahmed1989",
   }
 
   CheckBoxTest = () => {
@@ -37,20 +36,9 @@ class Login extends Component {
   }
 
   handleAuthentication = () => {
-    this.setState({ loading: true });
-
-
-
-    authenticate(this.state.email, this.state.pass)
-      .then(res => {
-        this.setState({ isConnected: true, loading: false });
-        ToastAndroid.show("Successfully authenticated!", ToastAndroid.LONG);
-        this.props.navigation.navigate('Dashboard');
-      })
-      .catch(error => {
-        this.setState({ isConnected: false, loading: false });
-        ToastAndroid.show(error.response.data.error, ToastAndroid.LONG);
-      });
+    this.props.authenticateWithRedux({
+      email: this.state.email, pass: this.state.pass
+    });
   }
 
   handleEmailChange = (text) => {
@@ -67,10 +55,19 @@ class Login extends Component {
     });
   }
 
+  componentDidUpdate() {
+    if (this.props.authenticated) {
+      ToastAndroid.show("Successfully authenticated!", ToastAndroid.LONG);
+      this.props.navigation.navigate('Dashboard');
+    } else if (this.props.error) {
+      ToastAndroid.show(this.props.error, ToastAndroid.LONG);
+    }
+  }
+
   render() {
     return (
       <ImageBackground style={styles.container} source={Background}>
-        {this.state.loading &&
+        {this.props.logging &&
           <View style={styles.loading}>
             <ActivityIndicator size={80} color="#0000ff" />
           </View>
@@ -117,7 +114,10 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-      user: state.authReducer.user
+    logging: state.authReducer.logging,
+    authenticated: state.authReducer.authenticated,
+    error: state.authReducer.error,
+    errors: state.errors.errors
   }
 }
 
