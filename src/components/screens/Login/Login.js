@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet, Text, View, StatusBar, Image, Icon, ToastA
 import { CheckBox, Button } from 'react-native-elements'
 import axios from 'axios';
 
-import StyledInput from '../../ui/Input';
+import StyledInput from '../../ui/Input/Input';
 
 import LogoApp from '../../../assets/img/appNAme.png'
 import companyLogo from '../../../assets/img/proxym.png'
@@ -67,7 +67,8 @@ export default class Login extends Component {
       <ImageBackground style={styles.container} source={Background}>
         {this.state.loading &&
           <View style={styles.loading}>
-            <ActivityIndicator size={80} color="#0000ff" />
+          <Image source={companyLogo}style={{marginBottom:50}}></Image>
+            <ActivityIndicator size={80} color="#2594DA" />
           </View>
         }
         <StatusBar hidden />
@@ -76,8 +77,8 @@ export default class Login extends Component {
           <Image source={LogoApp}></Image>
         </View>
         <View style={styles.inputPos}>
-          <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
-          <StyledInput value={this.state.pass} onChange={this.handlePassChange} name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+        <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address"  />
+        <StyledInput value={this.state.pass} onChange={this.handlePassChange} name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
         </View>
         {/* <View style={styles.checkPos}>
           <CheckBox
@@ -125,8 +126,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
-    backgroundColor: 'white',
-    opacity: 0.5
+    backgroundColor: 'black',
+    opacity: 0.9
   },
 
   dh: {
@@ -154,4 +155,5 @@ const styles = StyleSheet.create({
   logoStyle: {
     top: 100,
   },
+
 });

@@ -65,6 +65,7 @@
 		AEFFFD5EF9FE4ED38A2B3047 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4CABE2FA6F74D799A68AABB /* Zocial.ttf */; };
 		23D6C90B8CAD47318EC74363 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B093C55762B4456DA51D707A /* libRNImagePicker.a */; };
 		9ADB602ABF0B4BB48F2981AB /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EEBCAF62BEF4165A8F478D5 /* libRNReanimated.a */; };
+		97AB83DA2BE442D7B6044F17 /* libSajjadBlurOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F140C57B379842E1894720A8 /* libSajjadBlurOverlay.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +405,8 @@
 		B093C55762B4456DA51D707A /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		A51E9F90394445738DB172D2 /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; name = "RNReanimated.xcodeproj"; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		7EEBCAF62BEF4165A8F478D5 /* libRNReanimated.a */ = {isa = PBXFileReference; name = "libRNReanimated.a"; path = "libRNReanimated.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1622539D853F44F0A35E60D5 /* SajjadBlurOverlay.xcodeproj */ = {isa = PBXFileReference; name = "SajjadBlurOverlay.xcodeproj"; path = "../node_modules/react-native-blur-overlay/ios/SajjadBlurOverlay.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F140C57B379842E1894720A8 /* libSajjadBlurOverlay.a */ = {isa = PBXFileReference; name = "libSajjadBlurOverlay.a"; path = "libSajjadBlurOverlay.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +441,7 @@
 				B9308686FDC348B2A1EE561A /* libRNVectorIcons.a in Frameworks */,
 				23D6C90B8CAD47318EC74363 /* libRNImagePicker.a in Frameworks */,
 				9ADB602ABF0B4BB48F2981AB /* libRNReanimated.a in Frameworks */,
+				97AB83DA2BE442D7B6044F17 /* libSajjadBlurOverlay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +639,7 @@
 				7D3D5D3748B347ADB484E2DA /* RNVectorIcons.xcodeproj */,
 				89192E19A0D14B2490F15853 /* RNImagePicker.xcodeproj */,
 				A51E9F90394445738DB172D2 /* RNReanimated.xcodeproj */,
+				1622539D853F44F0A35E60D5 /* SajjadBlurOverlay.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1307,6 +1312,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trackTime.app/trackTime";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1316,6 +1322,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Debug;
@@ -1337,6 +1344,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trackTime.app/trackTime";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1346,6 +1354,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Release;
@@ -1374,6 +1383,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Debug;
@@ -1401,6 +1411,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Release;
@@ -1430,6 +1441,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1439,6 +1451,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Debug;
@@ -1468,6 +1481,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1477,6 +1491,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Release;
@@ -1505,6 +1520,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1514,6 +1530,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Debug;
@@ -1542,6 +1559,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1551,6 +1569,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-blur-overlay/ios",
 				);
 			};
 			name = Release;

@@ -32,10 +32,10 @@ export default class NotificationsBell extends React.Component {
     render () {
         return (
             <View style={{ position: 'absolute', right: 20, top: 5 }}>
-                <Badge style={{ top: 10, right: -10, zIndex: 1 }}>
+                <Badge style={{ top: 5, right: -10, zIndex: 1 }}>
                     {this.state.notifs.length > 0 && <Text>{this.state.notifs.length}</Text>}
                 </Badge>
-                <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
+                <Icon active name="md-notifications" style={{ color: 'black', top: -15 }} />
             </View>
         );
     }

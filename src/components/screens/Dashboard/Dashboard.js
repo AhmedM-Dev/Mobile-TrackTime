@@ -1,20 +1,22 @@
 import React from 'react';
 import axios from "axios";
-import { StyleSheet, StatusBar, AsyncStorage } from 'react-native';
-import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
-import SearchableDropdown from 'react-native-searchable-dropdown';
+import { StyleSheet, StatusBar, Image } from 'react-native';
+import { Container, Content, Card, Text, Button, View, Picker, Badge, Icon, Header, Title } from 'native-base';
+import userPic from '../../../assets/img/userPic.jpg';
 import PureChart from 'react-native-pure-chart';
-import Speedometer from 'react-native-speedometer-chart';
-
 import NotificationsBell from "../../ui/NotificationsBell";
-
+import SimplePicker from 'react-native-simple-picker';
 import getHoursDelays from "../../../utils/getHoursDelays";
 import getHoursOfWork from "../../../utils/timeDiff";
-
 import { API_URL } from "../../../../config";
-
 import HttpClient from '../../../services/HttpClient';
 import { fetchDataFromAsyncStorage } from '../../../services/services';
+import click from '../../../assets/img/click.png'
+import { TouchableHighlight } from 'react-native-gesture-handler';
+
+
+const languages = ['English', 'Frensh'];
+
 
 var items = [
     {
@@ -55,13 +57,15 @@ export default class Dashboard extends React.Component {
         delays: 0,
         averageWorkHours: 0,
         byMonth: null,
+
+        languageSelected: 'English'
     }
 
     fetchAttendees = (yearFilter) => {
         this.setState({
             year: yearFilter
         });
-        
+
         fetchDataFromAsyncStorage('user')
             .then(user => {
 
@@ -109,7 +113,6 @@ export default class Dashboard extends React.Component {
 
                                 ],
                                 color: '#FFA14F'
-
                             },
                             {
                                 seriesName: 'hours',
@@ -176,11 +179,11 @@ export default class Dashboard extends React.Component {
             {
                 value: 50,
                 label: 'Refused',
-                color: '#C25A5A',
+                color: '#D94949',
             }, {
                 value: 40,
                 label: 'Canceled',
-                color: '#C2C25A'
+                color: '#E5DC6F'
             }, {
                 value: 25,
                 label: 'Accepted',
@@ -197,125 +200,126 @@ export default class Dashboard extends React.Component {
 
         return (
 
-            <Container style={{ backgroundColor: '#021630' }}>
+            <Container style={{ backgroundColor: 'white' }}>
                 <StatusBar hidden />
 
-                <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
+                <Header style={{ backgroundColor: 'white', flexDirection: 'row' }}>
                     <Icon name='md-menu' style={{
-                        color: 'white', position: 'absolute',
+                        color: 'black', position: 'absolute',
                         left: 20, top: 15
                     }}
                         onPress={() => this.props.navigation.openDrawer()}
                     />
-                    <Title style={{ top: 15 }}>Dashboard</Title>
-                    {/* <View style={{ position: 'absolute', right: 20 }}>
-                        <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-                        <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
-                    </View> */}
+                    <Title style={{
+                        top: 15, color: 'black', marginRight: 70, marginLeft: 15
+                    }}>Dashboard</Title>
+
+                    <TouchableHighlight onPress={() => props.navigation.navigate('Settings')} style={{
+                        borderRadius: 100,
+                        height: 30,
+                        width: 30,
+                        marginRight: 15,
+                        top: 15,
+                    }}>
+                        <Image source={userPic} style={{
+                            borderRadius: 100,
+                            height: 30,
+                            width: 30,
+                            borderWidth: 1,
+                            borderColor: 'black',
+                        }}></Image>
+                    </TouchableHighlight>
+
+                    <Icon name="md-globe"
+                        style={{
+                            top: 13,
+                            color: 'black',
+                            fontSize: 34,
+                            marginRight: 15,
+                        }}
+                        onPress={() => {
+                            this.refs.picker.show();
+                        }} />
+                    <SimplePicker
+                        ref={'picker'}
+                        options={languages}
+                        labels={languages}
+                        itemStyle={{
+                            fontSize: 25,
+                            color: 'red',
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                        }}
+                        onSubmit={(languages) => {
+                            this.setState({
+                                languageSelected: languages,
+                            });
+                        }}
+                    />
+
                     <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} />
                 </Header>
-                <View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Image
+                        source={click}
+                        style={[{ marginRight: 3, height: 30, width: 30, top: 20, left: 20 ,}]}
+                    />
                     <Picker
                         selectedValue={this.state.year}
+                        mode="dropdown"
                         style={{
                             height: 50,
                             width: 340,
                             alignSelf: 'center',
                             marginTop: 10,
                             marginBottom: 10,
-                            borderWidth: 1,
-                            borderColor: '#021630',
-                            color: 'white',
-                            backgroundColor: '#082955'
+                            color: 'black',
+                            backgroundColor: 'white',
+                            marginLeft: 10
                         }}
                         onValueChange={(itemValue, itemIndex) => this.fetchAttendees(itemValue)}>
-                        <Picker.Item label="Current year" value="2019" color="#021630"
-                            style={{ alignSelf: "center", backgroundColor: 'red' }} />
-                        <Picker.Item label="2018" value="2018" color="#021630" />
-                        <Picker.Item label="All years" value={null} color="#021630" />
-
-
-
+                        <Picker.Item label="Current year" value="2019" color="black"
+                            style={{ alignSelf: "center" }} />
+                        <Picker.Item label="2018" value="2018" color="black" />
+                        <Picker.Item label="All years" value={null} color="black" />
                     </Picker>
                 </View>
-
-                {/* <SearchableDropdown
-                    onTextChange={(itemValue, itemIndex) =>
-                        this.setState({ year: itemValue })}
-                    onItemSelect={
-                        (itemValue, itemIndex) =>
-                            this.setState({ year: JSON.stringify((itemValue.id)) })
-                    }
-                    containerStyle={{ padding: 5 }}
-                    textInputStyle={{
-                        padding: 12,
-                        borderWidth: 1,
-                        borderColor: '#021630',
-                        fontSize: 18,
-                        width: 340,
-                        alignSelf: 'center',
-                        color: 'white',
-                        backgroundColor: '#082955'
-                    }}
-                    itemStyle={{
-                        padding: 10,
-                        marginTop: 2,
-                        backgroundColor: '#4986B9',
-                        borderColor: '#082955',
-                        borderWidth: 1,
-                        width: 340,
-                        alignSelf: 'center',
-                    }}
-                    itemTextStyle={{ color: 'white' }}
-                    itemsContainerStyle={{ maxHeight: 140 }}
-                    items={items}
-                    // defaultIndex={3}
-                    placeholder="Current year"
-                    resetValue={false}
-                    underlineColorAndroid="transparent"
-                /> */}
-
                 <Content  >
 
                     <View  >
-
-
-
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                             <Button badge vertical style={{
-                                backgroundColor: '#082955', borderRadius: 20
+                                backgroundColor: '#ECECEC', borderRadius: 20
                                 , width: 170, marginRight: 5, marginBottom: 10, left: 4, top: 5
                             }}>
-                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}>
+                                <Badge style={styles.greenBadge }>
                                     <Text>{this.state.workedHours}</Text>
                                 </Badge>
-                                <Text style={{ color: 'white' }}>Hours worked</Text>
+                                <Text style={{ color: 'black' }}>Hours worked</Text>
                             </Button>
                             <Button badge vertical style={{
                                 borderRadius: 20,
-                                backgroundColor: '#082955', width: 164, marginRight: 5, marginBottom: 10, left: 4, top: 5
+                                backgroundColor: '#ECECEC', width: 164, marginRight: 5, marginBottom: 10, left: 4, top: 5
                             }}>
-                                <Badge style={{
-                                    backgroundColor: '#3F7930', top: -10
-                                }} ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
-                                <Text style={{ color: 'white' }} >Days worked</Text>
+                                <Badge style={
+                                    styles.greenBadge
+                                } ><Text>{this.state.daysWorked && this.state.daysWorked}</Text></Badge>
+                                <Text style={{ color: 'black' }} >Days worked</Text>
                             </Button>
-
-
                         </View>
 
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                             <Button badge vertical style={{
-                                marginRight: 6, marginBottom: 10, backgroundColor: '#082955', width: 230, top: 5, borderRadius: 20
+                                marginRight: 6, marginBottom: 10, backgroundColor: '#ECECEC', width: 230, top: 5, borderRadius: 20
                             }}>
-                                <Badge style={{ backgroundColor: '#3F7930', top: -10 }}><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
-                                <Text style={{ color: 'white' }} >Average working hours</Text>
+                                <Badge style={ styles.greenBadge }><Text>{this.state.workedHours && this.state.daysWorked && (this.state.workedHours / this.state.daysWorked).toFixed(2)}</Text></Badge>
+                                <Text style={{ color: 'black' }} >Average working hours</Text>
                             </Button>
                             <Button badge vertical style={{
-                                backgroundColor: '#082955', marginBottom: 10, width: 104, top: 5, borderRadius: 20
+                                backgroundColor: '#ECECEC', marginBottom: 10, width: 104, top: 5, borderRadius: 20
                             }}>
                                 <Badge style={{ backgroundColor: '#E82C2C', top: -10 }}><Text>{this.state.delays && this.state.delays}</Text></Badge>
-                                <Text style={{ color: 'white' }} >Delays</Text>
+                                <Text style={{ color: 'black' }} >Delays</Text>
                             </Button>
                         </View>
 
@@ -323,7 +327,7 @@ export default class Dashboard extends React.Component {
                         <Card style={styles.lineChart} >
                             {this.state.graphData && <PureChart data={this.state.graphData}
                                 type='bar'
-                                backgroundColor='#082955'
+                                backgroundColor='#ECECEC'
                                 height={150}
                             />}
                             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 10, left: 10 }}>
@@ -334,64 +338,15 @@ export default class Dashboard extends React.Component {
                         </Card>
 
 
-                        {/* <CardItem>
-                            <Left>
-                                <Button transparent>
-                                    <Image source={blueIcon} />
-                                    <Text style={{ color: '#6894C7' }}>Days worked</Text>
-                                </Button>
-                            </Left>
-
-                            <Body>
-                                <Button transparent>
-                                    <Image source={redIcon} />
-                                    <Text style={{ color: '#C95C5C' }}>Hours worked</Text>
-                                </Button>
-                            </Body> */}
-
-                        {/* <Right>
-                                <Button backgroundColor='#F1F4FA' style={{
-                                    borderRadius: 20
-                                }} >
-                                    <Image source={detailsIcon} style={{ right: -10 }} />
-                                    <Text style={{ color: '#6FBADE' }}>Details </Text>
-                                </Button>
-                            </Right> */}
-                        {/* </CardItem> */}
-
                     </View>
 
                     <Card style={styles.cardStyle}>
-                        <Text style={{ fontSize: 18, left: -80, marginTop: 10, color: 'white', marginBottom: 20 }}>Authorizations</Text>
+                        <Text style={{ fontSize: 18, left: -80, marginTop: 10, color: 'black', marginBottom: 20 }}>Authorizations</Text>
                         <PureChart data={sampleDataa} type='pie' />
                         <View style={{ height: 20 }}></View>
                     </Card>
-
-
-
-                    {/* <View style={styles.cardStyle}  >
-                        <Text style={{ fontSize: 18, marginTop:10 , marginBottom:10,color:'white' , left:-80}}>Average grade</Text>
-                        <View >
-                            <Speedometer
-                                value={13}
-                                totalValue={20}
-                                size={250}
-                                outerColor="#C2ECD4"
-                                internalColor="#327951"
-                                showText
-                                text="13.00"
-                                textStyle={{ color: '#297AB1' }}
-                                showLabels
-                                labelStyle={{ color: '#327951' }}
-                                showPercent
-                                percentStyle={{ color: '#327951' }}
-                            /></View>
-                    </View> */}
-
                 </Content>
-
-
-            </Container>
+            </Container >
         );
     }
 }
@@ -405,14 +360,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         width: 340,
-        backgroundColor: '#082955',
-        borderColor: '#082955',
+        backgroundColor: '#ECECEC',
+        borderColor: '#ECECEC',
         borderRadius: 20
     },
 
     lineChart: {
-        backgroundColor: '#082955',
-        borderColor: '#082955',
+        backgroundColor: '#ECECEC',
+        borderColor: '#ECECEC',
         paddingTop: 25,
         paddingBottom: 10,
         paddingRight: 20,
@@ -422,6 +377,10 @@ const styles = StyleSheet.create({
 
 
     },
+
+    greenBadge:{
+        backgroundColor: '#3F7930', top: -10
+    }
 
 }
 );

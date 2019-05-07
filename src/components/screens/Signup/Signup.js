@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
 import {Button} from 'react-native-elements'
-import StyledInput from '../../ui/Input';
+import StyledInput from '../../ui/Input/Input';
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';

@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View ,Image} from 'react-native';
+import companyLogo from '../../../assets/img/proxym.png'
 
 export default class AuthenticationLoading extends React.Component {
     constructor(props) {
@@ -16,8 +17,10 @@ export default class AuthenticationLoading extends React.Component {
 
     render() {
         return (
-            <View style={[styles.container, styles.horizontal]}>
-                <ActivityIndicator size={80} color="#0000ff" />
+            <View style={styles.container}>
+              <Image source={companyLogo} style={{marginBottom:50}}></Image>
+
+                <ActivityIndicator size={80} color="#2594DA" />
                 <StatusBar hidden={true} />
             </View>
         );
@@ -26,11 +29,14 @@ export default class AuthenticationLoading extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center'
-    },
-    horizontal: {
-        flexDirection: 'row',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
         justifyContent: 'center',
+        zIndex: 10,
+        backgroundColor: 'black',
     }
 });
