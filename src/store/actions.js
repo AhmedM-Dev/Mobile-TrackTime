@@ -41,4 +41,20 @@ export const getUserFromAsyncStorageToStore = () => dispatch => {
             error
         });
     });
-} 
+}
+
+export const getAvatar = () => dispatch => {
+    http.get("avatar")
+    .then(response => {
+        dispatch({
+            type: types.GET_AVATAR,
+            payload: response.data
+        });
+    })
+    .catch(error => {
+        dispatch({
+            type: types.ADD_ERROR,
+            error
+        });
+    });
+}

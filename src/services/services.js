@@ -37,7 +37,7 @@ export const getDashboardData = async (user) => {
 };
 
 export const logout = async ({ navigate }) => {
-    await AsyncStorage.clear();
+    await AsyncStorage.removeItem('user');
     navigate('Auth');
 };
 

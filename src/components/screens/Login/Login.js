@@ -122,7 +122,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  authenticateWithRedux(payload) { dispatch(authenticateWithRedux(payload)) },
+  authenticateWithRedux(payload) { dispatch(authenticateWithRedux(payload)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

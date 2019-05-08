@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import dashboardReducer from "../components/screens/Dashboard/reducers";
+import settingsReducer from "../components/screens/Setting/reducers";
 
 import types from './types';
 
@@ -43,6 +44,12 @@ export const authReducer = (state = { user: {} }, action) => {
                 error: action.error,
             }
 
+        case types.GET_AVATAR:
+            return {
+                ...state,
+                avatar: action.payload
+            }
+
         case types.GET_USER_FROM_ASYNCSTORAGE_TO_STORE:
             return {
                 ...state,
@@ -77,5 +84,6 @@ export default combineReducers({
     errors,
     authReducer,
     loadingReducer,
+    settingsReducer,
     dashboardReducer
 });
