@@ -1,6 +1,7 @@
 import React from 'react';
-import { StatusBar, StyleSheet, AsyncStorage, Image, TouchableHighlight ,     TextInput
+import { StatusBar, StyleSheet, Image, TouchableHighlight ,     TextInput
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
     Container,
     Content,

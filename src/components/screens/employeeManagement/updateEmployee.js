@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform, AsyncStorage } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import StyledInput from '../../ui/Input/lightInput';

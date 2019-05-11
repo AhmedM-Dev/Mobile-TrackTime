@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View ,Image} from 'react-native';
+import { ActivityIndicator, StatusBar, StyleSheet, View ,Image} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import companyLogo from '../../../assets/img/proxym.png'
 
 export default class AuthenticationLoading extends React.Component {

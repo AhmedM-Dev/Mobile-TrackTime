@@ -1,6 +1,7 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, AsyncStorage, Text, } from 'react-native'
+import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, Text, } from 'react-native'
 import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation'
+import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Badge, View } from 'native-base';
 import { Button } from 'react-native-elements'
 import Login from './components/screens/Login';

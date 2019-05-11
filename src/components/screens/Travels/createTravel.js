@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
     StatusBar,
-    AsyncStorage,
     StyleSheet,
     TextInput
 } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View, Content, Picker, Button, Container, Icon } from 'native-base'
 import axios from "axios";
 import { API_URL } from "../../../../config";
