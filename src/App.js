@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, Text, } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation';
@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 
 import store from '../src/store';
 
+import Administration from "./components/screens/Administration";
 import Login from './components/screens/Login';
 import Signup from './components/screens/Signup';
 import AuthenticationLoading from "./components/screens/AuthenticationLoading";
@@ -20,6 +21,13 @@ import History from './components/screens/History';
 import Avatar from './components/screens/Avatar';
 import Displacements from './components/screens/Travels';
 import Pm from './components/screens/Pm';
+import addEvent from './components/screens/eventManagement/addEvent';
+import addHolidays from './components/screens/holidaysManagement/addHolidays';
+import addUser from './components/screens/employeeManagement/addEmployee';
+import removeUser from './components/screens/employeeManagement/deleteEmployee';
+import updateUser from './components/screens/employeeManagement/updateEmployee';
+import Notifications from './components/screens/Notifications';
+import Holidays from './components/screens/Holidays';
 
 import { logout } from './services/services';
 
@@ -32,6 +40,7 @@ import leaveIcon from './assets/img/leaveIcon.png'
 import AttendanceTimeIcon from './assets/img/attendanceTime.png'
 import DisplacementsLogo from './assets/img/DisplacementsLogo.png';
 import { fetchDataFromAsyncStorage } from './services/services';
+import adminIcon from './assets/img/Admin.png';
 
 const AppContext = React.createContext({
   theme: {}
@@ -80,64 +89,76 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
     logout(props.navigation);
   };
 
-  const { background, activeBackgroundColor, activeLabelStyle, inactiveLabelStyle, logoutFontColor, logoutBackground, userBackground } = props.theme.menu;
 
-  return (
-    <AppContext.Provider value={{ theme: props.theme }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ImageBackground style={{ height: 180, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} source={props.theme.preset === 'light' ? bgm2 : bgm}>
-          <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
-            <Image source={{ uri: props.avatar && props.avatar.photo }} style={{
-              borderRadius: 100,
-              height: 140,
-              width: 140,
-              borderWidth: 2,
-              borderColor: '#104E77',
-              left: -10,
-              marginRight: 10
-            }}></Image>
-          </TouchableHighlight>
-          <View style={{ width: 80 }}>
-            <Text style={{ color: props.theme.fontColor }}>{props.user.displayName}</Text>
-            <Text style={{ color: props.theme.fontColor }}>{props.user.job_title}</Text>
-          </View>
-        </ImageBackground>
-        <ScrollView style={{ backgroundColor: background }}>
-          <DrawerItems {...props}
-            // labelStyle={{ color: props.theme.fontColor }}
-            // activeTintColor='red' 
-            activeBackgroundColor={activeBackgroundColor}
-            // inactiveTintColor='red'
-            //  inactiveBackgroundColor='transparent' 
-            inactiveLabelStyle={{ color: inactiveLabelStyle }}
-            activeLabelStyle={{ color: activeLabelStyle }}
-          // activeLabelStyle={{color: 'red'}}
-          />
+  if (!props.user.username) {
+    return <></>
+  } else {
 
-          <Button
-            icon={
-              <Icon
-                name="md-log-out"
-                style={{ color: logoutFontColor, marginRight: 10, fontSize: 18 }}
-              />
-            }
-            buttonStyle={{
-              backgroundColor: logoutBackground,
-              borderRadius: 0,
-              width: 270,
-              alignSelf: 'center',
-            }}
-            titleStyle={{
-              color: logoutFontColor,
-              top: -1
-            }}
-            title="Logout"
-            onPress={() => _signOutAsync()}
-          />
-        </ScrollView>
-      </SafeAreaView>
-    </AppContext.Provider>
-  );
+    const menu = {
+      ...props,
+      items: props.user.jobTitle === 'Administrator' ? props.items : props.items.filter(item => item.key !== 'Administration')
+    }
+
+    const { background, activeBackgroundColor, activeLabelStyle, inactiveLabelStyle, logoutFontColor, logoutBackground, userBackground } = props.theme.menu;
+
+    return (
+      <AppContext.Provider value={{ theme: props.theme }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ImageBackground style={{ height: 180, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} source={props.theme.preset === 'light' ? bgm2 : bgm}>
+            <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
+              <Image source={{ uri: props.avatar && props.avatar.photo }} style={{
+                borderRadius: 100,
+                height: 140,
+                width: 140,
+                borderWidth: 2,
+                borderColor: '#104E77',
+                left: -10,
+                marginRight: 10
+              }}></Image>
+            </TouchableHighlight>
+            <View style={{ width: 80 }}>
+              <Text style={{ color: props.theme.fontColor }}>{props.user.displayName}</Text>
+              <Text style={{ color: props.theme.fontColor }}>{props.user.jobTitle}</Text>
+            </View>
+          </ImageBackground>
+          <ScrollView style={{ backgroundColor: background }}>
+            <DrawerItems {...menu}
+              // labelStyle={{ color: props.theme.fontColor }}
+              // activeTintColor='red' 
+              activeBackgroundColor={activeBackgroundColor}
+              // inactiveTintColor='red'
+              //  inactiveBackgroundColor='transparent' 
+              inactiveLabelStyle={{ color: inactiveLabelStyle }}
+              activeLabelStyle={{ color: activeLabelStyle }}
+            // activeLabelStyle={{color: 'red'}}
+            />
+
+            <Button
+              icon={
+                <Icon
+                  name="md-log-out"
+                  style={{ color: logoutFontColor, marginRight: 10, fontSize: 18 }}
+                />
+              }
+              buttonStyle={{
+                backgroundColor: logoutBackground,
+                borderRadius: 0,
+                width: 270,
+                alignSelf: 'center',
+              }}
+              titleStyle={{
+                color: logoutFontColor,
+                top: -1
+              }}
+              title="Logout"
+              onPress={() => _signOutAsync()}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </AppContext.Provider>
+    );
+  }
+
 });
 
 // const itemColor = store.getState().settingsReducer.theme.menu.activeLabelStyle;
@@ -147,6 +168,15 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
  */
 const AppDrawNavigator = createDrawerNavigator(
   {
+    'Administration': {
+      screen: Administration,
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <Image source={adminIcon} style={{ height: 18, width: 18 }} />
+        )
+      })
+    },
+
     'Dashboard': {
       screen: Dashboard,
       navigationOptions: () => ({
@@ -227,12 +257,23 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+    'Holidays': {
+      screen: Holidays,
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <AppContext.Consumer>
+            {value => <Icon name="md-happy" size={20} style={{ color: value.theme.menu.activeLabelStyle, fontSize: 20 }} />}
+          </AppContext.Consumer>
+        )
+      })
+    },
+
     'Settings': {
       screen: Setting,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
           <AppContext.Consumer>
-            {value => <Icon name="md-settings" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+            {value => <Icon name="md-settings" style={{ color: value.theme.menu.activeLabelStyle, fontSize: value.theme.menu.fontSize }} />}
           </AppContext.Consumer>
         )
       })
@@ -242,7 +283,53 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: Avatar,
       navigationOptions: ({ navigation }) => ({
         drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
 
+    'addUser': {
+      screen: addUser,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    'removeUser': {
+      screen: removeUser,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+    'updateUser': {
+      screen: updateUser,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    'addEvent': {
+      screen: addEvent,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    'addHolidays': {
+      screen: addHolidays,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    'Notifications': {
+      screen: Notifications,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },

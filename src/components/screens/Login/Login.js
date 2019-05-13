@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, Text, View, StatusBar, Image, Icon, ToastAndroid, ActivityIndicator } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TextInput, View, StatusBar, Image, Icon, ToastAndroid, ActivityIndicator } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements'
 import { connect } from 'react-redux';
+import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 
 import StyledInput from '../../ui/Input';
 
@@ -17,6 +18,9 @@ import { authenticate, storeDataToAsyncStorage } from '../../../services/service
 import { authenticateWithRedux } from '../../../store/actions';
 
 import styles from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { API_URL } from "../../../../config";
 
 class Login extends Component {
 
@@ -25,6 +29,23 @@ class Login extends Component {
     loading: false,
     email: "ahmed.tux@protonmail.com",
     pass: "ahmed1989",
+    countClick: 0,
+    promptAPIURL: false,
+    apiURL: API_URL
+  }
+
+  handleLogoClick = () => {
+    this.setState({
+      countClick: this.state.countClick + 1
+    }, () => {
+      console.log("clicks:", this.state.countClick);
+      if (this.state.countClick > 2) {
+        this.setState({
+          promptAPIURL: true,
+          countClick: 0
+        });
+      }
+    });
   }
 
   CheckBoxTest = () => {
@@ -66,22 +87,65 @@ class Login extends Component {
 
   render() {
     return (
-      <ImageBackground style={styles.container} source={Background}>
-        {this.props.logging &&
-          <View style={styles.loading}>
-            <ActivityIndicator size={80} color="#0000ff" />
+      <>
+        <Dialog
+          onDismiss={() => {
+            this.setState({ promptAPIURL: false });
+          }}
+          onTouchOutside={() => {
+            this.setState({ promptAPIURL: false });
+          }}
+          visible={this.state.promptAPIURL}
+          dialogTitle={<DialogTitle title="Change API http address" />}
+          dialogAnimation={new SlideAnimation({ slideFrom: 'bottom' })}
+        >
+          <DialogContent>
+            <Text>Slide Animation</Text>
+            <TextInput name="apiUrl" value={this.state.apiURL} placeholder="API URL" defaultValue={API_URL} />
+            <StyledInput defaultValue={API_URL} value={this.state.apiURL} onChange={null} name="apiUrl" text={'API URL'} textColor={'black'} />
+          </DialogContent>
+        </Dialog>
+        {/* <Dialog
+          style={{ width: '80%' }}
+          visible={this.state.promptAPIURL}
+          onTouchOutside={() => {
+            this.setState({ promptAPIURL: false });
+          }}
+          footer={
+            <DialogFooter>
+              <DialogButton
+                text="CANCEL"
+                onPress={() => { }}
+              />
+              <DialogButton
+                text="OK"
+                onPress={() => { }}
+              />
+            </DialogFooter>
+          }
+        >
+          <DialogContent>
+            <Text>Hello there</Text>
+          </DialogContent>
+        </Dialog> */}
+        <ImageBackground style={styles.container} source={Background}>
+          {this.props.logging &&
+            <View style={styles.loading}>
+              <ActivityIndicator size={80} color="#0000ff" />
+            </View>
+          }
+          <StatusBar hidden />
+          <View style={{ flexDirection: 'row', top: 100 }}>
+            <Image source={companyLogo} style={{ height: 50, width: 50, marginRight: 15 }}></Image>
+            <TouchableOpacity onPress={this.handleLogoClick}>
+              <Image source={LogoApp}></Image>
+            </TouchableOpacity>
           </View>
-        }
-        <StatusBar hidden />
-        <View style={{ flexDirection: 'row', top: 100 }}>
-          <Image source={companyLogo} style={{ height: 50, width: 50, marginRight: 15 }}></Image>
-          <Image source={LogoApp}></Image>
-        </View>
-        <View style={styles.inputPos}>
-          <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
-          <StyledInput value={this.state.pass} onChange={this.handlePassChange} name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
-        </View>
-        {/* <View style={styles.checkPos}>
+          <View style={styles.inputPos}>
+            <StyledInput value={this.state.email} onChange={this.handleEmailChange} name="email" image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" require />
+            <StyledInput value={this.state.pass} onChange={this.handlePassChange} name="pass" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} />
+          </View>
+          {/* <View style={styles.checkPos}>
           <CheckBox
             checkedIcon={<Image source={checkedIcon} style={{ height: 20, width: 20, marginRight: -10 }} />}
             uncheckedIcon={<Image source={uncheckedIcon} style={{ height: 20, width: 20, marginRight: -10 }} />}
@@ -90,23 +154,24 @@ class Login extends Component {
           />
           <Text style={styles.remember}> Remember me </Text>
         </View> */}
-        <Button
-          buttonStyle={{
-            height: 50,
-            width: 300,
-            backgroundColor: '#19678F',
-            borderWidth: 1,
-            borderRadius: 30,
-            borderColor: '#19678F',
-            top: 350,
-            padding: 10,
-            position: 'relative',
-            opacity: 0.8
-          }}
-          title="Log in"
-          onPress={() => this.handleAuthentication()} />
+          <Button
+            buttonStyle={{
+              height: 50,
+              width: 300,
+              backgroundColor: '#19678F',
+              borderWidth: 1,
+              borderRadius: 30,
+              borderColor: '#19678F',
+              top: 350,
+              padding: 10,
+              position: 'relative',
+              opacity: 0.8
+            }}
+            title="Log in"
+            onPress={() => this.handleAuthentication()} />
 
-      </ImageBackground>
+        </ImageBackground>
+      </>
     );
   }
 }

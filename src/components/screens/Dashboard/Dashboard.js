@@ -15,35 +15,35 @@ import { getAvatar } from "../../../store/actions";
 
 import prepareGraphDate from "../../../utils/prepareGraphDate";
 
-var items = [
-    {
-        id: 'Current year',
-        name: 'Current year',
-    },
-    {
-        id: '2018',
-        name: '2018',
-    },
-    {
-        id: 'All years',
-        name: 'All years',
-    },
+// var items = [
+//     {
+//         id: 'Current year',
+//         name: 'Current year',
+//     },
+//     {
+//         id: '2018',
+//         name: '2018',
+//     },
+//     {
+//         id: 'All years',
+//         name: 'All years',
+//     },
 
-];
+// ];
 
-option = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-    }]
-};
+// option = {
+//     xAxis: {
+//         type: 'category',
+//         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//     },
+//     yAxis: {
+//         type: 'value'
+//     },
+//     series: [{
+//         data: [820, 932, 901, 934, 1290, 1330, 1320],
+//         type: 'line'
+//     }]
+// };
 
 class Dashboard extends React.Component {
     state = {
@@ -94,8 +94,6 @@ class Dashboard extends React.Component {
             }
 
         ]
-
-
 
         if (!this.props.stats) {
             return (
@@ -213,11 +211,13 @@ Dashboard.propTypes = {
     loading: PropTypes.bool,
     user: PropTypes.shape({
         email: PropTypes.string,
-        job_title: PropTypes.string,
+        jobTitle: PropTypes.string,
         token: PropTypes.string,
         userId: PropTypes.number,
         username: PropTypes.string,
-        displayName: PropTypes.string
+        displayName: PropTypes.string,
+        groupId: PropTypes.number,
+        phoneNumber: PropTypes.number
     }),
     stats: PropTypes.shape({
         averageWorkingHours: PropTypes.number,

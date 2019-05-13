@@ -52,7 +52,7 @@ export default class HttpClient {
         return this.axiosClient.post(domain, payload);
     }
 
-    put(domain) {
+    put(domain, payload) {
         return this.axiosClient.put(domain, payload);
     }
 

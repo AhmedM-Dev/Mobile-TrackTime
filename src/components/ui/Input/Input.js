@@ -15,6 +15,7 @@ export default StyledInput = (props) => {
             placeholderTextColor={props.textColor}
             keyboardType={props.keyboardType}
             secureTextEntry={props.secureTextEntry}
+            defaultValue={props.defaultValue}
           />
         </View>
         
