@@ -20,7 +20,7 @@ const prepareGraphData = (statsData) => {
                 { x: 'December', y: statsData[11].workedDays },
 
             ],
-            color: 'green'
+            color: '#4C98B4'
         },
         {
             seriesName: 'hours',
@@ -38,7 +38,7 @@ const prepareGraphData = (statsData) => {
                 { x: 'November', y: statsData[10].workedHours },
                 { x: 'December', y: statsData[11].workedHours },
             ],
-            color: 'blue'
+            color: '#AA669A'
         },
         {
             seriesName: 'delays',

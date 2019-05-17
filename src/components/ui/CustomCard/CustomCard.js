@@ -4,18 +4,6 @@ import { connect } from "react-redux";
 import { Card, Text, View } from 'native-base';
 
 const CustomCard = props => {
-
-    // const [body, setBody] = useState(null);
-    // const [footer, setFooter] = useState(null);
-
-    // React.Children.map(props.children, (child) => {
-    //     if (child.key === 'body') {
-    //         setBody(child);
-    //     } else if ((child.key === 'footer')) {
-    //         setFooter(child);
-    //     }
-    // });
-
     return (
         <Card style={{ ...styles.lineChart, backgroundColor: props.theme.cardBackground, borderColor: props.theme.cardBackground }}>
             {props.children}

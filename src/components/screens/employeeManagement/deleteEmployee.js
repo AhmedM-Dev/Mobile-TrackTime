@@ -45,17 +45,16 @@ export default class adminMenu extends Component {
     }
     render() {
         return (
-            <ImageBackground style={styles.container} source={Background}>
-                    <Content>
+            <View style={styles.container} >
+            <Content>
                 <Icon
-                    name="md-arrow-round-back"
+                    name="md-keypad"
                     style={{
-                        color: 'white',
+                        color: 'black',
                         margin:15,
                         top:10
                     }}
                     onPress={() => this.props.navigation.navigate('Administration')} />
-<Text style={{color:'white' , alignSelf:'center', top:100}}> Remove user </Text>
 
                     <View style={styles.inputPos}>
                         <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
@@ -66,7 +65,7 @@ export default class adminMenu extends Component {
 
 
                     <ActionButton
-                        buttonColor="transparent"
+                        buttonColor="black"
                         btnOutRange="#C8593C"
                         icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
                         degrees={180}
@@ -96,7 +95,7 @@ export default class adminMenu extends Component {
                         </ActionButton.Item>
                     </ActionButton>
                 </Content>
-            </ImageBackground>
+            </View>
         );
     }
 }
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-
+        backgroundColor: '#E7E7E7',
     },
 
 inputPos:{

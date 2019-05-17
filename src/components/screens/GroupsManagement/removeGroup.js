@@ -3,67 +3,44 @@ import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-n
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import StyledInput from '../../ui/Input/lightInput';
-import EmailIcon from '../../../assets/img/Email.png';
-import PasswordIcon from '../../../assets/img/password.png';
+import titleIcon from '../../../assets/img/titleIcon.png';
 import axios from "axios";
 import { API_URL } from "../../../../config";
 import Background from '../../../assets/img/backgroundM.jpg';
-import groupIcon from '../../../assets/img/group.png';
-import jobLogo from '../../../assets/img/jobLogo.png';
-export default class adminMenu extends Component {
-    constructor() {
-        super();
+import ImagePicker from 'react-native-image-picker';
+import StyledInput from '../../ui/Input/addEventInput';
+
+
+
+
+
+export default class addEvent extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            email: '',
-            password: null,
-
         }
-    };
-
-
-    handleEmailChange = (text) => {
-        this.setState({
-            ...this.state,
-            email: text
-        });
     }
-
-    handlePassChange = (text) => {
-        this.setState({
-            ...this.state,
-            pass: text
-        });
-    }
-
-    componentWillMount() {
-        AsyncStorage.getItem("user").then(user => {
-
-            this.setState({
-                connectedUser: JSON.parse(user)
-            });
-        })
-    }
+   
     render() {
         return (
             <View style={styles.container} >
-                    <Content>
-                <Icon
-                    name="md-keypad"
-                    style={{
-                        color: 'black',
-                        margin:15,
-                        top:10
-                    }}
-                    onPress={() => this.props.navigation.navigate('Administration')} />
+                <Content>
+                    <Icon
+                        name="md-keypad"
+                        style={{
+                            color: 'black',
+                            margin: 15,
+                            top:10
+                        }}
+                        onPress={() => this.props.navigation.navigate('Administration')} />
+                 
+                    
 
-                    <View style={styles.inputPos}>
-                        <StyledInput image={EmailIcon} text={'User email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-                         <View style={{ marginTop:20 , marginBottom:10}}/>
-                        <StyledInput image={groupIcon} text={'New group ID'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-                        <StyledInput image={jobLogo} text={'New job title '} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-
+                    <View style={{marginBottom:80, marginTop:100}}>
+                    <StyledInput image={titleIcon} text={'Group name'} textColor={'white'} />
                     </View>
+
+
 
 
 
@@ -74,7 +51,7 @@ export default class adminMenu extends Component {
                         degrees={180}
                         size={40}
                         radius={50}
-                        
+
                     // outRangeScale={0.5}       
                     >
 
@@ -107,18 +84,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#E7E7E7',
+        justifyContent:'center'
     },
 
-inputPos:{
-    top:120,
-    marginBottom:250
-},
 
-actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
-    color: 'white',
-    
-},
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+
+    },
+
+    instructions2: {
+        color: 'white',
+        marginBottom: 15,
+        fontSize: 16
+    },
+
 
 });

@@ -97,29 +97,28 @@ class AddMenu extends Component {
 
   render() {
     return (
-      <ImageBackground style={styles.container} source={Background}>
+      <View style={styles.container} >
         <Content>
           <Icon
-            name="md-arrow-round-back"
+            name="md-keypad"
             style={{
-              color: 'white',
+              color: 'black',
               margin: 15,
               top: 10
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-          <Text style={{ color: 'white', alignSelf: 'center' }}> Add user </Text>
           <View style={styles.inputPos}>
             <StyledInput image={logoName} text={'First name'} textColor={'white'} onChange={this.handleFirstNAmeChange} />
             <StyledInput image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleLastNameChange} />
             <StyledInput image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleJobTitleChange} />
             <StyledInput image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleGroupIdChange} />
-            <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} />
+            {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}
             <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
             <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handlePassChange} />
           </View>
 
           <ActionButton
-            buttonColor="transparent"
+            buttonColor="black"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
@@ -146,7 +145,7 @@ class AddMenu extends Component {
             </ActionButton.Item>
           </ActionButton>
         </Content>
-      </ImageBackground>
+      </View>
     );
   }
 }
@@ -154,7 +153,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-  },
+    backgroundColor: '#E7E7E7',
+},
 
   inputPos: {
     top: 30,

@@ -20,27 +20,20 @@ import Setting from './components/screens/Setting';
 import History from './components/screens/History';
 import Avatar from './components/screens/Avatar';
 import Displacements from './components/screens/Travels';
-import Pm from './components/screens/Pm';
-import addEvent from './components/screens/eventManagement/addEvent';
 import addHolidays from './components/screens/holidaysManagement/addHolidays';
+import EmployeeManagement from './components/screens/employeeManagement/EmployeeManagement';
 import addUser from './components/screens/employeeManagement/addEmployee';
 import removeUser from './components/screens/employeeManagement/deleteEmployee';
 import updateUser from './components/screens/employeeManagement/updateEmployee';
 import Notifications from './components/screens/Notifications';
 import Holidays from './components/screens/Holidays';
-
+import GroupsManagement from './components/screens/GroupsManagement/GroupsManagement';
+import EventsManagement from './components/screens/eventManagement/EventsManagement';
+import addEvent from './components/screens/eventManagement/addEvent';
+import removeEvent from './components/screens/eventManagement/removeEvent';
+import updateEvent from './components/screens/eventManagement/updateEvent';
 import { logout } from './services/services';
 
-import pmLogo from './assets/img/pm.png'
-import userPic from './assets/img/userPic.jpg';
-import bgm2 from './assets/img/background2.jpg';
-import bgm from './assets/img/background.jpg';
-import eventsLogo from './assets/img/eventsLogo.png'
-import leaveIcon from './assets/img/leaveIcon.png'
-import AttendanceTimeIcon from './assets/img/attendanceTime.png'
-import DisplacementsLogo from './assets/img/DisplacementsLogo.png';
-import { fetchDataFromAsyncStorage } from './services/services';
-import adminIcon from './assets/img/Admin.png';
 
 const AppContext = React.createContext({
   theme: {}
@@ -104,23 +97,22 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
     return (
       <AppContext.Provider value={{ theme: props.theme }}>
         <SafeAreaView style={{ flex: 1 }}>
-          <ImageBackground style={{ height: 180, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} source={props.theme.preset === 'light' ? bgm2 : bgm}>
+        <View style={{backgroundColor:'black' , height:120 ,flexDirection:'row' , justifyContent:'center',alignItems:'center'}}>
             <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
               <Image source={{ uri: props.avatar && props.avatar.photo }} style={{
                 borderRadius: 100,
-                height: 140,
-                width: 140,
+                height: 85,
+                width: 85,
                 borderWidth: 2,
-                borderColor: '#104E77',
-                left: -10,
-                marginRight: 10
+                borderColor: '#ECECEC',
+                marginRight:20
               }}></Image>
             </TouchableHighlight>
-            <View style={{ width: 80 }}>
-              <Text style={{ color: props.theme.fontColor }}>{props.user.displayName}</Text>
-              <Text style={{ color: props.theme.fontColor }}>{props.user.jobTitle}</Text>
+            <View style={{ width: 150 }}>
+              <Text style={{ color: 'white' }}>{props.user.displayName}</Text>
+              <Text style={{ color: 'white' }}>{props.user.jobTitle}</Text>
             </View>
-          </ImageBackground>
+          </View>
           <ScrollView style={{ backgroundColor: background }}>
             <DrawerItems {...menu}
               // labelStyle={{ color: props.theme.fontColor }}
@@ -137,7 +129,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
               icon={
                 <Icon
                   name="md-log-out"
-                  style={{ color: logoutFontColor, marginRight: 10, fontSize: 18 }}
+                  style={{ color: logoutFontColor, marginRight: 10, fontSize: 18 , left:-81 }}
                 />
               }
               buttonStyle={{
@@ -148,7 +140,8 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
               }}
               titleStyle={{
                 color: logoutFontColor,
-                top: -1
+                top: -1,
+                left:-58
               }}
               title="Logout"
               onPress={() => _signOutAsync()}
@@ -170,9 +163,11 @@ const AppDrawNavigator = createDrawerNavigator(
   {
     'Administration': {
       screen: Administration,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: () => ({
         drawerIcon: (
-          <Image source={adminIcon} style={{ height: 18, width: 18 }} />
+          <AppContext.Consumer>
+            {value => <Icon name="md-keypad" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+          </AppContext.Consumer>
         )
       })
     },
@@ -215,7 +210,7 @@ const AppDrawNavigator = createDrawerNavigator(
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
           <AppContext.Consumer>
-            {value => <Icon name="jet" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+            {value => <Icon name="md-navigate" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
           </AppContext.Consumer>
         )
       })
@@ -232,16 +227,16 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-    'Project management': {
-      screen: Pm,
-      navigationOptions: ({ navigation }) => ({
-        drawerIcon: (
-          <AppContext.Consumer>
-            {value => <Icon name="md-construct" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
-          </AppContext.Consumer>
-        )
-      })
-    },
+    // 'Project management': {
+    //   screen: Pm,
+    //   navigationOptions: ({ navigation }) => ({
+    //     drawerIcon: (
+    //       <AppContext.Consumer>
+    //         {value => <Icon name="md-construct" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+    //       </AppContext.Consumer>
+    //     )
+    //   })
+    // },
 
     'Events': {
       screen: Events,
@@ -295,6 +290,16 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+
+    'EmployeeManagement': {
+      screen: EmployeeManagement,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    
     'removeUser': {
       screen: removeUser,
       navigationOptions: ({ navigation }) => ({
@@ -309,6 +314,40 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
+    'removeEvent': {
+      screen:  removeEvent,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+    'EventsManagement': {
+      screen:  EventsManagement,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+    'GroupsManagement': {
+      screen:  GroupsManagement,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+
+
+    
+    'updateEvent': {
+      screen:  updateEvent,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+ 
 
     'addEvent': {
       screen: addEvent,

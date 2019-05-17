@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch } from 'react-native';
+import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch , Image} from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
+import companyLogo from '../../../assets/img/proxym.png'
 
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
@@ -45,7 +46,47 @@ import prepareGraphDate from "../../../utils/prepareGraphDate";
 //     }]
 // };
 
+import userPic from '../../../assets/img/userPic.jpg';
+import SimplePicker from 'react-native-simple-picker';
+import click from '../../../assets/img/click.png'
+import { TouchableHighlight } from 'react-native-gesture-handler';
+
+
+const languages = ['English', 'Frensh'];
+
+var items = [
+    {
+        id: 'Current year',
+        name: 'Current year',
+    },
+    {
+        id: '2018',
+        name: '2018',
+    },
+    {
+        id: 'All years',
+        name: 'All years',
+    },
+
+];
+
+option = {
+    xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line'
+    }]
+};
+
 class Dashboard extends React.Component {
+
+    
     state = {
         connectedUser: {},
         year: new Date().getFullYear(),
@@ -54,7 +95,9 @@ class Dashboard extends React.Component {
         delays: 0,
         averageWorkHours: 0,
         byMonth: null,
-        fetched: false
+        fetched: false,
+        languageSelected: 'English'
+
     }
 
     componentDidMount() {
@@ -77,11 +120,11 @@ class Dashboard extends React.Component {
             {
                 value: 50,
                 label: 'Refused',
-                color: '#C25A5A',
+                color: '#D94949',
             }, {
                 value: 40,
                 label: 'Canceled',
-                color: '#C2C25A'
+                color: '#E5DC6F'
             }, {
                 value: 25,
                 label: 'Accepted',
@@ -97,7 +140,8 @@ class Dashboard extends React.Component {
 
         if (!this.props.stats) {
             return (
-                <View style={[styles.container, styles.horizontal]}>
+                <View style={styles.container}>
+                 <Image source={companyLogo} style={{marginBottom:50}}></Image>
                     <ActivityIndicator size={80} color="#0000ff" />
                     <StatusBar hidden={true} />
                 </View>
@@ -108,30 +152,77 @@ class Dashboard extends React.Component {
                 <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
                     <StatusBar hidden />
 
-                    <Header style={{ backgroundColor: this.props.theme.cardBackground, flexDirection: 'row', borderBottomWidth: 1 }}>
+                    <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row',  }}>
                         <Icon name='md-menu' style={{
                             color: this.props.theme.fontColor, position: 'absolute',
                             left: 20, top: 15
                         }}
                             onPress={() => this.props.navigation.openDrawer()}
                         />
-                        <Title style={{ top: 15, color: this.props.theme.fontColor }}>{this.props.user.displayName}</Title>
-                        {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+                        <Title style={{ top: 15, color: this.props.theme.fontColor , marginRight: 70, marginLeft: 15}}>Dashboard</Title>
+                        <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
+                        borderRadius: 100,
+                        height: 30,
+                        width: 30,
+                        marginRight: 15,
+                        top: 15,
+                    }}>
+                        <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+                            borderRadius: 100,
+                            height: 30,
+                            width: 30,
+                            borderWidth: 1,
+                            borderColor: this.props.theme.fontColor,
+                            zIndex:20
+                        }}></Image>
+                    </TouchableHighlight>
+
+                    <Icon name="md-globe"
+                        style={{
+                            top: 13,
+                            color: this.props.theme.fontColor,
+                            fontSize: 34,
+                            marginRight: 15,
+                        }}
+                        onPress={() => {
+                            this.refs.picker.show();
+                        }} />
+                    <SimplePicker
+                        ref={'picker'}
+                        options={languages}
+                        labels={languages}
+                        itemStyle={{
+                            fontSize: 25,
+                            color: 'red',
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                        }}
+                        onSubmit={(languages) => {
+                            this.setState({
+                                languageSelected: languages,
+                            });
+                        }}
+                    />
+                        <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} />
                     </Header>
 
                     <Content style={{ padding: 10 }} >
-                        <View>
+                    <View style={{ flexDirection: 'row' }}>
+                    <Icon
+                        name="md-calendar"
+                        style={{ marginRight: 15, fontSize:16, top: 28, left: 20 , color:this.props.theme.fontColor}}
+                    />
                             <Picker
                                 selectedValue={this.state.year}
                                 style={{
                                     height: 50,
-                                    width: '100%',
+                                    width: 340,
                                     alignSelf: 'center',
+                                    marginTop: 10,
                                     marginBottom: 10,
-                                    borderWidth: 1,
-                                    borderColor: '#021630',
                                     color: this.props.theme.fontColor,
-                                    backgroundColor: this.props.theme.cardBackground
+                                    backgroundColor: this.props.theme.backgroundColor,
+                                    marginLeft: 10
                                 }}
                                 onValueChange={(itemValue, itemIndex) => this.handleYearFilterChange(itemValue)}>
                                 <Picker.Item label={`Current year (${new Date().getFullYear()})`} value={new Date().getFullYear()} color="#021630"
@@ -156,16 +247,16 @@ class Dashboard extends React.Component {
                             <CustomCard>
                                 <View style={{ flex: 1, left: -10 }}>
                                     <PureChart data={prepareGraphDate(this.props.stats.perMonth)}
-                                        type='line'
+                                        type='bar'
                                         backgroundColor={this.props.theme.cardBackground}
                                         height={150}
                                     />
                                 </View>
 
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ color: 'green' }}> Days worked</Text>
-                                    <Text style={{ color: 'blue' }}> Hours worked</Text>
-                                    <Text style={{ color: '#BE4242' }}> Delays</Text>
+                                    <Text style={{ color: '#4C98B4' , fontWeight:'bold'}}> Days worked</Text>
+                                    <Text style={{ color: '#AA669A' , fontWeight:'bold'}}> Hours worked</Text>
+                                    <Text style={{ color: '#BE4242' , fontWeight:'bold'}}> Delays</Text>
                                 </View>
                             </CustomCard>
                         </View>
@@ -186,25 +277,20 @@ class Dashboard extends React.Component {
 
 const styles = StyleSheet.create({
 
-    cardStyle: {
-
-        alignContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        flex: 1,
-        backgroundColor: '#082955',
-        borderColor: '#082955',
-        borderRadius: 10
-    },
+    
     container: {
-        flex: 1,
-        justifyContent: 'center'
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10,
+        backgroundColor: 'black',
     },
 
-    horizontal: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-    }
+  
 });
 
 Dashboard.propTypes = {
@@ -230,12 +316,15 @@ Dashboard.propTypes = {
     theme: PropTypes.object
 };
 
+
 const mapStateToProps = state => {
     return {
         loading: state.loadingReducer.loading,
         user: state.authReducer.user,
         stats: state.dashboardReducer.statsReducer.stats,
-        theme: state.settingsReducer.theme
+        theme: state.settingsReducer.theme,
+        avatar: state.authReducer.avatar
+
     }
 }
 

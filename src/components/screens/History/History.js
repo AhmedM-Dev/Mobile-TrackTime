@@ -1,8 +1,5 @@
 import React from 'react';
-import { StatusBar, Image, StyleSheet, ImageBackground 
-
-
-} from 'react-native';
+import { StatusBar, Image, StyleSheet, ImageBackground ,} from 'react-native';
 import {
   Container,
   Content,
@@ -16,7 +13,9 @@ import {
   Badge, Icon, Header, Title,
 } from 'native-base';
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
+import SimplePicker from 'react-native-simple-picker';
 
 import PureChart from 'react-native-pure-chart';
 import bg from '../../../assets/img/bg.jpg'
@@ -88,6 +87,7 @@ var categories = [
 },
 ];
 
+const languages = ['English', 'Frensh'];
 
 export default class Events extends React.Component {
   constructor() {
@@ -95,7 +95,9 @@ export default class Events extends React.Component {
     this.state = {
       year: 'All years',
       status: 'All status',
-      category: 'All categories'
+      category: 'All categories',
+      languageSelected: 'English'
+
     }
 
   };
@@ -127,24 +129,62 @@ export default class Events extends React.Component {
   ]
 
     return (
-      <Container style={{ backgroundColor: '#021630' }} >
+      <Container style={styles.container} >
         <StatusBar hidden />
 
+        <Header style={{ backgroundColor: 'white', flexDirection: 'row',  }}>
+                        <Icon name='md-menu' style={{
+                            color: 'black', position: 'absolute',
+                            left: 20, top: 15
+                        }}
+                            onPress={() => this.props.navigation.openDrawer()}
+                        />
+                        <Title style={{ top: 15, color: 'black' , marginRight: 70, marginLeft: 25}}> Leaves history</Title>
+                        <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
+                        borderRadius: 100,
+                        height: 30,
+                        width: 30,
+                        marginRight: 15,
+                        top: 15,
+                    }}>
+                        <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+                            borderRadius: 100,
+                            height: 30,
+                            width: 30,
+                            borderWidth: 1,
+                            borderColor: 'black',
+                            zIndex:20
+                        }}></Image>
+                    </TouchableHighlight>
 
-        <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
-          <Icon name='md-menu' style={{
-            color: 'white', position: 'absolute',
-            left: 20, top: 15
-          }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Title style={{ top: 15 }}>My leave history</Title>
-
-          <View style={{ position: 'absolute', right: 20 }}>
-            <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-            <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
-          </View>
-        </Header>
+                    <Icon name="md-globe"
+                        style={{
+                            top: 13,
+                            color: 'black',
+                            fontSize: 34,
+                            marginRight: 15,
+                        }}
+                        onPress={() => {
+                            this.refs.picker.show();
+                        }} />
+                    <SimplePicker
+                        ref={'picker'}
+                        options={languages}
+                        labels={languages}
+                        itemStyle={{
+                            fontSize: 25,
+                            color: 'red',
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                        }}
+                        onSubmit={(languages) => {
+                            this.setState({
+                                languageSelected: languages,
+                            });
+                        }}
+                    />
+                        {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+                    </Header>
 
 
 
@@ -154,7 +194,8 @@ export default class Events extends React.Component {
               <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.year}
-                  style={{ height: 50, width: 300 , color:'white' }}
+                  style={{ height: 50, width: 300 , color:'black' ,borderRadius:20,
+                }}
                  
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ year: itemValue })
@@ -174,7 +215,8 @@ export default class Events extends React.Component {
               <View style={styles.list}>
                 <Picker
                   selectedValue={this.state.status}
-                  style={{ height: 50, width: 300 , color:'white'}}
+                  style={{ height: 50, width: 300 , color:'black' , borderRadius:20,
+                }}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ status: itemValue })
                   }>
@@ -227,29 +269,30 @@ export default class Events extends React.Component {
                     containerStyle={{ marginTop:1}}
                     textInputStyle={{
                         borderWidth: 1,
-                        borderColor: '#021630',
+                        borderColor: '#F7F7F7',
+                        borderRadius:20,
                         fontSize: 18,
                         width: 342,
                         alignSelf: 'center',
-                        color: 'white',
-                        backgroundColor: '#082955',
+                        color: 'black',
+                        backgroundColor: '#F7F7F7',
                        paddingLeft:27 
                     }}
                     itemStyle={{
                         padding: 3,
                         paddingLeft:30,
-                        backgroundColor: '#082955',
+                        backgroundColor: '#F7F7F7',
                         width: 340,
                         alignSelf: 'center',
                         margin:-2  ,
                           }}
-                    itemTextStyle={{ color: '#CEE4EE' }}
+                    itemTextStyle={{ color: 'gray' }}
                     itemsContainerStyle={{ maxHeight: 220 , 
                                           alignSelf:'center',
                                            width:340 ,
                                            marginBottom:5,
                                            borderWidth:1,
-                                           borderColor:'#082955',
+                                           borderColor:'#F7F7F7',
                                            marginTop:-2
                                           }}
                     items={categories}
@@ -282,14 +325,17 @@ export default class Events extends React.Component {
   }
 }
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+},
   cardStyle: {
     marginTop:10,
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     width: 340,
-    backgroundColor: '#082955',
-    borderColor: '#082955',
+    backgroundColor: '#F7F7F7',
+    borderColor: '#F7F7F7',
     padding:10
 },
   list: {
@@ -298,9 +344,9 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 20,
     alignSelf: 'center',
-    borderColor: '#082955',
+    borderColor: '#F7F7F7',
     marginTop: 2,
-    backgroundColor: '#082955', 
+    backgroundColor: '#F7F7F7', 
 
   },
   textStyle: {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Icon, Container, Content, View, Text } from 'native-base'
+import { Icon, Container, Content, View, Text,  } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import titleIcon from '../../../assets/img/titleIcon.png';
 import axios from "axios";
@@ -14,68 +14,16 @@ import motifIcon from '../../../assets/img/detailsIcon.png'
 import priceIcon from '../../../assets/img/priceIcon.png'
 import { Button } from 'react-native-elements';
 
-import events from '../../../assets/img/events.jpg'
-
-const options = {
-    title: '',
-    takePhotoButtonTitle: 'Take photo',
-    chooseFromLibraryButtonTitle: 'Choose from library',
-};
 
 
-export default class addEvent extends Component {
+export default class updateEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatarSource: null,
-            pic: null,
-            startDate: null,
-            startTime: null,
-            endDate: null,
-            endTime: null,
+    
         }
     }
-    myfun = () => {
-        ImagePicker.showImagePicker(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('Image Picker Error: ', response.error);
-            }
-
-            else {
-                let source = { uri: response.uri };
-                this.setState({
-                    avatarSource: source,
-                    pic: response.data
-                });
-            }
-        });
-    }
-    uploadPic = () => {
-        RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
-            Authorization: "Bearer access-token",
-            otherHeader: "foo",
-            'Content-Type': 'multipart/form-data',
-        }, [
-                { name: 'image', filename: 'avatar.png', data: this.state.pic }
-            ]).then((resp) => {
-                console.log('your image uploaded successfully');
-                this.setState({ avatarSource: null })
-            })
-    }
-
-    handleDateChange = (type, value) => {
-        this.setState({
-            ...this.state,
-            startDate: type === "startdate" ? value : this.state.startDate,
-            startTime: type === "starttime" ? value : this.state.startTime,
-            endDate: type === "enddate" ? value : this.state.endDate,
-            endTime: type === "endtime" ? value : this.state.endTime
-        })
-    }
-
+   
 
     render() {
         return (
@@ -86,63 +34,47 @@ export default class addEvent extends Component {
                         style={{
                             color: 'black',
                             margin: 15,
-                            top: 10
+                            top:10,
                         }}
                         onPress={() => this.props.navigation.navigate('Administration')} />
+
+
                     <View style={{marginTop:10}}>
-                        {/* <Image source={this.state.avatarSource}
-                            style={{
-                                marginBottom: 20,
-                                alignSelf: 'center',
-                                height: 150,
-                                width: 300,
-                                borderWidth: 2,
-                                borderColor: '#E7E7E7',
-                                borderRadius:20,
-                                top:10
-                            }} /> */}
 
-                        <Button
-                            icon={
-                                <Icon
-                                    name="md-log-out"
-                                    style={{ color: 'white', marginRight: 10, fontSize: 18, left: -81 }}
-                                />
-                            }
-                            buttonStyle={{
-                                backgroundColor: 'black',
-                                borderRadius: 20,
-                                borderColor: 'white',
-                                borderWidth: 2,
-                                width: 300,
-                                alignSelf: 'center',
-                                marginBottom: 5
-                            }}
-                            titleStyle={{
-                                color: 'white'
-                            }}
-                            title="Event image"
-                            onPress={() => alert('hbfud')}
-                        />
-                        <Icon name="md-download"
-                            onPress={this.myfun}
-                            style={{ position: "absolute", top: 120, color: "white", left: 260, opacity: 0.7 }} />
-
-                    </View>
-
-                    <View>
-                        <StyledInput image={titleIcon} text={'ID'} textColor={'white'} />
-                        <StyledInput image={titleIcon} text={'Title'} textColor={'white'} />
-                        <StyledInput image={motifIcon} text={'Datails'} textColor={'white'} />
-                        <StyledInput image={priceIcon} text={'Price'} textColor={'white'} />
+                    <StyledInput image={titleIcon} text={'Event ID'} textColor={'white'} />
+                    <Button
+              icon={
+                <Icon
+                  name="md-log-out"
+                  style={{ color: 'white', marginRight: 10, fontSize: 18 , left:-81 }}
+                />
+              }
+              buttonStyle={{
+                backgroundColor: 'black',
+                borderRadius: 20,
+                borderColor:'white',
+                borderWidth: 2 ,
+                width: 300,
+                alignSelf: 'center',
+                marginBottom:5
+              }}
+              titleStyle={{
+                 color:'white'
+              }}
+              title="Set new event image"
+              onPress={() => alert('hbfud')}
+            />
+                        <StyledInput image={titleIcon} text={'New Title'} textColor={'white'} />
+                        <StyledInput image={motifIcon} text={'New details'} textColor={'white'} />
+                        <StyledInput image={priceIcon} text={'New Price'} textColor={'white'} />
 
 
                         <DatePicker
-                            style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
+                            style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white' , marginTop:5 }}
                             date={this.state.startDate}
                             mode="date"
                             iconSource={null}
-                            placeholder="Start date"
+                            placeholder="New start date"
 
                             format="DD-MM-YYYY"
                             minDate="01-01-2019"
@@ -158,7 +90,7 @@ export default class addEvent extends Component {
                                     marginTop: 10,
                                     backgroundColor: 'black',
                                     borderColor: 'gray',
-                                    borderRadius: 20
+                                    borderRadius:20
 
                                 },
                                 placeholderText: {
@@ -172,7 +104,7 @@ export default class addEvent extends Component {
                         <DatePicker
                             style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
                             date={this.state.startTime}
-                            placeholder="Start time"
+                            placeholder="New start time"
                             iconSource={null}
                             mode="time"
                             format="HH:mm"
@@ -192,7 +124,7 @@ export default class addEvent extends Component {
                                     marginTop: 10,
                                     backgroundColor: 'black',
                                     borderColor: 'gray',
-                                    borderRadius: 20
+                                    borderRadius:20
 
                                 },
                                 placeholderText: {
@@ -211,7 +143,7 @@ export default class addEvent extends Component {
                             date={this.state.endDate}
                             mode="date"
                             iconSource={null}
-                            placeholder="End date"
+                            placeholder="New end date"
                             format="DD-MM-YYYY"
                             minDate="01-01-2019"
                             maxDate="31-12-2019"
@@ -228,7 +160,7 @@ export default class addEvent extends Component {
                                     marginTop: 10,
                                     backgroundColor: 'black',
                                     borderColor: 'gray',
-                                    borderRadius: 20
+                                    borderRadius:20
                                 },
                                 placeholderText: {
                                     color: 'white'
@@ -240,9 +172,9 @@ export default class addEvent extends Component {
                             onDateChange={(date) => { this.handleDateChange("enddate", date) }}
                         />
                         <DatePicker
-                            style={{ width: 300, alignSelf: 'center', marginBottom: 70 }}
+                            style={{ width: 300, alignSelf: 'center' , marginBottom:70}}
                             date={this.state.endTime}
-                            placeholder="End time"
+                            placeholder="new end time"
                             mode="time"
                             format="HH:mm"
                             confirmBtnText="Confirm"
@@ -256,14 +188,14 @@ export default class addEvent extends Component {
                                     left: 0,
                                     top: 4,
                                     marginLeft: 0,
-                                    borderRadius: 20
+                                    borderRadius:20
 
                                 },
                                 dateInput: {
                                     marginTop: 10,
                                     backgroundColor: 'black',
                                     borderColor: 'gray',
-                                    borderRadius: 20
+                                    borderRadius:20
 
                                 },
                                 placeholderText: {

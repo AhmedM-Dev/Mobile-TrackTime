@@ -16,9 +16,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 10,
-        backgroundColor: 'white',
-        opacity: 0.5
+        zIndex: 30,
+        backgroundColor: 'black',
     },
 
     dh: {

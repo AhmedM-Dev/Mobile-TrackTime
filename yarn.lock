@@ -5420,10 +5420,10 @@ react-native-elements@^1.1.0:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
-react-native-gesture-handler@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.1.0.tgz#2a7d545ad2e0ca23adce22b2af441ad360ecccee"
-  integrity sha512-E9IKHpmL+sz/iCYkUriTUjBaQBORWV+oheYPQleADkxjo2sYsQfnlyTz4EQYFONkUwJ6WmfTNkYt2/yc5U4Ziw==
+react-native-gesture-handler@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.2.1.tgz#9c48fb1ab13d29cece24bbb77b1e847eebf27a2b"
+  integrity sha512-c1+L72Vjc/bwHKcIJ8a2/88SW9l3/axcAIpg3zB1qTzwdCxHZJeQn6d58cQXHPepxFBbgfTCo60B7SipSfo+zw==
   dependencies:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
@@ -5501,6 +5501,13 @@ react-native-setting-list@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-setting-list/-/react-native-setting-list-2.0.1.tgz#7bccecc072b0854169e976232652981d58e1328d"
   integrity sha512-WfWw4vIbONfa8w4gzNS80JBkeLaHVlSn/RRcUacIzNtkrZ4sh+JI5o4TXkClNR+U72yyGQ1wREfKLA14SKxcmw==
+  dependencies:
+    prop-types "^15.5.10"
+
+react-native-simple-picker@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-simple-picker/-/react-native-simple-picker-3.1.1.tgz#b55611df0e219e21f9c6ec63c1fcd410fc5d7139"
+  integrity sha512-w9C/G0q1vs2QO0E1rxVQavYTCE3q8tweHcLHdS/ipBWrbixMqFaXy6ZJDuD4SnUrDF8T7FMStOll5OWVmotGZg==
   dependencies:
     prop-types "^15.5.10"
 

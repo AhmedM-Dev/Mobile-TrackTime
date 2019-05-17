@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, StatusBar, ImageBackground, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StatusBar, ImageBackground, Text, StyleSheet, TouchableOpacity ,TouchableHighlight} from 'react-native';
 import SettingsList from 'react-native-setting-list';
 import { Container, Header, Content, List, ListItem, Icon, Left, Body, Right, Switch, Button, Title } from 'native-base';
 
@@ -72,207 +72,176 @@ class Settings extends Component {
 
   render() {
     return (
-      // <Container style={{ backgroundColor: '#DDE3F3' }}>
-      //   <StatusBar hidden />
+     
 
-      //   <ImageBackground source={bgst} style={{ flex: 1, height: 180 }}>
-      //     <Icon name='md-settings' style={{
-      //       color: 'white', position: 'absolute',
-      //       left: 40, top: 20
-      //     }}
-      //       onPress={() => this.props.navigation.navigate('Dashboard')}
-      //     />
-      //     <Title style={{ top: 15, left: -50, fontSize: 24 }}>Settings</Title>
+      <Container style={{ backgroundColor: this.props.theme.settingContainerColor }}>
 
-      //   </ImageBackground>
+<Header style={{ backgroundColor:this.props.theme.settingsHeaderColor, flexDirection: 'row' }}>
+  <Icon name='md-menu' style={{
+    color: this.props.theme.imageSettingsBorderColor, position: 'absolute',
+    left: 20, top: 15
+  }}
+    onPress={() => this.props.navigation.openDrawer()}
+  />
+  <Title style={{ top: 15, marginLeft: -150, color: this.props.theme.imageSettingsBorderColor }}>Settings</Title>
 
-      //   <View style={{ backgroundColor: 'white', height: 510, width: 340, left: 10, top: -60, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-      //     <Content>
-      //       <View >
-      //         <Image source={this.state.avatarSource} style={{ marginTop: 15, marginBottom: 10, alignSelf: 'center', height: 150, width: 150, borderRadius: 100, borderWidth: 2, borderColor: '#104E77' }} />
-      //         <Icon name="md-camera"
-      //           onPress={this.myfun}
-      //           style={{ position: "absolute", top: 100, color: "#3A5793", left: 235 }} />
+  {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+</Header>
 
-      //       </View>
+<View style={{
+  zIndex: 5000,
+  backgroundColor:  this.props.theme.settingsHeaderColor ,
+  height: 150,
+  borderBottomLeftRadius: 120,
+  flexDirection: 'row'
+  , alignItes: 'center',
+  justifyContent: 'center',
+  zIndex:2
+}}>
+  <TouchableHighlight onPress={this.myfun} style={{
+    borderRadius: 100,
+    height: 100,
+    width: 100,
+    marginRight: 30,
+    top: 10
+  }}>
+    <Image source={userPic} style={{
+      borderRadius: 100,
+      height: 100,
+      width: 100,
+      borderWidth: 1,
+      borderColor: this.props.theme.imageSettingsBorderColor,
+    }}></Image>
+  </TouchableHighlight>
+  <View style={{ width: 150, top: 35 }}>
+    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>Asma ben Ahmed</Text>
+    <Text style={{ color:  this.props.theme.fontColor, fontWeight: 'bold' }}>Admin </Text>
+  </View>
+</View>
 
-      //       <SettingsList borderColor='#DDE3F3' defaultItemSize={50} >
+<Content>
+  <View style={{ width: 280, borderLeftColor: this.props.theme.barColor , borderLeftWidth: 2, alignSelf: 'center' ,marginTop:30 }}>
 
-      //         <SettingsList.Item
-      //           hasNavArrow={false}
-      //           title='Account settings'
-      //           titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center', fontSize: 16 }}
-      //           itemWidth={50}
-      //           borderHide={'Both'}
-      //           backgroundColor={'white'}
+    <SettingsList borderColor={this.props.theme.settingContainerColor}  >
 
-      //         />
-      //         <Text style={{ left: 15, top: -10 }}>Manage informations about you</Text>
+      {/* <SettingsList.Header
+        hasNavArrow={false}
+        headerText='Account settings'
+        borderHide={'Both'}
+        headerStyle={{
+          fontSize: 18,
+          color: this.props.theme.fontColor,
+          marginLeft: 10,
+          fontWeight: 'bold',
+         
+        }}
+        backgroundColor= {this.props.theme.settingContainerColor}  
+        borderColor='red'
+      /> */}
 
-      //         <SettingsList.Item
-      //           icon={
-      //             <Image style={styles.iconStyle} source={NameIcon} />
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16 }}
-      //           title='First name'
-      //           borderHide={'Both'}
-      //         />
-
-      //         <SettingsList.Item
-      //           icon={
-      //             <Image style={styles.iconStyle} source={NameIcon} />
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16 }}
-      //           title='Last name'
-      //           borderHide={'Both'}
-      //         />
-
-      //         <SettingsList.Item
-      //           icon={
-
-      //             <Image style={styles.iconStyle} source={PasswordIcon} />
-
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16 }}
-      //           title='Password'
-      //           borderHide={'Both'}
-      //         />
-      //         <SettingsList.Item
-      //           icon={
-
-      //             <Image style={styles.iconStyle} source={EmailIcon} />
-
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16 }}
-      //           title='Email'
-      //           borderHide={'Both'}
-      //         />
-      //         <SettingsList.Item
-      //           hasNavArrow={false}
-      //           title='Application settings'
-      //           titleStyle={{ color: '#3B5998', fontWeight: 'bold', justifyContent: 'center', fontSize: 16 }}
-      //           itemWidth={50}
-      //           borderHide={'Both'}
-      //           backgroundColor={'white'}
-      //         />
-
-      //         <SettingsList.Item
-      //           icon={
-      //             <Image style={styles.iconStyle} source={langIcon} />
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
-      //           title='Language'
-      //           borderHide={'Both'}
-      //         />
-
-      //         <SettingsList.Item
-      //           icon={
-      //             <Image style={styles.iconStyle} source={themeIcon} />
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
-      //           title='Theme'
-      //           borderHide={'Both'}
-      //         />
-
-      //         <Switch value={false} />
-
-      //         <SettingsList.Item
-      //           icon={
-      //             <Image style={styles.iconStyle} source={unsubscribeIcon} />
-      //           }
-      //           hasNavArrow={false}
-      //           itemWidth={50}
-      //           titleStyle={{ color: 'black', fontSize: 16, justifyContent: 'center' }}
-      //           title='Unsubscribe'
-      //           borderHide={'Both'}
-      //         />
+      <SettingsList.Item
+        icon={
+          <View style={styles.headerIcon}></View>
+        }
+        hasNavArrow={false}
+        itemWidth={50}
+        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+        title='First name'
+        borderHide={'Both'}
+        backgroundColor= {this.props.theme.settingContainerColor}    />
 
 
-      //       </SettingsList>
-      //     </Content>
+      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>Asma</Text>
 
-      //   </View>
+      <SettingsList.Item
+         icon={
+          <View style={styles.headerIcon}></View>
+        }
+        hasNavArrow={false}
+        itemWidth={50}
+        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+        title='Last name'
+        borderHide={'Both'}
+        backgroundColor= {this.props.theme.settingContainerColor}  
+      />
+      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>Ben ahmed</Text>
 
 
-      //   <View style={{ flexDirection: 'row', position: 'absolute', bottom: 20, left: 10 }}>
-      //     <Button light
-      //       style={{ width: 340, top: 10, width: 340, backgroundColor: '#3A5793' }}
-      //     >
-      //       <Text style={{ color: 'white', left: 135 }}>Save updates</Text>
-      //     </Button>
-      //   </View>
+
+      <SettingsList.Item
+        icon={
+          <View style={styles.headerIcon}></View>
+        }
+        hasNavArrow={false}
+        itemWidth={50}
+        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+        title='Email'
+        borderHide={'Both'}
+        backgroundColor= {this.props.theme.settingContainerColor}  
+      />
+      
+      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>asma.bahmed19@hotmail.com</Text>
+
+        <SettingsList.Item
+          icon={
+            <View style={styles.headerIcon}></View>
+          }
+          hasNavArrow={false}
+          itemWidth={50}
+          titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+          title='Password'
+          borderHide={'Both'}
+          backgroundColor= {this.props.theme.settingContainerColor}  
+        />
+
+{/* <SettingsList.Header
+        hasNavArrow={false}
+        headerText='Application settings'
+        borderHide={'Both'}
+        headerStyle={{
+          fontSize: 18,
+          color: this.props.theme.fontColor,
+          marginLeft: 10,
+          fontWeight: 'bold'
+
+        }}
+        backgroundColor= {this.props.theme.settingContainerColor}  
+      /> */}
+ <SettingsList.Item
+        icon={
+          <View style={styles.headerIcon}></View>
+        }
+        hasNavArrow={false}
+        itemWidth={50}
+        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+        title='Language'
+        borderHide={'Both'}
+        backgroundColor= {this.props.theme.settingContainerColor}  
+      />
+      
+      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>English</Text>
 
 
-      // </Container>
+<SettingsList.Item
+          icon={
+            <View style={styles.headerIcon}></View>
+          }
+          hasNavArrow={false}
+          itemWidth={50}
+          titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+          title='Light theme'
+          borderHide={'Both'}
+          backgroundColor= {this.props.theme.settingContainerColor}  
+        />
+<Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true } style={{top:-30}} />
+   
+    </SettingsList>
 
-      <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
-        <StatusBar hidden />
-        <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Settings</Title>
-          </Body>
-        </Header>
-        <Content>
-          <ListItem icon>
-            <Left>
-              <Button style={{ backgroundColor: "#FF9501" }}>
-                <Icon active name="airplane" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Theme</Text>
-            </Body>
-            <Right>
-              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true } />
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-                <Icon active name="wifi" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Wi-Fi</Text>
-            </Body>
-            <Right>
-              <Text>GeekyAnts</Text>
-              <Icon active name="arrow-forward" />
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Button style={{ backgroundColor: "#007AFF" }}>
-                <Icon active name="bluetooth" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Bluetooth</Text>
-            </Body>
-            <Right>
-              <Text>On</Text>
-              <Icon active name="arrow-forward" />
-            </Right>
-          </ListItem>
-        </Content>
-      </Container>
+
+
+  </View>
+</Content>
+            </Container>
     );
   }
 }
@@ -285,6 +254,15 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15
   },
+
+  headerIcon: {
+    backgroundColor: '#2CA96E',
+    marginRight: -7,
+    height: 15, width: 15,
+    borderRadius: 100,
+    alignSelf: 'center', left: -7
+  }
+
 });
 
 const mapStateToProps = state => {

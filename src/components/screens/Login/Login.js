@@ -27,8 +27,8 @@ class Login extends Component {
   state = {
     check: false,
     loading: false,
-    email: "ahmed.tux@protonmail.com",
-    pass: "ahmed1989",
+    email: "asma.bahmed19@hotmail.com",
+    pass: "92333520",
     countClick: 0,
     promptAPIURL: false,
     apiURL: API_URL
@@ -131,7 +131,8 @@ class Login extends Component {
         <ImageBackground style={styles.container} source={Background}>
           {this.props.logging &&
             <View style={styles.loading}>
-              <ActivityIndicator size={80} color="#0000ff" />
+            <Image source={companyLogo} style={{marginBottom:50}}></Image>
+                    <ActivityIndicator size={80} color="#0000ff" />
             </View>
           }
           <StatusBar hidden />

@@ -29,8 +29,10 @@ import clock from '../../../assets/img/clock.png';
 import clockB from '../../../assets/img/clockB.png';
 import DatePicker from 'react-native-datepicker';
 import dateIcon from '../../../assets/img/date.png';
+const languages = ['English', 'Frensh'];
 
-
+import SimplePicker from 'react-native-simple-picker';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 class AttendanceTime extends React.Component {
   constructor(props) {
     super(props);
@@ -52,26 +54,65 @@ class AttendanceTime extends React.Component {
 
           <StatusBar hidden />
 
-          <Header style={{ backgroundColor: '#021630', flexDirection: 'row' }}>
+          <Header style={{ backgroundColor: 'white', flexDirection: 'row', }}>
             <Icon name='md-menu' style={{
-              color: 'white', position: 'absolute',
+              color: 'black', position: 'absolute',
               left: 20, top: 15
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15 }}>Attendance time</Title>
+            <Title style={{ top: 15, color: 'black', marginRight: 70, marginLeft: 60 }}>Attendance time</Title>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
+              borderRadius: 100,
+              height: 30,
+              width: 30,
+              marginRight: 15,
+              top: 15,
+            }}>
+              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+                borderRadius: 100,
+                height: 30,
+                width: 30,
+                borderWidth: 1,
+                borderColor: 'black',
+                zIndex: 20
+              }}></Image>
+            </TouchableHighlight>
 
-            <View style={{ position: 'absolute', right: 20 }}>
-              <Badge style={{ top: 10, right: -10, zIndex: 1 }}><Text>2</Text></Badge>
-              <Icon active name="md-notifications" style={{ color: 'white', top: -10 }} />
-            </View>
+            <Icon name="md-globe"
+              style={{
+                top: 13,
+                color: 'black',
+                fontSize: 34,
+                marginRight: 15,
+              }}
+              onPress={() => {
+                this.refs.picker.show();
+              }} />
+            <SimplePicker
+              ref={'picker'}
+              options={languages}
+              labels={languages}
+              itemStyle={{
+                fontSize: 25,
+                color: 'red',
+                textAlign: 'left',
+                fontWeight: 'bold',
+              }}
+              onSubmit={(languages) => {
+                this.setState({
+                  languageSelected: languages,
+                });
+              }}
+            />
+            {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
           </Header>
 
           <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 10 }}>
             <View style={{ marginRight: 5 }}>
 
               <DatePicker
-                style={{ width: 225, marginBottom: 5, marginTop: 10 }}
+                style={{ width: 280, marginBottom: 5, marginTop: 10 }}
                 date={this.state.date1}
                 mode="date"
                 placeholder="Select start date"
@@ -89,9 +130,9 @@ class AttendanceTime extends React.Component {
                     marginLeft: 0,
                   },
                   dateInput: {
-                    backgroundColor: '#082955',
-                    borderColor: '#082955',
-
+                    backgroundColor: '#F7F7F7',
+                    borderColor: '#F7F7F7',
+                    borderRadius: 20,
                   },
                 }}
                 onDateChange={date => {
@@ -99,7 +140,7 @@ class AttendanceTime extends React.Component {
                 }}
               />
               <DatePicker
-                style={{ width: 225, }}
+                style={{ width: 280, }}
                 date={this.state.date2}
                 mode="date"
                 placeholder="Select end date"
@@ -115,8 +156,9 @@ class AttendanceTime extends React.Component {
                     marginLeft: 0,
                   },
                   dateInput: {
-                    backgroundColor: '#082955',
-                    borderColor: '#082955'
+                    backgroundColor: '#F7F7F7',
+                    borderColor: '#F7F7F7',
+                    borderRadius: 20,
                   },
                 }}
 
@@ -125,10 +167,23 @@ class AttendanceTime extends React.Component {
                 }}
               />
             </View>
-
-            <Button style={{ width: 110, height: 85, backgroundColor: '#0E6655', marginTop: 10, }}>
-              <Icon name="md-done-all" style={{ color: 'white', fontSize: 40, left: 20 }}></Icon>
+<View>
+            <Button style={{ width: 110, height: 40, backgroundColor: '#0E6655', marginTop: 10, borderRadius :20   , width:50}}>
+            <Icon name="md-done-all" style={{ color: 'white', fontSize: 18, }}></Icon>
             </Button>
+            
+            <Button 
+            style={{ width: 110, 
+            height: 40, 
+            backgroundColor: '#0E6655',
+             marginTop: 5, 
+             borderRadius :20 ,
+              width:50}}
+              onPress={() => this.props.navigation.navigate('New request')}>
+            <Icon name="md-add" style={{ color: 'white', fontSize: 18,  }}></Icon>
+            </Button>
+            
+            </View>
           </View>
 
           <Content style={{ padding: 10 }}>
@@ -162,8 +217,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     height: 230,
-    backgroundColor: '#082955',
-    borderColor: '#082955',
+    borderColor: '#F7F7F7',
     padding: 15,
     borderRadius: 10
   },
