@@ -10,8 +10,8 @@ export const getUsers = () => dispatch => {
   http.get(`${domain}`)
     .then(response => {
       dispatch({
-        type: types.ADD_USER,
-        payload: response.data
+        type: types.GET_USERS,
+        users: response.data.users
       });
     })
     .catch(error => {
@@ -29,6 +29,7 @@ export const addUser = payload => dispatch => {
         type: types.ADD_USER,
         payload: response.data
       });
+      alert("User added successfully");
     })
     .catch(error => {
       dispatch({
@@ -39,10 +40,10 @@ export const addUser = payload => dispatch => {
 }
 
 export const updateUser = payload => dispatch => {
-  http.post(`${domain}`, payload)
+  http.put(`${domain}/${payload.userId}`, payload)
     .then(response => {
       dispatch({
-        type: types.ADD_USER,
+        type: types.UPDATE_USER,
         payload: response.data
       });
     })
@@ -58,7 +59,7 @@ export const deleteUser = payload => dispatch => {
   http.delete(`${domain}/${payload.userId}`)
     .then(response => {
       dispatch({
-        type: types.ADD_USER,
+        type: types.DELETE_USER,
         payload: response
       });
     })
@@ -70,18 +71,18 @@ export const deleteUser = payload => dispatch => {
     });
 }
 
-export const getGroups = () => dispatch => {
-  http.get(`groups`)
-    .then(response => {
-      dispatch({
-        type: types.ADD_USER,
-        payload: response.data
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: globals.ADD_ERROR,
-        error
-      });
-    });
-}
+// export const getGroups = () => dispatch => {
+//   http.get(`groups`)
+//     .then(response => {
+//       dispatch({
+//         type: types.ADD_USER,
+//         payload: response.data
+//       });
+//     })
+//     .catch(error => {
+//       dispatch({
+//         type: globals.ADD_ERROR,
+//         error
+//       });
+//     });
+// }

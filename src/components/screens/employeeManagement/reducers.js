@@ -32,7 +32,15 @@ const usersReducer = (state = {}, action) => {
         users: state.users.filter(user => user.userId !== payload.userId)
       };
 
+    case types.GET_USERS:
+      return {
+        ...state,
+        users: action.users
+      };
+
     default:
       return state;
   }
 }
+
+export default usersReducer;

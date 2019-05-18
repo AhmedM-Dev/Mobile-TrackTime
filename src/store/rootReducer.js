@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import dashboardReducer from "../components/screens/Dashboard/reducers";
 import settingsReducer from "../components/screens/Setting/reducers";
 import attendancesReducer from "../components/screens/AttendanceTime/reducers";
+import usersReducer from "../components/screens/employeeManagement/reducers";
 
 import types from './types';
 
@@ -87,5 +88,6 @@ export default combineReducers({
     loadingReducer,
     settingsReducer,
     dashboardReducer,
-    attendancesReducer
+    attendancesReducer,
+    usersReducer
 });

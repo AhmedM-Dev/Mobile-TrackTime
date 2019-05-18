@@ -25,7 +25,7 @@ export default class adminMenu extends Component {
                         onPress={() => this.props.navigation.openDrawer()} />
                     <View style={{ top: 90, marginBottom: 30, alignItems: 'center' }}>
                         <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}> ADMINISTRATION </Text>
-                        <Text style={{ color: 'blach', fontSize: 20 , opacity:0.9}}> MENU </Text>
+                        <Text style={{ color: 'black', fontSize: 20 , opacity:0.9}}> MENU </Text>
                     </View>
                     <View style={{ top: 110, marginBottom: 120 }}>
                         <Button

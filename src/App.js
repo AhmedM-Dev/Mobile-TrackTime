@@ -83,7 +83,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
   };
 
 
-  if (!props.user.username) {
+  if (!props.user.email) {
     return <></>
   } else {
 
@@ -109,7 +109,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
               }}></Image>
             </TouchableHighlight>
             <View style={{ width: 150 }}>
-              <Text style={{ color: 'white' }}>{props.user.displayName}</Text>
+              <Text style={{ color: 'white' }}>{`${props.user.firstName} ${props.user.lastName}`}</Text>
               <Text style={{ color: 'white' }}>{props.user.jobTitle}</Text>
             </View>
           </View>
