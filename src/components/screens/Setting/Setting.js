@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, Image, StatusBar, ImageBackground, Text, StyleSheet, TouchableOpacity ,TouchableHighlight} from 'react-native';
 import SettingsList from 'react-native-setting-list';
 import { Container, Header, Content, List, ListItem, Icon, Left, Body, Right, Switch, Button, Title } from 'native-base';
+import ImagePicker from 'react-native-image-picker';
 
 import { changeTheme } from "./actions";
 
@@ -10,7 +11,6 @@ import userPic from '../../../assets/img/userPic.jpg'
 import bgst from '../../../assets/img/bgst.jpg'
 import langIcon from '../../../assets/img/langIcon.png'
 import themeIcon from '../../../assets/img/themeIcon.png'
-import ImagePicker from 'react-native-image-picker';
 import EmailIcon from '../../../assets/img/emailB.png';
 import PasswordIcon from '../../../assets/img/passwordB.png';
 import NameIcon from '../../../assets/img/nameB.png';

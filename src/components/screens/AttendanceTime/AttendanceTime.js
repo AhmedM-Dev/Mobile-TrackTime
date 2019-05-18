@@ -167,22 +167,24 @@ class AttendanceTime extends React.Component {
                 }}
               />
             </View>
-<View>
-            <Button style={{ width: 110, height: 40, backgroundColor: '#0E6655', marginTop: 10, borderRadius :20   , width:50}}>
-            <Icon name="md-done-all" style={{ color: 'white', fontSize: 18, }}></Icon>
-            </Button>
-            
-            <Button 
-            style={{ width: 110, 
-            height: 40, 
-            backgroundColor: '#0E6655',
-             marginTop: 5, 
-             borderRadius :20 ,
-              width:50}}
-              onPress={() => this.props.navigation.navigate('New request')}>
-            <Icon name="md-add" style={{ color: 'white', fontSize: 18,  }}></Icon>
-            </Button>
-            
+            <View>
+              <Button style={{ width: 110, height: 40, backgroundColor: '#0E6655', marginTop: 10, borderRadius: 20, width: 50 }}>
+                <Icon name="md-done-all" style={{ color: 'white', fontSize: 18, }}></Icon>
+              </Button>
+
+              <Button
+                style={{
+                  width: 110,
+                  height: 40,
+                  backgroundColor: '#0E6655',
+                  marginTop: 5,
+                  borderRadius: 20,
+                  width: 50
+                }}
+                onPress={() => this.props.navigation.navigate('New request')}>
+                <Icon name="md-add" style={{ color: 'white', fontSize: 18, }}></Icon>
+              </Button>
+
             </View>
           </View>
 

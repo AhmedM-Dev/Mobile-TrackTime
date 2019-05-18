@@ -10,6 +10,7 @@ import {
   Content,
   Badge, Card, CardItem, Thumbnail, Button, Left, Body
 } from 'native-base';
+import ImagePicker from 'react-native-image-picker';
 
 import Swiper from 'react-native-swiper';
 import SimplePicker from 'react-native-simple-picker';
@@ -22,8 +23,6 @@ import { CardList } from 'react-native-card-list';
 
 export default class NewRequest extends Component {
   render() {
-
-
     return (
       <Container style={{ backgroundColor: 'white' }} >
         <StatusBar hidden />
@@ -87,43 +86,43 @@ export default class NewRequest extends Component {
           loop
           showPaginationBelow={true}
         >
-<Content>
-        <View style={styles.slide}>
-            <Card style={{  width: 340 , alignSelf:'center' }}>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={events} />
+          <Content>
+            <View style={styles.slide}>
+              <Card style={{ width: 340, alignSelf: 'center' }}>
+                <CardItem>
+                  <Left>
+                    <Thumbnail source={events} />
+                    <Body>
+                      <Text>Tunisia docker meetup</Text>
+                      <Text note>March 1, 2019 , from 8:30 to 13:00 </Text>
+                    </Body>
+                  </Left>
+                </CardItem>
+                <CardItem>
                   <Body>
-                    <Text>Tunisia docker meetup</Text>
-                    <Text note>March 1, 2019 , from 8:30 to 13:00 </Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem>
-                <Body>
-                  <Image source={dockerMeetup} style={{ height: 200, width: 320, alignSelf:'center' , top:-20 }} />
-                  <Text>
-                    #Docker : Every year the Docker community everywhere celebrates the Docker birthday. This year we are #organizing the first Docker Meetup in Tunisia.
+                    <Image source={dockerMeetup} style={{ height: 200, width: 320, alignSelf: 'center', top: -20 }} />
+                    <Text>
+                      #Docker : Every year the Docker community everywhere celebrates the Docker birthday. This year we are #organizing the first Docker Meetup in Tunisia.
                     {'\n'}{'\n'}
-    Join us celebrating the 6th Docker Birthday :D
-    Subscribe Now ! => https://bit.ly/2IZdJqD
+                      Join us celebrating the 6th Docker Birthday :D
+                      Subscribe Now ! => https://bit.ly/2IZdJqD
     {'\n'}{'\n'}
-    The goal of this event is to share knowledge and testimonials and customer stories about Docker and its ecosystem, presented by Regional experts and IT professionals.
+                      The goal of this event is to share knowledge and testimonials and customer stories about Docker and its ecosystem, presented by Regional experts and IT professionals.
     {'\n'}{'\n'}
-    #Proxym #ARSII
+                      #Proxym #ARSII
                 </Text>
-                </Body>
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Button transparent textStyle={{ color: '#87838B' }}>
-                    <Icon name="md-heart" style={{ color: 'red' }} />
-                    <Text>20 reacts</Text>
-                  </Button>
-                </Left>
-              </CardItem>
-            </Card>
-</View></Content>
+                  </Body>
+                </CardItem>
+                <CardItem>
+                  <Left>
+                    <Button transparent textStyle={{ color: '#87838B' }}>
+                      <Icon name="md-heart" style={{ color: 'red' }} />
+                      <Text>20 reacts</Text>
+                    </Button>
+                  </Left>
+                </CardItem>
+              </Card>
+            </View></Content>
           <View style={styles.slide}>
             <Text style={styles.text}>2</Text>
           </View>
@@ -152,14 +151,14 @@ export default class NewRequest extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: 'white',
-    flex:1,
+    flex: 1,
 
   },
   slide: {
     flex: 1,
     backgroundColor: 'white',
   },
- 
+
   text: {
     color: 'black',
     fontSize: 30,

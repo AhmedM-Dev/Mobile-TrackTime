@@ -21,7 +21,7 @@ const usersReducer = (state = {}, action) => {
       return {
         ...state,
         users: [
-          ...state.users.filter(user => user.userId !== payload.userId),
+          ...state.users.filter(user => user.userId !== action.payload.userId),
           action.payload
         ]
       };
@@ -29,7 +29,7 @@ const usersReducer = (state = {}, action) => {
     case types.DELETE_USER:
       return {
         ...state,
-        users: state.users.filter(user => user.userId !== payload.userId)
+        users: state.users.filter(user => user.userId !== action.payload)
       };
 
     case types.GET_USERS:

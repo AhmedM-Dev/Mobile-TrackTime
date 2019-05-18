@@ -55,12 +55,12 @@ export const updateUser = payload => dispatch => {
     });
 }
 
-export const deleteUser = payload => dispatch => {
-  http.delete(`${domain}/${payload.userId}`)
+export const deleteUser = userId => dispatch => {
+  http.delete(`${domain}/${userId}`)
     .then(response => {
       dispatch({
         type: types.DELETE_USER,
-        payload: response
+        payload: userId
       });
     })
     .catch(error => {

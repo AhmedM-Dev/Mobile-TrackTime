@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { orderBy, split } from 'lodash';
+import { orderBy } from 'lodash';
 
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';

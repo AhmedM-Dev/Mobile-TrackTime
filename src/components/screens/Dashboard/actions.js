@@ -23,3 +23,19 @@ export const getStats = payload => dispatch => {
             });
         });
 }
+
+export const getNotifications = () => dispatch => {
+    http.get(domain)
+    .then(response => {
+        dispatch({
+            type: types.GET_NOTIFICATIONS,
+            payload: response.data
+        });
+    })
+    .catch(error => {
+        dispatch({
+            type: types.AUTHENTICATE_FAILED,
+            error: error.response.data.error
+        });
+    });
+}
