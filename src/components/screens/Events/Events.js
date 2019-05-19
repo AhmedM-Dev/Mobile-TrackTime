@@ -10,7 +10,6 @@ import {
   Content,
   Badge, Card, CardItem, Thumbnail, Button, Left, Body
 } from 'native-base';
-import ImagePicker from 'react-native-image-picker';
 
 import Swiper from 'react-native-swiper';
 import SimplePicker from 'react-native-simple-picker';
