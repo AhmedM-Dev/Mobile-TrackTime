@@ -9,6 +9,7 @@ const AdminPickers = props => {
         height={props.height}
         width={props.width}
         top={props.top}
+        marginBottom={props.marginBottom}
         left={props.left}
         paddingLeft={props.paddingLeft}
         style={{ 

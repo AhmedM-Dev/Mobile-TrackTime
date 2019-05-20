@@ -13,6 +13,7 @@ import DatePicker from 'react-native-datepicker';
 import motifIcon from '../../../assets/img/detailsIcon.png'
 import priceIcon from '../../../assets/img/priceIcon.png'
 import { Button } from 'react-native-elements';
+import  Textarea  from 'react-native-textarea'
 
 
 
@@ -30,7 +31,7 @@ export default class updateEvent extends Component {
             <View style={styles.container} >
                 <Content>
                     <Icon
-                        name="md-keypad"
+                        name="md-arrow-dropleft"
                         style={{
                             color: 'black',
                             margin: 15,
@@ -41,7 +42,6 @@ export default class updateEvent extends Component {
 
                     <View style={{marginTop:10}}>
 
-                    <StyledInput image={titleIcon} text={'Event ID'} textColor={'white'} />
                     <Button
               icon={
                 <Icon
@@ -65,9 +65,17 @@ export default class updateEvent extends Component {
               onPress={() => alert('hbfud')}
             />
                         <StyledInput image={titleIcon} text={'New Title'} textColor={'white'} />
-                        <StyledInput image={motifIcon} text={'New details'} textColor={'white'} />
-                        <StyledInput image={priceIcon} text={'New Price'} textColor={'white'} />
-
+                        <View>
+              <Textarea
+                containerStyle={styles.textareaContainer}
+                style={styles.textarea}
+                // onChangeText={this.handleDetailsChange}
+                defaultValue={this.state.details}
+                placeholder={'Details'}
+                placeholderTextColor={'white'}
+                underlineColorAndroid={'transparent'}
+              />
+            </View>
 
                         <DatePicker
                             style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white' , marginTop:5 }}
@@ -270,6 +278,22 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontSize: 16
     },
-
+    textareaContainer: {
+        height: 180,
+        padding: 5,
+        backgroundColor: 'black',
+        borderColor: 'gray',
+        borderRadius: 20,
+        paddingLeft: 10,
+        paddingRight: 10
+      },
+      textarea: {
+        textAlignVertical: 'top',  // hack android
+        height: 170,
+        fontSize: 14,
+        color: 'white',
+        paddingLeft: 10,
+        paddingRight: 10
+      },
 
 });

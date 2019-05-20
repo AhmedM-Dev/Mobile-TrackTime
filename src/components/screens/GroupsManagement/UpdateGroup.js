@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Icon, Container, Content, View, Text,Picker } from 'native-base'
+import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import titleIcon from '../../../assets/img/titleIcon.png';
 import leaderIcon from '../../../assets/img/leader.png';
@@ -12,24 +12,39 @@ import ImagePicker from 'react-native-image-picker';
 import StyledInput from '../../ui/Input/addEventInput';
 import { connect } from 'react-redux';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
-import { addGroup , getUsers} from './actions';
+import { addGroup, getUsers , getGroups } from './actions';
+
+import groupIcon from '../../../assets/img/group.png';
 
 
-
-class addGroups extends Component {
+class UpdateGroup extends Component {
     constructor() {
         super();
         this.state = {
-            name:'',
-            poleLead:''
+            selectedGroup:'',
+            name: '',
+            poleLead: ''
         }
     }
-    handleGroupName = (text) => {
+
+    
+
+    handleSelectGroup = (group) => {
         this.setState({
-            ...this.state,
-            name: text
+          selectedGroup: group
         });
-    }
+      }
+
+      handleNameChange = (text) => {
+        this.setState({
+          selectedGroup: {
+            ...this.state.selectedGroup,
+            name: text
+          }
+        });
+      }
+
+
     handlePoleLead = (poleLead) => {
         this.setState({
             ...this.state,
@@ -49,7 +64,13 @@ class addGroups extends Component {
 
     componentDidMount() {
         this.props.getUsers();
-      }
+
+    }
+
+    componentDidMount(){
+        this.props.getGroups();
+    }
+   
 
     render() {
         return (
@@ -65,28 +86,49 @@ class addGroups extends Component {
                         onPress={() => this.props.navigation.navigate('Administration')} />
 
 
+                    <AdminPickers height={55} width={300} top={50} marginBottom={-100}
+                    >
+                        <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+                        <Picker
+                            selectedValue={this.state.selectedGroup || ''}
+                            style={{
+                                alignSelf: 'center',
+                                marginTop: 10,
+                                marginBottom: 10,
+                                color: 'white',
+
+                            }}
+                            name="group"
+                            onValueChange={this.handleSelectGroup}>
+                            {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group} color="#021630" />)}
+                        </Picker>
+                    </AdminPickers>
+
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
-                        <StyledInput image={titleIcon} text={'Group name'} textColor={'white'} onChange={this.handleGroupName} />
-           
+                        <StyledInput 
+                        value={this.state.selectedGroup && this.state.selectedGroup.name}
+                        image={titleIcon} text={'Group name'} textColor={'white'} onChange={this.handleNameChange} />
+
                         <AdminPickers height={55} width={300} paddingLeft={20}>
-                        
-                        <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
-           
-            <Picker
-              selectedValue={this.state.poleLead || ''}
-              style={{
-                alignSelf: 'center',
-                marginTop: 10,
-                marginBottom: 10,
-                color: 'white',
-              }}
-              onValueChange={this.handlePoleLead}>
-              {/* <Picker.Item label="Leader" value='' color="#021630" /> */}
-              {this.props.users && this.props.users.length > 0 && this.props.users.map(user => 
-              <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user.userId} color="#021630" />)}
-            </Picker>
-            </AdminPickers>
+
+                            <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
+
+                            <Picker
+                                selectedValue={this.state.poleLead || ''}
+                                value={this.state.selectedGroup && this.state.selectedGroup.poleLead}
+                                style={{
+                                    alignSelf: 'center',
+                                    marginTop: 10,
+                                    marginBottom: 10,
+                                    color: 'white',
+                                }}
+                                onValueChange={this.handlePoleLead}>
+                                {/* <Picker.Item label="Leader" value='' color="#021630" /> */}
+                                {this.props.users && this.props.users.length > 0 && this.props.users.map(user =>
+                                    <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user.userId} color="#021630" />)}
+                            </Picker>
+                        </AdminPickers>
 
                     </View>
 
@@ -162,6 +204,7 @@ const mapStateToProps = state => {
         user: state.authReducer.user,
         theme: state.settingsReducer.theme,
         users: state.groupsReducer.users,
+        groups: state.groupsReducer.groups
 
     }
 }
@@ -170,7 +213,7 @@ const mapDispatchToProps = dispatch => ({
     addGroup(group) { dispatch(addGroup(group)) },
     getGroups() { dispatch(getGroups()) },
     getUsers() { dispatch(getUsers()) },
-
+    getGroups() { dispatch(getGroups()) },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(addGroups);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateGroup);

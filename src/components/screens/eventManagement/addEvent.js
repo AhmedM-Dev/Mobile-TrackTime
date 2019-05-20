@@ -6,7 +6,7 @@ import ActionButton from 'react-native-circular-action-menu';
 import axios from "axios";
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
-
+import  Textarea  from 'react-native-textarea'
 import { API_URL } from "../../../../config";
 import titleIcon from '../../../assets/img/titleIcon.png';
 import Background from '../../../assets/img/backgroundM.jpg';
@@ -114,7 +114,7 @@ class AddEvent extends Component {
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-keypad"
+            name="md-arrow-dropleft"
             style={{
               color: 'black',
               margin: 15,
@@ -123,12 +123,6 @@ class AddEvent extends Component {
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={{ marginTop: 10 }}>
             <Button
-              icon={
-                <Icon
-                  name="md-log-out"
-                  style={{ color: 'white', marginRight: 10, fontSize: 18, left: -81 }}
-                />
-              }
               buttonStyle={{
                 backgroundColor: 'black',
                 borderRadius: 20,
@@ -151,9 +145,18 @@ class AddEvent extends Component {
           </View>
 
           <View>
-            <StyledInput image={titleIcon} text={'Title'} textColor={'white'} onChange={this.handleTitleChange} />
-            <StyledInput image={motifIcon} text={'Datails'} textColor={'white'} onChange={this.handleDetailsChange} />
-
+            <StyledInput  text={'Title'} textColor={'white'} onChange={this.handleTitleChange} />
+            <View>
+              <Textarea
+                containerStyle={styles.textareaContainer}
+                style={styles.textarea}
+                onChangeText={this.handleDetailsChange}
+                defaultValue={this.state.details}
+                placeholder={'Details'}
+                placeholderTextColor={'white'}
+                underlineColorAndroid={'transparent'}
+              />
+            </View>
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
               date={this.state.startDate}
@@ -355,16 +358,34 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16
   },
+  textareaContainer: {
+    height: 180,
+    padding: 5,
+    backgroundColor: 'black',
+    borderColor: 'gray',
+    borderRadius: 20,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  textarea: {
+    textAlignVertical: 'top',  // hack android
+    height: 170,
+    fontSize: 14,
+    color: 'white',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+
 
 
 });
 
 const mapStateToProps = state => {
   return {
-      loading: state.loadingReducer.loading,
-      user: state.authReducer.user,
-      stats: state.dashboardReducer.statsReducer.stats,
-      theme: state.settingsReducer.theme,
+    loading: state.loadingReducer.loading,
+    user: state.authReducer.user,
+    stats: state.dashboardReducer.statsReducer.stats,
+    theme: state.settingsReducer.theme,
   }
 }
 

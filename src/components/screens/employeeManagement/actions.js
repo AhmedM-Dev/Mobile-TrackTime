@@ -30,7 +30,8 @@ export const addUser = payload => dispatch => {
         type: types.ADD_USER,
         payload: response.data
       });
-      alert("User added successfully");
+      ToastAndroid.show("User added successfully", ToastAndroid.LONG);
+
     })
     .catch(error => {
       dispatch({
@@ -65,6 +66,8 @@ export const deleteUser = userId => dispatch => {
         type: types.DELETE_USER,
         payload: userId
       });
+      ToastAndroid.show("User delated successfully", ToastAndroid.LONG);
+
     })
     .catch(error => {
       dispatch({

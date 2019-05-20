@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
-import { addUser } from './actions';
+import { addUser ,getGroups} from './actions';
 
 
 
@@ -22,7 +22,6 @@ import jobLogo from '../../../assets/img/jobLogo.png';
 import Background from '../../../assets/img/backgroundM.jpg';
 
 import { API_URL } from "../../../../config";
-import { getGroups } from './actions';
 
 
 class addEmployee extends Component {
@@ -31,10 +30,10 @@ class addEmployee extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      jobTitle: '',
+      groupId: null,
       email: '',
       password: null,
-      jobTitle: '',
-      group: '',
     }
   };
 
@@ -56,17 +55,11 @@ class addEmployee extends Component {
   handleGroupChange = (group) => {
     this.setState({
       ...this.state,
-      group: group
+      groupId: group
     });
   }
 
-  handlePhoneNumberChange = (text) => {
-    this.setState({
-      ...this.state,
-      phoneNumber: text
-    });
-  }
-
+ 
   handleEmailChange = (text) => {
     this.setState({
       ...this.state,
@@ -142,7 +135,7 @@ class addEmployee extends Component {
                 }}
                 name="group"
                 onValueChange={this.handleGroupChange}>
-                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
+                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.groupId} color="#021630" />)}
               </Picker>
             </AdminPickers>
             {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}
@@ -219,7 +212,7 @@ const mapStateToProps = state => {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
     theme: state.settingsReducer.theme,
-    groups: state.groupsReducer.groups
+    groups: state.usersReducer.groups
 
   }
 }

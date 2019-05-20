@@ -16,9 +16,8 @@ import groupIcon from '../../../assets/img/group.png';
 import jobLogo from '../../../assets/img/jobLogo.png';
 import logoName from '../../../assets/img/name.png';
 
-import { updateUser, getUsers } from './actions';
+import { updateUser, getUsers ,getGroups} from './actions';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
-import { getGroups } from './actions';
 
 class UpdateEmployee extends Component {
   constructor() {

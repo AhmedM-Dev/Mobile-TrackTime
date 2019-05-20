@@ -4,11 +4,15 @@ import { Text, View,Button } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import addGroup from './addGroup.js'
 import removeGroup from './removeGroup.js'
+import updateGroup from './UpdateGroup'
 
 export default createMaterialTopTabNavigator({
   Add: { 
     screen: addGroup
    },
+   Update: { 
+    screen: updateGroup
+  },
   Remove: { 
     screen: removeGroup
   },
