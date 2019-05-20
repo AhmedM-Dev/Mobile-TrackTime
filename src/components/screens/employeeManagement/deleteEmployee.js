@@ -12,6 +12,7 @@ import PasswordIcon from '../../../assets/img/password.png';
 import axios from "axios";
 import { API_URL } from "../../../../config";
 import Background from '../../../assets/img/backgroundM.jpg';
+import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
 import { deleteUser, getUsers } from './actions';
 
@@ -65,7 +66,7 @@ class DeleteEmployee extends Component {
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-keypad"
+            name="md-arrow-dropleft"
             style={{
               color: 'black',
               margin: 15,
@@ -74,21 +75,19 @@ class DeleteEmployee extends Component {
             onPress={() => this.props.navigation.navigate('Administration')} />
 
           <View style={styles.inputPos}>
+          <AdminPickers height={55} width={300} paddingLeft={20}>
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
-                height: 50,
-                width: 300,
                 alignSelf: 'center',
                 marginTop: 10,
                 marginBottom: 10,
-                color: this.props.theme.fontColor,
-                backgroundColor: this.props.theme.backgroundColor,
-                marginLeft: 10
+                color: 'white',
               }}
               onValueChange={this.handleSelectUser}>
               {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
             </Picker>
+            </AdminPickers>
           </View>
 
           <ActionButton

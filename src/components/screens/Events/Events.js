@@ -93,7 +93,8 @@ export default class NewRequest extends Component {
                     <Thumbnail source={events} />
                     <Body>
                       <Text>Tunisia docker meetup</Text>
-                      <Text note>March 1, 2019 , from 8:30 to 13:00 </Text>
+                      <Text note>date </Text>
+                      <Text note>time </Text>
                     </Body>
                   </Left>
                 </CardItem>

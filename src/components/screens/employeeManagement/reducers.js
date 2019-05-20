@@ -37,7 +37,11 @@ const usersReducer = (state = {}, action) => {
         ...state,
         users: action.users
       };
-
+      case types.GET_GROUPS:
+      return {
+        ...state,
+        groups: action.groups
+      };
     default:
       return state;
   }

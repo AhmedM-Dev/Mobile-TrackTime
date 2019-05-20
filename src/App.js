@@ -97,7 +97,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
     return (
       <AppContext.Provider value={{ theme: props.theme }}>
         <SafeAreaView style={{ flex: 1 }}>
-        <View style={{backgroundColor:'black' , height:120 ,flexDirection:'row' , justifyContent:'center',alignItems:'center'}}>
+        <View style={{backgroundColor:'#020B1C' , height:120 ,flexDirection:'row' , justifyContent:'center',alignItems:'center'}}>
             <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
               <Image source={{ uri: props.avatar && props.avatar.photo }} style={{
                 borderRadius: 100,
@@ -109,7 +109,8 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
               }}></Image>
             </TouchableHighlight>
             <View style={{ width: 150 }}>
-              <Text style={{ color: 'white' }}>{`${props.user.firstName} ${props.user.lastName}`}</Text>
+              {/* <Text style={{ color: 'white' }}>{`${props.user.firstName} ${props.user.lastName}`}</Text> */}
+              <Text style={{ color: 'white' }}>{props.user.displayName}</Text>
               <Text style={{ color: 'white' }}>{props.user.jobTitle}</Text>
             </View>
           </View>

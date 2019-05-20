@@ -6,6 +6,7 @@ import attendancesReducer from "../components/screens/AttendanceTime/reducers";
 import usersReducer from "../components/screens/employeeManagement/reducers";
 import eventsReducer from "../components/screens/eventManagement/reducers";
 import notificationsReducer from "../components/ui/NotificationsBell/reducers";
+import groupsReducer from "../components/screens/employeeManagement/reducers";
 
 import types from './types';
 
@@ -93,5 +94,6 @@ export default combineReducers({
     attendancesReducer,
     usersReducer,
     eventsReducer,
-    notificationsReducer
+    notificationsReducer,
+    groupsReducer
 });

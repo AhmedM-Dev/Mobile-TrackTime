@@ -5,6 +5,7 @@ import HttpClient from '../../../services/HttpClient';
 
 const http = new HttpClient();
 const domain = 'users';
+const groupsDomain = 'groups';
 
 export const getUsers = () => dispatch => {
   http.get(`${domain}`)
@@ -36,6 +37,8 @@ export const addUser = payload => dispatch => {
         type: globals.ADD_ERROR,
         error
       });
+      ToastAndroid.show("Email already used.", ToastAndroid.LONG);
+
     });
 }
 
@@ -71,18 +74,19 @@ export const deleteUser = userId => dispatch => {
     });
 }
 
-// export const getGroups = () => dispatch => {
-//   http.get(`groups`)
-//     .then(response => {
-//       dispatch({
-//         type: types.ADD_USER,
-//         payload: response.data
-//       });
-//     })
-//     .catch(error => {
-//       dispatch({
-//         type: globals.ADD_ERROR,
-//         error
-//       });
-//     });
-// }
+
+export const getGroups = () => dispatch => {
+  http.get(`${groupsDomain}`)
+    .then(response => {
+      dispatch({
+        type: types.GET_GROUPS,
+        groups: response.data.groups
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: globals.ADD_ERROR,
+        error
+      });
+    });
+}

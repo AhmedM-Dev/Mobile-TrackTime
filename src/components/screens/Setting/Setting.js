@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, StatusBar, ImageBackground, Text, StyleSheet, TouchableOpacity ,TouchableHighlight} from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity ,TouchableHighlight} from 'react-native';
 import SettingsList from 'react-native-setting-list';
-import { Container, Header, Content, List, ListItem, Icon, Left, Body, Right, Switch, Button, Title } from 'native-base';
+import { Container, Header, Content, Icon,  Switch,  Title } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 import { changeTheme } from "./actions";
 
-import userPic from '../../../assets/img/userPic.jpg'
-import bgst from '../../../assets/img/bgst.jpg'
-import langIcon from '../../../assets/img/langIcon.png'
-import themeIcon from '../../../assets/img/themeIcon.png'
-import EmailIcon from '../../../assets/img/emailB.png';
-import PasswordIcon from '../../../assets/img/passwordB.png';
-import NameIcon from '../../../assets/img/nameB.png';
-import unsubscribeIcon from '../../../assets/img/uns.png';
 
 
 const options = {
@@ -105,7 +97,8 @@ class Settings extends Component {
     marginRight: 30,
     top: 10
   }}>
-    <Image source={userPic} style={{
+    <Image source={{ uri: this.props.avatar && this.props.avatar.photo }}
+      style={{
       borderRadius: 100,
       height: 100,
       width: 100,
@@ -114,13 +107,13 @@ class Settings extends Component {
     }}></Image>
   </TouchableHighlight>
   <View style={{ width: 150, top: 35 }}>
-    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>Asma ben Ahmed</Text>
+    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>Asma Ben AHmed</Text>
     <Text style={{ color:  this.props.theme.fontColor, fontWeight: 'bold' }}>Admin </Text>
   </View>
 </View>
 
 <Content>
-  <View style={{ width: 280, borderLeftColor: this.props.theme.barColor , borderLeftWidth: 2, alignSelf: 'center' ,marginTop:30 }}>
+  <View style={{ width: 280, borderLeftColor: this.props.theme.barColor , borderLeftWidth: 2, alignSelf: 'center' ,marginTop:40 }}>
 
     <SettingsList borderColor={this.props.theme.settingContainerColor}  >
 
@@ -194,33 +187,6 @@ class Settings extends Component {
           backgroundColor= {this.props.theme.settingContainerColor}  
         />
 
-{/* <SettingsList.Header
-        hasNavArrow={false}
-        headerText='Application settings'
-        borderHide={'Both'}
-        headerStyle={{
-          fontSize: 18,
-          color: this.props.theme.fontColor,
-          marginLeft: 10,
-          fontWeight: 'bold'
-
-        }}
-        backgroundColor= {this.props.theme.settingContainerColor}  
-      /> */}
- <SettingsList.Item
-        icon={
-          <View style={styles.headerIcon}></View>
-        }
-        hasNavArrow={false}
-        itemWidth={50}
-        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-        title='Language'
-        borderHide={'Both'}
-        backgroundColor= {this.props.theme.settingContainerColor}  
-      />
-      
-      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>English</Text>
-
 
 <SettingsList.Item
           icon={
@@ -265,9 +231,16 @@ const styles = StyleSheet.create({
 
 });
 
+
+
+
+
 const mapStateToProps = state => {
   return {
       theme: state.settingsReducer.theme,
+      avatar: state.authReducer.avatar,
+      displayName: state.authReducer.displayName,
+
   }
 }
 
@@ -276,3 +249,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+
+
+
+

@@ -12,13 +12,12 @@ export const lightTheme = {
     menu: {
         background: '#F7F7F7',
         activeBackgroundColor: '#74BE9C',
-        activeLabelStyle: '#000000',
+        activeLabelStyle: '#020B1C',
         inactiveLabelStyle: '#232323',
         fintSize: 20,
         logoutBackground: '#F7F7F7' ,
-        logoutFontColor: '#000000',
+        logoutFontColor: '#020B1C',
         jobTitle: 'black',
-        userName: 'black',
         color:'white'
        
     }
@@ -26,22 +25,22 @@ export const lightTheme = {
 
 export const darkTheme = {
     preset: 'dark',
-    backgroundColor: 'black',
+    backgroundColor: '#020B1C',
     fontColor: 'white',
-    cardBackground: '#313131',
-    settingsHeaderColor:'black',
+    cardBackground: '#01152E',
+    settingsHeaderColor:'#020B1C',
     inputs: '#021630',
-    settingContainerColor: '#313131' , 
-    barColor:'#313131',
+    settingContainerColor: '#01152E' , 
+    barColor:'#020B1C',
 informationsColor:'#8F8E8E',
 imageSettingsBorderColor:'white',
     menu: {
-        background: 'black',
+        background: '#020B1C',
         activeBackgroundColor: '#1A6441',
         activeLabelStyle: 'white',
         inactiveLabelStyle: 'white',
         fintSize: 20,
-        logoutBackground: 'black' ,
+        logoutBackground: '#020B1C' ,
         logoutFontColor: 'white' ,
        
     }

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Icon, Container, Content, View, Text } from 'native-base';
+import { Icon, Container, Content, View, Text, Picker } from 'native-base';
 import ActionButton from 'react-native-circular-action-menu';
 import axios from "axios";
 import { connect } from 'react-redux';
+import { Button } from 'react-native-elements';
+import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
 import { addUser } from './actions';
+
+
 
 import StyledInput from '../../ui/Input/lightInput';
 import EmailIcon from '../../../assets/img/Email.png';
@@ -18,21 +22,22 @@ import jobLogo from '../../../assets/img/jobLogo.png';
 import Background from '../../../assets/img/backgroundM.jpg';
 
 import { API_URL } from "../../../../config";
+import { getGroups } from './actions';
 
 
-class AddMenu extends Component {
+class addEmployee extends Component {
   constructor() {
     super();
     this.state = {
       firstName: '',
       lastName: '',
-      groupId: null,
-      phoneNumber: '',
       email: '',
       password: null,
-      jobTitle: ''
+      jobTitle: '',
+      group: '',
     }
   };
+
 
   handleFirstNAmeChange = (text) => {
     this.setState({
@@ -48,10 +53,10 @@ class AddMenu extends Component {
     });
   }
 
-  handleGroupIdChange = (text) => {
+  handleGroupChange = (group) => {
     this.setState({
       ...this.state,
-      groupId: text
+      group: group
     });
   }
 
@@ -84,7 +89,14 @@ class AddMenu extends Component {
   }
 
   handleAddUser = () => {
-    this.props.addUser(this.state);
+    const { firstName, lastName, jobTitle, group, email, password } = this.state;
+    if (firstName !== '' && lastName !== '' && jobTitle !== '' && group !== '' && email !== '' && password !== '') {
+      this.props.addUser(this.state);
+      ToastAndroid.show("user added successfully", ToastAndroid.LONG);
+    } else {
+      ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+    }
+
 
     // axios.post(API_URL + "users", {
     //   userId: this.state.connectedUser.userId,
@@ -95,26 +107,47 @@ class AddMenu extends Component {
     //   }).catch(error => alert(error));
   }
 
+  componentDidMount() {
+    this.props.getGroups();
+  }
   render() {
     return (
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-keypad"
+            name="md-arrow-dropleft"
             style={{
               color: 'black',
               margin: 15,
               top: 10
             }}
+
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={styles.inputPos}>
-            <StyledInput image={logoName} text={'First name'} textColor={'white'} onChange={this.handleFirstNAmeChange} />
-            <StyledInput image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleLastNameChange} />
-            <StyledInput image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleJobTitleChange} />
-            <StyledInput image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleGroupIdChange} />
+            <StyledInput image={logoName} text={'First name'} textColor={'white'} onChange={this.handleFirstNAmeChange} name="firstName" />
+            <StyledInput image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleLastNameChange} name="lastName" />
+            <StyledInput image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleJobTitleChange} name="jobTitle" />
+            {/* <StyledInput image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleGroupIdChange} /> */}
+            <AdminPickers height={55}>
+              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+              <Picker
+                selectedValue={this.state.group || ''}
+                width={300}
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  color: 'white',
+
+                }}
+                name="group"
+                onValueChange={this.handleGroupChange}>
+                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
+              </Picker>
+            </AdminPickers>
             {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}
-            <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-            <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handlePassChange} />
+            <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} name="email" />
+            <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handlePassChange} name="password" />
           </View>
 
           <ActionButton
@@ -124,7 +157,7 @@ class AddMenu extends Component {
             degrees={180}
             size={40}
             radius={50}
-          // outRangeScale={0.5}       
+            outRangeScale={0.5}
           >
             <ActionButton.Item
               buttonColor='#C9CF57'
@@ -144,6 +177,10 @@ class AddMenu extends Component {
               />
             </ActionButton.Item>
           </ActionButton>
+
+
+
+
         </Content>
       </View>
     );
@@ -155,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#E7E7E7',
-},
+  },
 
   inputPos: {
     top: 30,
@@ -175,16 +212,21 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
 const mapStateToProps = state => {
   return {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
-    theme: state.settingsReducer.theme
+    theme: state.settingsReducer.theme,
+    groups: state.groupsReducer.groups
+
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  addUser(user) { dispatch(addUser(user)) }
+  addUser(user) { dispatch(addUser(user)) },
+  getGroups() { dispatch(getGroups()) },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(addEmployee);

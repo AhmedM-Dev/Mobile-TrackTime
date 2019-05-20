@@ -1,95 +1,21 @@
 import React from 'react';
-import { StatusBar, Image, StyleSheet, ImageBackground ,} from 'react-native';
+import { StatusBar, Image, StyleSheet ,} from 'react-native';
 import {
   Container,
   Content,
-  Card,
   Text,
   Button,
   View,
   Picker,
-  Footer,
-  FooterTab,
-  Badge, Icon, Header, Title,
+ Icon, Header, Title,
 } from 'native-base';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-
-import SimplePicker from 'react-native-simple-picker';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import PureChart from 'react-native-pure-chart';
-import bg from '../../../assets/img/bg.jpg'
-
-var categories = [
-  {
-      id: 'All categories',
-      name: 'All categories',
-  },
-  {
-      id: 'Paid leave',
-      name: 'Paid leave',
-  },
-  {
-      id: 'Additional days',
-      name: 'Additional days',
-  },
-  {
-    id: 'Unpaid leave',
-    name: 'Unpaid leave',
-},
-{
-  id: 'Sick leave',
-  name: 'Sick leave',
-},
-{
-  id: 'Paternity leave',
-  name: 'Paternity leave',
-},
-{
-  id: 'Maternity leave',
-  name: 'Maternity leave',
-},
-{
-  id: 'Wedding leave',
-  name: 'Wedding leave',
-},
-{
-  id: "Son's circumcision ",
-  name: "Son's circumcision ",
-},
-{
-  id: "Son's/Daughter's wedding",
-  name: "Son's/Daughter's wedding",
-},
-{
-  id: "Spouse's death",
-  name: "Spouse's death",
-},
-{
-  id: "Mother's/Father's death",
-  name: "Mother's/Father's death",
-},
-{
-  id: "Son's/Daughter's death",
-  name: "Son's/Daughter's death",
-},
-{
-  id: "Brother's/Sister's death",
-  name:"Brother's/Sister's death",
-},
-{
-  id: "Grandfather's/Grandmother's death",
-  name: "Grandfather's/Grandmother's death",
-},
-{
-  id: "Other",
-  name: "Other",
-},
-];
-
-const languages = ['English', 'Frensh'];
-
-export default class Events extends React.Component {
+import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
+class History extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -129,17 +55,17 @@ export default class Events extends React.Component {
   ]
 
     return (
-      <Container style={styles.container} >
+      <Container style={{backgroundColor:this.props.theme.backgroundColor}} >
         <StatusBar hidden />
 
-        <Header style={{ backgroundColor: 'white', flexDirection: 'row',  }}>
+        <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row',  }}>
                         <Icon name='md-menu' style={{
-                            color: 'black', position: 'absolute',
+                            color: this.props.theme.fontColor, position: 'absolute',
                             left: 20, top: 15
                         }}
                             onPress={() => this.props.navigation.openDrawer()}
                         />
-                        <Title style={{ top: 15, color: 'black' , marginRight: 70, marginLeft: 25}}> Leaves history</Title>
+                        <Title style={{ top: 15, color: this.props.theme.fontColor , marginRight: 90, marginLeft: 25}}> Leaves history</Title>
                         <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
                         borderRadius: 100,
                         height: 30,
@@ -152,38 +78,11 @@ export default class Events extends React.Component {
                             height: 30,
                             width: 30,
                             borderWidth: 1,
-                            borderColor: 'black',
+                            borderColor: this.props.theme.fontColor,
                             zIndex:20
                         }}></Image>
                     </TouchableHighlight>
-
-                    <Icon name="md-globe"
-                        style={{
-                            top: 13,
-                            color: 'black',
-                            fontSize: 34,
-                            marginRight: 15,
-                        }}
-                        onPress={() => {
-                            this.refs.picker.show();
-                        }} />
-                    <SimplePicker
-                        ref={'picker'}
-                        options={languages}
-                        labels={languages}
-                        itemStyle={{
-                            fontSize: 25,
-                            color: 'red',
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        }}
-                        onSubmit={(languages) => {
-                            this.setState({
-                                languageSelected: languages,
-                            });
-                        }}
-                    />
-                        {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+                   
                     </Header>
 
 
@@ -191,10 +90,10 @@ export default class Events extends React.Component {
         <Content>
             <View>
 
-              <View style={styles.list}>
+              <CustumPicker>
                 <Picker
                   selectedValue={this.state.year}
-                  style={{ height: 50, width: 300 , color:'black' ,borderRadius:20,
+                  style={{ height: 50, width: 300 , color:this.props.theme.fontColor ,
                 }}
                  
                   onValueChange={(itemValue, itemIndex) =>
@@ -205,17 +104,17 @@ export default class Events extends React.Component {
                   <Picker.Item label="2017" value="2017" />
 
                 </Picker>
-              </View>
+              </CustumPicker>
 
             </View>
 
 
             <View>
 
-              <View style={styles.list}>
+              <CustumPicker>
                 <Picker
                   selectedValue={this.state.status}
-                  style={{ height: 50, width: 300 , color:'black' , borderRadius:20,
+                  style={{ height: 50, width: 300 , color:this.props.theme.fontColor , 
                 }}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ status: itemValue })
@@ -226,17 +125,17 @@ export default class Events extends React.Component {
                   <Picker.Item label="Declined" value="Declined" />
                   <Picker.Item label="Canceled" value="Canceled" />
                 </Picker>
-              </View>
+              </CustumPicker>
 
 
             </View>
 
 
-            <View>
+            <CustumPicker>
 
-                {/* <Picker
+                 <Picker
                   selectedValue={this.state.category}
-                  style={{ height: 50, width: 300 , color:'white' }}
+                  style={{ height: 50, width: 300 , color:this.props.theme.fontColor , borderRadius:20}}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ category: itemValue })
                   }>
@@ -257,60 +156,17 @@ export default class Events extends React.Component {
                   <Picker.Item label="Grandfather's/Grandmother's death" value="Grandfather's/Grandmother's death" />
                   <Picker.Item label="Other" value="Other" />
 
-                </Picker> */}
-                  <SearchableDropdown
-                  listType="ListView"
-                    onTextChange={(itemValue, itemIndex) =>
-                        this.setState({ category: itemValue })}
-                    onItemSelect={
-                        (itemValue, itemIndex) =>
-                            this.setState({ category: JSON.stringify((itemValue.id)) })
-                    }
-                    containerStyle={{ marginTop:1}}
-                    textInputStyle={{
-                        borderWidth: 1,
-                        borderColor: '#F7F7F7',
-                        borderRadius:20,
-                        fontSize: 18,
-                        width: 342,
-                        alignSelf: 'center',
-                        color: 'black',
-                        backgroundColor: '#F7F7F7',
-                       paddingLeft:27 
-                    }}
-                    itemStyle={{
-                        padding: 3,
-                        paddingLeft:30,
-                        backgroundColor: '#F7F7F7',
-                        width: 340,
-                        alignSelf: 'center',
-                        margin:-2  ,
-                          }}
-                    itemTextStyle={{ color: 'gray' }}
-                    itemsContainerStyle={{ maxHeight: 220 , 
-                                          alignSelf:'center',
-                                           width:340 ,
-                                           marginBottom:5,
-                                           borderWidth:1,
-                                           borderColor:'#F7F7F7',
-                                           marginTop:-2
-                                          }}
-                    items={categories}
-                    // defaultIndex={3}
-                    placeholder="All categories"
-                    resetValue={false}
-                    underlineColorAndroid="transparent"
-                />
+                </Picker> 
 
               <Button style={{ width: 340 ,flexDirection:'row' ,alignSelf:'center' , backgroundColor:'#0E6655' , borderRadius:0 , marginTop:2 }}>
-                <Icon name="md-done-all" style={{color:'white', left:15 }}></Icon>
+                <Icon name="md-done-all" style={{color:this.props.theme.backgroundColor, left:15 }}></Icon>
                 <Text style={{ left :-200}}>FILTER</Text>
               </Button>
 
-            </View>
+            </CustumPicker>
 
 
-            {/* <View style={styles.cardStyle}>
+            {/* <View >
               <PureChart data={sampleDataa} type='pie' />
               </View> */}
 
@@ -324,33 +180,29 @@ export default class Events extends React.Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-},
-  cardStyle: {
-    marginTop:10,
-    alignContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    width: 340,
-    backgroundColor: '#F7F7F7',
-    borderColor: '#F7F7F7',
-    padding:10
-},
-  list: {
-    borderWidth: 1,
-    width: 340,
-    height: 50,
-    paddingLeft: 20,
-    alignSelf: 'center',
-    borderColor: '#F7F7F7',
-    marginTop: 2,
-    backgroundColor: '#F7F7F7', 
 
-  },
+
+const styles = StyleSheet.create({
+
   textStyle: {
     left: 18
   },
 }
 )
+
+
+
+History.propTypes = {
+  theme: PropTypes.object
+};
+
+
+const mapStateToProps = state => {
+  return {
+    theme: state.settingsReducer.theme,
+    avatar: state.authReducer.avatar,
+  }
+}
+
+
+export default connect(mapStateToProps)(History);

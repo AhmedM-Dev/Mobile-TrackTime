@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
 
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
@@ -17,6 +17,8 @@ import jobLogo from '../../../assets/img/jobLogo.png';
 import logoName from '../../../assets/img/name.png';
 
 import { updateUser, getUsers } from './actions';
+import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
+import { getGroups } from './actions';
 
 class UpdateEmployee extends Component {
   constructor() {
@@ -24,10 +26,13 @@ class UpdateEmployee extends Component {
     this.state = {
       email: '',
       password: null,
-      selectedUser: null
+      selectedUser: null,
+      group:''
     }
   };
-
+  componentDidMount() {
+    this.props.getGroups();
+  }
 
   handleEmailChange = (text) => {
     this.setState({
@@ -89,11 +94,13 @@ class UpdateEmployee extends Component {
     });
   }
 
-  handleChangeGroup = (text) => {
+  handleChangeGroup = (group) => {
     this.setState({
+      ...this.state,
+      group:group,
       selectedUser: {
         ...this.state.selectedUser,
-        groupId: text
+        group: group
       }
     });
   }
@@ -124,8 +131,11 @@ class UpdateEmployee extends Component {
         userId,
         ...this.state.selectedUser
       });
+      ToastAndroid.show("user updated successfully", ToastAndroid.LONG);
+
     } else {
-      alert("All infos are required.");
+      ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+
     }
   }
 
@@ -134,35 +144,48 @@ class UpdateEmployee extends Component {
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-keypad"
+            name="md-arrow-dropleft"
             style={{
               color: 'black',
               margin: 15,
               top: 10
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-          <View style={styles.inputPos}>
+            <AdminPickers height={40} width={230} top={-40} left={50} paddingLeft={20}>
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
-                height: 50,
-                width: '100%',
                 alignSelf: 'center',
                 marginTop: 10,
                 marginBottom: 10,
-                color: this.props.theme.fontColor,
-                backgroundColor: this.props.theme.backgroundColor,
-                marginLeft: 10
+                color: 'white',
               }}
               onValueChange={this.handleSelectUser}>
               {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
             </Picker>
+            </AdminPickers>
 
+              <View style={styles.inputPos}>
             <StyledInput name="firstName" value={this.state.selectedUser && this.state.selectedUser.firstName} image={logoName} text={'First name'} textColor={'white'} onChange={this.handleChangeFirstName} />
             <StyledInput name="lastName" value={this.state.selectedUser && this.state.selectedUser.lastName} image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleChangeLastName} />
             <StyledInput name="jobTitle" value={this.state.selectedUser && this.state.selectedUser.jobTitle} image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleChangeJobTitle} />
-            <StyledInput name="groupId" value={this.state.selectedUser && this.state.selectedUser.groupId.toString()} image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleChangeGroup} />
-            {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}
+            <AdminPickers height={55}>
+              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+              <Picker
+                selectedValue={this.state.group || ''}
+                width={300}
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  color: 'white',
+
+                }}
+                name="group"
+                onValueChange={this.handleChangeGroup}>
+                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
+              </Picker>
+            </AdminPickers>
             <StyledInput name="email" value={this.state.selectedUser && this.state.selectedUser.email} image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleChangeEmail} />
             <StyledInput name="password" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handleChangePass} />
           </View>
@@ -209,8 +232,10 @@ const styles = StyleSheet.create({
   },
 
   inputPos: {
-    top: 30,
-    marginBottom: 100
+    marginBottom: 70,
+    alignItems:'center',
+    alignSelf:'center',
+    justifyContent:'center',
   },
 
   actionButtonIcon: {
@@ -231,13 +256,17 @@ const mapStateToProps = state => {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
     users: state.usersReducer.users,
-    theme: state.settingsReducer.theme
+    theme: state.settingsReducer.theme,
+    groups: state.groupsReducer.groups
+
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getUsers() { dispatch(getUsers()) },
-  updateUser(user) { dispatch(updateUser(user)) }
+  updateUser(user) { dispatch(updateUser(user)) },
+  getGroups() { dispatch(getGroups()) },
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateEmployee);
