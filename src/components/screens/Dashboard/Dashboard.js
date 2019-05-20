@@ -323,8 +323,7 @@ const mapStateToProps = state => {
     user: state.authReducer.user,
     stats: state.dashboardReducer.statsReducer.stats,
     theme: state.settingsReducer.theme,
-    avatar: state.authReducer.avatar,
-    notifications: state.notificationsReducer.notifications
+    avatar: state.authReducer.avatar
   }
 }
 

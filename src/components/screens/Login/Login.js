@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, Text, TextInput, View, StatusBar, Image, Icon, ToastAndroid, ActivityIndicator } from 'react-native';
-import { CheckBox, Button } from 'react-native-elements'
+import { ImageBackground, Text, TextInput, View, StatusBar, Image, ToastAndroid, ActivityIndicator } from 'react-native';
+import { Button } from 'react-native-elements'
 import { connect } from 'react-redux';
-import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
+import Dialog, { DialogContent, DialogTitle, SlideAnimation } from 'react-native-popup-dialog';
 
 import StyledInput from '../../ui/Input';
 
@@ -11,10 +11,10 @@ import companyLogo from '../../../assets/img/proxym.png'
 import Background from '../../../assets/img/background.jpg';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
-import checkedIcon from '../../../assets/img/checkedIcon.png'
-import uncheckedIcon from '../../../assets/img/uncheckedIcon.png'
+import checkedIcon from '../../../assets/img/checkedIcon.png';
+import uncheckedIcon from '../../../assets/img/uncheckedIcon.png';
 
-import { authenticate, storeDataToAsyncStorage } from '../../../services/services';
+import { storeDataToAsyncStorage } from '../../../services/services';
 import { authenticateWithRedux } from '../../../store/actions';
 
 import styles from './styles';

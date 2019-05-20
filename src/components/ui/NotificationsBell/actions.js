@@ -5,11 +5,11 @@ import types from './types';
 const http = new HttpClient();
 
 export const getNotifications = () => dispatch => {
-    http.get(domain)
+    http.get('notifications')
     .then(response => {
         dispatch({
             type: types.GET_NOTIFICATIONS,
-            payload: response.data
+            payload: response.data.notifications
         });
     })
     .catch(error => {

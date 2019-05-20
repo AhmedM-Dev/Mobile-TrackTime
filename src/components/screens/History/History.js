@@ -258,8 +258,8 @@ export default class Events extends React.Component {
                   <Picker.Item label="Other" value="Other" />
 
                 </Picker> */}
-                  <SearchableDropdown
-                  listType="ListView"
+                  {/* <SearchableDropdown
+                  // listType="ListView"
                     onTextChange={(itemValue, itemIndex) =>
                         this.setState({ category: itemValue })}
                     onItemSelect={
@@ -300,7 +300,7 @@ export default class Events extends React.Component {
                     placeholder="All categories"
                     resetValue={false}
                     underlineColorAndroid="transparent"
-                />
+                /> */}
 
               <Button style={{ width: 340 ,flexDirection:'row' ,alignSelf:'center' , backgroundColor:'#0E6655' , borderRadius:0 , marginTop:2 }}>
                 <Icon name="md-done-all" style={{color:'white', left:15 }}></Icon>
