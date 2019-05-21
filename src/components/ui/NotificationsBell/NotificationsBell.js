@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, View, Badge, Icon } from 'native-base';
 import axios from "axios";
 
+import { getNotifications } from './actions';
+
 import { API_URL } from "../../../../config";
 
 import PropTypes from 'prop-types';
@@ -26,18 +28,19 @@ class NotificationsBell extends React.Component {
   }
 
   componentDidMount() {
+    this.props.getNotifications();
     setInterval(() => {
-      this.fetchNotifications();
+      this.props.getNotifications();
     }, 10000);
   }
 
   render() {
     return (
       <View style={{ position: 'absolute', right: 20, top: 5 }}>
-        <Badge style={{ top: 5, right: -10, zIndex: 1 }}>
-          {this.state.notifs.length > 0 && <Text>{this.state.notifs.length}</Text>}
-        </Badge>
-        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor , top: -15 }} />
+        {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ top: 5, right: -10, zIndex: 1 }}>
+          <Text>{this.props.notifications.length}</Text>
+        </Badge>}
+        <Icon active name="md-notifications" style={{ color: 'black', top: -15 }} />
       </View>
     );
   }
