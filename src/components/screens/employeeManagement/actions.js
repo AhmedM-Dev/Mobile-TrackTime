@@ -48,7 +48,7 @@ export const updateUser = payload => dispatch => {
     .then(response => {
       dispatch({
         type: types.UPDATE_USER,
-        payload: response.data
+        payload: response.data.user
       });
     })
     .catch(error => {

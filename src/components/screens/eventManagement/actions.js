@@ -6,10 +6,6 @@ const http = new HttpClient();
 
 const domain = "events";
 
-// export const getEvents = () => dispatch => {
-
-// }
-
 export const deleteEvent = eventId => dispatch => {
   http.delete(`${domain}/${eventId}`)
     .then(response => {
@@ -17,7 +13,7 @@ export const deleteEvent = eventId => dispatch => {
         type: types.DELETE_EVENT,
         payload: eventId
       });
-      ToastAndroid.show("Event delated successfully", ToastAndroid.LONG);
+      ToastAndroid.show("Event deleted successfully", ToastAndroid.LONG);
 
     })
     .catch(error => {
@@ -43,6 +39,7 @@ export const getEvents = () => dispatch => {
       });
     });
 }
+
 export const createEvent = payload => dispatch => {
   http.post(domain, payload)
     .then(response => {
@@ -58,11 +55,3 @@ export const createEvent = payload => dispatch => {
       });
     });
 }
-
-// export const updateEvent = () => dispatch => {
-
-// }
-
-// export const deleteEvent = () => dispatch => {
-
-// }

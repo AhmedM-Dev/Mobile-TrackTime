@@ -5,22 +5,22 @@ import { Card, Text, View } from 'native-base';
 
 const AdminPickers = props => {
     return (
-        <View 
-        height={props.height}
-        width={props.width}
-        top={props.top}
-        marginBottom={props.marginBottom}
-        left={props.left}
-        paddingLeft={props.paddingLeft}
-        style={{ 
-            backgroundColor: 'black',
-            marginBottom: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderColor: 'gray',
-            borderWidth: 1,
-            borderRadius: 20
-        }}>
+        <View
+            height={props.height}
+            width={props.width}
+            top={props.top}
+            marginBottom={props.marginBottom}
+            left={props.left}
+            paddingLeft={props.paddingLeft}
+            style={{
+                backgroundColor: 'black',
+                marginBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderRadius: 20
+            }}>
             {props.children}
         </View>
     )
