@@ -12,96 +12,75 @@ import {
 } from 'native-base';
 
 import Swiper from 'react-native-swiper';
-import SimplePicker from 'react-native-simple-picker';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-const languages = ['English', 'Frensh'];
-
+import NotificationsBell from "../../ui/NotificationsBell";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import events from '../../../assets/img/eventsLogo.png'
 import dockerMeetup from '../../../assets/img/dockerMeetup.jpg'
-import { CardList } from 'react-native-card-list';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
-export default class NewRequest extends Component {
+class Events extends Component {
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }} >
+      <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
         <StatusBar hidden />
 
-        <Header style={{ backgroundColor: 'white', flexDirection: 'row', }}>
-          <Icon name='md-menu' style={{
-            color: 'black', position: 'absolute',
-            left: 20, top: 15
-          }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Title style={{ top: 15, color: 'black', marginRight: 70, marginLeft: 5 }}>Events</Title>
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
-            borderRadius: 100,
-            height: 30,
-            width: 30,
-            marginRight: 15,
-            top: 15,
-          }}>
-            <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+        <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
+            <Icon name='md-menu' style={{
+              color: this.props.theme.fontColor, position: 'absolute',
+              left: 20, top: 15
+            }}
+              onPress={() => this.props.navigation.openDrawer()}
+            />
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
               width: 30,
-              borderWidth: 1,
-              borderColor: 'black',
-              zIndex: 20
-            }}></Image>
-          </TouchableHighlight>
-
-          <Icon name="md-globe"
-            style={{
-              top: 13,
-              color: 'black',
-              fontSize: 34,
               marginRight: 15,
-            }}
-            onPress={() => {
-              this.refs.picker.show();
-            }} />
-          <SimplePicker
-            ref={'picker'}
-            options={languages}
-            labels={languages}
-            itemStyle={{
-              fontSize: 25,
-              color: 'red',
-              textAlign: 'left',
-              fontWeight: 'bold',
-            }}
-            onSubmit={(languages) => {
-              this.setState({
-                languageSelected: languages,
-              });
-            }}
-          />
-          {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
-        </Header>
+              top: 15,
+            }}>
+              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+                borderRadius: 100,
+                height: 30,
+                width: 30,
+                borderWidth: 1,
+                borderColor: this.props.theme.fontColor,
+                zIndex: 20
+              }}></Image>
+            </TouchableHighlight>
+            <NotificationsBell />
+          </Header>
         <Swiper
-          style={styles.wrapper}
+          style={{backgroundColor:this.props.theme.backgroundColor , flex:1}}
           smoothTransition
           loop
-          showPaginationBelow={true}
-        >
+          showsButtons={false}
+          dot={<View style={{backgroundColor: '#CFCDCD', width: 10, height: 10, borderRadius: 7, marginLeft: 4, marginRight: 4}} />}
+          activeDot={<View style={{backgroundColor: '#74BE9C', width: 10, height: 10, borderRadius: 7,marginLeft: 4, marginRight: 4}} />}
+          paginationStyle={{
+            bottom: 30
+          }}
+          showPaginationBelow={false}>
           <Content>
-            <View style={styles.slide}>
-              <Card style={{ width: 340, alignSelf: 'center' }}>
-                <CardItem>
+
+
+            <View style={{  fontSize:30 , fontWeight:'bold'}}>
+              <Card style={{ width: 340, alignSelf: 'center' , backgroundColor:this.props.theme.backgroundColor ,borderColor: this.props.theme.cardBackground  }}>
+                <CardItem style={{backgroundColor:this.props.theme.backgroundColor }}>
                   <Left>
                     <Thumbnail source={events} />
                     <Body>
-                      <Text>Tunisia docker meetup</Text>
-                      <Text note>date </Text>
-                      <Text note>time </Text>
+                      <Text style={{color:this.props.theme.fontColor}}>Tunisia docker meetup</Text>
+                      <Text style={{color:this.props.theme.fontColor}} note>date </Text>
+                      <Text style={{color:this.props.theme.fontColor}}note>time </Text>
                     </Body>
                   </Left>
                 </CardItem>
-                <CardItem>
-                  <Body>
-                    <Image source={dockerMeetup} style={{ height: 200, width: 320, alignSelf: 'center', top: -20 }} />
-                    <Text>
+                <CardItem style={{backgroundColor:this.props.theme.backgroundColor}}>
+                  <Body style={{ borderRadius:20}}>
+                    <Image source={dockerMeetup} style={{ height: 200, width: 320, alignSelf: 'center', top: -15  , borderRadius:20}} />
+                    <Text style={{color:this.props.theme.fontColor}} >
                       #Docker : Every year the Docker community everywhere celebrates the Docker birthday. This year we are #organizing the first Docker Meetup in Tunisia.
                     {'\n'}{'\n'}
                       Join us celebrating the 6th Docker Birthday :D
@@ -113,34 +92,27 @@ export default class NewRequest extends Component {
                 </Text>
                   </Body>
                 </CardItem>
-                <CardItem>
+                {/* <CardItem>
                   <Left>
                     <Button transparent textStyle={{ color: '#87838B' }}>
                       <Icon name="md-heart" style={{ color: 'red' }} />
                       <Text>20 reacts</Text>
                     </Button>
                   </Left>
-                </CardItem>
+                </CardItem> */}
               </Card>
-            </View></Content>
-          <View style={styles.slide}>
-            <Text style={styles.text}>2</Text>
+            </View>
+            </Content>
+
+
+
+          <View >
+            <Text >2</Text>
           </View>
-          <View style={styles.slide}>
-            <Text style={styles.text}>3</Text>
+          <View >
+            <Text >3</Text>
           </View>
-          <View style={styles.slide}>
-            <Text style={styles.text}>4</Text>
-          </View>
-          <View style={styles.slide}>
-            <Text style={styles.text}>5</Text>
-          </View>
-          <View style={styles.slide}>
-            <Text style={styles.text}>6</Text>
-          </View>
-          <View style={styles.slide}>
-            <Text style={styles.text}>7</Text>
-          </View>
+
         </Swiper>
 
       </Container>
@@ -148,22 +120,23 @@ export default class NewRequest extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: 'white',
-    flex: 1,
-
-  },
-  slide: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-
-  text: {
-    color: 'black',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
 
 
-})
+
+
+const mapStateToProps = state => {
+  return {
+    loading: state.loadingReducer.loading,
+    user: state.authReducer.user,
+    theme: state.settingsReducer.theme,
+    avatar: state.authReducer.avatar,
+    
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getAvatar() { dispatch(getAvatar()) }
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Events);

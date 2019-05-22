@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Icon, Container, Content, View, Text,Picker } from 'native-base'
+import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import titleIcon from '../../../assets/img/titleIcon.png';
 import leaderIcon from '../../../assets/img/leader.png';
@@ -12,7 +12,7 @@ import ImagePicker from 'react-native-image-picker';
 import StyledInput from '../../ui/Input/addEventInput';
 import { connect } from 'react-redux';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
-import { addGroup , getUsers} from './actions';
+import { addGroup, getUsers } from './actions';
 
 
 
@@ -20,8 +20,8 @@ class addGroups extends Component {
     constructor() {
         super();
         this.state = {
-            name:'',
-            poleLead:''
+            name: '',
+            poleLead: ''
         }
     }
     handleGroupName = (text) => {
@@ -49,7 +49,7 @@ class addGroups extends Component {
 
     componentDidMount() {
         this.props.getUsers();
-      }
+    }
 
     render() {
         return (
@@ -68,25 +68,23 @@ class addGroups extends Component {
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
                         <StyledInput image={titleIcon} text={'Group name'} textColor={'white'} onChange={this.handleGroupName} />
-           
                         <AdminPickers height={55} width={300} paddingLeft={20}>
-                        
-                        <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
-           
-            <Picker
-              selectedValue={this.state.poleLead || ''}
-              style={{
-                alignSelf: 'center',
-                marginTop: 10,
-                marginBottom: 10,
-                color: 'white',
-              }}
-              onValueChange={this.handlePoleLead}>
-              {/* <Picker.Item label="Leader" value='' color="#021630" /> */}
-              {this.props.users && this.props.users.length > 0 && this.props.users.map(user => 
-              <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user.userId} color="#021630" />)}
-            </Picker>
-            </AdminPickers>
+                            <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
+
+                            <Picker
+                                selectedValue={this.state.poleLead || ''}
+                                style={{
+                                    alignSelf: 'center',
+                                    marginTop: 10,
+                                    marginBottom: 10,
+                                    color: 'white',
+                                }}
+                                onValueChange={this.handlePoleLead}>
+                                {/* <Picker.Item label="Leader" value='' color="#021630" /> */}
+                                {this.props.users && this.props.users.length > 0 && this.props.users.map(user =>
+                                    <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user.userId} color="#021630" />)}
+                            </Picker>
+                        </AdminPickers>
 
                     </View>
 

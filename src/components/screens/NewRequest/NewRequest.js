@@ -4,10 +4,9 @@ import { Text, View,Button } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import LeaveRequest from './LeaveRequest'
 import AttendanceCorrection from './Attendance correction'
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
- createMaterialTopTabNavigator({
+
+ export default createMaterialTopTabNavigator({
     'Attendance correction Request': { 
     screen: AttendanceCorrection
    },
@@ -33,20 +32,6 @@ import { connect } from 'react-redux';
   },
 });
 
-
-createMaterialTopTabNavigator.propTypes = {
-  theme: PropTypes.object
-};
-
-const mapStateToProps = state => {
-  return {
-    theme: state.settingsReducer.theme,
-
-  }
-}
-
-
-export default connect(mapStateToProps)(createMaterialTopTabNavigator);
 
 
 

@@ -22,6 +22,7 @@ import {
 import { map } from 'lodash';
 
 import AttendanceClock from '../../ui/AttendanceClock';
+import NotificationsBell from "../../ui/NotificationsBell";
 
 import { getAttendances } from './actions';
 
@@ -53,15 +54,14 @@ class AttendanceTime extends React.Component {
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
 
           <StatusBar hidden />
-
-          <Header style={{ backgroundColor: 'white', flexDirection: 'row', }}>
+          <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
             <Icon name='md-menu' style={{
-              color: 'black', position: 'absolute',
+              color: this.props.theme.fontColor, position: 'absolute',
               left: 20, top: 15
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15, color: 'black', marginRight: 70, marginLeft: 60 }}>Attendance time</Title>
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
@@ -74,45 +74,17 @@ class AttendanceTime extends React.Component {
                 height: 30,
                 width: 30,
                 borderWidth: 1,
-                borderColor: 'black',
+                borderColor: this.props.theme.fontColor,
                 zIndex: 20
               }}></Image>
             </TouchableHighlight>
-
-            <Icon name="md-globe"
-              style={{
-                top: 13,
-                color: 'black',
-                fontSize: 34,
-                marginRight: 15,
-              }}
-              onPress={() => {
-                this.refs.picker.show();
-              }} />
-            <SimplePicker
-              ref={'picker'}
-              options={languages}
-              labels={languages}
-              itemStyle={{
-                fontSize: 25,
-                color: 'red',
-                textAlign: 'left',
-                fontWeight: 'bold',
-              }}
-              onSubmit={(languages) => {
-                this.setState({
-                  languageSelected: languages,
-                });
-              }}
-            />
-            {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+            <NotificationsBell />
           </Header>
-
-          <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 10 }}>
-            <View style={{ marginRight: 5 }}>
+          <View style={{ flexDirection: 'row', alignSelf: 'center' , marginBottom:5 }}>
+            <View style={{ marginRight: 5  }}>
 
               <DatePicker
-                style={{ width: 280, marginBottom: 5, marginTop: 10 }}
+                style={{ width: 280, marginBottom: 5, marginTop: 10  }}
                 date={this.state.date1}
                 mode="date"
                 placeholder="Select start date"
@@ -130,17 +102,23 @@ class AttendanceTime extends React.Component {
                     marginLeft: 0,
                   },
                   dateInput: {
-                    backgroundColor: '#F7F7F7',
-                    borderColor: '#F7F7F7',
+                    backgroundColor: this.props.theme.cardBackground,
+                    borderColor: this.props.theme.cardBackground,
                     borderRadius: 20,
                   },
+                  placeholderText: {
+                    color: this.props.theme.fontColor
+                },
+                dateText: {
+                    color: this.props.theme.fontColor
+                }
                 }}
                 onDateChange={date => {
                   this.setState({ date1: date });
                 }}
               />
               <DatePicker
-                style={{ width: 280, }}
+                style={{ width: 280,}}
                 date={this.state.date2}
                 mode="date"
                 placeholder="Select end date"
@@ -156,10 +134,16 @@ class AttendanceTime extends React.Component {
                     marginLeft: 0,
                   },
                   dateInput: {
-                    backgroundColor: '#F7F7F7',
-                    borderColor: '#F7F7F7',
+                    backgroundColor: this.props.theme.cardBackground,
+                    borderColor: this.props.theme.cardBackground,
                     borderRadius: 20,
                   },
+                  placeholderText: {
+                    color: this.props.theme.fontColor
+                },
+                dateText: {
+                    color: this.props.theme.fontColor
+                }
                 }}
 
                 onDateChange={date => {
@@ -179,20 +163,23 @@ class AttendanceTime extends React.Component {
                   backgroundColor: '#0E6655',
                   marginTop: 5,
                   borderRadius: 20,
-                  width: 50
+                  width: 50,
+                  
                 }}
                 onPress={() => this.props.navigation.navigate('New request')}>
-                <Icon name="md-add" style={{ color: 'white', fontSize: 18, }}></Icon>
+                <Icon name="md-add" style={{ color: 'white', fontSize: 18, left:4 }}></Icon>
               </Button>
 
             </View>
           </View>
 
           <Content style={{ padding: 10 }}>
+
+          
             {
               this.props.attendancesList.map((item, i) => {
                 return (
-                  <Card key={i} style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground }}>
+                  <Card key={i} style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground , borderColor:this.props.theme.cardBackground }}>
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
                       <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{item.date}</Text>
                       {
@@ -219,7 +206,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     height: 230,
-    borderColor: '#F7F7F7',
     padding: 15,
     borderRadius: 10
   },
@@ -239,12 +225,16 @@ const mapStateToProps = state => {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
     attendancesList: state.attendancesReducer.attendancesList,
-    theme: state.settingsReducer.theme
+    theme: state.settingsReducer.theme,
+    avatar: state.authReducer.avatar,
+    
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getAttendances() { dispatch(getAttendances()) },
+  getAvatar() { dispatch(getAvatar()) }
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AttendanceTime);

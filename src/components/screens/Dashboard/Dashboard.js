@@ -17,73 +17,49 @@ import { getAvatar } from "../../../store/actions";
 
 import prepareGraphDate from "../../../utils/prepareGraphDate";
 
-// var items = [
-//     {
-//         id: 'Current year',
-//         name: 'Current year',
-//     },
-//     {
-//         id: '2018',
-//         name: '2018',
-//     },
-//     {
-//         id: 'All years',
-//         name: 'All years',
-//     },
-
-// ];
-
-// option = {
-//     xAxis: {
-//         type: 'category',
-//         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-//     },
-//     yAxis: {
-//         type: 'value'
-//     },
-//     series: [{
-//         data: [820, 932, 901, 934, 1290, 1330, 1320],
-//         type: 'line'
-//     }]
-// };
 
 import userPic from '../../../assets/img/userPic.jpg';
 import SimplePicker from 'react-native-simple-picker';
 import click from '../../../assets/img/click.png'
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
+// import {
+//   ContributionGraph,
+// } from 'react-native-chart-kit'
 
-const languages = ['English', 'Frensh'];
+// const chartConfig = {
+//   backgroundGradientFrom: '#1E2923',
+//   backgroundGradientTo: '#08130D',
+//   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+//   strokeWidth: 2 // optional, default 3
+// }
 
-var items = [
-  {
-    id: 'Current year',
-    name: 'Current year',
-  },
-  {
-    id: '2018',
-    name: '2018',
-  },
-  {
-    id: 'All years',
-    name: 'All years',
-  },
-
-];
-
-option = {
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [{
-    data: [820, 932, 901, 934, 1290, 1330, 1320],
-    type: 'line'
-  }]
-};
+// const commitsData = [
+//   { date: '2017-01-02', count: 1 },
+//   { date: '2017-01-03', count: 2 },
+//   { date: '2017-01-04', count: 3 },
+//   { date: '2017-01-05', count: 4 },
+//   { date: '2017-01-06', count: 5 },
+//   { date: '2017-01-30', count: 2 },
+//   { date: '2017-01-31', count: 3 },
+//   { date: '2017-03-01', count: 2 },
+//   { date: '2017-04-02', count: 4 },
+//   { date: '2017-03-05', count: 2 },
+//   { date: '2017-02-30', count: 4 }
+// ]
+// option = {
+//   xAxis: {
+//     type: 'category',
+//     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+//   },
+//   yAxis: {
+//     type: 'value'
+//   },
+//   series: [{
+//     data: [820, 932, 901, 934, 1290, 1330, 1320],
+//     type: 'line'
+//   }]
+// };
 
 class Dashboard extends React.Component {
 
@@ -180,12 +156,12 @@ class Dashboard extends React.Component {
             <NotificationsBell />
           </Header>
 
-          <Content style={{ padding: 10 , }} >
+          <Content style={{ padding: 10, }} >
             <CustumPicker >
               <Picker
                 selectedValue={this.state.year}
                 style={{
-                  height: 50, width: 300 , color:this.props.theme.fontColor, 
+                  height: 50, width: 300, color: this.props.theme.fontColor,
                 }}
                 onValueChange={(itemValue, itemIndex) => this.handleYearFilterChange(itemValue)}>
                 <Picker.Item label={`Current year (${new Date().getFullYear()})`} value={new Date().getFullYear()} color="#021630"
@@ -197,7 +173,7 @@ class Dashboard extends React.Component {
               </Picker>
             </CustumPicker>
             <View  >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 , marginTop:10}}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, marginTop: 10 }}>
                 <ButtonWithBadge style={{ flex: 6 }} text="Hours worked" data={this.props.stats.totalHours.toFixed(2)} badgeColor="#3F7930" />
                 <ButtonWithBadge style={{ flex: 6 }} text="Days worked" data={this.props.stats.totalDays} badgeColor="#3F7930" />
               </View>
@@ -230,6 +206,17 @@ class Dashboard extends React.Component {
                 <PureChart data={sampleDataa} type='pie' />
               </View>
             </CustomCard>
+
+            {/* <CustomCard>
+              <ContributionGraph
+                values={commitsData}
+                endDate={new Date('2017-04-01')}
+                numDays={105}
+                width={200}
+                height={220}
+                chartConfig={chartConfig}
+              />
+            </CustomCard> */}
           </Content>
         </Container>
       )

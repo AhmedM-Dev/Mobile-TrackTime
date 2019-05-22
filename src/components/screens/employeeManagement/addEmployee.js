@@ -31,7 +31,7 @@ class addEmployee extends Component {
       firstName: '',
       lastName: '',
       jobTitle: '',
-      groupId: null,
+      group: '',
       email: '',
       password: null,
     }
@@ -55,7 +55,7 @@ class addEmployee extends Component {
   handleGroupChange = (group) => {
     this.setState({
       ...this.state,
-      groupId: group
+      group: group
     });
   }
 
@@ -135,7 +135,7 @@ class addEmployee extends Component {
                 }}
                 name="group"
                 onValueChange={this.handleGroupChange}>
-                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.groupId} color="#021630" />)}
+                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
               </Picker>
             </AdminPickers>
             {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}

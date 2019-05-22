@@ -147,10 +147,10 @@ class UpdateEmployee extends Component {
             style={{
               color: 'black',
               margin: 15,
-              top: 10
+              top: 15
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-            <AdminPickers height={40} width={230} top={-40} left={50} paddingLeft={20}>
+            <AdminPickers height={40} width={250} top={-35} left={50} paddingLeft={20}>
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
