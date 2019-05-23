@@ -1,21 +1,11 @@
 import React from 'react';
 import { ProgressCircle } from 'react-native-svg-charts';
-import { View } from 'native-base';
-import { split, parseInt, take } from 'lodash';
+import { split, parseInt } from 'lodash';
+
+import timeToAngle from '../../../utils/timeToAngle';
 
 
 const PI = 3.14159265359;
-
-const timeToAngle = time => {
-
-  const t = parseInt(time[0]) + (parseInt(time[1]) / 60);
-
-  if (t <= 12) {
-    return ((t - 6) * 5) - 30;
-  } else {
-    return ((t - 12) * 5);
-  }
-}
 
 const AttendanceClock = props => {
   return (
@@ -38,8 +28,8 @@ const AttendanceClock = props => {
         timeToAngle(split(props.attendances[0], ':')) > -15 &&
         <ProgressCircle
           style={{ width: 200, height: 200, position: 'absolute', top: -3, right: -3, zIndex: 12 }}
-          startAngle={(PI / 30) * timeToAngle(split(props.attendances[0], ':'))}
-          endAngle={(PI / 30) * (timeToAngle(split(props.attendances[0], ':')) + 0.5)}
+          startAngle={(PI / 30) * -15}
+          endAngle={(PI / 30) * timeToAngle(split(props.attendances[0], ':'))}
           progress={1}
           progressColor={'#FF0000'}
         />

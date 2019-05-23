@@ -6,7 +6,6 @@ import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, Vi
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
 import companyLogo from '../../../assets/img/proxym.png'
-import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
 
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
@@ -160,7 +159,7 @@ class Dashboard extends React.Component {
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 70, marginLeft: 15 }}>Dashboard</Title>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
@@ -173,19 +172,56 @@ class Dashboard extends React.Component {
                 height: 30,
                 width: 30,
                 borderWidth: 1,
-                borderColor: this.props.theme.fontColor,
-                zIndex: 20
+                borderColor: this.props.theme.fontColor
               }}></Image>
             </TouchableHighlight>
+
+            <Icon name="md-globe"
+              style={{
+                top: 13,
+                color: this.props.theme.fontColor,
+                fontSize: 34,
+                marginRight: 15,
+              }}
+              onPress={() => {
+                this.refs.picker.show();
+              }} />
+            <SimplePicker
+              ref={'picker'}
+              options={languages}
+              labels={languages}
+              itemStyle={{
+                fontSize: 25,
+                color: 'red',
+                textAlign: 'left',
+                fontWeight: 'bold',
+              }}
+              onSubmit={(languages) => {
+                this.setState({
+                  languageSelected: languages,
+                });
+              }}
+            />
             <NotificationsBell />
           </Header>
 
-          <Content style={{ padding: 10 , }} >
-            <CustumPicker >
+          <Content style={{ padding: 10 }} >
+            <View style={{ flexDirection: 'row' }}>
+              <Icon
+                name="md-calendar"
+                style={{ marginRight: 15, fontSize: 16, top: 28, left: 20, color: this.props.theme.fontColor }}
+              />
               <Picker
                 selectedValue={this.state.year}
                 style={{
-                  height: 50, width: 300 , color:this.props.theme.fontColor, 
+                  height: 50,
+                  width: 340,
+                  alignSelf: 'center',
+                  marginTop: 10,
+                  marginBottom: 10,
+                  color: this.props.theme.fontColor,
+                  backgroundColor: this.props.theme.backgroundColor,
+                  marginLeft: 10
                 }}
                 onValueChange={(itemValue, itemIndex) => this.handleYearFilterChange(itemValue)}>
                 <Picker.Item label={`Current year (${new Date().getFullYear()})`} value={new Date().getFullYear()} color="#021630"
@@ -195,9 +231,9 @@ class Dashboard extends React.Component {
                 <Picker.Item label="2016" value="2016" color="#021630" />
                 <Picker.Item label="All years" value={null} color="#021630" />
               </Picker>
-            </CustumPicker>
+            </View>
             <View  >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 , marginTop:10}}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
                 <ButtonWithBadge style={{ flex: 6 }} text="Hours worked" data={this.props.stats.totalHours.toFixed(2)} badgeColor="#3F7930" />
                 <ButtonWithBadge style={{ flex: 6 }} text="Days worked" data={this.props.stats.totalDays} badgeColor="#3F7930" />
               </View>
@@ -250,7 +286,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
-    backgroundColor: '#020B1C',
+    backgroundColor: 'black',
   },
 
 
@@ -263,8 +299,10 @@ Dashboard.propTypes = {
     jobTitle: PropTypes.string,
     token: PropTypes.string,
     userId: PropTypes.number,
+    username: PropTypes.string,
     displayName: PropTypes.string,
-    groups: PropTypes.string,
+    groupId: PropTypes.number,
+    phoneNumber: PropTypes.number
   }),
   stats: PropTypes.shape({
     averageWorkingHours: PropTypes.number,

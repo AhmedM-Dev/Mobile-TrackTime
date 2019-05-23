@@ -36,11 +36,11 @@ class NotificationsBell extends React.Component {
 
   render() {
     return (
-      <View style={{ position: 'absolute', right: 20, top: 5 }}>
+      <View>
         {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ top: 5, right: -10, zIndex: 1 }}>
           <Text>{this.props.notifications.length}</Text>
         </Badge>}
-        <Icon active name="md-notifications" style={{ color: 'black', top: -15 }} />
+        <Icon active name="md-notifications"  />
       </View>
     );
   }

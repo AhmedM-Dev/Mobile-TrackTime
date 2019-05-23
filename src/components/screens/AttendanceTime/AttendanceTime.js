@@ -3,6 +3,7 @@ import {
   StatusBar, Image, StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
+import DatePicker from 'react-native-datepicker';
 import {
   Container,
   Content,
@@ -10,16 +11,11 @@ import {
   Text,
   Button,
   View,
-  Picker,
-  Footer,
-  FooterTab,
-  Badge,
   Icon,
   Header,
-  Title,
-  List
+  Title
 } from 'native-base';
-import { map } from 'lodash';
+import { map, split } from 'lodash';
 
 import AttendanceClock from '../../ui/AttendanceClock';
 
@@ -27,8 +23,9 @@ import { getAttendances } from './actions';
 
 import clock from '../../../assets/img/clock.png';
 import clockB from '../../../assets/img/clockB.png';
-import DatePicker from 'react-native-datepicker';
-import dateIcon from '../../../assets/img/date.png';
+
+import timeToAngle from '../../../utils/timeToAngle';
+
 const languages = ['English', 'Frensh'];
 
 import SimplePicker from 'react-native-simple-picker';
@@ -196,7 +193,7 @@ class AttendanceTime extends React.Component {
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
                       <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{item.date}</Text>
                       {
-                        map(item.attendances, (time, i) => <Text key={i} style={{ color: this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
+                        map(item.attendances, (time, i) => <Text key={i} style={{ color: i === 0 && timeToAngle(split(item.attendances[0], ':')) > -15 ? 'red' : this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
                       }
                     </View>
                     <View style={{ flex: 7 }}>

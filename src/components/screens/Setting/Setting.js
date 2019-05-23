@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, StyleSheet, TouchableOpacity ,TouchableHighlight} from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
 import SettingsList from 'react-native-setting-list';
-import { Container, Header, Content, Icon,  Switch,  Title } from 'native-base';
+import { Container, Header, Content, Icon, Switch, Title } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 import { changeTheme } from "./actions";
@@ -64,60 +64,60 @@ class Settings extends Component {
 
   render() {
     return (
-     
+
 
       <Container style={{ backgroundColor: this.props.theme.settingContainerColor }}>
 
-<Header style={{ backgroundColor:this.props.theme.settingsHeaderColor, flexDirection: 'row' }}>
-  <Icon name='md-menu' style={{
-    color: this.props.theme.imageSettingsBorderColor, position: 'absolute',
-    left: 20, top: 15
-  }}
-    onPress={() => this.props.navigation.openDrawer()}
-  />
-  <Title style={{ top: 15, marginLeft: -150, color: this.props.theme.imageSettingsBorderColor }}>Settings</Title>
+        <Header style={{ backgroundColor: this.props.theme.settingsHeaderColor, flexDirection: 'row' }}>
+          <Icon name='md-menu' style={{
+            color: this.props.theme.imageSettingsBorderColor, position: 'absolute',
+            left: 20, top: 15
+          }}
+            onPress={() => this.props.navigation.openDrawer()}
+          />
+          <Title style={{ top: 15, marginLeft: -150, color: this.props.theme.imageSettingsBorderColor }}>Settings</Title>
 
-  {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
-</Header>
+          {/* <NotificationsBell userId={this.state.connectedUser && this.state.connectedUser.userId} /> */}
+        </Header>
 
-<View style={{
-  zIndex: 5000,
-  backgroundColor:  this.props.theme.settingsHeaderColor ,
-  height: 150,
-  borderBottomLeftRadius: 120,
-  flexDirection: 'row'
-  , alignItes: 'center',
-  justifyContent: 'center',
-  zIndex:2
-}}>
-  <TouchableHighlight onPress={this.myfun} style={{
-    borderRadius: 100,
-    height: 100,
-    width: 100,
-    marginRight: 30,
-    top: 10
-  }}>
-    <Image source={{ uri: this.props.avatar && this.props.avatar.photo }}
-      style={{
-      borderRadius: 100,
-      height: 100,
-      width: 100,
-      borderWidth: 1,
-      borderColor: this.props.theme.imageSettingsBorderColor,
-    }}></Image>
-  </TouchableHighlight>
-  <View style={{ width: 150, top: 35 }}>
-    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>Asma Ben AHmed</Text>
-    <Text style={{ color:  this.props.theme.fontColor, fontWeight: 'bold' }}>Admin </Text>
-  </View>
-</View>
+        <View style={{
+          zIndex: 5000,
+          backgroundColor: this.props.theme.settingsHeaderColor,
+          height: 150,
+          borderBottomLeftRadius: 120,
+          flexDirection: 'row'
+          , alignItes: 'center',
+          justifyContent: 'center',
+          zIndex: 2
+        }}>
+          <TouchableHighlight onPress={this.myfun} style={{
+            borderRadius: 100,
+            height: 100,
+            width: 100,
+            marginRight: 30,
+            top: 10
+          }}>
+            <Image source={{ uri: this.props.avatar && this.props.avatar.photo }}
+              style={{
+                borderRadius: 100,
+                height: 100,
+                width: 100,
+                borderWidth: 1,
+                borderColor: this.props.theme.imageSettingsBorderColor,
+              }}></Image>
+          </TouchableHighlight>
+          <View style={{ width: 150, top: 35 }}>
+            <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${this.props.user && this.props.user.firstName} ${this.props.user && this.props.user.lastName}`}</Text>
+            <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{this.props.user && this.props.user.jobTitle}</Text>
+          </View>
+        </View>
 
-<Content>
-  <View style={{ width: 280, borderLeftColor: this.props.theme.barColor , borderLeftWidth: 2, alignSelf: 'center' ,marginTop:40 }}>
+        <Content>
+          <View style={{ width: 280, borderLeftColor: this.props.theme.barColor, borderLeftWidth: 2, alignSelf: 'center', marginTop: 40 }}>
 
-    <SettingsList borderColor={this.props.theme.settingContainerColor}  >
+            <SettingsList borderColor={this.props.theme.settingContainerColor}  >
 
-      {/* <SettingsList.Header
+              {/* <SettingsList.Header
         hasNavArrow={false}
         headerText='Account settings'
         borderHide={'Both'}
@@ -132,82 +132,82 @@ class Settings extends Component {
         borderColor='red'
       /> */}
 
-      <SettingsList.Item
-        icon={
-          <View style={styles.headerIcon}></View>
-        }
-        hasNavArrow={false}
-        itemWidth={50}
-        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-        title='First name'
-        borderHide={'Both'}
-        backgroundColor= {this.props.theme.settingContainerColor}    />
+              <SettingsList.Item
+                icon={
+                  <View style={styles.headerIcon}></View>
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+                title='First name'
+                borderHide={'Both'}
+                backgroundColor={this.props.theme.settingContainerColor} />
 
 
-      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>Asma</Text>
+              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>Asma</Text>
 
-      <SettingsList.Item
-         icon={
-          <View style={styles.headerIcon}></View>
-        }
-        hasNavArrow={false}
-        itemWidth={50}
-        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-        title='Last name'
-        borderHide={'Both'}
-        backgroundColor= {this.props.theme.settingContainerColor}  
-      />
-      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>Ben ahmed</Text>
-
-
-
-      <SettingsList.Item
-        icon={
-          <View style={styles.headerIcon}></View>
-        }
-        hasNavArrow={false}
-        itemWidth={50}
-        titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-        title='Email'
-        borderHide={'Both'}
-        backgroundColor= {this.props.theme.settingContainerColor}  
-      />
-      
-      <Text style={{ left: 30, top: -10 , color: this.props.theme.informationsColor , marginBottom:-10}}>asma.bahmed19@hotmail.com</Text>
-
-        <SettingsList.Item
-          icon={
-            <View style={styles.headerIcon}></View>
-          }
-          hasNavArrow={false}
-          itemWidth={50}
-          titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-          title='Password'
-          borderHide={'Both'}
-          backgroundColor= {this.props.theme.settingContainerColor}  
-        />
-
-
-<SettingsList.Item
-          icon={
-            <View style={styles.headerIcon}></View>
-          }
-          hasNavArrow={false}
-          itemWidth={50}
-          titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-          title='Light theme'
-          borderHide={'Both'}
-          backgroundColor= {this.props.theme.settingContainerColor}  
-        />
-<Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true } style={{top:-30}} />
-   
-    </SettingsList>
+              <SettingsList.Item
+                icon={
+                  <View style={styles.headerIcon}></View>
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+                title='Last name'
+                borderHide={'Both'}
+                backgroundColor={this.props.theme.settingContainerColor}
+              />
+              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>Ben ahmed</Text>
 
 
 
-  </View>
-</Content>
-            </Container>
+              <SettingsList.Item
+                icon={
+                  <View style={styles.headerIcon}></View>
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+                title='Email'
+                borderHide={'Both'}
+                backgroundColor={this.props.theme.settingContainerColor}
+              />
+
+              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>asma.bahmed19@hotmail.com</Text>
+
+              <SettingsList.Item
+                icon={
+                  <View style={styles.headerIcon}></View>
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+                title='Password'
+                borderHide={'Both'}
+                backgroundColor={this.props.theme.settingContainerColor}
+              />
+
+
+              <SettingsList.Item
+                icon={
+                  <View style={styles.headerIcon}></View>
+                }
+                hasNavArrow={false}
+                itemWidth={50}
+                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
+                title='Light theme'
+                borderHide={'Both'}
+                backgroundColor={this.props.theme.settingContainerColor}
+              />
+              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} />
+
+            </SettingsList>
+
+
+
+          </View>
+        </Content>
+      </Container>
     );
   }
 }
@@ -237,10 +237,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-      theme: state.settingsReducer.theme,
-      avatar: state.authReducer.avatar,
-      displayName: state.authReducer.displayName,
-
+    theme: state.settingsReducer.theme,
+    avatar: state.authReducer.avatar,
+    user: state.authReducer.user,
   }
 }
 
