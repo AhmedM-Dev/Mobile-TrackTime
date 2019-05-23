@@ -44,7 +44,7 @@ export default class adminMenu extends Component {
                 top: -1,
                 left: -30,
               }}
-              title="Employee management"
+              title="Employee Management"
               onPress={() => this.props.navigation.navigate('EmployeeManagement')}
             />
 
@@ -67,7 +67,7 @@ export default class adminMenu extends Component {
                 paddingLeft: 20
 
               }}
-              title="Events management"
+              title="Events Management"
               onPress={() => this.props.navigation.navigate('EventsManagement')}
             />
 
@@ -89,7 +89,7 @@ export default class adminMenu extends Component {
                 paddingLeft: 20
 
               }}
-              title="Groups management"
+              title="Groups Management"
               onPress={() => this.props.navigation.navigate('GroupsManagement')}
             />
 
@@ -111,7 +111,7 @@ export default class adminMenu extends Component {
                 paddingLeft: 20
 
               }}
-              title="holidays management"
+              title="Holidays Management"
               onPress={() => this.props.navigation.navigate('addHolidays')}
             />
           </View>
