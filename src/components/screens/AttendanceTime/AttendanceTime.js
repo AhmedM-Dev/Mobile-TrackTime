@@ -178,7 +178,7 @@ class AttendanceTime extends React.Component {
                 return (
                   <Card key={i} style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground , borderColor:this.props.theme.cardBackground }}>
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
-                      <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{item.date}</Text>
+                      <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${new Date(item.date).getDate()}-${new Date(item.date).getMonth() + 1}-${new Date(item.date).getFullYear()}`}</Text>
                       {
                         map(item.attendances, (time, i) => <Text key={i} style={{ color: i === 0 && timeToAngle(split(item.attendances[0], ':')) > -15 ? 'red' : this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
                       }

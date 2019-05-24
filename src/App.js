@@ -110,7 +110,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
             </TouchableHighlight>
             <View style={{ width: 150 }}>
               {/* <Text style={{ color: 'white' }}>{`${props.user.firstName} ${props.user.lastName}`}</Text> */}
-              <Text style={{ color: 'white' }}>{props.user.displayName}</Text>
+              <Text style={{ color: 'white' }}>{props.user.firstName ? props.user.firstName : ''} {props.user.lastName ? props.user.lastName : ''}</Text>
               <Text style={{ color: 'white' }}>{props.user.jobTitle}</Text>
             </View>
           </View>
@@ -195,7 +195,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-    'Attendance time': {
+    'Attendances': {
       screen: AttendanceTime,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
