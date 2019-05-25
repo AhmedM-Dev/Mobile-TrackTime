@@ -7,7 +7,6 @@ import usersReducer from "../components/screens/employeeManagement/reducers";
 import eventsReducer from "../components/screens/eventManagement/reducers";
 import notificationsReducer from "../components/ui/NotificationsBell/reducers";
 import groupsReducer from "../components/screens/GroupsManagement/reducers";
-
 import types from './types';
 
 export const errors = (state = [], action) => {
@@ -95,5 +94,5 @@ export default combineReducers({
     usersReducer,
     eventsReducer,
     notificationsReducer,
-    groupsReducer,
+    groupsReducer
 });

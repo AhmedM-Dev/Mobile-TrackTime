@@ -146,7 +146,7 @@ class Dashboard extends React.Component {
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 80 }}>Dashboard</Title>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
@@ -162,7 +162,7 @@ class Dashboard extends React.Component {
                 borderColor: this.props.theme.fontColor
               }}></Image>
             </TouchableHighlight>
-            <NotificationsBell />
+            <NotificationsBell navigation={this.props.navigation} />
           </Header>
 
           <Content style={{ padding: 10 }} >
