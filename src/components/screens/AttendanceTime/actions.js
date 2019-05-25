@@ -6,9 +6,15 @@ const http = new HttpClient();
 
 const domain = 'attendances';
 
-export const getAttendances = () => dispatch => {
+const formatDate = (date) => `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`;
 
-  http.get(`${domain}`)
+export const getAttendances = (filters = {}) => dispatch => {
+
+  const { dateFrom, dateTo } = filters;
+
+  console.log("DATE REQUEST", `${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `&dateTo=${formatDate(dateTo)}` : ''}`);
+  
+  http.get(`${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `${!dateFrom ? '?' : '&'}dateTo=${formatDate(dateTo)}` : ''}`)
     .then(response => {
       console.log("ATTENDANCES FROM ACTION:", response.data);
 

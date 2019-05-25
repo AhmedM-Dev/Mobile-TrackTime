@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StatusBar, Image, StyleSheet
+  StatusBar, Image, StyleSheet, FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
@@ -16,34 +16,45 @@ import {
   Title
 } from 'native-base';
 import { map, split } from 'lodash';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import AttendanceClock from '../../ui/AttendanceClock';
 import NotificationsBell from "../../ui/NotificationsBell";
 
 import { getAttendances } from './actions';
 
+import timeToAngle from '../../../utils/timeToAngle';
+
 import clock from '../../../assets/img/clock.png';
 import clockB from '../../../assets/img/clockB.png';
 
-import timeToAngle from '../../../utils/timeToAngle';
 
-const languages = ['English', 'Frensh'];
-
-import SimplePicker from 'react-native-simple-picker';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 class AttendanceTime extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { date: '15-05-2018' };
+  state = {
+    dateFrom: null,
+    dateTo: null,
+    list: [],
+    offset: 0,
+    limit: 10
   }
 
   componentDidMount() {
     this.props.getAttendances();
   }
 
+  handleFilterAttendances = () => {
+    this.props.getAttendances({ ...this.state });
+  }
+
+  handleLazyLoading = () => {
+    console.log("End reached");
+  }
+
   render() {
 
-    if (!this.props.attendancesList || this.props.attendancesList < 1) {
+    console.log("STATE", this.state);
+
+    if (!this.props.attendancesList) {
       return <></>
     } else
 
@@ -77,17 +88,17 @@ class AttendanceTime extends React.Component {
             </TouchableHighlight>
             <NotificationsBell />
           </Header>
-          <View style={{ flexDirection: 'row', alignSelf: 'center' , marginBottom:5 }}>
-            <View style={{ marginRight: 5  }}>
+          <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 5 }}>
+            <View style={{ marginRight: 5 }}>
 
               <DatePicker
-                style={{ width: 280, marginBottom: 5, marginTop: 10  }}
-                date={this.state.date1}
+                style={{ width: 280, marginBottom: 5, marginTop: 10 }}
+                date={this.state.dateFrom || ''}
                 mode="date"
                 placeholder="Select start date"
-                format="DD-MM-YYYY"
-                minDate="01-01-2004"
-                maxDate="31-12-2019"
+                format="YYYY-MM-DD"
+                minDate="2006-01-01"
+                maxDate={this.state.dateFrom || new Date()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 iconSource={null}
@@ -105,23 +116,23 @@ class AttendanceTime extends React.Component {
                   },
                   placeholderText: {
                     color: this.props.theme.fontColor
-                },
-                dateText: {
+                  },
+                  dateText: {
                     color: this.props.theme.fontColor
-                }
+                  }
                 }}
                 onDateChange={date => {
-                  this.setState({ date1: date });
+                  this.setState({ dateFrom: date });
                 }}
               />
               <DatePicker
-                style={{ width: 280,}}
-                date={this.state.date2}
+                style={{ width: 280, }}
+                date={this.state.dateTo || ''}
                 mode="date"
                 placeholder="Select end date"
-                format="DD-MM-YYYY"
-                minDate="01-01-2004"
-                maxDate="31-12-2019"
+                format="YYYY-MM-DD"
+                minDate={this.state.dateFrom || "2006-01-01"}
+                maxDate={new Date()}
                 iconSource={null}
                 customStyles={{
                   dateIcon: {
@@ -137,19 +148,19 @@ class AttendanceTime extends React.Component {
                   },
                   placeholderText: {
                     color: this.props.theme.fontColor
-                },
-                dateText: {
+                  },
+                  dateText: {
                     color: this.props.theme.fontColor
-                }
+                  }
                 }}
 
                 onDateChange={date => {
-                  this.setState({ date2: date });
+                  this.setState({ dateTo: date });
                 }}
               />
             </View>
             <View>
-              <Button style={{ width: 110, height: 40, backgroundColor: '#0E6655', marginTop: 10, borderRadius: 20, width: 50 }}>
+              <Button style={{ width: 110, height: 40, backgroundColor: '#0E6655', marginTop: 10, borderRadius: 20, width: 50 }} onPress={this.handleFilterAttendances}>
                 <Icon name="md-done-all" style={{ color: 'white', fontSize: 18, }}></Icon>
               </Button>
 
@@ -161,22 +172,27 @@ class AttendanceTime extends React.Component {
                   marginTop: 5,
                   borderRadius: 20,
                   width: 50,
-                  
+
                 }}
                 onPress={() => this.props.navigation.navigate('New request')}>
-                <Icon name="md-add" style={{ color: 'white', fontSize: 18, left:4 }}></Icon>
+                <Icon name="md-add" style={{ color: 'white', fontSize: 18, left: 4 }}></Icon>
               </Button>
 
             </View>
           </View>
 
           <Content style={{ padding: 10 }}>
-
-          
             {
-              this.props.attendancesList.map((item, i) => {
-                return (
-                  <Card key={i} style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground , borderColor:this.props.theme.cardBackground }}>
+              this.props.attendancesList.length > 0 &&
+              <FlatList
+                // ItemSeparatorComponent={Platform.OS !== 'android' && ({highlighted}) => (
+                //   <View style={[style.separator, highlighted && {marginLeft: 0}]} />
+                // )}
+                onScroll={this.handleLazyLoading}
+                scrollEventThrottle={2}
+                data={this.props.attendancesList}
+                renderItem={({ item }) => (
+                  <Card style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground, borderColor: this.props.theme.cardBackground }}>
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
                       <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${new Date(item.date).getDate()}-${new Date(item.date).getMonth() + 1}-${new Date(item.date).getFullYear()}`}</Text>
                       {
@@ -188,8 +204,8 @@ class AttendanceTime extends React.Component {
                       <AttendanceClock attendances={item.attendances} />
                     </View>
                   </Card>
-                )
-              })
+                )}
+              />
             }
           </Content>
         </Container>
@@ -224,12 +240,11 @@ const mapStateToProps = state => {
     attendancesList: state.attendancesReducer.attendancesList,
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
-    
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  getAttendances() { dispatch(getAttendances()) },
+  getAttendances(filters) { dispatch(getAttendances(filters)) },
   getAvatar() { dispatch(getAvatar()) }
 
 });

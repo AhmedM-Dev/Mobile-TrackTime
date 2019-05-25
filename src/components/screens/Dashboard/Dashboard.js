@@ -283,16 +283,15 @@ const styles = StyleSheet.create({
 
 Dashboard.propTypes = {
   loading: PropTypes.bool,
-  user: PropTypes.shape({
-    email: PropTypes.string,
-    jobTitle: PropTypes.string,
-    token: PropTypes.string,
-    userId: PropTypes.number,
-    username: PropTypes.string,
-    displayName: PropTypes.string,
-    groupId: PropTypes.number,
-    phoneNumber: PropTypes.number
-  }),
+  // user: PropTypes.shape({
+  //   email: PropTypes.string,
+  //   jobTitle: PropTypes.string,
+  //   token: PropTypes.string,
+  //   userId: PropTypes.string,
+  //   username: PropTypes.string,
+  //   displayName: PropTypes.string,
+  //   groupId: PropTypes.string,
+  // }),
   stats: PropTypes.shape({
     averageWorkingHours: PropTypes.number,
     maxHours: PropTypes.number,
