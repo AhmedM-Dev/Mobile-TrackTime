@@ -25,7 +25,6 @@ import EmployeeManagement from './components/screens/employeeManagement/Employee
 import addUser from './components/screens/employeeManagement/addEmployee';
 import removeUser from './components/screens/employeeManagement/deleteEmployee';
 import updateUser from './components/screens/employeeManagement/updateEmployee';
-import Notifications from './components/screens/Notifications';
 import Holidays from './components/screens/Holidays';
 import GroupsManagement from './components/screens/GroupsManagement/GroupsManagement';
 import EventsManagement from './components/screens/eventManagement/EventsManagement';
@@ -34,6 +33,7 @@ import removeEvent from './components/screens/eventManagement/removeEvent';
 import updateEvent from './components/screens/eventManagement/updateEvent';
 import Calendar from './components/screens/Calendar/Calendar';
 import { logout } from './services/services';
+import Notifications from './components/screens/Notifications';
 
 
 const AppContext = React.createContext({
@@ -174,6 +174,8 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+   
+
     'Dashboard': {
       screen: Dashboard,
       navigationOptions: () => ({
@@ -254,6 +256,8 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+   
+
     'Holidays': {
       screen: Holidays,
       navigationOptions: ({ navigation }) => ({
@@ -276,6 +280,23 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+    'Notifications': {
+      screen: Notifications,
+
+      navigationOptions: ({ navigation }) => ({
+
+        drawerIcon: (
+          <AppContext.Consumer>
+            {value => <Icon name="md-notifications" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+          </AppContext.Consumer>
+        ),
+        // navigationOptions: ({ navigation }) => ({
+        //   drawerLabel: () => null,
+        // })
+
+      })
+    },
+    
     'Settings': {
       screen: Setting,
       navigationOptions: ({ navigation }) => ({
@@ -369,12 +390,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-    'Notifications': {
-      screen: Notifications,
-      navigationOptions: ({ navigation }) => ({
-        drawerLabel: () => null,
-      })
-    },
+  
 
     'Signup': {
       screen: Signup,

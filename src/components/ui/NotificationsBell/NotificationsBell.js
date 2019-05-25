@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Badge, Icon } from 'native-base';
+import { Text, View, Badge, Icon, Button } from 'native-base';
 import axios from "axios";
 
 import { getNotifications } from './actions';
@@ -36,12 +36,12 @@ class NotificationsBell extends React.Component {
 
   render() {
     return (
-      <View>
-        {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ top: 10, right: -10, zIndex: 1 }}>
+      <Button transparent onPress={() => this.props.navigation.navigate('Notifications')}  style={{left:-10}}>
+        {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ zIndex: 1  , right:-30}}>
           <Text>{this.props.notifications.length}</Text>
         </Badge>}
-        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor, top: -10 }} />
-      </View>
+        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor , left:-23 , fontSize:30}} />
+      </Button>
     );
   }
 }

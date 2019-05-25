@@ -1,16 +1,19 @@
-
 import React from 'react';
 import { Text, View,Button } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import Celebrations from './celebrations'
-import Leaves from './leaves'
+import add from './add'
+import update from './updateHoliday'
+import remove from './removeHoliday'
 
 export default createMaterialTopTabNavigator({
-  Celebrations: { 
-    screen: Celebrations
+  ADD: { 
+    screen: add
    },
-  Leaves: { 
-    screen: Leaves
+   UPDATE: { 
+    screen: update
+  },
+  REMOVE: { 
+    screen: remove
   },
 },
 {
