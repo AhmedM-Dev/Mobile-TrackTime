@@ -18,6 +18,7 @@ const AdminPickers = props => {
                 backgroundColor: 'black',
                 marginBottom: 10,
                 flexDirection: 'row',
+                alignItems: 'center',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 20
