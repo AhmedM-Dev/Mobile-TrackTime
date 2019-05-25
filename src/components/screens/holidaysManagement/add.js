@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
-import { Icon, Container, Content, View, Text ,Picker } from 'native-base'
+import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
@@ -14,19 +14,39 @@ export default class addEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            holidayCAtegory:'',
-            days:'',
-            Date:''
+            holidayCAtegory: '',
+            title:'',
+            days: '',
+            Date: ''
         }
+    }
+
+    handleHolidayCategory = (text) => {
+        this.setState({
+            holidayCAtegory: text
+        });
+    }
+
+    handleTitle = (text) => {
+        this.setState({
+            title: text
+        });
+    }
+
+    handleDays = (text) => {
+        this.setState({
+            days: text
+        });
+    }
+
+    handleDate = (text) => {
+        this.setState({
+            Date: text
+        });
     }
 
     render() {
 
-        handleHolidayCAtegory = (text) => {
-            this.setState({
-              holidayCAtegory: text
-            });
-          }
 
         return (
             <View style={styles.container} >
@@ -40,26 +60,27 @@ export default class addEvent extends Component {
                         }}
                         onPress={() => this.props.navigation.navigate('Administration')} />
 
-                    <View style={styles.inputPos}>
-                        <AdminPickers height={55} width={300} paddingLeft={20}>
+                    <View >
+                        <AdminPickers height={55} width={300} paddingLeft={20} marginTop={40}>
                             <Picker
-                                selectedValue={this.state.holidayCAtegory }
+                                selectedValue={this.state.holidayCAtegory|| ''}
                                 style={{
                                     alignSelf: 'center',
                                     marginTop: 10,
                                     marginBottom: 10,
                                     color: 'white',
                                 }}
-                                onValueChange={this.handleHolidayCAtegory}>
-                                <Picker.Item label={Celebrations} value={Celebrations} color="#021630" />
-                                <Picker.Item label={Holidays} value={Holidays} color="#021630" />                            </Picker>
+                                onValueChange={(itemValue) => this.handleHolidayCategory(itemValue)}>
+                                <Picker.Item label="Celebrations" value="Celebrations" color="#021630" />
+                                <Picker.Item label="Holidays" value="Holidays" color="#021630" />
+                            </Picker>
                         </AdminPickers>
                     </View>
 
-                    <View style={{ marginBottom: 80, marginTop: 100 }}>
-                        <StyledInput text={'Name'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-                        <StyledInput text={'Days'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
-                        <StyledInput text={'Date'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
+                    <View style={{ marginBottom: 80, marginTop: 10 }}>
+                        <StyledInput text={'Name'} textColor={'white'} keyboardType="email-address" onChange={this.handleTitle} />
+                        <StyledInput text={'Days'} textColor={'white'} keyboardType="email-address" onChange={this.handleDays} />
+                        <StyledInput text={'Date'} textColor={'white'} keyboardType="email-address" onChange={this.handleDate} />
                     </View>
 
 
