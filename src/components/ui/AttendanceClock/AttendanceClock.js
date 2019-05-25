@@ -31,7 +31,7 @@ const AttendanceClock = props => {
           startAngle={-(PI / 2)}
           endAngle={(PI / 30) * (timeToAngle(split(props.attendances[0], ':'))+0.5)}
           progress={1}
-          progressColor={'#AB2228'}
+          progressColor={'#EC8181'}
         />
       }
     </>

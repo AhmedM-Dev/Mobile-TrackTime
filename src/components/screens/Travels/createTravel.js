@@ -322,26 +322,7 @@ export class createTravel extends Component {
                             radius={50}
                         // outRangeScale={0.5}       
                         >
-                            <ActionButton.Item
-                                buttonColor='#A23B81'
-                                title="menu"
-                                onPress={() => this.props.navigation.openDrawer()}>
-                                <Icon
-                                    name="md-menu"
-                                    style={styles.actionButtonIcon}
-
-                                />
-                            </ActionButton.Item>
-                            <ActionButton.Item
-                                buttonColor='#3B76A2'
-                                title="home"
-                                onPress={() => this.props.navigation.navigate('Dashboard')}>
-                                <Icon
-                                    name="md-home"
-                                    style={styles.actionButtonIcon}
-
-                                />
-                            </ActionButton.Item>
+                     
                             <ActionButton.Item
                                 buttonColor='green'
                                 title="Save"

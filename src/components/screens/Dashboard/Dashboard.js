@@ -10,12 +10,16 @@ import companyLogo from '../../../assets/img/proxym.png'
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
 import NotificationsBell from "../../ui/NotificationsBell";
+import Speedometer from 'react-native-speedometer-chart';
 
 import { getStats } from './actions';
 import { getAvatar } from "../../../store/actions";
 
 import prepareGraphDate from "../../../utils/prepareGraphDate";
+import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
+import StarRating from './StarRating';
 
+import Star from 'react-native-star-view';
 
 import userPic from '../../../assets/img/userPic.jpg';
 import SimplePicker from 'react-native-simple-picker';
@@ -74,7 +78,7 @@ class Dashboard extends React.Component {
     averageWorkHours: 0,
     byMonth: null,
     fetched: false,
-    languageSelected: 'English'
+    languageSelected: 'English',
 
   }
 
@@ -86,6 +90,11 @@ class Dashboard extends React.Component {
       console.log(bssid);
     });
   }
+
+  ratingCompleted(rating) {
+    console.log("Rating is: " + rating)
+  }
+
 
   handleYearFilterChange = (year) => {
     this.setState({
@@ -137,7 +146,7 @@ class Dashboard extends React.Component {
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 70, marginLeft: 15 }}>Dashboard</Title>
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
@@ -153,53 +162,15 @@ class Dashboard extends React.Component {
                 borderColor: this.props.theme.fontColor
               }}></Image>
             </TouchableHighlight>
-
-            <Icon name="md-globe"
-              style={{
-                top: 13,
-                color: this.props.theme.fontColor,
-                fontSize: 34,
-                marginRight: 15,
-              }}
-              onPress={() => {
-                this.refs.picker.show();
-              }} />
-            <SimplePicker
-              ref={'picker'}
-              options={languages}
-              labels={languages}
-              itemStyle={{
-                fontSize: 25,
-                color: 'red',
-                textAlign: 'left',
-                fontWeight: 'bold',
-              }}
-              onSubmit={(languages) => {
-                this.setState({
-                  languageSelected: languages,
-                });
-              }}
-            />
             <NotificationsBell />
           </Header>
 
           <Content style={{ padding: 10 }} >
-            <View style={{ flexDirection: 'row' }}>
-              <Icon
-                name="md-calendar"
-                style={{ marginRight: 15, fontSize: 16, top: 28, left: 20, color: this.props.theme.fontColor }}
-              />
+            <CustumPicker >
               <Picker
                 selectedValue={this.state.year}
                 style={{
-                  height: 50,
-                  width: 340,
-                  alignSelf: 'center',
-                  marginTop: 10,
-                  marginBottom: 10,
-                  color: this.props.theme.fontColor,
-                  backgroundColor: this.props.theme.backgroundColor,
-                  marginLeft: 10
+                  height: 50, width: 300, color: this.props.theme.fontColor,
                 }}
                 onValueChange={(itemValue, itemIndex) => this.handleYearFilterChange(itemValue)}>
                 <Picker.Item label={`Current year (${new Date().getFullYear()})`} value={new Date().getFullYear()} color="#021630"
@@ -209,7 +180,7 @@ class Dashboard extends React.Component {
                 <Picker.Item label="2016" value="2016" color="#021630" />
                 <Picker.Item label="All years" value={null} color="#021630" />
               </Picker>
-            </View>
+            </CustumPicker>
             <View  >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, marginTop: 10 }}>
                 <ButtonWithBadge style={{ flex: 6 }} text="Hours worked" data={this.props.stats.totalHours.toFixed(2)} badgeColor="#3F7930" />
@@ -239,10 +210,46 @@ class Dashboard extends React.Component {
             </View>
 
             <CustomCard>
-              <Text style={{ fontSize: 18, color: this.props.theme.fontColor }}>Authorizations</Text>
+              <Text style={{
+                fontSize: 18,
+                color: this.props.theme.fontColor,
+                width: '114%',
+                top: -20,
+                paddingBottom: 5, paddingTop: 5,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                paddingLeft:20,
+                left: -20,
+                backgroundColor: this.props.theme.cardHeaderColor
+              }}>Authorizations</Text>
               <View style={{ flex: 1, alignItems: 'center', marginTop: 10 }}>
                 <PureChart data={sampleDataa} type='pie' />
               </View>
+            </CustomCard>
+
+            <CustomCard>
+              
+            <Text style={{
+                fontSize: 18,
+                color: this.props.theme.fontColor,
+                width: '114%',
+                top: -20,
+                paddingBottom: 5, paddingTop: 5,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                paddingLeft:20,
+                left: -20,
+                backgroundColor: this.props.theme.cardHeaderColor
+              }}>
+              Average grade</Text>
+              <View style={{ margin: 10 }}>
+                <Text style={{
+                  alignSelf: 'center',
+                  color: '#94E7B2',
+                  fontWeight: 'bold'
+                }}>14.7  <Text style={{ color: this.props.theme.fontColor }}>/ 20</Text></Text>
+              </View>
+              <Star score={14.7} style={styles.starStyle} totalScore={20} />
             </CustomCard>
 
             {/* <CustomCard>
@@ -278,6 +285,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
+  starStyle: {
+    width: 150,
+    height: 30,
+    marginBottom: 10,
+    alignSelf: 'center'
+  }
 
 });
 

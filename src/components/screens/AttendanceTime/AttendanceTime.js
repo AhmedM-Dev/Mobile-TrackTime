@@ -69,7 +69,7 @@ class AttendanceTime extends React.Component {
             }}
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Dashboard</Title>
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Attendances</Title>
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
@@ -196,7 +196,7 @@ class AttendanceTime extends React.Component {
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
                       <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${new Date(item.date).getDate()}-${new Date(item.date).getMonth() + 1}-${new Date(item.date).getFullYear()}`}</Text>
                       {
-                        map(item.attendances, (time, i) => <Text key={i} style={{ color: i === 0 && timeToAngle(split(item.attendances[0], ':')) > -15 ? 'red' : this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
+                        map(item.attendances, (time, i) => <Text key={i} style={{ color: i === 0 && timeToAngle(split(item.attendances[0], ':')) > -15 ? '#EC8181' : this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
                       }
                     </View>
                     <View style={{ flex: 7 }}>

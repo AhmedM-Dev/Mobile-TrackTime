@@ -15,6 +15,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PureChart from 'react-native-pure-chart';
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
+import NotificationsBell from "../../ui/NotificationsBell";
+
 class History extends React.Component {
   constructor() {
     super();
@@ -59,31 +61,30 @@ class History extends React.Component {
         <StatusBar hidden />
 
         <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
-          <Icon name='md-menu' style={{
-            color: this.props.theme.fontColor, position: 'absolute',
-            left: 20, top: 15
-          }}
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-          <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 25 }}> Leaves history</Title>
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
-            borderRadius: 100,
-            height: 30,
-            width: 30,
-            marginRight: 15,
-            top: 15,
-          }}>
-            <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+            <Icon name='md-menu' style={{
+              color: this.props.theme.fontColor, position: 'absolute',
+              left: 20, top: 15
+            }}
+              onPress={() => this.props.navigation.openDrawer()}
+            />
+            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Leaves history</Title>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
               borderRadius: 100,
               height: 30,
               width: 30,
-              borderWidth: 1,
-              borderColor: this.props.theme.fontColor,
-              zIndex: 20
-            }}></Image>
-          </TouchableHighlight>
-
-        </Header>
+              marginRight: 15,
+              top: 15,
+            }}>
+              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
+                borderRadius: 100,
+                height: 30,
+                width: 30,
+                borderWidth: 1,
+                borderColor: this.props.theme.fontColor
+              }}></Image>
+            </TouchableHighlight>
+            <NotificationsBell />
+          </Header>
 
 
 
