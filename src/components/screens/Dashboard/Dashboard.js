@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image } from 'react-native';
+import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image ,ScrollView} from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
+
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
 import companyLogo from '../../../assets/img/proxym.png'
@@ -12,7 +13,7 @@ import ButtonWithBadge from "../../ui/ButtonWithBadge";
 import NotificationsBell from "../../ui/NotificationsBell";
 import Speedometer from 'react-native-speedometer-chart';
 
-import { getStats } from './actions';
+import { getStats ,getUsers} from './actions';
 import { getAvatar } from "../../../store/actions";
 
 import prepareGraphDate from "../../../utils/prepareGraphDate";
@@ -79,7 +80,6 @@ class Dashboard extends React.Component {
     byMonth: null,
     fetched: false,
     languageSelected: 'English',
-
   }
 
   componentDidMount() {
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
       console.log(bssid);
     });
   }
-
+  
   ratingCompleted(rating) {
     console.log("Rating is: " + rating)
   }
@@ -124,7 +124,7 @@ class Dashboard extends React.Component {
       }
 
     ]
-
+  
     if (!this.props.stats) {
       return (
         <View style={styles.container}>
@@ -272,7 +272,6 @@ class Dashboard extends React.Component {
 
 const styles = StyleSheet.create({
 
-
   container: {
     position: 'absolute',
     left: 0,
@@ -323,13 +322,13 @@ const mapStateToProps = state => {
     user: state.authReducer.user,
     stats: state.dashboardReducer.statsReducer.stats,
     theme: state.settingsReducer.theme,
-    avatar: state.authReducer.avatar
+    avatar: state.authReducer.avatar,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getStats(year) { dispatch(getStats(year)) },
-  getAvatar() { dispatch(getAvatar()) }
+  getAvatar() { dispatch(getAvatar()) },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

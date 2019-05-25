@@ -9,6 +9,11 @@ export const statsReducer = (state = {}, action) => {
                 ...state,
                 stats: action.payload
             };
+            case types.GET_USERS:
+            return {
+              ...state,
+              users: action.users
+            };
 
         default:
             return state;

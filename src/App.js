@@ -32,6 +32,7 @@ import EventsManagement from './components/screens/eventManagement/EventsManagem
 import addEvent from './components/screens/eventManagement/addEvent';
 import removeEvent from './components/screens/eventManagement/removeEvent';
 import updateEvent from './components/screens/eventManagement/updateEvent';
+import Calendar from './components/screens/Calendar/Calendar';
 import { logout } from './services/services';
 
 
@@ -255,6 +256,17 @@ const AppDrawNavigator = createDrawerNavigator(
 
     'Holidays': {
       screen: Holidays,
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <AppContext.Consumer>
+            {value => <Icon name="md-happy" size={20} style={{ color: value.theme.menu.activeLabelStyle, fontSize: 20 }} />}
+          </AppContext.Consumer>
+        )
+      })
+    },
+
+    'Calendar': {
+      screen: Calendar,
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
           <AppContext.Consumer>
