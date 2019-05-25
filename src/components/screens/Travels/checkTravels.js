@@ -83,37 +83,7 @@ export class checkTravels extends Component {
 
                         </Content>
 
-                        <ActionButton
-                            buttonColor="transparent"
-                            btnOutRange="transparent"
-                            icon={<Icon name='md-arrow-dropup' style={styles.ButtonIcon} />}
-                            degrees={135}
-                            size={40}
-                            radius={50}
-                            position='right'
-                        // outRangeScale={0.5}       
-                        >
-                            <ActionButton.Item
-                                buttonColor='#A23B81'
-                                title="menu"
-                                onPress={() => this.props.navigation.openDrawer()}>
-                                <Icon
-                                    name="md-menu"
-                                    style={styles.actionButtonIcon}
-
-                                />
-                            </ActionButton.Item>
-                            <ActionButton.Item
-                                buttonColor='#3B76A2'
-                                title="home"
-                                onPress={() => this.props.navigation.navigate('Dashboard')}>
-                                <Icon
-                                    name="md-home"
-                                    style={styles.actionButtonIcon}
-
-                                />
-                            </ActionButton.Item>
-                        </ActionButton>
+                    
             </Container>
         );
     }

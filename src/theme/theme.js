@@ -9,6 +9,7 @@ export const lightTheme = {
     informationsColor:'#CECECE',
     imageSettingsBorderColor:'black',
     settingsHeaderColor:'#CECECE',
+    cardHeaderColor:'#DADADA',
     menu: {
         background: '#F7F7F7',
         activeBackgroundColor: '#74BE9C',
@@ -33,6 +34,7 @@ export const darkTheme = {
     settingContainerColor: '#01152E' , 
     barColor:'#020B1C',
 informationsColor:'#8F8E8E',
+cardHeaderColor:'#021F44',
 imageSettingsBorderColor:'white',
     menu: {
         background: '#020B1C',

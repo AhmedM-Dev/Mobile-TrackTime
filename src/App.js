@@ -295,7 +295,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'EmployeeManagement': {
       screen: EmployeeManagement,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -304,28 +303,24 @@ const AppDrawNavigator = createDrawerNavigator(
     'removeUser': {
       screen: removeUser,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
     'updateUser': {
       screen: updateUser,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
     'removeEvent': {
       screen:  removeEvent,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
     'EventsManagement': {
       screen:  EventsManagement,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -333,7 +328,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'GroupsManagement': {
       screen:  GroupsManagement,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -344,7 +338,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'updateEvent': {
       screen:  updateEvent,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -353,7 +346,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'addEvent': {
       screen: addEvent,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -361,7 +353,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'addHolidays': {
       screen: addHolidays,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
@@ -369,7 +360,6 @@ const AppDrawNavigator = createDrawerNavigator(
     'Notifications': {
       screen: Notifications,
       navigationOptions: ({ navigation }) => ({
-        drawerLockMode: "locked-closed",
         drawerLabel: () => null,
       })
     },
