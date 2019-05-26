@@ -36,16 +36,15 @@ class NotificationsBell extends React.Component {
 
   render() {
     return (
-      <Button transparent onPress={() => this.props.navigation.navigate('Notifications')}  style={{left:-10}}>
-        {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ zIndex: 1  , right:-30}}>
+      <Button transparent onPress={() => this.props.navigation.navigate('Notifications')}  >
+        {this.props.notifications && this.props.notifications.length > 0 && <Badge style={{ position: 'absolute', zIndex: 1, right: 0 }}>
           <Text>{this.props.notifications.length}</Text>
         </Badge>}
-        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor , left:-23 , fontSize:30}} />
+        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor, fontSize: 35 }} />
       </Button>
     );
   }
 }
-
 
 NotificationsBell.propTypes = {
   theme: PropTypes.object

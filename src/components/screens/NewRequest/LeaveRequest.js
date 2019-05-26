@@ -91,9 +91,6 @@ export default class Events extends React.Component {
     return (
       <Container style={{ backgroundColor: 'white' }} >
         <StatusBar hidden />
-
-
-
         <Content>
           <Card style={styles.cardStyle}>
             <View >

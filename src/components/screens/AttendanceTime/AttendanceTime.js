@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StatusBar, Image, StyleSheet, FlatList
+  Image, StyleSheet, FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
@@ -11,15 +11,12 @@ import {
   Text,
   Button,
   View,
-  Icon,
-  Header,
-  Title
+  Icon
 } from 'native-base';
 import { map, split } from 'lodash';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
+import AppHeader from '../../ui/AppHeader';
 import AttendanceClock from '../../ui/AttendanceClock';
-import NotificationsBell from "../../ui/NotificationsBell";
 
 import { getAttendances } from './actions';
 
@@ -61,33 +58,8 @@ class AttendanceTime extends React.Component {
       return (
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
 
-          <StatusBar hidden />
-          <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
-            <Icon name='md-menu' style={{
-              color: this.props.theme.fontColor, position: 'absolute',
-              left: 20, top: 15
-            }}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Attendances</Title>
-            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
-              borderRadius: 100,
-              height: 30,
-              width: 30,
-              marginRight: 15,
-              top: 15,
-            }}>
-              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
-                borderRadius: 100,
-                height: 30,
-                width: 30,
-                borderWidth: 1,
-                borderColor: this.props.theme.fontColor,
-                zIndex: 20
-              }}></Image>
-            </TouchableHighlight>
-            <NotificationsBell />
-          </Header>
+          <AppHeader title="Attendances" navigation={this.props.navigation} />
+
           <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 5 }}>
             <View style={{ marginRight: 5 }}>
 

@@ -27,7 +27,7 @@ class Login extends Component {
   state = {
     check: false,
     loading: false,
-    email: "asma.bahmed19@hotmail.com",
+    email: "ahmed.tux@protonmail.com",
     pass: "123",
     countClick: 0,
     promptAPIURL: false,

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image ,ScrollView} from 'react-native';
-import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
+import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Title } from 'native-base';
 
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
@@ -12,6 +12,8 @@ import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
 import NotificationsBell from "../../ui/NotificationsBell";
 import Speedometer from 'react-native-speedometer-chart';
+
+import AppHeader from '../../ui/AppHeader';
 
 import { getStats ,getUsers} from './actions';
 import { getAvatar } from "../../../store/actions";
@@ -137,33 +139,8 @@ class Dashboard extends React.Component {
       return (
 
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
-          <StatusBar hidden />
-
-          <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
-            <Icon name='md-menu' style={{
-              color: this.props.theme.fontColor, position: 'absolute',
-              left: 20, top: 15
-            }}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 80 }}>Dashboard</Title>
-            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
-              borderRadius: 100,
-              height: 30,
-              width: 30,
-              marginRight: 15,
-              top: 15,
-            }}>
-              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
-                borderRadius: 100,
-                height: 30,
-                width: 30,
-                borderWidth: 1,
-                borderColor: this.props.theme.fontColor
-              }}></Image>
-            </TouchableHighlight>
-            <NotificationsBell navigation={this.props.navigation} />
-          </Header>
+        
+          <AppHeader title="Dashboard" navigation={this.props.navigation} />
 
           <Content style={{ padding: 10 }} >
             <CustumPicker >

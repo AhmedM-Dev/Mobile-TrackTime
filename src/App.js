@@ -90,7 +90,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
 
     const menu = {
       ...props,
-      items: props.user.jobTitle === 'Administrator' ? props.items : props.items.filter(item => item.key !== 'Administration')
+      items: props.user.businessRole === 'Administrator' ? props.items : props.items.filter(item => item.key !== 'Administration')
     }
 
     const { background, activeBackgroundColor, activeLabelStyle, inactiveLabelStyle, logoutFontColor, logoutBackground, userBackground } = props.theme.menu;

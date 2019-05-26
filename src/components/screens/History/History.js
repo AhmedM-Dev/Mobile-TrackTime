@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Image, StyleSheet, } from 'react-native';
+import { StyleSheet, } from 'react-native';
 import {
   Container,
   Content,
@@ -7,15 +7,14 @@ import {
   Button,
   View,
   Picker,
-  Icon, Header, Title,
+  Icon
 } from 'native-base';
-import SearchableDropdown from 'react-native-searchable-dropdown';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PureChart from 'react-native-pure-chart';
+
+import AppHeader from '../../ui/AppHeader';
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
-import NotificationsBell from "../../ui/NotificationsBell";
 
 class History extends React.Component {
   constructor() {
@@ -58,35 +57,7 @@ class History extends React.Component {
 
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
-        <StatusBar hidden />
-
-        <Header style={{ backgroundColor: this.props.theme.backgroundColor, flexDirection: 'row', }}>
-            <Icon name='md-menu' style={{
-              color: this.props.theme.fontColor, position: 'absolute',
-              left: 20, top: 15
-            }}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Title style={{ top: 15, color: this.props.theme.fontColor, marginRight: 90, marginLeft: 15 }}>Leaves history</Title>
-            <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')} style={{
-              borderRadius: 100,
-              height: 30,
-              width: 30,
-              marginRight: 15,
-              top: 15,
-            }}>
-              <Image source={{ uri: this.props.avatar && this.props.avatar.photo }} style={{
-                borderRadius: 100,
-                height: 30,
-                width: 30,
-                borderWidth: 1,
-                borderColor: this.props.theme.fontColor
-              }}></Image>
-            </TouchableHighlight>
-            <NotificationsBell />
-          </Header>
-
-
+        <AppHeader title="History" navigation={this.props.navigation} />
 
         <Content>
           <View>
@@ -109,10 +80,7 @@ class History extends React.Component {
             </CustumPicker>
 
           </View>
-
-
           <View>
-
             <CustumPicker>
               <Picker
                 selectedValue={this.state.status}
@@ -129,10 +97,7 @@ class History extends React.Component {
                 <Picker.Item label="Canceled" value="Canceled" />
               </Picker>
             </CustumPicker>
-
-
           </View>
-
 
           <CustumPicker>
 
@@ -164,19 +129,11 @@ class History extends React.Component {
               <Icon name="md-done-all" style={{ color: this.props.theme.backgroundColor, left: 15 }}></Icon>
               <Text style={{ left: -200 }}>FILTER</Text>
             </Button>
-
           </CustumPicker>
-
-
           {/* <View >
               <PureChart data={sampleDataa} type='pie' />
               </View> */}
-
-
-
         </Content>
-
-
 
       </Container>
     );
