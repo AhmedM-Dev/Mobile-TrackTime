@@ -28,4 +28,5 @@ export default createMaterialTopTabNavigator({
         backgroundColor: 'white'
       }
     },
-  });
+  }
+);

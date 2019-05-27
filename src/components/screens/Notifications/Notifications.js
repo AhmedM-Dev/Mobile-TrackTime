@@ -39,10 +39,9 @@ class Notifications extends Component {
       case 'EVENT': return eventIcon;
       case 'TRAVEL': return travelIcon;
       case 'INFO': return infosIcon;
-      case 'LEAVEREQUEST': return leaveIcon;
-      case 'ATTENDANCEREQUEST': return clockIcon;
+      case 'LEAVE': return leaveIcon;
+      case 'ATTENDANCE': return clockIcon;
       case 'DELAY' || 'ABSENCE': return delaysIcon;
-
     }
   }
 
@@ -98,9 +97,7 @@ class Notifications extends Component {
                         </Button>
                       </Right>
                     </ListItem>
-
                   )
-
                 })
               }
 

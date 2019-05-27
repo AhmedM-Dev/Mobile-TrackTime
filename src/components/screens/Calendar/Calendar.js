@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image, ScrollView } from 'react-native';
-import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Header, Title } from 'native-base';
-import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { StyleSheet, ScrollView } from 'react-native';
+import { Container, Content, Button, View, Picker, Icon } from 'native-base';
+import { Table, Row } from 'react-native-table-component';
 import DatePicker from 'react-native-datepicker';
 import { getUsers } from '../Dashboard/actions';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-import NotificationsBell from "../../ui/NotificationsBell";
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
 import { getGroups } from './actions';
 

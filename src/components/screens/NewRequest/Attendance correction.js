@@ -1,31 +1,13 @@
 
 import React from 'react';
 import {
-  StatusBar, StyleSheet, AsyncStorage, Image, TouchableHighlight, TextInput
+  StatusBar, StyleSheet
 } from 'react-native';
 import {
   Container,
-  Content,
-  Card,
-  Text,
-  View,
-  Picker,
-  Button,
-  Badge,
-  Icon,
-  Header,
-  Title,
+  Icon
 } from 'native-base';
-import DatePicker from 'react-native-datepicker';
-import Textarea from 'react-native-textarea';
-import SimplePicker from 'react-native-simple-picker';
-import NotificationsBell from "../../ui/NotificationsBell";
-import axios from "axios";
-import userPic from '../../../assets/img/userPic.jpg';
-import { API_URL } from "../../../../config";
 import ActionButton from 'react-native-circular-action-menu';
-
-const languages = ['English', 'Frensh'];
 
 export default class Events extends React.Component {
 
