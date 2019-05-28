@@ -3,6 +3,12 @@ package com.tracktime;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.devstepbcn.wifi.AndroidWifiPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +28,13 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+            new AndroidWifiPackage(),
+            new VectorIconsPackage(),
+            new SvgPackage(),
+            new ImagePickerPackage(),
+            new AsyncStoragePackage(),
+            new RNGestureHandlerPackage()
       );
     }
 

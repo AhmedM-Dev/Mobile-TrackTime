@@ -1,5 +1,5 @@
 {
-  "name": "trackTime",
+  "name": "TrackTime",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,16 +7,50 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "16.6.3",
-    "react-native": "0.58.5",
-    "react-navigation": "^3.3.0"
+    "@react-native-community/async-storage": "^1.3.3",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "native-base": "^2.12.1",
+    "prop-types": "^15.7.2",
+    "react": "16.8.3",
+    "react-calendar-heatmap": "^1.8.0",
+    "react-native": "0.59.5",
+    "react-native-android-wifi": "^0.0.40",
+    "react-native-card-list": "^0.1.0",
+    "react-native-chart-kit": "^2.6.1",
+    "react-native-circular-action-menu": "^0.5.0",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "^1.2.1",
+    "react-native-image-picker": "^0.28.1",
+    "react-native-maps": "git+https://github.com/pjamrozowicz/react-native-maps.git",
+    "react-native-popup-dialog": "^0.18.2",
+    "react-native-pure-chart": "^0.0.24",
+    "react-native-ratings": "^6.3.1",
+    "react-native-searchable-dropdown": "^1.0.6",
+    "react-native-setting-list": "^2.0.1",
+    "react-native-simple-picker": "^3.1.1",
+    "react-native-speedometer-chart": "^0.7.3",
+    "react-native-star-view": "^1.1.3",
+    "react-native-svg": "^9.4.0",
+    "react-native-svg-charts": "^5.2.0",
+    "react-native-swiper": "^1.5.14",
+    "react-native-table-component": "^1.2.0",
+    "react-native-textarea": "^1.0.3",
+    "react-native-vector-icons": "^6.4.2",
+    "react-navigation": "^3.9.1",
+    "react-redux": "^7.0.2",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "24.1.0",
-    "jest": "24.1.0",
-    "metro-react-native-babel-preset": "0.52.0",
-    "react-test-renderer": "16.6.3"
+    "@babel/core": "^7.4.4",
+    "@babel/runtime": "^7.4.4",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "react-test-renderer": "16.8.3"
   },
   "jest": {
     "preset": "react-native"
