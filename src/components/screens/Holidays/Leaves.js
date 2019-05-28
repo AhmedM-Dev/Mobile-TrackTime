@@ -5,11 +5,12 @@ import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Button } from 'react-native-elements'
 import leaveIcon from '../../../assets/img/leaveIcon.png'
 import ActionButton from 'react-native-circular-action-menu';
+import { connect } from 'react-redux';
 
 
 var width = Dimensions.get('window').width;
 
-export default class Leaves extends Component {
+class Leaves extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,24 +32,25 @@ export default class Leaves extends Component {
         ]
 
         return (
-            <Container style={styles.container}>
+            <Container style={{...styles.container , backgroundColor:this.props.theme.backgroundColor}}>
             <Content>
-              <Table borderStyle={{borderColor: 'transparent'}}>
-                <Row data={state.tableHead} widthArr={state.widthArr} style={styles.header} textStyle={styles.headerText}/>
-              </Table>
-                <Table borderStyle={{borderColor: '#ECECEC'}} style={{marginBottom:150}}>
-                  {
-                    tableData.map((rowData, index) => (
-                      <Row
-                        key={index}
-                        data={rowData}
-                        widthArr={state.widthArr}
-                        style={[styles.row, index%2 && {backgroundColor: '#D3D2D2'}]}
-                        textStyle={styles.text}
-                      />
-                    ))
-                  }
-                </Table>
+              
+              <Table borderStyle={{ borderColor: 'transparent' }}>
+            <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor , borderTopLeftRadius:20, borderTopRightRadius:20 }} textStyle={{ ...styles.text, color: 'white' }} />
+          </Table>
+          <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
+            {
+              tableData.map((rowData, index) => (
+                <Row
+                  key={index}
+                  data={rowData}
+                  widthArr={state.widthArr}
+                  style={[ {height: 40, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
+                  textStyle={{...styles.text , color:this.props.theme.fontColor}}
+                />
+              ))
+            }
+          </Table>
   
                 <ActionButton
                               buttonColor="transparent"
@@ -59,27 +61,7 @@ export default class Leaves extends Component {
                               radius={50}
                           // outRangeScale={0.5}       
                           >
-                              <ActionButton.Item
-                                  buttonColor='#A23B81'
-                                  title="menu"
-                                  onPress={() => this.props.navigation.openDrawer()}>
-                                  <Icon
-                                      name="md-menu"
-                                      style={styles.actionButtonIcon}
-  
-                                  />
-                              </ActionButton.Item>
-                              <ActionButton.Item
-                                  buttonColor='#3B76A2'
-                                  title="home"
-                                  onPress={() => this.props.navigation.navigate('Dashboard')}>
-                                  <Icon
-                                      name="md-home"
-                                      style={styles.actionButtonIcon}
-  
-                                  />
-                                  
-                              </ActionButton.Item>
+                              
 
                               <ActionButton.Item
                                   buttonColor='#53C6B1'
@@ -131,3 +113,15 @@ const styles = StyleSheet.create({
       color: '#2CA96E',
   },
   });
+
+
+  const mapStateToProps = state => {
+    return {
+      theme: state.settingsReducer.theme,
+      avatar: state.authReducer.avatar,
+    }
+  }
+  
+  
+  export default connect(mapStateToProps)(Leaves);
+  

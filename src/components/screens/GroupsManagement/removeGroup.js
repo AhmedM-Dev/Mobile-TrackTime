@@ -3,12 +3,7 @@ import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-n
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text ,Picker} from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import titleIcon from '../../../assets/img/titleIcon.png';
-import axios from "axios";
-import { API_URL } from "../../../../config";
-import Background from '../../../assets/img/backgroundM.jpg';
-import ImagePicker from 'react-native-image-picker';
-import StyledInput from '../../ui/Input/addEventInput';
+
 import { connect } from 'react-redux';
 
 import { deleteGroup , getGroups} from './actions';
@@ -17,6 +12,7 @@ import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 import groupIcon from '../../../assets/img/group.png';
 
 
+import { orderBy } from 'lodash';
 
 class removeGroup extends Component {
     constructor(props) {
@@ -30,6 +26,8 @@ class removeGroup extends Component {
         const { group } = this.state;
         if (group !== null) {
             this.props.deleteGroup(this.state.group.groupId);
+            ToastAndroid.show("Group deleted successfully .", ToastAndroid.LONG);
+
         }
 
         else {
@@ -78,7 +76,8 @@ class removeGroup extends Component {
                 }}
                 name="group"
                 onValueChange={this.handleGroupChange}>
-                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group} color="#021630" />)}
+                {this.props.groups && this.props.groups.length > 0 && orderBy(this.props.groups, 'name', 'asc').map(group => <Picker.Item label={group.name} value={group} color="#021630" />)}
+
               </Picker>
             </AdminPickers>
 

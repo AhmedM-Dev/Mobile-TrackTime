@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
 import SettingsList from 'react-native-setting-list';
 import { Container, Header, Content, Icon, Switch, Title } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 import { changeTheme } from "./actions";
 
+import { Button } from 'react-native-elements';
 
 
 const options = {
@@ -19,8 +20,12 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.user,
       avatarSource: null,
       pic: null,
+      email: this.props.user && this.props.user.email,
+      lastPass: '',
+      newPass: '',
     }
   }
 
@@ -61,6 +66,28 @@ class Settings extends Component {
     this.props.changeTheme(value ? 'light' : 'dark');
   }
 
+
+  handleEmailChange = (text) => {
+    this.setState({
+      ...this.state,
+      email: text
+    });
+  }
+
+
+  handleNewPassChange = (text) => {
+    this.setState({
+      ...this.state,
+      newPass: text
+    });
+  }
+
+  handleLastPassChange = (text) => {
+    this.setState({
+      ...this.state,
+      lastPass: text
+    });
+  }
 
   render() {
     return (
@@ -113,51 +140,28 @@ class Settings extends Component {
         </View>
 
         <Content>
-          <View style={{ width: 280, borderLeftColor: this.props.theme.barColor, borderLeftWidth: 2, alignSelf: 'center', marginTop: 40 }}>
+          <View style={{ width: 280, borderLeftColor: this.props.theme.barColor, borderLeftWidth: 2, alignSelf: 'center', top: 40 }}>
 
             <SettingsList borderColor={this.props.theme.settingContainerColor}  >
 
-              {/* <SettingsList.Header
-        hasNavArrow={false}
-        headerText='Account settings'
-        borderHide={'Both'}
-        headerStyle={{
-          fontSize: 18,
-          color: this.props.theme.fontColor,
-          marginLeft: 10,
-          fontWeight: 'bold',
-         
-        }}
-        backgroundColor= {this.props.theme.settingContainerColor}  
-        borderColor='red'
-      /> */}
 
-              <SettingsList.Item
-                icon={
-                  <View style={styles.headerIcon}></View>
-                }
-                hasNavArrow={false}
-                itemWidth={50}
-                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-                title='First name'
-                borderHide={'Both'}
-                backgroundColor={this.props.theme.settingContainerColor} />
+              <TextInput
+                style={{
+                  height: 40, color: this.props.theme.informationsColor,
+                  borderColor: this.props.theme.settingContainerColor,
+                  width: 250,
+                  left: 20, zIndex: 1000
 
-
-              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>Asma</Text>
-
-              <SettingsList.Item
-                icon={
-                  <View style={styles.headerIcon}></View>
-                }
-                hasNavArrow={false}
-                itemWidth={50}
-                titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-                title='Last name'
-                borderHide={'Both'}
-                backgroundColor={this.props.theme.settingContainerColor}
+                }}
+                onChangeText={(text) => this.handleLastPassChange()}
+                // value={this.state.text}
+                placeholder='Please set your last password here '
+                placeholderTextColor={this.props.theme.informationsColor}
+                secureTextEntry={true}
+                value={this.state.lastPass}
+                name="last password"
               />
-              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>Ben ahmed</Text>
+
 
 
 
@@ -173,7 +177,21 @@ class Settings extends Component {
                 backgroundColor={this.props.theme.settingContainerColor}
               />
 
-              <Text style={{ left: 30, top: -10, color: this.props.theme.informationsColor, marginBottom: -10 }}>asma.bahmed19@hotmail.com</Text>
+              <TextInput
+                style={{
+                  height: 40, top: -20, marginBottom: -40, color: this.props.theme.informationsColor,
+                  borderColor: this.props.theme.settingContainerColor,
+                  width: 250,
+                  left: 20, zIndex: 1000
+
+                }}
+                onChangeText={(text) => this.handleEmailChange()}
+                // value={this.state.text}
+                placeholder={this.props.user && this.props.user.email}
+                placeholderTextColor={this.props.theme.informationsColor}
+                value={this.state.email}
+                name="email"
+              />
 
               <SettingsList.Item
                 icon={
@@ -188,7 +206,26 @@ class Settings extends Component {
               />
 
 
+
+              <TextInput
+                style={{
+                  height: 40, marginBottom: -40, top: -20, color: this.props.theme.informationsColor,
+                  borderColor: this.props.theme.settingContainerColor,
+                  width: 250,
+                  left: 20, zIndex: 1000
+
+                }}
+                onChangeText={(text) => this.handleNewPassChange()}
+                // value={this.state.text}
+                placeholder='New one'
+                placeholderTextColor={this.props.theme.informationsColor}
+                secureTextEntry={true}
+                value={this.state.newPass}
+                name="new password"
+              />
+
               <SettingsList.Item
+
                 icon={
                   <View style={styles.headerIcon}></View>
                 }
@@ -206,6 +243,22 @@ class Settings extends Component {
 
 
           </View>
+          <Button
+            buttonStyle={{
+              backgroundColor: '#2CA96E',
+              borderRadius: 0,
+              width: 300,
+              alignSelf: 'center',
+              marginTop: 60, borderRadius: 10,
+              marginBottom: 10
+            }}
+            titleStyle={{
+              color: 'white',
+              top: -1,
+            }}
+            title="Save"
+          // onPress={() => _signOutAsync()}
+          />
         </Content>
       </Container>
     );

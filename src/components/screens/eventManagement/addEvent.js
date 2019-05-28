@@ -35,10 +35,8 @@ class AddEvent extends Component {
       details: "",
       logo: null,
       photo: null,
-      startDate: null,
-      startTime: null,
-      endDate: null,
-      endTime: null,
+      dateFrom:null,
+      dateTo :null,
       photoFileName: null
     }
   }
@@ -116,9 +114,9 @@ class AddEvent extends Component {
           <Icon
             name="md-arrow-dropleft"
             style={{
-              color: 'black',
-              margin: 15,
-              top: 10
+              marginLeft: 30,
+                            top:25,
+                            marginBottom:40
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={{ marginTop: 10 }}>
@@ -159,12 +157,12 @@ class AddEvent extends Component {
             </View>
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
-              date={this.state.startDate}
-              mode="date"
+              date={this.state.dateFrom}
+              mode="datetime"
               iconSource={null}
-              placeholder="Start date"
+              placeholder="From ... "
 
-              format="DD-MM-YYYY"
+              format="DD-MM-YYYY, HH:mm"
               minDate="01-01-2019"
               maxDate="31-12-2019"
               customStyles={{
@@ -188,83 +186,14 @@ class AddEvent extends Component {
                   color: 'white'
                 }
               }}
-              onDateChange={(date) => { this.handleDateChange("startDate", date) }} />
+              onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
+          
             <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
-              date={this.state.startTime}
-              placeholder="Start time"
-              iconSource={null}
-              mode="time"
-              format="HH:mm"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              minuteInterval={10}
-              headerBackground="red"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: 'black',
-                  borderColor: 'gray',
-                  borderRadius: 20
-
-                },
-                placeholderText: {
-                  color: 'white'
-                },
-                dateText: {
-                  color: 'white'
-                }
-              }}
-              onDateChange={(time) => { this.handleDateChange("startTime", time) }}
-            />
-
-
-            <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
-              date={this.state.endDate}
-              mode="date"
-              iconSource={null}
-              placeholder="End date"
-              format="DD-MM-YYYY"
-              minDate="01-01-2019"
-              maxDate="31-12-2019"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: 'black',
-                  borderColor: 'gray',
-                  borderRadius: 20
-                },
-                placeholderText: {
-                  color: 'white'
-                },
-                dateText: {
-                  color: 'white',
-                }
-              }}
-              onDateChange={(date) => { this.handleDateChange("endDate", date) }}
-            />
-            <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 70 }}
-              date={this.state.endTime}
-              placeholder="End time"
-              mode="time"
-              format="HH:mm"
+              style={{ width: 300, alignSelf: 'center', marginBottom: 100 }}
+              date={this.state.dateTo}
+              placeholder="To ... "
+              mode="datetime"
+              format="DD-MM-YYYY, HH:mm"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               minuteInterval={10}
@@ -293,7 +222,7 @@ class AddEvent extends Component {
                   color: 'white'
                 }
               }}
-              onDateChange={(time) => { this.handleDateChange("endTime", time) }}
+              onDateChange={(dateT) => { this.handleDateChange("dateTo", dateT) }}
             />
 
 
@@ -341,7 +270,6 @@ class AddEvent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E7E7E7',
   },
 
@@ -365,7 +293,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 20,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10, width:300 , alignSelf:'center'
   },
   textarea: {
     textAlignVertical: 'top',  // hack android

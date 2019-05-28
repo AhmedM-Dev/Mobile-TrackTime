@@ -21,7 +21,8 @@ const AdminPickers = props => {
                 alignItems: 'center',
                 borderColor: 'gray',
                 borderWidth: 1,
-                borderRadius: 20
+                borderRadius: 20,
+                alignSelf:'center'
             }}>
             {props.children}
         </View>

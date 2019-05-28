@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
@@ -58,6 +58,7 @@ class DeleteEmployee extends Component {
 
   handleDeleteUser = () => {
     this.props.deleteUser(this.state.selectedUser.userId);
+    ToastAndroid.show("user deleted successfully", ToastAndroid.LONG);
   }
 
 

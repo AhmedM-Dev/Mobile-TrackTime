@@ -5,9 +5,7 @@ import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, cre
 import { Icon, Badge, View } from 'native-base';
 import { Button } from 'react-native-elements';
 import { Provider } from 'react-redux';
-
 import store from '../src/store';
-
 import Administration from "./components/screens/Administration";
 import Login from './components/screens/Login';
 import Signup from './components/screens/Signup';
@@ -143,7 +141,7 @@ const CustomDrawerComponent = connect(mapStateToProps)((props) => {
               titleStyle={{
                 color: logoutFontColor,
                 top: -1,
-                left:-58
+                left:-55
               }}
               title="Logout"
               onPress={() => _signOutAsync()}
@@ -249,7 +247,7 @@ const AppDrawNavigator = createDrawerNavigator(
 
         drawerIcon: (
           <AppContext.Consumer>
-            {value => <Icon name="calendar" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
+            {value => <Icon name="md-bookmark" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
           </AppContext.Consumer>
         ),
 
@@ -274,7 +272,7 @@ const AppDrawNavigator = createDrawerNavigator(
       navigationOptions: ({ navigation }) => ({
         drawerIcon: (
           <AppContext.Consumer>
-            {value => <Icon name="md-happy" size={20} style={{ color: value.theme.menu.activeLabelStyle, fontSize: 20 }} />}
+            {value => <Icon name="calendar" size={20} style={{ color: value.theme.menu.activeLabelStyle, fontSize: 20 }} />}
           </AppContext.Consumer>
         )
       })

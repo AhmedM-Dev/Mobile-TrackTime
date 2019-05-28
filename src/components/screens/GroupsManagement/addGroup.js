@@ -21,6 +21,7 @@ class addGroups extends Component {
         super();
         this.state = {
             name: '',
+            shortName: '',
             poleLead: ''
         }
     }
@@ -36,16 +37,36 @@ class addGroups extends Component {
             poleLead: poleLead
         });
     }
+
+    handleGroupShortName = (text) => {
+        this.setState({
+            ...this.state,
+            shortName: text
+        });
+    }
+
     handleAddGroup = () => {
-        const { name, poleLead } = this.state;
-        if (name !== '' && poleLead !== '') {
+        const { name, shortName, poleLead } = this.state;
+        if (name !== '' && shortName !== '' && poleLead !== '') {
             this.props.addGroup(this.state);
+            ToastAndroid.show("Group added successfully", ToastAndroid.LONG);
+
         }
 
         else {
             ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
         }
     }
+
+    resetAll = () => {
+        this.setState({
+            name: '',
+            shortName: '',
+            poleLead: ''
+        }
+        );
+    }
+
 
     componentDidMount() {
         this.props.getUsers();
@@ -67,7 +88,8 @@ class addGroups extends Component {
 
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
-                        <StyledInput image={titleIcon} text={'Group name'} textColor={'white'} onChange={this.handleGroupName} />
+                        <StyledInput text={'Name'} textColor={'white'} onChange={this.handleGroupName} />
+                        <StyledInput text={'Short name'} textColor={'white'} onChange={this.handleGroupShortName} />
                         <AdminPickers height={55} width={300} paddingLeft={20}>
                             <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
 
@@ -106,7 +128,7 @@ class addGroups extends Component {
                         <ActionButton.Item
                             buttonColor='#C9CF57'
                             title="Reset"
-                            onPress={() => alert('refresh')} >
+                            onPress={() => { this.resetAll() }}>
                             <Icon
                                 name="md-refresh"
                                 style={styles.actionButtonIcon} />

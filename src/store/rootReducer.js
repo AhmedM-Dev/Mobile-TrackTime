@@ -8,6 +8,8 @@ import eventsReducer from "../components/screens/eventManagement/reducers";
 import notificationsReducer from "../components/ui/NotificationsBell/reducers";
 import groupsReducer from "../components/screens/GroupsManagement/reducers";
 import calendarReducer from "../components/screens/Calendar/reducers";
+import eventReducer from "../components/screens/Events/reducers";
+
 
 import types from './types';
 
@@ -119,5 +121,6 @@ export default combineReducers({
   notificationsReducer,
   groupsReducer,
   calendarReducer,
-  requestsReducer
+  requestsReducer,
+  eventReducer
 });

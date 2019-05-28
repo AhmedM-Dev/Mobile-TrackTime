@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 20
+    borderRadius: 20,
+    alignSelf:'center'
   },
 
   inputs: {

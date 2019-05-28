@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
 
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
@@ -16,7 +16,7 @@ import groupIcon from '../../../assets/img/group.png';
 import jobLogo from '../../../assets/img/jobLogo.png';
 import logoName from '../../../assets/img/name.png';
 
-import { updateUser, getUsers ,getGroups} from './actions';
+import { updateUser, getUsers, getGroups } from './actions';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
 class UpdateEmployee extends Component {
@@ -26,7 +26,7 @@ class UpdateEmployee extends Component {
       email: '',
       password: null,
       selectedUser: null,
-      group:''
+      group: ''
     }
   };
   componentDidMount() {
@@ -96,7 +96,7 @@ class UpdateEmployee extends Component {
   handleChangeGroup = (group) => {
     this.setState({
       ...this.state,
-      group:group,
+      group: group,
       selectedUser: {
         ...this.state.selectedUser,
         group: group
@@ -147,10 +147,10 @@ class UpdateEmployee extends Component {
             style={{
               color: 'black',
               margin: 15,
-              top: 15
+              top: 25
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-            <AdminPickers height={40} width={250} top={-35} left={50} paddingLeft={20}>
+          <AdminPickers height={40} width={230} top={-25} left={50} paddingLeft={20}>
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
@@ -158,18 +158,21 @@ class UpdateEmployee extends Component {
                 marginTop: 10,
                 marginBottom: 10,
                 color: 'white',
+
               }}
               onValueChange={this.handleSelectUser}>
               {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
             </Picker>
-            </AdminPickers>
+          </AdminPickers>
 
-              <View style={styles.inputPos}>
+          <View style={styles.inputPos}>
             <StyledInput name="firstName" value={this.state.selectedUser && this.state.selectedUser.firstName} image={logoName} text={'First name'} textColor={'white'} onChange={this.handleChangeFirstName} />
             <StyledInput name="lastName" value={this.state.selectedUser && this.state.selectedUser.lastName} image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleChangeLastName} />
             <StyledInput name="jobTitle" value={this.state.selectedUser && this.state.selectedUser.jobTitle} image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleChangeJobTitle} />
+
+
             <AdminPickers height={55}>
-              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 10 }}></Image>
               <Picker
                 selectedValue={this.state.group || ''}
                 width={300}
@@ -185,6 +188,8 @@ class UpdateEmployee extends Component {
                 {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
               </Picker>
             </AdminPickers>
+
+
             <StyledInput name="email" value={this.state.selectedUser && this.state.selectedUser.email} image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleChangeEmail} />
             <StyledInput name="password" image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handleChangePass} />
           </View>
@@ -232,9 +237,9 @@ const styles = StyleSheet.create({
 
   inputPos: {
     marginBottom: 70,
-    alignItems:'center',
-    alignSelf:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
 
   actionButtonIcon: {

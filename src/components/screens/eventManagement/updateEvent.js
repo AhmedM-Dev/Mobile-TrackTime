@@ -21,10 +21,82 @@ export default class updateEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-    
+          title: "",
+          details: "",
+          logo: null,
+          photo: null,
+          dateFrom:null,
+          dateTo :null,
+          photoFileName: null
         }
-    }
+      }
+      selectPhoto = () => {
+        ImagePicker.showImagePicker(options, (response) => {
+    
+          console.log("RESPONSE IMAGE", response);
+    
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          }
+          else if (response.error) {
+            console.log('Image Picker Error: ', response.error);
+          }
+          else {
+            let source = { uri: response.uri };
+            this.setState({
+              photo: response.data,
+              photoFileName: response.fileName
+            });
+          }
+        });
+      }
+    
+      uploadPic = () => {
+        console.log("PIC", this.state.pic);
+        // RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
+        //   Authorization: "Bearer access-token",
+        //   otherHeader: "foo",
+        //   'Content-Type': 'multipart/form-data',
+        // }, [
+        //     { name: 'image', filename: 'avatar.png', data: this.state.pic }
+        //   ]).then((resp) => {
+        //     console.log('your image uploaded successfully');
+        //     this.setState({ avatarSource: null })
+        //   })
+      }
    
+
+    handleDateChange = (type, value) => {
+        this.setState({
+          ...this.state,
+          startDate: type === "startdate" ? value : this.state.startDate,
+          startTime: type === "starttime" ? value : this.state.startTime,
+          endDate: type === "enddate" ? value : this.state.endDate,
+          endTime: type === "endtime" ? value : this.state.endTime
+        })
+      }
+    
+      handleUpdateEvent = () => {
+        this.props.updateEvent(this.state);
+      }
+    
+      handleTitleChange = (title) => {
+        this.setState({
+          title
+        });
+      }
+    
+      handleDetailsChange = (details) => {
+        this.setState({
+          details
+        });
+      }
+    
+      handleDateChange = (dateID, date) => {
+        this.setState({
+          [dateID]: date
+        });
+      }
 
     render() {
         return (
@@ -34,8 +106,9 @@ export default class updateEvent extends Component {
                         name="md-arrow-dropleft"
                         style={{
                             color: 'black',
-                            margin: 15,
-                            top:10,
+                            marginLeft: 30,
+                            top:25,
+                            marginBottom:40
                         }}
                         onPress={() => this.props.navigation.navigate('Administration')} />
 
@@ -43,12 +116,7 @@ export default class updateEvent extends Component {
                     <View style={{marginTop:10}}>
 
                     <Button
-              icon={
-                <Icon
-                  name="md-log-out"
-                  style={{ color: 'white', marginRight: 10, fontSize: 18 , left:-81 }}
-                />
-              }
+             
               buttonStyle={{
                 backgroundColor: 'black',
                 borderRadius: 20,
@@ -62,14 +130,14 @@ export default class updateEvent extends Component {
                  color:'white'
               }}
               title="Set new event image"
-              onPress={() => alert('hbfud')}
+              onPress={this.selectPhoto}
             />
-                        <StyledInput image={titleIcon} text={'New Title'} textColor={'white'} />
+                        <StyledInput image={titleIcon} text={'New Title'} textColor={'white'} onChange={this.handleTitleChange} />
                         <View>
               <Textarea
                 containerStyle={styles.textareaContainer}
                 style={styles.textarea}
-                // onChangeText={this.handleDetailsChange}
+                onChangeText={this.handleDetailsChange}
                 defaultValue={this.state.details}
                 placeholder={'Details'}
                 placeholderTextColor={'white'}
@@ -77,145 +145,75 @@ export default class updateEvent extends Component {
               />
             </View>
 
-                        <DatePicker
-                            style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white' , marginTop:5 }}
-                            date={this.state.startDate}
-                            mode="date"
-                            iconSource={null}
-                            placeholder="New start date"
+            <DatePicker
+              style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
+              date={this.state.dateFrom}
+              mode="datetime"
+              iconSource={null}
+              placeholder="From ... "
 
-                            format="DD-MM-YYYY"
-                            minDate="01-01-2019"
-                            maxDate="31-12-2019"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0,
-                                },
-                                dateInput: {
-                                    marginTop: 10,
-                                    backgroundColor: 'black',
-                                    borderColor: 'gray',
-                                    borderRadius:20
+              format="DD-MM-YYYY, HH:mm"
+              minDate="01-01-2019"
+              maxDate="31-12-2019"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  marginTop: 10,
+                  backgroundColor: 'black',
+                  borderColor: 'gray',
+                  borderRadius: 20
 
-                                },
-                                placeholderText: {
-                                    color: 'white'
-                                },
-                                dateText: {
-                                    color: 'white'
-                                }
-                            }}
-                            onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
-                        <DatePicker
-                            style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
-                            date={this.state.startTime}
-                            placeholder="New start time"
-                            iconSource={null}
-                            mode="time"
-                            format="HH:mm"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            minuteInterval={10}
-                            headerBackground="red"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0,
+                },
+                placeholderText: {
+                  color: 'white'
+                },
+                dateText: {
+                  color: 'white'
+                }
+              }}
+              onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
+          
+            <DatePicker
+              style={{ width: 300, alignSelf: 'center', marginBottom: 100 }}
+              date={this.state.dateTo}
+              placeholder="To ... "
+              mode="datetime"
+              format="DD-MM-YYYY, HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              minuteInterval={10}
+              iconSource={null}
 
-                                },
-                                dateInput: {
-                                    marginTop: 10,
-                                    backgroundColor: 'black',
-                                    borderColor: 'gray',
-                                    borderRadius:20
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0,
+                  borderRadius: 20
 
-                                },
-                                placeholderText: {
-                                    color: 'white'
-                                },
-                                dateText: {
-                                    color: 'white'
-                                }
-                            }}
-                            onDateChange={(time) => { this.handleDateChange("starttime", time) }}
-                        />
+                },
+                dateInput: {
+                  marginTop: 10,
+                  backgroundColor: 'black',
+                  borderColor: 'gray',
+                  borderRadius: 20
 
-
-                        <DatePicker
-                            style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
-                            date={this.state.endDate}
-                            mode="date"
-                            iconSource={null}
-                            placeholder="New end date"
-                            format="DD-MM-YYYY"
-                            minDate="01-01-2019"
-                            maxDate="31-12-2019"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0,
-                                },
-                                dateInput: {
-                                    marginTop: 10,
-                                    backgroundColor: 'black',
-                                    borderColor: 'gray',
-                                    borderRadius:20
-                                },
-                                placeholderText: {
-                                    color: 'white'
-                                },
-                                dateText: {
-                                    color: 'white',
-                                }
-                            }}
-                            onDateChange={(date) => { this.handleDateChange("enddate", date) }}
-                        />
-                        <DatePicker
-                            style={{ width: 300, alignSelf: 'center' , marginBottom:70}}
-                            date={this.state.endTime}
-                            placeholder="new end time"
-                            mode="time"
-                            format="HH:mm"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            minuteInterval={10}
-                            iconSource={null}
-
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 4,
-                                    marginLeft: 0,
-                                    borderRadius:20
-
-                                },
-                                dateInput: {
-                                    marginTop: 10,
-                                    backgroundColor: 'black',
-                                    borderColor: 'gray',
-                                    borderRadius:20
-
-                                },
-                                placeholderText: {
-                                    color: 'white'
-                                },
-                                dateText: {
-                                    color: 'white'
-                                }
-                            }}
-                            onDateChange={(time) => { this.handleDateChange("endtime", time) }}
-                        />
-
+                },
+                placeholderText: {
+                  color: 'white'
+                },
+                dateText: {
+                  color: 'white'
+                }
+              }}
+              onDateChange={(dateT) => { this.handleDateChange("dateTo", dateT) }}
+            />
 
                     </View>
 
@@ -245,7 +243,7 @@ export default class updateEvent extends Component {
                         <ActionButton.Item
                             buttonColor='#006B4C'
                             title="Save"
-                            onPress={() => { this.handleAddUser() }}>
+                            onPress={() => { this.handleUpdateEvent() }}>
                             <Icon
                                 name="md-done-all"
                                 style={styles.actionButtonIcon}
@@ -261,7 +259,6 @@ export default class updateEvent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         backgroundColor: '#E7E7E7',
     },
 
@@ -285,7 +282,9 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderRadius: 20,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        width:300,
+        alignSelf:'center'
       },
       textarea: {
         textAlignVertical: 'top',  // hack android

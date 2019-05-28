@@ -192,12 +192,13 @@ class Dashboard extends React.Component {
                 color: this.props.theme.fontColor,
                 width: '114%',
                 top: -20,
-                paddingBottom: 5, paddingTop: 5,
+                paddingBottom: 5, paddingTop: 10,
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
                 paddingLeft:20,
                 left: -20,
-                backgroundColor: this.props.theme.cardHeaderColor
+                backgroundColor: this.props.theme.cardHeaderColor,
+                fontFamily:'cursive' , fontWeight:'bold'
               }}>Authorizations</Text>
               <View style={{ flex: 1, alignItems: 'center', marginTop: 10 }}>
                 <PureChart data={sampleDataa} type='pie' />
@@ -211,12 +212,13 @@ class Dashboard extends React.Component {
                 color: this.props.theme.fontColor,
                 width: '114%',
                 top: -20,
-                paddingBottom: 5, paddingTop: 5,
+                paddingBottom: 5, paddingTop: 10,
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
                 paddingLeft:20,
                 left: -20,
-                backgroundColor: this.props.theme.cardHeaderColor
+                backgroundColor: this.props.theme.cardHeaderColor,
+                fontFamily:'cursive' , fontWeight:'bold'
               }}>
               Average grade</Text>
               <View style={{ margin: 10 }}>

@@ -122,7 +122,7 @@ class addEmployee extends Component {
             <StyledInput image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleJobTitleChange} name="jobTitle" />
             {/* <StyledInput image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleGroupIdChange} /> */}
             <AdminPickers height={55}>
-              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 10 }}></Image>
               <Picker
                 selectedValue={this.state.group || ''}
                 width={300}
@@ -131,7 +131,7 @@ class addEmployee extends Component {
                   marginTop: 10,
                   marginBottom: 10,
                   color: 'white',
-
+                  
                 }}
                 name="group"
                 onValueChange={this.handleGroupChange}>

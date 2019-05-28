@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     width: 340,
-    backgroundColor: '#ECECEC',
-    borderColor: '#ECECEC',
     borderRadius: 20,
     marginTop: 40
   },
@@ -44,19 +42,16 @@ const styles = StyleSheet.create({
     opacity: 0.3
   },
   textareaContainer: {
-    borderWidth: 1,
-    width: 300,
-    height: 80,
-    position: 'relative',
-    marginTop: 10,
+    height: 180,
     padding: 5,
-    paddingLeft: 10,
-    backgroundColor: '#1C1C1C',
-    borderColor: '#1C1C1C',
-    alignSelf: 'center',
-    color: 'white',
+    backgroundColor: 'black',
+    borderColor: 'gray',
     borderRadius: 20,
-    marginBottom: 100
+    paddingLeft: 10,
+    paddingRight: 10,
+    width:300,
+    marginBottom:50,
+    alignSelf:'center',
   },
   actionButtonIcon: {
     fontSize: 20,
@@ -68,7 +63,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: '#2CA96E',
-  }
+  },
+  
+  textarea: {
+    textAlignVertical: 'top',  // hack android
+    height: 170,
+    fontSize: 14,
+    color: 'white',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  
 });
 
 export default styles;

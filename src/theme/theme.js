@@ -9,7 +9,8 @@ export const lightTheme = {
     informationsColor: '#CECECE',
     imageSettingsBorderColor: 'black',
     settingsHeaderColor: '#CECECE',
-    cardHeaderColor: '#DADADA',
+    cardHeaderColor: '#F7F7F7',
+    pickerBackground:'#DADADA',
     menu: {
         background: '#F7F7F7',
         activeBackgroundColor: '#74BE9C',
@@ -21,6 +22,11 @@ export const lightTheme = {
         jobTitle: 'black',
         color: 'white'
 
+    },
+    calendar:{
+        headerColor:'#17739B',
+        c1:'#EEF4F7',
+        c2 :'#DBE7EE',
     }
 }
 
@@ -28,13 +34,14 @@ export const darkTheme = {
     preset: 'dark',
     backgroundColor: '#020B1C',
     fontColor: 'white',
-    cardBackground: '#01152E',
+    cardBackground: '#001B39',
     settingsHeaderColor: '#020B1C',
     inputs: '#021630',
     settingContainerColor: '#01152E',
     barColor: '#020B1C',
+    pickerBackground:'#DADADA',
     informationsColor: '#8F8E8E',
-    cardHeaderColor: '#021F44',
+    cardHeaderColor: '#001B39',
     imageSettingsBorderColor: 'white',
     menu: {
         background: '#020B1C',
@@ -45,5 +52,10 @@ export const darkTheme = {
         logoutBackground: '#020B1C',
         logoutFontColor: 'white',
 
+    },
+    calendar:{
+        headerColor:'#2CA96E',
+        c1:'#235F81',
+        c2 :'#104664',
     }
 }

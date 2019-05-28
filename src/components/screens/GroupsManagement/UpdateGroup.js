@@ -23,6 +23,7 @@ class UpdateGroup extends Component {
         this.state = {
             selectedGroup:'',
             name: '',
+            shortName:'',
             poleLead: ''
         }
     }
@@ -44,6 +45,15 @@ class UpdateGroup extends Component {
         });
       }
 
+      handleShortNameChange = (text) => {
+        this.setState({
+          selectedGroup: {
+            ...this.state.selectedGroup,
+            shortName: text
+          }
+        });
+      }
+
 
     handlePoleLead = (poleLead) => {
         this.setState({
@@ -53,8 +63,10 @@ class UpdateGroup extends Component {
     }
     handleAddGroup = () => {
         const { name, poleLead } = this.state;
-        if (name !== '' && poleLead !== '') {
+        if (name !== '' && shortName !== '' && poleLead !== '') {
             this.props.addGroup(this.state);
+            ToastAndroid.show("Group updated successfully", ToastAndroid.LONG);
+
         }
 
         else {
@@ -106,9 +118,13 @@ class UpdateGroup extends Component {
 
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
-                        <StyledInput 
+                    <StyledInput 
                         value={this.state.selectedGroup && this.state.selectedGroup.name}
-                        image={titleIcon} text={'Group name'} textColor={'white'} onChange={this.handleNameChange} />
+                        text={'Group name'} textColor={'white'} onChange={this.handleNameChange} />
+                        
+                        <StyledInput 
+                        value={this.state.selectedGroup && this.state.selectedGroup.shortName}
+                        text={'Group name'} textColor={'white'} onChange={this.handleShortNameChange} />
 
                         <AdminPickers height={55} width={300} paddingLeft={20}>
 

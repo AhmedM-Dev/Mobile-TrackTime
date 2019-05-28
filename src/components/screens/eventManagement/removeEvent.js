@@ -46,9 +46,8 @@ class removeEvent extends Component {
           <Icon
             name="md-arrow-dropleft"
             style={{
-              color: 'black',
-              margin: 15,
-              top: 10
+              marginLeft: 30,
+              top: 25,
             }}
             onPress={() => this.props && this.props.navigation.navigate('Administration')} />
 
@@ -112,7 +111,6 @@ class removeEvent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#E7E7E7',
     justifyContent: 'center'
   },
