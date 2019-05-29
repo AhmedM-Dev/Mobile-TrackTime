@@ -26,6 +26,10 @@ export const authenticateWithRedux = payload => dispatch => {
     });
 }
 
+export const logoutWithRedux = () => ({
+  type: types.LOGOUT
+});
+
 export const getUserFromAsyncStorageToStore = () => dispatch => {
   AsyncStorage.getItem('user')
     .then(response => {

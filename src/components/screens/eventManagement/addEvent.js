@@ -15,6 +15,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
+  maxWidth: 500,
+  maxHeight: 500
 };
 
 
@@ -32,6 +34,7 @@ class AddEvent extends Component {
       logoName: '' 
     }
   }
+  
   selectPhoto = () => {
     ImagePicker.showImagePicker(options, (response) => {
 

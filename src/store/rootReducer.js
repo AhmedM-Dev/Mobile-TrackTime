@@ -53,7 +53,16 @@ export const authReducer = (state = { user: {} }, action) => {
         error: action.error,
       }
 
+    case types.LOGOUT:
+      return { user: {} }
+
     case types.GET_AVATAR:
+      return {
+        ...state,
+        avatar: action.payload
+      }
+
+    case types.UPLOAD_AVATAR:
       return {
         ...state,
         avatar: action.payload

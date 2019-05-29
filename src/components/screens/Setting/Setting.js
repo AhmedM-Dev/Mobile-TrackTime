@@ -14,6 +14,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
+  maxWidth: 500,
+  maxHeight: 500
 };
 
 class Settings extends Component {

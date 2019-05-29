@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {
-  StatusBar, TextInput, ActivityIndicator
+  StatusBar, TextInput, ActivityIndicator, Alert
 } from 'react-native';
 import {
   Container,
@@ -28,6 +28,7 @@ const initialState = {
   leaveCategory: "Paid leave",
   requestCategory: 'LEAVE',
   motif: '',
+  languageSelected: 'English',
 }
 
 class LeaveRequest extends React.Component {
@@ -39,7 +40,6 @@ class LeaveRequest extends React.Component {
   }
 
   handleCreateRequest = () => {
-    console.log("REQUEST STATE:", this.state);
     this.props.createLeaveRequest(this.state);
   }
 
@@ -72,7 +72,21 @@ class LeaveRequest extends React.Component {
   //   }
   // }
 
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
   render() {
+    if (!this.props.sendingRequest && this.props.requestSuccess) {
+      Alert.alert(
+        'Info',
+        'Your request has been successfully created.',
+        [
+          { text: 'OK', onPress: () => this.setState(initialState) },
+        ],
+        { cancelable: false },
+      );
+    }
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
         {this.props.sendingRequest && !this.props.requestSuccess &&
