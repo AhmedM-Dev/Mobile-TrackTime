@@ -5394,6 +5394,11 @@ react-native-android-wifi@^0.0.40:
   resolved "https://registry.yarnpkg.com/react-native-android-wifi/-/react-native-android-wifi-0.0.40.tgz#b16bfc2a75e0ff6c4b28c0a4e30ef436175ead9a"
   integrity sha512-aEEtD6u4lA7chp+gEv+GyCGux0FRHaesg7j47blXkaXOPHszqOg8BsxQO2VSi2RdFXgIU83pLOIcAp8k93rDug==
 
+react-native-app-intro-slider@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-2.0.1.tgz#947fece38d2332d9cdc5381344b0c47ab822984b"
+  integrity sha512-Bg/hQ+fU7IJDaZYXApH7xWW7dxdb0buDZ46GGhOerOmJh6GMq5WIxtimYKP8u1Pumq+hGrbSRFzT1vhYlPkDAw==
+
 react-native-card-list@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-card-list/-/react-native-card-list-0.1.0.tgz#4ebcd81b2f25b39edcb6f508494c374edc75c203"

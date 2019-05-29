@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid} from 'react-native';
 import { Icon, Container, Content, View, Text } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import axios from "axios";
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
-import  Textarea  from 'react-native-textarea'
-import { API_URL } from "../../../../config";
-import titleIcon from '../../../assets/img/titleIcon.png';
-import Background from '../../../assets/img/backgroundM.jpg';
+import Textarea from 'react-native-textarea'
 import StyledInput from '../../ui/Input/addEventInput';
 import DatePicker from 'react-native-datepicker';
-import motifIcon from '../../../assets/img/detailsIcon.png'
-import priceIcon from '../../../assets/img/priceIcon.png'
 import { Button } from 'react-native-elements';
-
-import events from '../../../assets/img/events.jpg'
 
 import { createEvent } from './actions';
 
@@ -35,9 +26,10 @@ class AddEvent extends Component {
       details: "",
       logo: null,
       photo: null,
-      dateFrom:null,
-      dateTo :null,
-      photoFileName: null
+      dateFrom: null,
+      dateTo: null,
+      photoFileName: '',
+      logoName: '' 
     }
   }
   selectPhoto = () => {
@@ -61,6 +53,29 @@ class AddEvent extends Component {
     });
   }
 
+
+  selectLogo = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+
+      console.log("RESPONSE IMAGE", response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('Image Picker Error: ', response.error);
+      }
+      else {
+        let source = { uri: response.uri };
+        this.setState({
+          logo: response.data,
+          logoName: response.fileName
+        });
+      }
+    });
+  }
+
+
   uploadPic = () => {
     console.log("PIC", this.state.pic);
     // RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
@@ -78,15 +93,22 @@ class AddEvent extends Component {
   handleDateChange = (type, value) => {
     this.setState({
       ...this.state,
-      startDate: type === "startdate" ? value : this.state.startDate,
-      startTime: type === "starttime" ? value : this.state.startTime,
-      endDate: type === "enddate" ? value : this.state.endDate,
-      endTime: type === "endtime" ? value : this.state.endTime
+      dateFrom: type === "dateFrom" ? value : this.state.dateFrom,
+      dateTo: type === "dateTo" ? value : this.state.dateTo,
     })
   }
 
+
+
+
   handleCreateEvent = () => {
-    this.props.createEvent(this.state);
+    const { title, logoName, dateFrom, dateTo, details, photoFileName } = this.state;
+    if (title !== '' && logoName !== '' && dateFrom !== '' && dateTo !== '' && details !== '' && photoFileName !== '') {
+      this.props.createEvent(this.state);
+      ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
+    } else {
+      ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+    }
   }
 
   handleTitleChange = (title) => {
@@ -101,11 +123,7 @@ class AddEvent extends Component {
     });
   }
 
-  handleDateChange = (dateID, date) => {
-    this.setState({
-      [dateID]: date
-    });
-  }
+  
 
   render() {
     return (
@@ -115,8 +133,8 @@ class AddEvent extends Component {
             name="md-arrow-dropleft"
             style={{
               marginLeft: 30,
-                            top:25,
-                            marginBottom:40
+              top: 25,
+              marginBottom: 40
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={{ marginTop: 10 }}>
@@ -141,9 +159,31 @@ class AddEvent extends Component {
               style={{ position: "absolute", top: 120, color: "white", left: 260, opacity: 0.7 }} />
 
           </View>
+          <View>
+            <Button
+              buttonStyle={{
+                backgroundColor: 'black',
+                borderRadius: 20,
+                borderColor: 'white',
+                borderWidth: 2,
+                width: 300,
+                alignSelf: 'center',
+                marginBottom: 5
+              }}
+              titleStyle={{
+                color: 'white'
+              }}
+              title={this.state.logoName || "logo"}
+              onPress={this.selectLogo}
+            />
+            <Icon name="md-download"
+              onPress={this.myfun}
+              style={{ position: "absolute", top: 120, color: "white", left: 260, opacity: 0.7 }} />
+
+          </View>
 
           <View>
-            <StyledInput  text={'Title'} textColor={'white'} onChange={this.handleTitleChange} />
+            <StyledInput text={'Title'} textColor={'white'} onChange={this.handleTitleChange} />
             <View>
               <Textarea
                 containerStyle={styles.textareaContainer}
@@ -187,9 +227,9 @@ class AddEvent extends Component {
                 }
               }}
               onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
-          
+
             <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 100 }}
+              style={{ width: 300, alignSelf: 'center', marginBottom: 80 }}
               date={this.state.dateTo}
               placeholder="To ... "
               mode="datetime"
@@ -293,7 +333,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 20,
     paddingLeft: 10,
-    paddingRight: 10, width:300 , alignSelf:'center'
+    paddingRight: 10, width: 300, alignSelf: 'center'
   },
   textarea: {
     textAlignVertical: 'top',  // hack android

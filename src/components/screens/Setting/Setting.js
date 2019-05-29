@@ -232,7 +232,7 @@ class Settings extends Component {
                 hasNavArrow={false}
                 itemWidth={50}
                 titleStyle={{ color: this.props.theme.fontColor, fontSize: 16 }}
-                title='Light theme'
+                title='Light mode'
                 borderHide={'Both'}
                 backgroundColor={this.props.theme.settingContainerColor}
               />

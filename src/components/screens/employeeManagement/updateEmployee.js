@@ -150,7 +150,7 @@ class UpdateEmployee extends Component {
               top: 25
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-          <AdminPickers height={40} width={230} top={-25} left={50} paddingLeft={20}>
+          <AdminPickers height={40} width={230} top={-25} left={10} paddingLeft={20}>
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
@@ -181,7 +181,6 @@ class UpdateEmployee extends Component {
                   marginTop: 10,
                   marginBottom: 10,
                   color: 'white',
-
                 }}
                 name="group"
                 onValueChange={this.handleChangeGroup}>

@@ -14,6 +14,7 @@ import Dashboard from './components/screens/Dashboard';
 import Events from './components/screens/Events';
 import NewRequest from './components/screens/NewRequest';
 import AttendanceTime from './components/screens/AttendanceTime';
+import AppIntro from './components/screens/AppIntro';
 import Setting from './components/screens/Setting';
 import History from './components/screens/History';
 import Avatar from './components/screens/Avatar';
@@ -172,7 +173,17 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-   
+    'About TrackTime': {
+      screen: AppIntro,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: "locked-closed",
+        drawerIcon: (
+          <AppContext.Consumer>
+            {value => <Icon name="md-information" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 35 }} />}
+          </AppContext.Consumer>
+        )
+      })
+    },
 
     'Dashboard': {
       screen: Dashboard,
@@ -306,6 +317,9 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+    
+
+
     'Avatar': {
       screen: Avatar,
       navigationOptions: ({ navigation }) => ({
@@ -343,6 +357,7 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
+    
     'removeEvent': {
       screen:  removeEvent,
       navigationOptions: ({ navigation }) => ({

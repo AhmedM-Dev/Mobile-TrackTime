@@ -28,7 +28,6 @@ const initialState = {
   leaveCategory: "Paid leave",
   requestCategory: 'LEAVE',
   motif: '',
-  languageSelected: 'English'
 }
 
 class LeaveRequest extends React.Component {

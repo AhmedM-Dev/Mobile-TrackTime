@@ -41,12 +41,14 @@ export const getEvents = () => dispatch => {
 }
 
 export const createEvent = payload => dispatch => {
-  http.post(domain, payload)
+  http.post(`${domain}`, payload)
     .then(response => {
       dispatch({
-        type: types.ADD_EVENT,
+        type: types.EVENT,
         payload: response.data
       });
+      ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
+
     })
     .catch(error => {
       dispatch({
