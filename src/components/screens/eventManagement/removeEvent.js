@@ -18,13 +18,18 @@ import { deleteEvent, getEvents } from './actions';
 class removeEvent extends Component {
 
   state = {
-    event: null
+    selectedEvent: null
   }
 
   handleRemoveEvent = () => {
-    const { event } = this.state;
-    if (event !== null) {
-      this.props.deleteEvent(event.eventId);
+    const { selectedEvent } = this.state;
+    if (selectedEvent !== null) {
+      console.log("EEEE", selectedEvent);
+      this.props.deleteEvent(selectedEvent.eventId);
+      this.setState({
+        selectedEvent: null
+      });
+      ToastAndroid.show("Event deleted successfully", ToastAndroid.LONG);
     }
     else {
       ToastAndroid.show("Event title is required.", ToastAndroid.LONG);
@@ -36,26 +41,26 @@ class removeEvent extends Component {
   }
 
   handleEventChange = (event) => {
-    this.setState({ event });
+    this.setState({ selectedEvent: event });
   };
 
   render() {
     return (
       <View style={styles.container} >
         <Content>
-        <Icon
+          <Icon
             name="md-arrow-round-back"
             style={{
               color: '#DA7373',
-              margin:30,
+              margin: 30,
               fontSize: 18,
-              left:20
+              left: 20
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
 
 
 
-            <View style={{
+          <View style={{
             backgroundColor: '#AA7979',
             marginBottom: 80,
             flexDirection: 'row',
@@ -65,20 +70,20 @@ class removeEvent extends Component {
             alignSelf: 'center',
             height: 45, width: 300
           }}>
-              <Picker
-                selectedValue={this.state.event || ''}
-                style={{
-                  alignSelf: 'center',
-                  marginTop: 10,
-                  marginBottom: 10,
-                  color: 'white',
+            <Picker
+              selectedValue={this.state.selectedEvent || ''}
+              style={{
+                alignSelf: 'center',
+                marginTop: 10,
+                marginBottom: 10,
+                color: 'white',
 
-                }}
-                name="event"
-                onValueChange={this.handleEventChange}>
-                {this.props && this.props.events && this.props.events.length > 0 && this.props.events.map(event => <Picker.Item label={`${event.title}`} value={event} color="#021630" />)}
-              </Picker>
-            </View>
+              }}
+              name="event"
+              onValueChange={this.handleEventChange}>
+              {this.props && this.props.events && this.props.events.length > 0 && this.props.events.map(event => <Picker.Item label={`${event.title}`} value={event} color="#021630" />)}
+            </Picker>
+          </View>
 
 
           <ActionButton

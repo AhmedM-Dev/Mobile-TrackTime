@@ -3,9 +3,6 @@ import { StatusBar, ImageBackground, Image, StyleSheet, Platform ,ToastAndroid }
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import titleIcon from '../../../assets/img/titleIcon.png';
-import axios from "axios";
-import { API_URL } from "../../../../config";
 import ImagePicker from 'react-native-image-picker';
 import StyledInput from '../../ui/Input/addEventInput';
 import DatePicker from 'react-native-datepicker';

@@ -62,7 +62,8 @@ class UpdateEmployee extends Component {
 
   handleSelectUser = (user) => {
     this.setState({
-      selectedUser: user
+      selectedUser: user,
+      group: user.groupId
     });
   }
 
@@ -183,7 +184,6 @@ class UpdateEmployee extends Component {
             <StyledInput name="lastName" value={this.state.selectedUser && this.state.selectedUser.lastName} image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleChangeLastName} />
             <StyledInput name="jobTitle" value={this.state.selectedUser && this.state.selectedUser.jobTitle} image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleChangeJobTitle} />
 
-
             <AdminPickers height={45} width={300}>
               <Image source={groupIcon} style={{ width: 15, height: 15, marginLeft: 15, marginRight: 10, top: 15 }}></Image>
               <Picker
@@ -197,7 +197,7 @@ class UpdateEmployee extends Component {
                 }}
                 name="group"
                 onValueChange={this.handleChangeGroup}>
-                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
+                {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group.groupId} color="#021630" />)}
               </Picker>
             </AdminPickers>
 

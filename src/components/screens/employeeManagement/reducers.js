@@ -5,12 +5,6 @@ const usersReducer = (state = {}, action) => {
     case types.ADD_USER:
       return {
         ...state,
-        users: action.payload
-      };
-
-    case types.ADD_USER:
-      return {
-        ...state,
         users: [
           ...state.users,
           action.payload

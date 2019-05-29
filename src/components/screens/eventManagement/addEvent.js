@@ -15,8 +15,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
-  maxWidth: 50000000,
-  maxHeight: 5000000
+  maxWidth: 200,
+  maxHeight: 200
 };
 
 
@@ -47,9 +47,8 @@ class AddEvent extends Component {
         console.log('Image Picker Error: ', response.error);
       }
       else {
-        let source = { uri: response.uri };
         this.setState({
-          photo: response.data,
+          photo: `data:${response.type};base64,${response.data}`,
           photoFileName: response.fileName
         });
       }
@@ -71,7 +70,7 @@ class AddEvent extends Component {
       else {
         let source = { uri: response.uri };
         this.setState({
-          logo: response.data,
+          logo: `data:${response.type};base64,${response.data}`,
           logoName: response.fileName
         });
       }
@@ -80,7 +79,7 @@ class AddEvent extends Component {
 
 
   uploadPic = () => {
-    console.log("PIC", this.state.pic);
+    console.log("PIC", this.state.photo);
     // RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
     //   Authorization: "Bearer access-token",
     //   otherHeader: "foo",
@@ -100,9 +99,6 @@ class AddEvent extends Component {
       dateTo: type === "dateTo" ? value : this.state.dateTo,
     })
   }
-
-
-
 
   handleCreateEvent = () => {
     const { title, logoName, dateFrom, dateTo, details, photoFileName } = this.state;

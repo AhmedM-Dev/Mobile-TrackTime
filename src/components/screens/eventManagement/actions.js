@@ -1,12 +1,16 @@
+import { ToastAndroid } from 'react-native';
+
 import types from './types';
-import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
+
+import HttpClient from '../../../services/HttpClient';
 
 const http = new HttpClient();
 
 const domain = "events";
 
 export const deleteEvent = eventId => dispatch => {
+  console.log("PAYLOAD", eventId);
   http.delete(`${domain}/${eventId}`)
     .then(response => {
       dispatch({
@@ -14,7 +18,6 @@ export const deleteEvent = eventId => dispatch => {
         payload: eventId
       });
       ToastAndroid.show("Event deleted successfully", ToastAndroid.LONG);
-
     })
     .catch(error => {
       dispatch({
@@ -60,7 +63,7 @@ export const createEvent = payload => dispatch => {
   http.post(`${domain}`, payload)
     .then(response => {
       dispatch({
-        type: types.EVENT,
+        type: types.ADD_EVENT,
         payload: response.data
       });
       ToastAndroid.show("Event added successfully", ToastAndroid.LONG);

@@ -51,7 +51,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontSize: 20
               }}
               title="Employee Management"
               onPress={() => this.props.navigation.navigate('EmployeeManagement')}
@@ -66,7 +65,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontSize: 20
               }}
               title="Events Management"
               onPress={() => this.props.navigation.navigate('EventsManagement')}
@@ -81,7 +79,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontSize: 20
               }}
               title="Groups Management"
               onPress={() => this.props.navigation.navigate('GroupsManagement')}
@@ -98,7 +95,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontSize: 20
               }}
               title="Holidays Management"
               onPress={() => this.props.navigation.navigate('addHolidays')}
@@ -115,8 +111,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontSize: 20
-
               }}
               title="Working hours management"
               onPress={() => this.props.navigation.navigate('whm')}

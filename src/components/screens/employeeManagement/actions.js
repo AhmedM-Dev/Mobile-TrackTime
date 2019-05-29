@@ -1,3 +1,5 @@
+import { ToastAndroid } from 'react-native';
+
 import types from './types';
 import globals from '../../../store/types';
 
