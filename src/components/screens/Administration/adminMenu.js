@@ -51,7 +51,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontFamily: 'cursive',
                 fontSize: 20
               }}
               title="Employee Management"
@@ -67,7 +66,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontFamily: 'cursive',
                 fontSize: 20
               }}
               title="Events Management"
@@ -83,7 +81,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontFamily: 'cursive',
                 fontSize: 20
               }}
               title="Groups Management"
@@ -101,7 +98,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontFamily: 'cursive',
                 fontSize: 20
               }}
               title="Holidays Management"
@@ -119,7 +115,6 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                fontFamily: 'cursive',
                 fontSize: 20
 
               }}
