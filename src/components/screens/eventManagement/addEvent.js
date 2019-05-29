@@ -24,6 +24,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
+  maxWidth: 500,
+  maxHeight: 500
 };
 
 
@@ -42,6 +44,7 @@ class AddEvent extends Component {
       photoFileName: null
     }
   }
+  
   selectPhoto = () => {
     ImagePicker.showImagePicker(options, (response) => {
 

@@ -35,6 +35,7 @@ import Calendar from './components/screens/Calendar/Calendar';
 import { logout } from './services/services';
 import Notifications from './components/screens/Notifications';
 
+import { logoutWithRedux } from './store/actions';
 
 const AppContext = React.createContext({
   theme: {}
@@ -73,14 +74,19 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  logoutWithRedux() { dispatch(logoutWithRedux()) }
+});
+
 /**
  * Customizing Drawer navigator view
  * @param {*} props 
  */
-const CustomDrawerComponent = connect(mapStateToProps)((props) => {
+const CustomDrawerComponent = connect(mapStateToProps, mapDispatchToProps)((props) => {
 
   const _signOutAsync = () => {
     logout(props.navigation);
+    props.logoutWithRedux();
   };
 
 
