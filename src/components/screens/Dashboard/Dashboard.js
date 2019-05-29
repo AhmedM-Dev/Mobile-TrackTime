@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
-    backgroundColor: 'black',
+    backgroundColor: '#020B1C',
   },
 
   starStyle: {

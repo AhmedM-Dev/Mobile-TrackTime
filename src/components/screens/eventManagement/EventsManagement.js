@@ -19,8 +19,8 @@ export default createMaterialTopTabNavigator({
 },
 {
   tabBarOptions: {
-    activeTintColor : 'black',
-    inactiveTintColor:'black',
+    activeTintColor : 'white',
+    inactiveTintColor:'white',
     pressColor :'#2CA96E',
     tabStyle :{
 
@@ -30,8 +30,8 @@ export default createMaterialTopTabNavigator({
     },
   
     style: {
-      backgroundColor:'white'
-    }
+      backgroundColor:'#082E76'
+    },
   },
 });
 

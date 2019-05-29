@@ -14,11 +14,11 @@ const AdminPickers = props => {
             paddingLeft={props.paddingLeft}
             marginLeft={props.marginLeft}
             marginTop={props.marginTop}
+            backgroundColor={props.backgroundColor}
             style={{
-                backgroundColor: 'black',
+                backgroundColor: '#072152',
                 marginBottom: 10,
                 flexDirection: 'row',
-                alignItems: 'center',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 20,

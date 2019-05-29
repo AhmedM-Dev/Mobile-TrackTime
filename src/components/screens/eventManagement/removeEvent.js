@@ -43,18 +43,28 @@ class removeEvent extends Component {
     return (
       <View style={styles.container} >
         <Content>
-          <Icon
-            name="md-arrow-dropleft"
+        <Icon
+            name="md-arrow-round-back"
             style={{
-              marginLeft: 30,
-              top: 25,
+              color: '#DA7373',
+              margin:30,
+              fontSize: 18,
+              left:20
             }}
-            onPress={() => this.props && this.props.navigation.navigate('Administration')} />
+            onPress={() => this.props.navigation.navigate('Administration')} />
 
 
-          <View style={styles.inputPos}>
 
-            <AdminPickers height={55} width={300} >
+            <View style={{
+            backgroundColor: '#AA7979',
+            marginBottom: 80,
+            flexDirection: 'row',
+            borderColor: '#CB9090',
+            borderWidth: 1,
+            borderRadius: 20,
+            alignSelf: 'center',
+            height: 45, width: 300
+          }}>
               <Picker
                 selectedValue={this.state.event || ''}
                 style={{
@@ -68,19 +78,17 @@ class removeEvent extends Component {
                 onValueChange={this.handleEventChange}>
                 {this.props && this.props.events && this.props.events.length > 0 && this.props.events.map(event => <Picker.Item label={`${event.title}`} value={event} color="#021630" />)}
               </Picker>
-            </AdminPickers>
+            </View>
 
-          </View>
 
           <ActionButton
-            buttonColor="black"
+            buttonColor="#072152"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
             size={40}
             radius={50}
-
-          // outRangeScale={0.5}       
+            outRangeScale={0.5}
           >
 
             <ActionButton.Item
@@ -111,23 +119,15 @@ class removeEvent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E7E7E7',
-    justifyContent: 'center'
+    backgroundColor: '#D1D0D0',
+
   },
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
     color: 'white',
   },
-  instructions2: {
-    color: 'white',
-    marginBottom: 15,
-    fontSize: 16
-  },
-  inputPos: {
-    marginBottom: 200,
-    top: 100
-  }
+
 });
 
 const mapStateToProps = state => {

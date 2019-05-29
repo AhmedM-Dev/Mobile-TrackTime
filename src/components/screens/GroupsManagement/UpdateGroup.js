@@ -88,19 +88,29 @@ class UpdateGroup extends Component {
         return (
             <View style={styles.container} >
                 <Content>
-                    <Icon
-                        name="md-arrow-dropleft"
-                        style={{
-                            color: 'black',
-                            margin: 15,
-                            top: 10
-                        }}
-                        onPress={() => this.props.navigation.navigate('Administration')} />
+                <Icon
+            name="md-arrow-round-back"
+            style={{
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
+            }}
+            onPress={() => this.props.navigation.navigate('Administration')} />
 
 
-                    <AdminPickers height={55} width={300} top={50} marginBottom={-100}
-                    >
-                        <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+<View style={{
+            backgroundColor: '#AA7979',
+            marginBottom: 20,
+            flexDirection: 'row',
+            borderColor: '#CB9090',
+            borderWidth: 1,
+            borderRadius: 20,
+            alignSelf: 'center',
+            height: 45, width: 300,
+
+              paddingLeft:10
+          }}>
                         <Picker
                             selectedValue={this.state.selectedGroup || ''}
                             style={{
@@ -114,7 +124,7 @@ class UpdateGroup extends Component {
                             onValueChange={this.handleSelectGroup}>
                             {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group} color="#021630" />)}
                         </Picker>
-                    </AdminPickers>
+                    </View>
 
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
@@ -126,9 +136,8 @@ class UpdateGroup extends Component {
                         value={this.state.selectedGroup && this.state.selectedGroup.shortName}
                         text={'Group name'} textColor={'white'} onChange={this.handleShortNameChange} />
 
-                        <AdminPickers height={55} width={300} paddingLeft={20}>
+                        <AdminPickers height={45} width={300} paddingLeft={20}>
 
-                            <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
 
                             <Picker
                                 selectedValue={this.state.poleLead || ''}
@@ -153,15 +162,15 @@ class UpdateGroup extends Component {
 
 
                     <ActionButton
-                        buttonColor="black"
-                        btnOutRange="#C8593C"
-                        icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
-                        degrees={180}
-                        size={40}
-                        radius={50}
+            buttonColor="#072152"
+            btnOutRange="#C8593C"
+            icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
+            degrees={180}
+            size={40}
+            radius={50}
+            outRangeScale={0.5}
+          >
 
-                    // outRangeScale={0.5}       
-                    >
 
                         <ActionButton.Item
                             buttonColor='#C9CF57'
@@ -190,10 +199,8 @@ class UpdateGroup extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#E7E7E7',
-        justifyContent: 'center'
-    },
+        backgroundColor: '#D1D0D0',
+      },
 
 
     actionButtonIcon: {

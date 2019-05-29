@@ -143,14 +143,26 @@ class UpdateEmployee extends Component {
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-arrow-dropleft"
+            name="md-arrow-round-back"
             style={{
-              color: 'black',
-              margin: 15,
-              top: 25
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-          <AdminPickers height={40} width={230} top={-25} left={10} paddingLeft={20}>
+          <View style={{
+            backgroundColor: '#AA7979',
+            marginBottom: 20,
+            flexDirection: 'row',
+            borderColor: '#CB9090',
+            borderWidth: 1,
+            borderRadius: 20,
+            alignSelf: 'center',
+            height: 45, width: 300
+          }} >
+            <Image source={logoName} style={{ width: 15, height: 15, marginLeft: 15, marginRight: 10, top: 15 }}></Image>
+
             <Picker
               selectedValue={this.state.selectedUser || ''}
               style={{
@@ -158,12 +170,13 @@ class UpdateEmployee extends Component {
                 marginTop: 10,
                 marginBottom: 10,
                 color: 'white',
-
               }}
+
+
               onValueChange={this.handleSelectUser}>
               {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
             </Picker>
-          </AdminPickers>
+          </View>
 
           <View style={styles.inputPos}>
             <StyledInput name="firstName" value={this.state.selectedUser && this.state.selectedUser.firstName} image={logoName} text={'First name'} textColor={'white'} onChange={this.handleChangeFirstName} />
@@ -171,8 +184,8 @@ class UpdateEmployee extends Component {
             <StyledInput name="jobTitle" value={this.state.selectedUser && this.state.selectedUser.jobTitle} image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleChangeJobTitle} />
 
 
-            <AdminPickers height={55}>
-              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 10 }}></Image>
+            <AdminPickers height={45} width={300}>
+              <Image source={groupIcon} style={{ width: 15, height: 15, marginLeft: 15, marginRight: 10, top: 15 }}></Image>
               <Picker
                 selectedValue={this.state.group || ''}
                 width={300}
@@ -194,16 +207,16 @@ class UpdateEmployee extends Component {
           </View>
 
           <ActionButton
-            buttonColor="black"
+            buttonColor="#072152"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
             size={40}
             radius={50}
-          // outRangeScale={0.5}       
+            outRangeScale={0.5}
           >
             <ActionButton.Item
-              buttonColor='#C9CF57'
+              buttonColor='#A9A91C'
               title="Reset"
               onPress={() => alert('refresh')} >
               <Icon
@@ -230,8 +243,7 @@ class UpdateEmployee extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#E7E7E7',
+    backgroundColor: '#D1D0D0',
   },
 
   inputPos: {

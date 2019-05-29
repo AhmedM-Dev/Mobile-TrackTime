@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, Text, } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation';
-import { Icon, Badge, View } from 'native-base';
+import { Icon,  View } from 'native-base';
 import { Button } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import store from '../src/store';
@@ -33,7 +33,8 @@ import updateEvent from './components/screens/eventManagement/updateEvent';
 import Calendar from './components/screens/Calendar/Calendar';
 import { logout } from './services/services';
 import Notifications from './components/screens/Notifications';
-
+import addWorkingHours from './components/screens/WorkingHoursManagement/Add'
+import WorkingHoursManagement from './components/screens/WorkingHoursManagement'
 import { logoutWithRedux } from './store/actions';
 
 const AppContext = React.createContext({
@@ -349,8 +350,14 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
-
     
+    'addWorkingHours': {
+      screen: addWorkingHours,
+      navigationOptions: ({ navigation }) => ({
+        drawerLabel: () => null,
+      })
+    },
+
     'removeUser': {
       screen: removeUser,
       navigationOptions: ({ navigation }) => ({
@@ -377,6 +384,12 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+    'whm': {
+      screen:  WorkingHoursManagement,
+      navigationOptions: ({ navigation }) => ({
+        drawerLabel: () => null,
+      })
+    },
     'GroupsManagement': {
       screen:  GroupsManagement,
       navigationOptions: ({ navigation }) => ({

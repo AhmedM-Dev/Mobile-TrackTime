@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text ,Picker} from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
@@ -49,23 +49,35 @@ class removeGroup extends Component {
         return (
             <View style={styles.container} >
                 <Content>
-                    <Icon
-                        name="md-arrow-dropleft"
-                        style={{
-                            color: 'black',
-                            margin: 15,
-                            top:10
-                        }}
-                        onPress={() => this.props.navigation.navigate('Administration')} />
+                <Icon
+            name="md-arrow-round-back"
+            style={{
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
+            }}
+            onPress={() => this.props.navigation.navigate('Administration')} />
                  
                     
 
                     <View style={{marginBottom:80, marginTop:100}}>
 
-                    <AdminPickers height={55}                 width={300}
->
-              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}></Image>
+                    <View style={{
+            backgroundColor: '#AA7979',
+            marginBottom: 20,
+            flexDirection: 'row',
+            borderColor: '#CB9090',
+            borderWidth: 1,
+            borderRadius: 20,
+            alignSelf: 'center',
+            height: 45, width: 300,
+
+              paddingLeft:10
+          }}>
+
               <Picker
+              
                 selectedValue={this.state.group || ''}
                 style={{
                   alignSelf: 'center',
@@ -79,7 +91,7 @@ class removeGroup extends Component {
                 {this.props.groups && this.props.groups.length > 0 && orderBy(this.props.groups, 'name', 'asc').map(group => <Picker.Item label={group.name} value={group} color="#021630" />)}
 
               </Picker>
-            </AdminPickers>
+            </View>
 
                     </View>
 
@@ -88,15 +100,15 @@ class removeGroup extends Component {
 
 
                     <ActionButton
-                        buttonColor="black"
-                        btnOutRange="#C8593C"
-                        icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
-                        degrees={180}
-                        size={40}
-                        radius={50}
+            buttonColor="#072152"
+            btnOutRange="#C8593C"
+            icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
+            degrees={180}
+            size={40}
+            radius={50}
+            outRangeScale={0.5}
+          >
 
-                    // outRangeScale={0.5}       
-                    >
 
                         <ActionButton.Item
                             buttonColor='#C9CF57'
@@ -125,10 +137,8 @@ class removeGroup extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#E7E7E7',
-        justifyContent:'center'
-    },
+        backgroundColor: '#D1D0D0',
+      },
 
 
     actionButtonIcon: {

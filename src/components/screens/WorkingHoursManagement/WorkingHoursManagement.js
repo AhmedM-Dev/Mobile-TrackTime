@@ -2,19 +2,15 @@
 import React from 'react';
 import { Text, View,Button } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import addGroup from './addGroup.js'
-import removeGroup from './removeGroup.js'
-import updateGroup from './UpdateGroup'
+import add from './Add'
+import update from './Update'
 
 export default createMaterialTopTabNavigator({
   Add: { 
-    screen: addGroup
+    screen: add
    },
-   Update: { 
-    screen: updateGroup
-  },
-  Remove: { 
-    screen: removeGroup
+  Update: { 
+    screen: update
   },
 },
 {

@@ -40,6 +40,22 @@ export const getEvents = () => dispatch => {
     });
 }
 
+export const updateEvent = payload => dispatch => {
+  http.put(`${domain}`, payload)
+    .then(response => {
+      dispatch({
+        type: types.UPDATE_EVENT,
+        payload: response.data.user
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: globals.ADD_ERROR,
+        error
+      });
+    });
+}
+
 export const createEvent = payload => dispatch => {
   http.post(`${domain}`, payload)
     .then(response => {

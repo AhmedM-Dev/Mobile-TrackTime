@@ -15,8 +15,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
-  maxWidth: 500,
-  maxHeight: 500
+  maxWidth: 50000000,
+  maxHeight: 5000000
 };
 
 
@@ -132,21 +132,22 @@ class AddEvent extends Component {
     return (
       <View style={styles.container} >
         <Content>
-          <Icon
-            name="md-arrow-dropleft"
+        <Icon
+            name="md-arrow-round-back"
             style={{
-              marginLeft: 30,
-              top: 25,
-              marginBottom: 40
+              color: '#DA7373',
+              margin:30,
+              fontSize: 18,
+              left:20
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-          <View style={{ marginTop: 10 }}>
+          <View >
             <Button
               buttonStyle={{
-                backgroundColor: 'black',
+                backgroundColor: '#072152',
                 borderRadius: 20,
-                borderColor: 'white',
-                borderWidth: 2,
+                borderColor: 'gray',
+                borderWidth: 1,
                 width: 300,
                 alignSelf: 'center',
                 marginBottom: 5
@@ -154,7 +155,7 @@ class AddEvent extends Component {
               titleStyle={{
                 color: 'white'
               }}
-              title={this.state.photoFileName || "Event image"}
+              title={this.state.photoFileName || "Poster"}
               onPress={this.selectPhoto}
             />
             <Icon name="md-download"
@@ -165,10 +166,10 @@ class AddEvent extends Component {
           <View>
             <Button
               buttonStyle={{
-                backgroundColor: 'black',
+                backgroundColor: '#072152',
                 borderRadius: 20,
-                borderColor: 'white',
-                borderWidth: 2,
+                borderColor: 'gray',
+                borderWidth: 1,
                 width: 300,
                 alignSelf: 'center',
                 marginBottom: 5
@@ -217,7 +218,7 @@ class AddEvent extends Component {
                 },
                 dateInput: {
                   marginTop: 10,
-                  backgroundColor: 'black',
+                  backgroundColor: '#072152',
                   borderColor: 'gray',
                   borderRadius: 20
 
@@ -253,7 +254,7 @@ class AddEvent extends Component {
                 },
                 dateInput: {
                   marginTop: 10,
-                  backgroundColor: 'black',
+                  backgroundColor: '#072152',
                   borderColor: 'gray',
                   borderRadius: 20
 
@@ -271,19 +272,14 @@ class AddEvent extends Component {
 
           </View>
 
-
-
-
-
           <ActionButton
-            buttonColor="black"
+            buttonColor="#072152"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
             size={40}
             radius={50}
-
-          // outRangeScale={0.5}       
+            outRangeScale={0.5}
           >
 
             <ActionButton.Item
@@ -313,7 +309,7 @@ class AddEvent extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E7E7E7',
+    backgroundColor: '#D1D0D0',
   },
 
 
@@ -332,7 +328,7 @@ const styles = StyleSheet.create({
   textareaContainer: {
     height: 180,
     padding: 5,
-    backgroundColor: 'black',
+    backgroundColor: '#072152',
     borderColor: 'gray',
     borderRadius: 20,
     paddingLeft: 10,

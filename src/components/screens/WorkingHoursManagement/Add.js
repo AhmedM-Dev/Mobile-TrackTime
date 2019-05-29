@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import logoName from '../../../assets/img/name.png';
 
-import { deleteUser, getUsers } from './actions';
 
-class DeleteEmployee extends Component {
+class Add extends Component {
   constructor() {
     super();
     this.state = {
@@ -69,29 +67,7 @@ class DeleteEmployee extends Component {
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
 
-          <View style={{
-            backgroundColor: '#AA7979',
-            marginBottom: 80,
-            flexDirection: 'row',
-            borderColor: '#CB9090',
-            borderWidth: 1,
-            borderRadius: 20,
-            alignSelf: 'center',
-            height: 45, width: 300
-          }} >
-            <Image source={logoName} style={{ width: 15, height: 15, marginLeft: 15, marginRight: 10, top: 15 }}></Image>
-            <Picker
-              selectedValue={this.state.selectedUser || ''}
-              style={{
-                alignSelf: 'center',
-                marginTop: 10,
-                marginBottom: 10,
-                color: 'white',
-              }}
-              onValueChange={this.handleSelectUser}>
-              {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
-            </Picker>
-            </View>
+        
 
           <ActionButton
             buttonColor="#072152"
@@ -133,8 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#D1D0D0',
   },
 
-
-
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
@@ -146,16 +120,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    loading: state.loadingReducer.loading,
-    user: state.authReducer.user,
-    users: state.usersReducer.users,
-    theme: state.settingsReducer.theme
+    
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  getUsers() { dispatch(getUsers()) },
-  deleteUser(userId) { dispatch(deleteUser(userId)) }
+ 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteEmployee);
+export default connect(mapStateToProps, mapDispatchToProps)(Add);

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
 
-import { addUser ,getGroups} from './actions';
+import { addUser, getGroups } from './actions';
 
 
 
@@ -34,6 +34,7 @@ class addEmployee extends Component {
       group: '',
       email: '',
       password: null,
+      businessRole: '',
     }
   };
 
@@ -59,7 +60,7 @@ class addEmployee extends Component {
     });
   }
 
- 
+
   handleEmailChange = (text) => {
     this.setState({
       ...this.state,
@@ -71,6 +72,12 @@ class addEmployee extends Component {
     this.setState({
       ...this.state,
       password: text
+    });
+  }
+  handleBusinessRoleChange = (text) => {
+    this.setState({
+      ...this.state,
+      businessRole: text
     });
   }
 
@@ -89,15 +96,6 @@ class addEmployee extends Component {
     } else {
       ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
     }
-
-
-    // axios.post(API_URL + "users", {
-    //   userId: this.state.connectedUser.userId,
-    //   ...this.state
-    // })
-    //   .then((response) => {
-    //     alert("user added successfully")
-    //   }).catch(error => alert(error));
   }
 
   componentDidMount() {
@@ -108,21 +106,22 @@ class addEmployee extends Component {
       <View style={styles.container} >
         <Content>
           <Icon
-            name="md-arrow-dropleft"
+            name="md-arrow-round-back"
             style={{
-              color: 'black',
-              margin: 15,
-              top: 10
+              color: '#DA7373',
+              margin:30,
+              fontSize: 18,
+              left:20
             }}
-
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={styles.inputPos}>
             <StyledInput image={logoName} text={'First name'} textColor={'white'} onChange={this.handleFirstNAmeChange} name="firstName" />
             <StyledInput image={logoName} text={'Last name'} textColor={'white'} onChange={this.handleLastNameChange} name="lastName" />
             <StyledInput image={jobLogo} text={'Job title'} textColor={'white'} onChange={this.handleJobTitleChange} name="jobTitle" />
-            {/* <StyledInput image={groupIcon} text={'Group ID'} textColor={'white'} onChange={this.handleGroupIdChange} /> */}
-            <AdminPickers height={55}>
-              <Image source={groupIcon} style={{ width: 20, height: 20, marginLeft: 15, marginRight: 10 }}></Image>
+            <StyledInput image={jobLogo} text={'Business role'} textColor={'white'} onChange={this.handleBusinessRoleChange} name="businessRole" />
+
+            <AdminPickers height={45} width={300}>
+              <Image source={groupIcon} style={{ width: 15, height: 15, marginLeft: 15, marginRight: 10, top: 15 }}></Image>
               <Picker
                 selectedValue={this.state.group || ''}
                 width={300}
@@ -131,20 +130,18 @@ class addEmployee extends Component {
                   marginTop: 10,
                   marginBottom: 10,
                   color: 'white',
-                  
                 }}
                 name="group"
                 onValueChange={this.handleGroupChange}>
                 {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(groups => <Picker.Item label={`${groups.name}`} value={groups.name} color="#021630" />)}
               </Picker>
             </AdminPickers>
-            {/* <StyledInput image={phoneIcon} text={'Phone number'} textColor={'white'} onChange={this.handlePhoneNumberChange} /> */}
+
             <StyledInput image={EmailIcon} text={'Email'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} name="email" />
             <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handlePassChange} name="password" />
           </View>
-
           <ActionButton
-            buttonColor="black"
+            buttonColor="#072152"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
@@ -153,7 +150,7 @@ class addEmployee extends Component {
             outRangeScale={0.5}
           >
             <ActionButton.Item
-              buttonColor='#C9CF57'
+              buttonColor='#A9A91C'
               title="Reset"
               onPress={() => alert('refresh')} >
               <Icon
@@ -170,10 +167,6 @@ class addEmployee extends Component {
               />
             </ActionButton.Item>
           </ActionButton>
-
-
-
-
         </Content>
       </View>
     );
@@ -183,13 +176,11 @@ class addEmployee extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#E7E7E7',
+    backgroundColor: '#D1D0D0',
   },
 
   inputPos: {
-    top: 30,
-    marginBottom: 100
+    marginBottom: 80
   },
 
   actionButtonIcon: {

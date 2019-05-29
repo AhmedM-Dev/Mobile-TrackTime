@@ -3,12 +3,6 @@ import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid }
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
-import titleIcon from '../../../assets/img/titleIcon.png';
-import leaderIcon from '../../../assets/img/leader.png';
-import axios from "axios";
-import { API_URL } from "../../../../config";
-import Background from '../../../assets/img/backgroundM.jpg';
-import ImagePicker from 'react-native-image-picker';
 import StyledInput from '../../ui/Input/addEventInput';
 import { connect } from 'react-redux';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
@@ -76,24 +70,25 @@ class addGroups extends Component {
         return (
             <View style={styles.container} >
                 <Content>
-                    <Icon
-                        name="md-arrow-dropleft"
-                        style={{
-                            color: 'black',
-                            margin: 15,
-                            top: 10
-                        }}
-                        onPress={() => this.props.navigation.navigate('Administration')} />
+                <Icon
+            name="md-arrow-round-back"
+            style={{
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
+            }}
+            onPress={() => this.props.navigation.navigate('Administration')} />
 
 
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
                         <StyledInput text={'Name'} textColor={'white'} onChange={this.handleGroupName} />
                         <StyledInput text={'Short name'} textColor={'white'} onChange={this.handleGroupShortName} />
-                        <AdminPickers height={55} width={300} paddingLeft={20}>
-                            <Image source={leaderIcon} style={{ width: 20, height: 20, marginRight: 10 }}></Image>
+                        <AdminPickers height={45} width={300} paddingLeft={20}>
 
                             <Picker
+                            
                                 selectedValue={this.state.poleLead || ''}
                                 style={{
                                     alignSelf: 'center',
@@ -113,17 +108,16 @@ class addGroups extends Component {
 
 
 
-
                     <ActionButton
-                        buttonColor="black"
-                        btnOutRange="#C8593C"
-                        icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
-                        degrees={180}
-                        size={40}
-                        radius={50}
+            buttonColor="#072152"
+            btnOutRange="#C8593C"
+            icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
+            degrees={180}
+            size={40}
+            radius={50}
+            outRangeScale={0.5}
+          >
 
-                    // outRangeScale={0.5}       
-                    >
 
                         <ActionButton.Item
                             buttonColor='#C9CF57'
@@ -152,10 +146,8 @@ class addGroups extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#E7E7E7',
-        justifyContent: 'center'
-    },
+        backgroundColor: '#D1D0D0',
+      },
 
 
     actionButtonIcon: {

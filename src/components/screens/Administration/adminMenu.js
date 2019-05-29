@@ -1,39 +1,49 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, Image } from 'react-native';
-import { CheckBox, Button } from 'react-native-elements';
+import { StyleSheet, Image } from 'react-native';
+import { Button } from 'react-native-elements';
 import { Icon, Content, Text, View } from 'native-base';
-import Background from '../../../assets/img/backgroundM.jpg';
-import addUserIcon from '../../../assets/img/addUser.png';
-import updateUserIcon from '../../../assets/img/updateUserIcon.png';
-import removeUserIcon from '../../../assets/img/removeUserIcon.png';
-import eventsIcon from '../../../assets/img/eventsLogo.png';
-
+import companyLogo from '../../../assets/img/proxym.png'
 
 export default class adminMenu extends Component {
-
   render() {
     return (
       <View style={styles.container} >
-        <Content>
-          <Icon
+
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: 100,
+          height: 100,
+          backgroundColor: '#082E76',
+          borderBottomRightRadius: 300
+        }}>
+          <Image source={companyLogo} style={{
+            width: 50,
+            left: 15,
+            top: 15,
+         height:50,
+         width:50
+         }}>
+          </Image>
+          {/* <Icon
             name="md-menu"
             style={{
-              color: 'black',
-              left: 10,
-              top: 30
+              color: 'white',
+              left: 30, top: 30
             }}
-            onPress={() => this.props.navigation.openDrawer()} />
-          <View style={{ top: 90, marginBottom: 30, alignItems: 'center' }}>
-            <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}> ADMINISTRATION </Text>
-            <Text style={{ color: 'black', fontSize: 20, opacity: 0.9 }}> MENU </Text>
+            onPress={() => this.props.navigation.openDrawer()} /> */}
+
+        </View>
+        <Content>
+          <View style={{ top: 130, alignItems: 'center', marginBottom: 190 }}>
+            <Text style={{ color: '#05183C', fontSize: 25, fontWeight: 'bold', fontFamily: 'cursive' }}> ADMINISTRATION </Text>
+            <Text style={{ color: '#05183C', fontSize: 25, opacity: 0.9, fontFamily: 'cursive' }}> MENU </Text>
           </View>
-          <View style={{ top: 110, marginBottom: 120 }}>
+          <View style={{ alignItems: 'center' }}>
             <Button
-              icon={
-                <Image source={addUserIcon} style={{ height: 20, width: 20, left: -80 }}></Image>
-              }
               buttonStyle={{
-                backgroundColor: "black",
+                backgroundColor: "#072152",
                 borderRadius: 20,
                 width: 280,
                 height: 50,
@@ -41,20 +51,15 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                top: -1,
-                left: -30,
+                fontFamily: 'cursive',
+                fontSize: 20
               }}
               title="Employee Management"
               onPress={() => this.props.navigation.navigate('EmployeeManagement')}
             />
-
-
             <Button
-              icon={
-                <Image source={eventsIcon} style={{ height: 20, width: 20, left: -70 }}></Image>
-              }
               buttonStyle={{
-                backgroundColor: "black",
+                backgroundColor: "#072152",
                 borderRadius: 20,
                 width: 280,
                 height: 50,
@@ -62,21 +67,15 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                top: -1,
-                left: -50,
-                paddingLeft: 20
-
+                fontFamily: 'cursive',
+                fontSize: 20
               }}
               title="Events Management"
               onPress={() => this.props.navigation.navigate('EventsManagement')}
             />
-
             <Button
-              icon={
-                <Image source={eventsIcon} style={{ height: 20, width: 20, left: -70 }}></Image>
-              }
               buttonStyle={{
-                backgroundColor: "black",
+                backgroundColor: "#072152",
                 borderRadius: 20,
                 width: 280,
                 height: 50,
@@ -84,21 +83,17 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                top: -1,
-                left: -50,
-                paddingLeft: 20
-
+                fontFamily: 'cursive',
+                fontSize: 20
               }}
               title="Groups Management"
               onPress={() => this.props.navigation.navigate('GroupsManagement')}
             />
 
             <Button
-              icon={
-                <Icon name="md-happy" size={20} style={{ color: 'white', fontSize: 22, left: -65 }} />
-              }
+
               buttonStyle={{
-                backgroundColor: "black",
+                backgroundColor: "#072152",
                 borderRadius: 20,
                 width: 280,
                 height: 50,
@@ -106,14 +101,32 @@ export default class adminMenu extends Component {
               }}
               titleStyle={{
                 color: 'white',
-                top: -1,
-                left: -45,
-                paddingLeft: 20
-
+                fontFamily: 'cursive',
+                fontSize: 20
               }}
               title="Holidays Management"
               onPress={() => this.props.navigation.navigate('addHolidays')}
             />
+
+            <Button
+
+              buttonStyle={{
+                backgroundColor: "#072152",
+                borderRadius: 20,
+                width: 280,
+                height: 50,
+                marginBottom: 10, borderColor: 'gray', borderWidth: 1
+              }}
+              titleStyle={{
+                color: 'white',
+                fontFamily: 'cursive',
+                fontSize: 20
+
+              }}
+              title="Working hours management"
+              onPress={() => this.props.navigation.navigate('whm')}
+            />
+
           </View>
 
         </Content>
@@ -125,7 +138,6 @@ export default class adminMenu extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#E7E7E7',
+    backgroundColor: '#D1D0D0',
   },
 });
