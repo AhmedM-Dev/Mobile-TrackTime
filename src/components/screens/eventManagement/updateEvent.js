@@ -177,10 +177,10 @@ class updateEvents extends Component {
                 borderWidth: 1,
                 width: 300,
                 alignSelf: 'center',
-                marginBottom: 5
+                marginBottom: 5,
               }}
               titleStyle={{
-                color: 'white'
+                color: 'white', 
               }}
               title={this.state.selectedEvent && this.state.selectedEvent.photoFileName}
               onPress={this.selectPhoto}
@@ -220,10 +220,10 @@ class updateEvents extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white'
+                  color: 'white',position:'absolute' , left:30
                 },
                 dateText: {
-                  color: 'white'
+                  color: 'white',position:'absolute' , left:30
                 }
               }}
               onDateChange={(dateF) => { this.handleChangedateFrom(dateF) }} />
@@ -256,10 +256,10 @@ class updateEvents extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white'
+                  color: 'white',position:'absolute' , left:30
                 },
                 dateText: {
-                  color: 'white'
+                  color: 'white',position:'absolute' , left:30
                 }
               }}
               onDateChange={(dateT) => { this.handleChangeDateTo(dateT)}}
@@ -326,11 +326,10 @@ const styles = StyleSheet.create({
   },
   textareaContainer: {
     height: 180,
-    padding: 5,
     backgroundColor: '#072152',
     borderColor: 'gray',
     borderRadius: 20,
-    paddingLeft: 10,
+    paddingLeft: 25,
     paddingRight: 10,
     width: 300,
     alignSelf: 'center'
@@ -340,7 +339,6 @@ const styles = StyleSheet.create({
     height: 170,
     fontSize: 14,
     color: 'white',
-    paddingLeft: 10,
     paddingRight: 10
   },
 

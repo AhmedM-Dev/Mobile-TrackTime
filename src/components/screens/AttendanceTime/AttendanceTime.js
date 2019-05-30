@@ -22,7 +22,7 @@ import { getAttendances } from './actions';
 
 import timeToAngle from '../../../utils/timeToAngle';
 
-import clock from '../../../assets/img/clock.png';
+import clock from '../../../assets/img/clockA.png';
 import clockB from '../../../assets/img/clockB.png';
 
 
@@ -56,7 +56,7 @@ class AttendanceTime extends React.Component {
     } else
 
       return (
-        <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
+        <Container style={{ backgroundColor: this.props.theme.backgroundColor , }}>
 
           <AppHeader title="Attendances" navigation={this.props.navigation} />
 
@@ -155,18 +155,11 @@ class AttendanceTime extends React.Component {
 
           <Content style={{ padding: 10 }}>
             {
-              this.props.attendancesList.length > 0 &&
-              <FlatList
-                // ItemSeparatorComponent={Platform.OS !== 'android' && ({highlighted}) => (
-                //   <View style={[style.separator, highlighted && {marginLeft: 0}]} />
-                // )}
-                onScroll={this.handleLazyLoading}
-                scrollEventThrottle={2}
-                data={this.props.attendancesList}
-                renderItem={({ item }) => (
+              this.props.attendancesList.map((item, i) => {
+                return (
                   <Card style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground, borderColor: this.props.theme.cardBackground }}>
                     <View style={{ flex: 5, justifyContent: 'space-between' }}>
-                      <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${new Date(item.date).getDate()}-${new Date(item.date).getMonth() + 1}-${new Date(item.date).getFullYear()}`}</Text>
+                    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{`${new Date(item.date).getDate()}-${new Date(item.date).getMonth() + 1}-${new Date(item.date).getFullYear()}`}</Text>
                       {
                         map(item.attendances, (time, i) => <Text key={i} style={{ color: i === 0 && timeToAngle(split(item.attendances[0], ':')) > -15 ? '#EC8181' : this.props.theme.fontColor, fontSize: 18 }}>*{time}</Text>)
                       }
@@ -176,8 +169,8 @@ class AttendanceTime extends React.Component {
                       <AttendanceClock attendances={item.attendances} />
                     </View>
                   </Card>
-                )}
-              />
+                )
+              })
             }
           </Content>
         </Container>

@@ -37,15 +37,15 @@ const styles = StyleSheet.create({
   },
 
   inputs: {
-    marginLeft: 16,
     flex: 1,
-    color: 'white'
+    color: 'white',
+    paddingLeft:-15
   },
 
   inputIcon: {
     width: 20,
     height: 20,
-    marginLeft: 15,
+    marginLeft: 10,
     justifyContent: 'center'
   }
 });

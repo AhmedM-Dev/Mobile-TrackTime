@@ -156,10 +156,10 @@ class Add extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white', position: 'absolute', left: 55
+                  color: 'white', position: 'absolute', left: 35
                 },
                 dateText: {
-                  color: 'white', position: 'absolute', left: 55
+                  color: 'white', position: 'absolute', left: 35
                 }
               }}
               onDateChange= { this.handleDateFromChange } />
@@ -192,10 +192,10 @@ class Add extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white', position: 'absolute', left: 55
+                  color: 'white', position: 'absolute', left: 35
                 },
                 dateText: {
-                  color: 'white', position: 'absolute', left: 55
+                  color: 'white', position: 'absolute', left: 35
                 }
               }}
               onDateChange= { this.handleDateToChange } />

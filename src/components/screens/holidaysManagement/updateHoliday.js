@@ -34,19 +34,11 @@ export default class addEvent extends Component {
               left: 20
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
-                 
-                    
-
                     {/* <View style={{marginBottom:80, marginTop:100}}>
                     <StyledInput  text={'Name'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
                     <StyledInput  text={'Days'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
                     <StyledInput  text={'Date'} textColor={'white'} keyboardType="email-address" onChange={this.handleEmailChange} />
                     </View> */}
-
-
-
-
-
                     <ActionButton
             buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
@@ -54,9 +46,7 @@ export default class addEvent extends Component {
             degrees={180}
             size={40}
             radius={50}
-            outRangeScale={0.5}
-          >
-
+            outRangeScale={0.5}>
                         <ActionButton.Item
                             buttonColor='#C9CF57'
                             title="Reset"

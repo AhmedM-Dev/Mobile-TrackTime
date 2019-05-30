@@ -146,10 +146,12 @@ class AddEvent extends Component {
                 borderWidth: 1,
                 width: 300,
                 alignSelf: 'center',
-                marginBottom: 5
+                marginBottom: 5,
+                
               }}
               titleStyle={{
-                color: 'white'
+                color: 'white',
+                
               }}
               title={this.state.photoFileName || "Poster"}
               onPress={this.selectPhoto}
@@ -168,10 +170,12 @@ class AddEvent extends Component {
                 borderWidth: 1,
                 width: 300,
                 alignSelf: 'center',
-                marginBottom: 5
+                marginBottom: 5,
+                
               }}
               titleStyle={{
-                color: 'white'
+                color: 'white',  
+
               }}
               title={this.state.logoName || "logo"}
               onPress={this.selectLogo}
@@ -220,10 +224,10 @@ class AddEvent extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white'
+                  color: 'white', position:'absolute' , left:30
                 },
                 dateText: {
-                  color: 'white'
+                  color: 'white', position:'absolute' , left:30
                 }
               }}
               onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
@@ -256,10 +260,10 @@ class AddEvent extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white'
+                  color: 'white', position:'absolute' , left:30
                 },
                 dateText: {
-                  color: 'white'
+                  color: 'white', position:'absolute' , left:30
                 }
               }}
               onDateChange={(dateT) => { this.handleDateChange("dateTo", dateT) }}
@@ -316,18 +320,13 @@ const styles = StyleSheet.create({
 
   },
 
-  instructions2: {
-    color: 'white',
-    marginBottom: 15,
-    fontSize: 16
-  },
+
   textareaContainer: {
     height: 180,
-    padding: 5,
     backgroundColor: '#072152',
     borderColor: 'gray',
     borderRadius: 20,
-    paddingLeft: 10,
+    paddingLeft:25,
     paddingRight: 10, width: 300, alignSelf: 'center'
   },
   textarea: {
@@ -335,7 +334,6 @@ const styles = StyleSheet.create({
     height: 170,
     fontSize: 14,
     color: 'white',
-    paddingLeft: 10,
     paddingRight: 10
   },
 
