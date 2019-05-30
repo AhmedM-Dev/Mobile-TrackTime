@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, Text } from 'native-base';
 import { ProgressCircle } from 'react-native-svg-charts';
 import { split, parseInt } from 'lodash';
 
@@ -34,6 +35,11 @@ const AttendanceClock = props => {
           progressColor={'#EC8181'}
         />
       }
+      <View style={{ width: 200, height: 200, position: 'absolute', justifyContent: 'center', alignItems: 'center', top: -3, right: -3 }}>
+        <Text>{} of delay</Text>
+        <Text>{} worked</Text>
+        <Text>{} of pause</Text>
+      </View>
     </>
   )
 }

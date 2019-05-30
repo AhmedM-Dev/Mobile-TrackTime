@@ -17,6 +17,12 @@ const notificationsReducer = (state = [], action) => {
         ]
       };
 
+    case types.ACCEPT_REQUEST:
+      return state;
+
+    case types.REJECT_REQUEST:
+      return state;
+
     default:
       return state;
   }

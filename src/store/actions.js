@@ -1,6 +1,7 @@
-import types from './types';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Alert } from 'react-native';
 
+import types from './types';
 import { authenticate } from '../services/services';
 import HttpClient from '../services/HttpClient';
 
@@ -73,6 +74,16 @@ export const createLeaveRequest = payload => dispatch => {
         type: types.LEAVE_REQUEST_SUCCESS,
         payload: response.data
       });
+
+      Alert.alert(
+        'Info',
+        'Your request has been successfully created.',
+        [
+          { text: 'OK', onPress: () => this.setState(initialState) },
+        ],
+        { cancelable: false },
+      );
+
     })
     .catch(error => {
       dispatch({
