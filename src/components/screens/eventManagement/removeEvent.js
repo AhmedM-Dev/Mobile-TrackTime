@@ -61,10 +61,10 @@ class removeEvent extends Component {
 
 
           <View style={{
-            backgroundColor: '#AA7979',
+            backgroundColor: '#9C9C9C',
             marginBottom: 80,
             flexDirection: 'row',
-            borderColor: '#CB9090',
+            borderColor: '#9C9C9C',
             borderWidth: 1,
             borderRadius: 20,
             alignSelf: 'center',
@@ -87,7 +87,7 @@ class removeEvent extends Component {
 
 
           <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}

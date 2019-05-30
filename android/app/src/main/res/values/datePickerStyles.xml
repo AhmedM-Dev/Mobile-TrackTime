@@ -7,7 +7,7 @@
 <item name="android:timePickerDialogTheme">@style/Dialog.Theme</item>
 </style>
 <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
-<item name="colorAccent">#000</item>
+<item name="colorAccent">#082E76</item>
 <item name="android:textColorPrimary">#000000</item>
 </style>
 </resources>
