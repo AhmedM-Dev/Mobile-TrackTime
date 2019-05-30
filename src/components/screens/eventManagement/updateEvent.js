@@ -144,10 +144,10 @@ class updateEvents extends Component {
             onPress={() => this.props.navigation.navigate('Administration')} />
 
           <View style={{
-            backgroundColor: '#AA7979',
+            backgroundColor: '#9C9C9C',
             marginBottom: 20,
             flexDirection: 'row',
-            borderColor: '#CB9090',
+            borderColor: '#9C9C9C',
             borderWidth: 1,
             borderRadius: 20,
             alignSelf: 'center',
@@ -198,9 +198,9 @@ class updateEvents extends Component {
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
               date={this.state.selectedEvent && this.state.selectedEvent.dateFrom}
+              placeholder={this.state.selectedEvent && this.state.selectedEvent.dateFrom}
               mode="datetime"
               iconSource={null}
-              placeholder={this.state.selectedEvent && this.state.selectedEvent.dateFrom}
 
               format="DD-MM-YYYY, HH:mm"
               minDate="01-01-2019"
@@ -272,7 +272,7 @@ class updateEvents extends Component {
 
 
           <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}

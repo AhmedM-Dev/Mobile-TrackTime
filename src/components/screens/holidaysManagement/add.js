@@ -51,17 +51,18 @@ export default class addEvent extends Component {
         return (
             <View style={styles.container} >
                 <Content>
-                    <Icon
-                        name="md-arrow-dropleft"
-                        style={{
-                            color: 'black',
-                            margin: 15,
-                            top: 10
-                        }}
-                        onPress={() => this.props.navigation.navigate('Administration')} />
+                <Icon
+            name="md-arrow-round-back"
+            style={{
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
+            }}
+            onPress={() => this.props.navigation.navigate('Administration')} />
 
-                    <View >
-                        <AdminPickers height={55} width={300} paddingLeft={20} marginTop={40}>
+                    {/* <View >
+                        <AdminPickers height={45} width={300} paddingLeft={20} marginTop={40}>
                             <Picker
                                 selectedValue={this.state.holidayCAtegory|| ''}
                                 style={{
@@ -81,22 +82,21 @@ export default class addEvent extends Component {
                         <StyledInput text={'Name'} textColor={'white'} keyboardType="email-address" onChange={this.handleTitle} />
                         <StyledInput text={'Days'} textColor={'white'} keyboardType="email-address" onChange={this.handleDays} />
                         <StyledInput text={'Date'} textColor={'white'} keyboardType="email-address" onChange={this.handleDate} />
-                    </View>
+                    </View> */}
 
 
 
 
 
                     <ActionButton
-                        buttonColor="black"
-                        btnOutRange="#C8593C"
-                        icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
-                        degrees={180}
-                        size={40}
-                        radius={50}
-
-                    // outRangeScale={0.5}       
-                    >
+            buttonColor="#9C9C9C"
+            btnOutRange="#C8593C"
+            icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
+            degrees={180}
+            size={40}
+            radius={50}
+            outRangeScale={0.5}
+          >
 
                         <ActionButton.Item
                             buttonColor='#C9CF57'
@@ -125,9 +125,7 @@ export default class addEvent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#E7E7E7',
-        justifyContent: 'center'
+        backgroundColor: '#D1D0D0',
     },
 
 

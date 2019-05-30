@@ -109,7 +109,7 @@ class addGroups extends Component {
 
 
                     <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}

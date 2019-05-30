@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
-
 import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
@@ -9,9 +8,6 @@ import ActionButton from 'react-native-circular-action-menu';
 import StyledInput from '../../ui/Input/lightInput';
 import EmailIcon from '../../../assets/img/Email.png';
 import PasswordIcon from '../../../assets/img/password.png';
-import axios from "axios";
-import { API_URL } from "../../../../config";
-import Background from '../../../assets/img/backgroundM.jpg';
 import groupIcon from '../../../assets/img/group.png';
 import jobLogo from '../../../assets/img/jobLogo.png';
 import logoName from '../../../assets/img/name.png';
@@ -153,10 +149,10 @@ class UpdateEmployee extends Component {
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={{
-            backgroundColor: '#AA7979',
+            backgroundColor: '#9C9C9C',
             marginBottom: 20,
             flexDirection: 'row',
-            borderColor: '#CB9090',
+            borderColor: '#9C9C9C',
             borderWidth: 1,
             borderRadius: 20,
             alignSelf: 'center',
@@ -207,7 +203,7 @@ class UpdateEmployee extends Component {
           </View>
 
           <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}

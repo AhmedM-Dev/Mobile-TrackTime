@@ -141,7 +141,7 @@ class addEmployee extends Component {
             <StyledInput image={PasswordIcon} text={'Password'} textColor={'white'} secureTextEntry={true} onChange={this.handlePassChange} name="password" />
           </View>
           <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}

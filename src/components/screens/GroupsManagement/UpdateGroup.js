@@ -12,7 +12,7 @@ import ImagePicker from 'react-native-image-picker';
 import StyledInput from '../../ui/Input/addEventInput';
 import { connect } from 'react-redux';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
-import { addGroup, getUsers , getGroups } from './actions';
+import { addGroup, getUsers, getGroups } from './actions';
 
 import groupIcon from '../../../assets/img/group.png';
 
@@ -21,44 +21,46 @@ class UpdateGroup extends Component {
     constructor() {
         super();
         this.state = {
-            selectedGroup:'',
-            name: '',
-            shortName:'',
+            selectedGroup: '',
             poleLead: ''
         }
     }
 
-    
+
 
     handleSelectGroup = (group) => {
         this.setState({
-          selectedGroup: group
+            selectedGroup: group,
         });
-      }
+    }
 
-      handleNameChange = (text) => {
+    handleNameChange = (text) => {
         this.setState({
-          selectedGroup: {
-            ...this.state.selectedGroup,
-            name: text
-          }
+            selectedGroup: {
+                ...this.state.selectedGroup,
+                name: text
+            }
         });
-      }
+    }
 
-      handleShortNameChange = (text) => {
+    handleShortNameChange = (text) => {
         this.setState({
-          selectedGroup: {
-            ...this.state.selectedGroup,
-            shortName: text
-          }
+            selectedGroup: {
+                ...this.state.selectedGroup,
+                shortName: text
+            }
         });
-      }
+    }
 
 
     handlePoleLead = (poleLead) => {
         this.setState({
             ...this.state,
-            poleLead: poleLead
+            poleLead: poleLead,
+            selectedGroup: {
+                ...this.state.selectedGroup,
+                poleLead: poleLead
+            }
         });
     }
     handleAddGroup = () => {
@@ -79,38 +81,38 @@ class UpdateGroup extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getGroups();
     }
-   
+
 
     render() {
         return (
             <View style={styles.container} >
                 <Content>
-                <Icon
-            name="md-arrow-round-back"
-            style={{
-              color: '#DA7373',
-              margin: 30,
-              fontSize: 18,
-              left: 20
-            }}
-            onPress={() => this.props.navigation.navigate('Administration')} />
+                    <Icon
+                        name="md-arrow-round-back"
+                        style={{
+                            color: '#DA7373',
+                            margin: 30,
+                            fontSize: 18,
+                            left: 20
+                        }}
+                        onPress={() => this.props.navigation.navigate('Administration')} />
 
 
-<View style={{
-            backgroundColor: '#AA7979',
-            marginBottom: 20,
-            flexDirection: 'row',
-            borderColor: '#CB9090',
-            borderWidth: 1,
-            borderRadius: 20,
-            alignSelf: 'center',
-            height: 45, width: 300,
+                    <View style={{
+                        backgroundColor: '#9C9C9C',
+                        marginBottom: 20,
+                        flexDirection: 'row',
+                        borderColor: '#9C9C9C',
+                        borderWidth: 1,
+                        borderRadius: 20,
+                        alignSelf: 'center',
+                        height: 45, width: 300,
 
-              paddingLeft:10
-          }}>
+                        paddingLeft: 10
+                    }}>
                         <Picker
                             selectedValue={this.state.selectedGroup || ''}
                             style={{
@@ -128,13 +130,13 @@ class UpdateGroup extends Component {
 
 
                     <View style={{ marginBottom: 80, marginTop: 100 }}>
-                    <StyledInput 
-                        value={this.state.selectedGroup && this.state.selectedGroup.name}
-                        text={'Group name'} textColor={'white'} onChange={this.handleNameChange} />
-                        
-                        <StyledInput 
-                        value={this.state.selectedGroup && this.state.selectedGroup.shortName}
-                        text={'Group name'} textColor={'white'} onChange={this.handleShortNameChange} />
+                        <StyledInput
+                            value={this.state.selectedGroup && this.state.selectedGroup.name}
+                            text={'Group name'} textColor={'white'} onChange={this.handleNameChange} />
+
+                        <StyledInput
+                            value={this.state.selectedGroup && this.state.selectedGroup.shortName}
+                            text={'Group name'} textColor={'white'} onChange={this.handleShortNameChange} />
 
                         <AdminPickers height={45} width={300} paddingLeft={20}>
 
@@ -162,14 +164,14 @@ class UpdateGroup extends Component {
 
 
                     <ActionButton
-            buttonColor="#072152"
-            btnOutRange="#C8593C"
-            icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
-            degrees={180}
-            size={40}
-            radius={50}
-            outRangeScale={0.5}
-          >
+                        buttonColor="#9C9C9C"
+                        btnOutRange="#C8593C"
+                        icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
+                        degrees={180}
+                        size={40}
+                        radius={50}
+                        outRangeScale={0.5}
+                    >
 
 
                         <ActionButton.Item
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#D1D0D0',
-      },
+    },
 
 
     actionButtonIcon: {

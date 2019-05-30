@@ -64,10 +64,10 @@ class removeGroup extends Component {
                     <View style={{marginBottom:80, marginTop:100}}>
 
                     <View style={{
-            backgroundColor: '#AA7979',
+            backgroundColor: '#9C9C9C',
             marginBottom: 20,
             flexDirection: 'row',
-            borderColor: '#CB9090',
+            borderColor: '#9C9C9C',
             borderWidth: 1,
             borderRadius: 20,
             alignSelf: 'center',
@@ -100,7 +100,7 @@ class removeGroup extends Component {
 
 
                     <ActionButton
-            buttonColor="#072152"
+            buttonColor="#9C9C9C"
             btnOutRange="#C8593C"
             icon={<Icon name='md-arrow-dropup' style={styles.actionButtonIcon} />}
             degrees={180}
