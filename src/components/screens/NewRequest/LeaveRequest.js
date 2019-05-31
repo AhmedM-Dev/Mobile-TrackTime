@@ -10,6 +10,7 @@ import {
   View,
   Picker,
   Icon,
+  Radio
 } from 'native-base';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
@@ -23,9 +24,11 @@ import styles from './styles';
 
 const initialState = {
   dateFrom: null,
+  sessionFrom: 1,
   dateTo: null,
-  leaveCategory: "Paid leave",
-  requestCategory: 'LEAVE',
+  sessionTo: 2,
+  leaveCategory: 'Authorization',
+  requestCategory: 'AUTHORIZATION',
   motif: ''
 }
 
@@ -38,14 +41,35 @@ class LeaveRequest extends React.Component {
   }
 
   handleCreateRequest = () => {
-    this.props.createLeaveRequest(this.state);
+    if (this.state.requestCategory === 'LEAVE') {
+      const { timeFrom, timeTo, ...request } = this.state;
+      this.props.createLeaveRequest(request);
+    } else if (this.state.requestCategory === 'AUTHORIZATION') {
+      const { sessionFrom, sessionTo, dateFrom, dateTo, ...request } = this.state;
+
+      console.log('fff', request);
+
+      this.props.createLeaveRequest({
+        ...request,
+        date: dateFrom
+      });
+    }
   }
 
   handleCategoryChange = (category) => {
-    this.setState({
-      ...this.state,
-      leaveCategory: category
-    });
+    if (category === 'Authorization') {
+      this.setState({
+        ...this.state,
+        leaveCategory: category,
+        requestCategory: 'AUTHORIZATION'
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        leaveCategory: category,
+        requestCategory: 'LEAVE'
+      });
+    }
   }
 
   handleDateChange = (type, value) => {
@@ -53,7 +77,9 @@ class LeaveRequest extends React.Component {
       ...this.state,
       dateFrom: type === "startdate" ? value : this.state.dateFrom,
       dateTo: type === "enddate" ? value : this.state.dateTo,
-    })
+      timeFrom: type === "timeFrom" ? value : this.state.timeFrom,
+      timeTo: type === "timeTo" ? value : this.state.timeTo
+    });
   }
 
   handleMotifChange = (text) => {
@@ -61,6 +87,10 @@ class LeaveRequest extends React.Component {
       ...this.state,
       motif: text
     });
+  }
+
+  handleRadioChange = (value) => {
+    console.log('ffff', value);
   }
 
   setModalVisible(visible) {
@@ -98,6 +128,7 @@ class LeaveRequest extends React.Component {
                   this.handleCategoryChange(itemValue)
                 }
               >
+                <Picker.Item label="Authorization" value="Authorization" />
                 <Picker.Item label="Paid leave" value="Paid leave" />
                 <Picker.Item label="Additional days" value="Additional days" />
                 <Picker.Item label="Unpaid leave" value="Unpaid leave" />
@@ -122,11 +153,11 @@ class LeaveRequest extends React.Component {
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, marginTop: 20 }}
               date={this.state.dateFrom}
-              mode="datetime"
+              mode="date"
               iconSource={null}
-              placeholder="From ... "
+              placeholder={this.state.requestCategory === 'AUTHORIZATION' ? 'Date' : 'From...'}
 
-              format="DD-MM-YYYY, HH:mm"
+              format="DD-MM-YYYY"
               minDate={moment().format('DD-MM-YYYY')}
               // maxDate="31-12-2019"
               customStyles={{
@@ -155,15 +186,22 @@ class LeaveRequest extends React.Component {
               }}
               onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
           </View>
-          <View>
+
+          {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: 'red', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center' }}>
+            <Text>Morning</Text><Radio onPress={() => this.setState({ sessionFrom: 1 })} selected={this.state.sessionFrom === 1} />
+            <Text>Afternoon</Text><Radio onPress={() => this.setState({ sessionFrom: 2 })} selected={this.state.sessionFrom === 2} />
+          </View>
+          }
+
+          {this.state.requestCategory !== 'AUTHORIZATION' && <View>
 
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
               date={this.state.dateTo}
-              mode="datetime"
+              mode="date"
               iconSource={null}
               placeholder={"To ... "}
-              format="DD-MM-YYYY, HH:mm"
+              format="DD-MM-YYYY"
               minDate={moment().format('DD-MM-YYYY')}
               // maxDate="31-12-2019"
               confirmBtnText="Confirm"
@@ -194,7 +232,93 @@ class LeaveRequest extends React.Component {
               }}
               onDateChange={(date) => { this.handleDateChange("enddate", date) }}
             />
-          </View>
+          </View>}
+
+          {/* AUTHORIZATION MODE */}
+          {this.state.requestCategory === 'AUTHORIZATION' &&
+            <>
+              <View>
+                <DatePicker
+                  style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                  date={this.state.timeFrom}
+                  mode="time"
+                  iconSource={null}
+                  placeholder={"From..."}
+                  format="H:mm"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    dateIcon: {
+                      position: 'absolute',
+                      left: 0,
+                      top: 4,
+                      marginLeft: 0,
+                    },
+                    dateInput: {
+                      marginTop: 10,
+                      backgroundColor: this.props.theme.pickerBackground,
+                      borderColor: this.props.theme.pickerBackground,
+                      borderWidth: 1,
+                      borderRadius: 20
+                    },
+                    placeholderText: {
+                      color: this.props.theme.fontColor,
+                      left: -110
+                    },
+                    dateText: {
+                      color: this.props.theme.fontColor,
+                      left: -67
+
+                    }
+                  }}
+                  onDateChange={(date) => { this.handleDateChange("timeFrom", date) }}
+                />
+              </View>
+
+              <View>
+                <DatePicker
+                  style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                  date={this.state.timeTo}
+                  mode="time"
+                  iconSource={null}
+                  placeholder={"To..."}
+                  format="H:mm"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    dateIcon: {
+                      position: 'absolute',
+                      left: 0,
+                      top: 4,
+                      marginLeft: 0,
+                    },
+                    dateInput: {
+                      marginTop: 10,
+                      backgroundColor: this.props.theme.pickerBackground,
+                      borderColor: this.props.theme.pickerBackground,
+                      borderWidth: 1,
+                      borderRadius: 20
+                    },
+                    placeholderText: {
+                      color: this.props.theme.fontColor,
+                      left: -110
+                    },
+                    dateText: {
+                      color: this.props.theme.fontColor,
+                      left: -67
+
+                    }
+                  }}
+                  onDateChange={(date) => { this.handleDateChange("timeTo", date) }}
+                />
+              </View>
+
+            </>}
+
+          {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: 'red', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center' }}>
+            <Text>Morning</Text><Radio onPress={() => this.setState({ sessionTo: 1 })} selected={this.state.sessionTo === 1} />
+            <Text>Afternoon</Text><Radio onPress={() => this.setState({ sessionTo: 2 })} selected={this.state.sessionTo === 2} />
+          </View>}
 
           <View style={{ marginBottom: 50 }}>
             <Textarea

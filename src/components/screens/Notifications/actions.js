@@ -25,24 +25,26 @@ export const getNotifications = () => dispatch => {
 }
 
 export const vueNotification = payload => dispatch => {
-  http.put(`${domain}/${payload.notifId}`)
-    .then(response => {
-      dispatch({
-        type: types.VUE_NOTIFICATION,
-        payload: response.data.notification
+  if (payload) {
+    http.put(`${domain}/${payload.notifId}`)
+      .then(response => {
+        dispatch({
+          type: types.VUE_NOTIFICATION,
+          payload: response.data.notification
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: globals.ADD_ERROR,
+          error: error
+        });
       });
-    })
-    .catch(error => {
-      dispatch({
-        type: globals.ADD_ERROR,
-        error: error
-      });
-    });
+  }
 }
 
 
 export const acceptRequest = payload => dispatch => {
-  http.put(`requests/${payload.requestId}`, { note: payload.note, accept: true })
+  http.put(`requests/${payload.request.requestId}`, { note: payload.note, accept: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.ACCEPT_REQUEST
@@ -61,7 +63,7 @@ export const acceptRequest = payload => dispatch => {
 }
 
 export const rejectRequest = payload => dispatch => {
-  http.put(`requests/${payload.requestId}`, { note: payload.note, reject: true })
+  http.put(`requests/${payload.request.requestId}`, { note: payload.note, reject: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.REJECT_REQUEST

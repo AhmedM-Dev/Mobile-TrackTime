@@ -79,7 +79,7 @@ export const createLeaveRequest = payload => dispatch => {
         'Info',
         'Your request has been successfully created.',
         [
-          { text: 'OK', onPress: () => this.setState(initialState) },
+          { text: 'OK' },
         ],
         { cancelable: false },
       );

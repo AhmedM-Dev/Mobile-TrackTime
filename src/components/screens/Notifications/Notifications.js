@@ -4,6 +4,7 @@ import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right,
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Textarea from 'react-native-textarea';
+import { orderBy } from 'lodash';
 
 import AppHeader from '../../ui/AppHeader';
 
@@ -21,7 +22,8 @@ import styles from './styles';
 const initialState = {
   goTo: {
     to: null,
-    data: null
+    data: null,
+    category: null
   },
   note: ''
 };
@@ -32,10 +34,13 @@ class Notifications extends Component {
 
   handleGoTo = (goTo) => {
     if (goTo.category === 'EVENT') {
+      this.props.vueNotification(this.state.goTo.to);
       this.props.navigation.navigate('Events', { eventId: 'eventtttt' });
     } else {
       this.setState({
         goTo
+      }, () => {
+        this.props.vueNotification(this.state.goTo.to);
       });
     }
   }
@@ -46,8 +51,10 @@ class Notifications extends Component {
       case 'TRAVEL': return travelIcon;
       case 'INFO': return infosIcon;
       case 'LEAVE': return leaveIcon;
+      case 'AUTHORIZATION': return leaveIcon;
       case 'ATTENDANCE': return clockIcon;
-      case 'DELAY' || 'ABSENCE': return delaysIcon;
+      case 'DELAY': return delaysIcon;
+      case 'ABSENCE': return delaysIcon;
     }
   }
 
@@ -58,10 +65,11 @@ class Notifications extends Component {
   }
 
   handleAccept = () => {
-    if (this.state.goTo.category === 'LEAVE') {
-      const res = this.props.acceptRequest({
-        requestId: this.state.goTo.to && this.state.goTo.to.request && this.state.goTo.to.request.requestId,
-        note: this.state.note
+    if (this.state.goTo.category === 'LEAVE' || this.state.goTo.category === 'AUTHORIZATION') {
+      this.props.acceptRequest({
+        request: this.state.goTo.to && this.state.goTo.to.request,
+        note: this.state.note,
+        notifId: this.state.goTo.to.notifId
       });
 
       this.setState(initialState);
@@ -69,10 +77,11 @@ class Notifications extends Component {
   }
 
   handleReject = () => {
-    if (this.state.goTo.category === 'LEAVE') {
+    if (this.state.goTo.category === 'LEAVE' || this.state.goTo.category === 'AUTHORIZATION') {
       this.props.rejectRequest({
-        requestId: this.state.goTo.to && this.state.goTo.to.request && this.state.goTo.to.request.requestId,
-        note: this.state.note
+        request: this.state.goTo.to && this.state.goTo.to.request,
+        note: this.state.note,
+        notifId: this.state.goTo.to.notifId
       });
 
       this.setState(initialState);
@@ -82,12 +91,10 @@ class Notifications extends Component {
   render() {
     const { goTo } = this.state;
 
-    if (goTo.to && (goTo.category === 'TRAVEL' || goTo.category === 'LEAVE' || goTo.category === 'ATTENDANCE')) {
+    if (goTo.to && (goTo.category === 'TRAVEL' || goTo.category === 'LEAVE' || goTo.category === 'ATTENDANCE' || goTo.category === 'AUTHORIZATION')) {
       return (
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
           <Content>
-
-
             <Icon
               name="md-arrow-dropleft"
               onPress={() => this.handleGoTo(initialState)}
@@ -99,23 +106,25 @@ class Notifications extends Component {
                 <View style={{ backgroundColor: this.props.theme.cardBackground, width: 340, width: 340, alignSelf: 'center', borderRadius: 20, padding: 20 }}>
                   <Text style={{ color: this.props.theme.fontColor }}>Title : {goTo.to.title}</Text>
                   <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
-                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >Category : {goTo.to.category}</Text>
-                  <Text style={{ color: this.props.theme.fontColor }} >From : </Text>
-                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To : </Text>
+                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >Category : {goTo.to.request.leaveCategory}</Text>
+                  <Text style={{ color: this.props.theme.fontColor }} >From : {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
+                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To : {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
                 </View>
+              </>
+            }
 
-                {goTo.to.request.status === "pending" && <View style={{ marginTop: 10 }}>
-                  <Textarea
-                    containerStyle={{ ...styles.textareaContainer, backgroundColor: this.props.theme.pickerBackground }}
-                    style={{ ...styles.textarea, color: this.props.theme.fontColor }}
-                    onChangeText={(text) => this.handleNoteChange(text)}
-                    defaultValue={this.state.note}
-                    placeholder={'Note'}
-                    placeholderTextColor={this.props.theme.fontColor}
-                    underlineColorAndroid={'transparent'}
-                  />
-                </View>}
+            {
+              goTo.category === 'AUTHORIZATION' &&
+              <>
+                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 340, width: 340, alignSelf: 'center', borderRadius: 20, padding: 20 }}>
+                  <Text style={{ color: this.props.theme.fontColor }}>Title : {goTo.to.title}</Text>
+                  <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
+                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >Category : {goTo.to.request.leaveCategory}</Text>
+                  <Text style={{ color: this.props.theme.fontColor }} >From : {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
+                  <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To : {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
+                  <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
+                </View>
               </>
             }
 
@@ -136,12 +145,43 @@ class Notifications extends Component {
             </View>}
 
             {
+              goTo.to.request && goTo.to.request.status === "pending" &&
+              <View style={{ marginTop: 10 }}>
+                <Textarea
+                  containerStyle={{ ...styles.textareaContainer, backgroundColor: this.props.theme.pickerBackground }}
+                  style={{ ...styles.textarea, color: this.props.theme.fontColor }}
+                  onChangeText={(text) => this.handleNoteChange(text)}
+                  defaultValue={this.state.note}
+                  placeholder={'Note'}
+                  placeholderTextColor={this.props.theme.fontColor}
+                  underlineColorAndroid={'transparent'}
+                />
+              </View>
+            }
+
+            {
               goTo.to && goTo.to.request && goTo.to.request.status === 'pending' &&
               <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 20 }}>
                 <Button onPress={this.handleAccept} style={{ backgroundColor: 'green', marginRight: 20 }} ><Text>Accept</Text></Button>
                 <Button onPress={this.handleReject} style={{ backgroundColor: 'red' }} ><Text>Reject</Text></Button>
               </View>
             }
+          </Content>
+        </Container>
+      )
+    } else if (goTo.to && (goTo.category === 'INFO' || goTo.category === 'DELAY' || goTo.category === 'ABSENCE')) {
+      return (
+        <Container>
+          <Content>
+            <Icon
+              name="md-arrow-dropleft"
+              onPress={() => this.handleGoTo(initialState)}
+              style={{ color: this.props.theme.fontColor, margin: 20 }}> </Icon>
+
+            <Text>Title:</Text>
+            <Text>{goTo.to.title}</Text>
+            <Text>Content:</Text>
+            <Text>{goTo.to.content}</Text>
           </Content>
         </Container>
       )
@@ -154,7 +194,7 @@ class Notifications extends Component {
               {
                 this.props.notifications.length > 0 && this.props.notifications.map((notif, id) => {
                   return (
-                    <ListItem thumbnail key={id}>
+                    <ListItem style={notif && notif.vues && notif.vues.includes(this.props.user.userId) ? { backgroundColor: '#BDBDBD' } : null} thumbnail key={id}>
                       <Left>
                         <Thumbnail square source={this.getLogo(notif.category)} />
                       </Left>
@@ -184,9 +224,10 @@ Notifications.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    notifications: state.notificationsReducer.notifications,
+    notifications: orderBy(state.notificationsReducer.notifications, 'createdAtTimestamp', 'desc'),
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
+    user: state.authReducer.user
   }
 }
 
