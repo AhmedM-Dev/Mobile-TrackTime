@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     height: 180,
     padding: 5,
     backgroundColor: 'black',
-    borderColor: 'gray',
     borderRadius: 20,
     paddingLeft: 10,
     paddingRight: 10,
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   ButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: '#2CA96E',
+    color: '#4470B2',
   },
   
   textarea: {

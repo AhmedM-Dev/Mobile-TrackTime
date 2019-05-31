@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
-
+ 
 import types from './types';
 import { authenticate } from '../services/services';
 import HttpClient from '../services/HttpClient';
@@ -76,7 +76,7 @@ export const createLeaveRequest = payload => dispatch => {
       });
 
       Alert.alert(
-        'Info',
+        ' ',
         'Your request has been successfully created.',
         [
           { text: 'OK' },

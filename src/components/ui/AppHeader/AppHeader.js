@@ -19,6 +19,7 @@ const AppHeader = props => {
       shadowOffset: { width: 20, height: 2 },
       shadowOpacity: 0.8,
       shadowRadius: 2,
+      marginBottom:2
     },
   
     starStyle: {

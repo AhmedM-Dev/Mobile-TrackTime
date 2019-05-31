@@ -82,7 +82,7 @@ export default class AppIntro extends React.Component {
       }
 
       activeDotStyle={{
-          backgroundColor:'green'
+          backgroundColor:'#4470B2'
       }}
         slides={slides}
         renderDoneButton={this._renderDoneButton}

@@ -17,12 +17,12 @@ export default createMaterialTopTabNavigator({
   tabBarOptions: {
     activeTintColor : 'white',
     inactiveTintColor:'white',
-    pressColor :'#2CA96E',
+    pressColor :'#4470B2',
     tabStyle :{
 
     },
     indicatorStyle :{
-      backgroundColor:'#2CA96E'
+      backgroundColor:'#4470B2'
     },
   
     style: {

@@ -45,7 +45,7 @@ class Leaves extends Component {
                   key={index}
                   data={rowData}
                   widthArr={state.widthArr}
-                  style={[ {height: 40, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
+                  style={[ {height: 50, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
                   textStyle={{...styles.text , color:this.props.theme.fontColor}}
                 />
               ))
@@ -96,7 +96,7 @@ class Leaves extends Component {
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: 'white' },
-    header: { height: 50, backgroundColor: '#2CA96E' ,borderTopRightRadius:20 ,borderTopLeftRadius:20 },
+    header: { height: 50, backgroundColor: '#4470B2' ,borderTopRightRadius:20 ,borderTopLeftRadius:20 },
     headerText: { textAlign: 'center', fontWeight: 'bold'  , color:'white'},
     text:{color:'black' , textAlign:'center'},
     dataWrapper: { marginTop: -1 },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   ButtonIcon: {
       fontSize: 20,
       height: 22,
-      color: '#2CA96E',
+      color: '#4470B2',
   },
   });
 

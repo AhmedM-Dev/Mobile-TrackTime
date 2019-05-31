@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   ButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: '#2CA96E',
+    color: '#4470B2',
   },
   
   textarea: {

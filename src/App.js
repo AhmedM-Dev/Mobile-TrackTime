@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, ScrollView, Image, ImageBackground, TouchableHighlight, Text, } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, createSwitchNavigator, createAppContainer, DrawerItems } from 'react-navigation';
-import { Icon,  View } from 'native-base';
+import { Icon, View } from 'native-base';
 import { Button } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import store from '../src/store';
@@ -36,6 +36,7 @@ import Notifications from './components/screens/Notifications';
 import addWorkingHours from './components/screens/WorkingHoursManagement/Add'
 import WorkingHoursManagement from './components/screens/WorkingHoursManagement'
 import { logoutWithRedux } from './store/actions';
+import NotificationsBell from './components/ui/NotificationsBell';
 
 const AppContext = React.createContext({
   theme: {}
@@ -104,7 +105,7 @@ const CustomDrawerComponent = connect(mapStateToProps, mapDispatchToProps)((prop
     return (
       <AppContext.Provider value={{ theme: props.theme }}>
         <SafeAreaView style={{ flex: 1 }}>
-        <View style={{backgroundColor:'#020B1C' , height:120 ,flexDirection:'row' , justifyContent:'center',alignItems:'center'}}>
+          <View style={{ backgroundColor: '#020B1C', height: 120, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <TouchableHighlight onPress={() => props.navigation.navigate('Settings')}>
               <Image source={{ uri: props.avatar && props.avatar.photo }} style={{
                 borderRadius: 100,
@@ -112,7 +113,7 @@ const CustomDrawerComponent = connect(mapStateToProps, mapDispatchToProps)((prop
                 width: 85,
                 borderWidth: 2,
                 borderColor: '#ECECEC',
-                marginRight:20
+                marginRight: 20
               }}></Image>
             </TouchableHighlight>
             <View style={{ width: 150 }}>
@@ -137,7 +138,7 @@ const CustomDrawerComponent = connect(mapStateToProps, mapDispatchToProps)((prop
               icon={
                 <Icon
                   name="md-log-out"
-                  style={{ color: logoutFontColor, marginRight: 10, fontSize: 18 , left:-81 }}
+                  style={{ color: logoutFontColor, marginRight: 10, fontSize: 18, left: -81 }}
                 />
               }
               buttonStyle={{
@@ -149,7 +150,7 @@ const CustomDrawerComponent = connect(mapStateToProps, mapDispatchToProps)((prop
               titleStyle={{
                 color: logoutFontColor,
                 top: -1,
-                left:-55
+                left: -55
               }}
               title="Logout"
               onPress={() => _signOutAsync()}
@@ -272,7 +273,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-   
+
 
     'Holidays': {
       screen: Holidays,
@@ -302,9 +303,14 @@ const AppDrawNavigator = createDrawerNavigator(
       navigationOptions: ({ navigation }) => ({
 
         drawerIcon: (
-          <AppContext.Consumer>
-            {value => <Icon name="md-notifications" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22 }} />}
-          </AppContext.Consumer>
+          <View style={{ height: 50 }}>
+            <View style={{left:200 , top:10}}>
+              <NotificationsBell />
+            </View>
+            <AppContext.Consumer>
+              {value => <Icon name="md-notifications" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22, top: -30,left:8}} />}
+            </AppContext.Consumer>
+          </View>
         ),
         // navigationOptions: ({ navigation }) => ({
         //   drawerLabel: () => null,
@@ -312,7 +318,7 @@ const AppDrawNavigator = createDrawerNavigator(
 
       })
     },
-    
+
     'Settings': {
       screen: Setting,
       navigationOptions: ({ navigation }) => ({
@@ -324,7 +330,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-    
+
 
 
     'Avatar': {
@@ -350,7 +356,7 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
-    
+
     'addWorkingHours': {
       screen: addWorkingHours,
       navigationOptions: ({ navigation }) => ({
@@ -370,28 +376,28 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
-    
+
     'removeEvent': {
-      screen:  removeEvent,
+      screen: removeEvent,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },
     'EventsManagement': {
-      screen:  EventsManagement,
+      screen: EventsManagement,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },
 
     'whm': {
-      screen:  WorkingHoursManagement,
+      screen: WorkingHoursManagement,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },
     'GroupsManagement': {
-      screen:  GroupsManagement,
+      screen: GroupsManagement,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
@@ -399,14 +405,14 @@ const AppDrawNavigator = createDrawerNavigator(
 
 
 
-    
+
     'updateEvent': {
-      screen:  updateEvent,
+      screen: updateEvent,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },
- 
+
 
     'addEvent': {
       screen: addEvent,
@@ -422,7 +428,7 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-  
+
 
     'Signup': {
       screen: Signup,

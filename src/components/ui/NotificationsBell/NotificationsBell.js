@@ -40,7 +40,7 @@ class NotificationsBell extends React.Component {
         {this.props.notifications && this.props.user && this.props.notifications.filter(notif => !notif.vues.includes(this.props.user.userId)).length > 0 && <Badge style={{ position: 'absolute', zIndex: 1, right: 0 }}>
           <Text>{this.props.notifications.filter(notif => !notif.vues.includes(this.props.user.userId)).length}</Text>
         </Badge>}
-        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor, fontSize: 32 }} />
+        <Icon active name="md-notifications" style={{ color: this.props.theme.fontColor, fontSize: 32 , }} />
       </Button>
     );
   }

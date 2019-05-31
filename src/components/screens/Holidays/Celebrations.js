@@ -36,7 +36,7 @@ class Celebrations extends Component {
                   key={index}
                   data={rowData}
                   widthArr={state.widthArr}
-                  style={[ {height: 40, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
+                  style={[ {height: 50, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
                   textStyle={{...styles.text , color:this.props.theme.fontColor}}
                 />
               ))
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   ButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: '#2CA96E',
+    color: '#4470B2',
   },
 });
 

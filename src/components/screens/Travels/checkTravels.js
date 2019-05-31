@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
 
     leftIcon: {
-        backgroundColor: '#2CA96E',
+        backgroundColor: '#4470B2',
         marginRight: -40,
         height: 140, width: 20,
         borderRadius: 100,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     ButtonIcon: {
         fontSize: 20,
         height: 22,
-        color: '#2CA96E',
+        color: '#4470B2',
         
     },
  
