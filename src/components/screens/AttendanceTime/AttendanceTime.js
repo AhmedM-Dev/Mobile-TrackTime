@@ -18,7 +18,7 @@ import { map, split } from 'lodash';
 import AppHeader from '../../ui/AppHeader';
 import AttendanceClock from '../../ui/AttendanceClock';
 
-import { getAttendances } from './actions';
+import { getAttendances, checkIn } from './actions';
 
 import timeToAngle from '../../../utils/timeToAngle';
 
@@ -153,6 +153,13 @@ class AttendanceTime extends React.Component {
             </View>
           </View>
 
+          {/* Check in button */}
+          <View style={{ paddingLeft: 10, paddingRight: 10 }}>
+            <Button onLongPress={() => this.props.checkIn()} style={{ justifyContent: 'center', width: '100%', height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }} onPress={this.handleFilterAttendances}>
+              <Text>CHECK IN</Text>
+            </Button>
+          </View>
+
           <Content style={{ padding: 10 }}>
             {
               this.props.attendancesList.map((item, i) => {
@@ -166,7 +173,7 @@ class AttendanceTime extends React.Component {
                     </View>
                     <View style={{ flex: 7 }}>
                       <Image source={this.props.theme.preset === 'light' ? clockB : clock} style={styles.clockAlign} ></Image>
-                      <AttendanceClock attendances={item.attendances} />
+                      {item.attendances.length >= 4 && item.attendances.length % 2 === 0 && <AttendanceClock attendances={item.attendances} />}
                     </View>
                   </Card>
                 )
@@ -210,8 +217,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   getAttendances(filters) { dispatch(getAttendances(filters)) },
-  getAvatar() { dispatch(getAvatar()) }
-
+  checkIn() { dispatch(checkIn()) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AttendanceTime);
