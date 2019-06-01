@@ -9,6 +9,8 @@ import {
   Picker,
   Icon
 } from 'native-base';
+import ActionButton from 'react-native-circular-action-menu';
+import style from '../NewRequest/styles';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -42,7 +44,7 @@ class History extends React.Component {
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
         <AppHeader title="History" navigation={this.props.navigation} />
 
-        <View>
+        <View style={{ marginTop: 10 }}>
 
           <CustumPicker>
             <Picker
@@ -107,10 +109,9 @@ class History extends React.Component {
             <Picker.Item label="Other" value="Other" />
           </Picker>
 
-          <Button style={{ width: 340, flexDirection: 'row', backgroundColor: '#0E6655', borderRadius: 0, marginTop: 2 , left:-20 }}>
-            <Icon name="md-done-all" style={{ color: this.props.theme.backgroundColor, left: 15 }}></Icon>
-            <Text style={{ left: -200 }}>FILTER</Text>
-          </Button>
+         
+
+
         </CustumPicker>
         <Content>
           {
@@ -137,7 +138,38 @@ class History extends React.Component {
             />
           }
         </Content>
+        <ActionButton
+            buttonColor={this.props.theme.cardBackground}
+            btnOutRange={this.props.theme.cardBackground}
+            icon={<Icon name='md-arrow-dropup' style={style.ButtonIcon} />}
+            degrees={135}
+            size={40}
+            radius={50}
+            position="right"
+          outRangeScale={0.5}       
+          >
 
+            <ActionButton.Item
+              buttonColor='green'
+              title="Save"
+              // onPress={() => this.handleCreateRequest()}
+              >
+              <Icon
+                name="md-done-all"
+                style={style.actionButtonIcon}
+
+              />
+            </ActionButton.Item>
+            <ActionButton.Item
+              buttonColor='red'
+              title="Reset"
+              // onPress={() => this.resetAll()}
+                >
+              <Icon
+                name="md-refresh"
+                style={style.actionButtonIcon} />
+            </ActionButton.Item>
+          </ActionButton>
       </Container>
     );
   }

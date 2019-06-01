@@ -23,7 +23,7 @@ const AttendanceClock = props => {
         startAngle={(PI / 30) * timeToAngle(split(props.attendances[1], ':'))}
         endAngle={(PI / 30) * timeToAngle(split(props.attendances[2], ':'))}
         progress={1}
-        progressColor={'#FF8000'}
+        progressColor={'#7E0953'}
       />
       {
         timeToAngle(split(props.attendances[0], ':')) > -15 &&
@@ -36,9 +36,9 @@ const AttendanceClock = props => {
         />
       }
       <View style={{ width: 200, height: 200, position: 'absolute', justifyContent: 'center', alignItems: 'center', top: -3, right: -3 }}>
-        <Text>{} of delay</Text>
-        <Text>{} worked</Text>
-        <Text>{} of pause</Text>
+        <Text style={{color:'#EC8181'}}>{} of delay</Text>
+        <Text style={{color:'#1D8348'}} >{} worked</Text>
+        <Text style={{color:'#7E0953'}} >{} of pause</Text>
       </View>
     </>
   )

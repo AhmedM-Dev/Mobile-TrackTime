@@ -108,22 +108,19 @@ class LeaveRequest extends React.Component {
         <StatusBar hidden />
         <Content>
 
-          <View style={{ marginTop: 50 }}>
+          <View style={{ marginTop: 20,  width:340  , borderRadius:20 ,alignItems:'center' , alignSelf:'center' , backgroundColor:this.props.theme.backgroundColor}}>
             <View style={{
               ...styles.autorisationList,
               backgroundColor: this.props.theme.pickerBackground,
-              borderColor: this.props.theme.pickerBackground
-            }}>
+              borderColor: this.props.theme.pickerBackground, marginTop:20
+            }}> 
               <Picker
-                // placeholder="Select leave category"
                 selectedValue={this.state.leaveCategory}
                 style={{
-                  color: this.props.theme.fontColor,
+                  color: 'black',
                 }}
-
-                // style={{ width: 300, alignSelf: 'center', zIndex: 4 }}
-                textStyle={{ color: this.props.theme.fontColor }}
-                itemTextStyle={{ color: this.props.theme.fontColor }}
+                textStyle={{ color: 'black' }}
+                itemTextStyle={{ color: 'black' ,}}
                 onValueChange={(itemValue, itemIndex) =>
                   this.handleCategoryChange(itemValue)
                 }
@@ -146,201 +143,201 @@ class LeaveRequest extends React.Component {
                 <Picker.Item label="Other" value="Other" />
               </Picker>
             </View>
-          </View>
 
-          <View>
 
-            <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 5, marginTop: 20 }}
-              date={this.state.dateFrom}
-              mode="date"
-              iconSource={null}
-              placeholder={this.state.requestCategory === 'AUTHORIZATION' ? 'Date' : 'From...'}
+            <View>
 
-              format="DD-MM-YYYY"
-              minDate={moment().format('DD-MM-YYYY')}
-              // maxDate="31-12-2019"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: this.props.theme.pickerBackground,
-                  borderColor: this.props.theme.pickerBackground,
-                  borderWidth: 1,
-                  borderRadius: 20
-                },
-                placeholderText: {
-                  color: this.props.theme.fontColor,
-                  left: -100
-                },
-                dateText: {
-                  color: this.props.theme.fontColor,
-                  left: -67
+              <DatePicker
+                style={{ width: 300, alignSelf: 'center', marginBottom: 5, marginTop: 20 }}
+                date={this.state.dateFrom}
+                mode="date"
+                iconSource={null}
+                placeholder={this.state.requestCategory === 'AUTHORIZATION' ? 'Date' : 'From...'}
 
-                }
-              }}
-              onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
-          </View>
+                format="DD-MM-YYYY"
+                minDate={moment().format('DD-MM-YYYY')}
+                // maxDate="31-12-2019"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0,
+                  },
+                  dateInput: {
+                    marginTop: 10,
+                    backgroundColor: this.props.theme.pickerBackground,
+                    borderColor: this.props.theme.pickerBackground,
+                    borderWidth: 1,
+                    borderRadius: 20
+                  },
+                  placeholderText: {
+                    color: 'black',
+                    left: -100 , position:'absolute' , left:20
+                  },
+                  dateText: {
+                    color: 'black',
+                    left: -67, position:'absolute' , left:20
 
-          {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: 'red', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center' }}>
-            <Text>Morning</Text><Radio onPress={() => this.setState({ sessionFrom: 1 })} selected={this.state.sessionFrom === 1} />
-            <Text>Afternoon</Text><Radio onPress={() => this.setState({ sessionFrom: 2 })} selected={this.state.sessionFrom === 2} />
-          </View>
-          }
+                  }
+                }}
+                onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
+            </View>
 
-          {this.state.requestCategory !== 'AUTHORIZATION' && <View>
+            {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#4470B2', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center', borderRadius: 20, height: 40, alignItems: 'center' }}>
+              <Text style={{ color: 'white' }} >Morning</Text><Radio onPress={() => this.setState({ sessionFrom: 1 })} selected={this.state.sessionFrom === 1} selectedColor={"white"} />
+              <Text style={{ color: 'white' }} >Afternoon</Text><Radio onPress={() => this.setState({ sessionFrom: 2 })} selected={this.state.sessionFrom === 2} selectedColor={"white"} />
+            </View>
+            }
 
-            <DatePicker
-              style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
-              date={this.state.dateTo}
-              mode="date"
-              iconSource={null}
-              placeholder={"To ... "}
-              format="DD-MM-YYYY"
-              minDate={moment().format('DD-MM-YYYY')}
-              // maxDate="31-12-2019"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: this.props.theme.pickerBackground,
-                  borderColor: this.props.theme.pickerBackground,
-                  borderWidth: 1,
-                  borderRadius: 20
-                },
-                placeholderText: {
-                  color: this.props.theme.fontColor,
-                  left: -110
-                },
-                dateText: {
-                  color: this.props.theme.fontColor,
-                  left: -67
+            {this.state.requestCategory !== 'AUTHORIZATION' && <View>
 
-                }
-              }}
-              onDateChange={(date) => { this.handleDateChange("enddate", date) }}
-            />
-          </View>}
+              <DatePicker
+                style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                date={this.state.dateTo}
+                mode="date"
+                iconSource={null}
+                placeholder={"To ... "}
+                format="DD-MM-YYYY"
+                minDate={moment().format('DD-MM-YYYY')}
+                // maxDate="31-12-2019"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0,
+                  },
+                  dateInput: {
+                    marginTop: 10,
+                    backgroundColor: this.props.theme.pickerBackground,
+                    borderColor: this.props.theme.pickerBackground,
+                    borderWidth: 1,
+                    borderRadius: 20
+                  },
+                  placeholderText: {
+                    color: 'black',
+                    left: -110, position:'absolute' , left:20
+                  },
+                  dateText: {
+                    color: 'black',
+                    left: -67, position:'absolute' , left:20
 
-          {/* AUTHORIZATION MODE */}
-          {this.state.requestCategory === 'AUTHORIZATION' &&
-            <>
-              <View>
-                <DatePicker
-                  style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
-                  date={this.state.timeFrom}
-                  mode="time"
-                  iconSource={null}
-                  placeholder={"From..."}
-                  format="H:mm"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginTop: 10,
-                      backgroundColor: this.props.theme.pickerBackground,
-                      borderColor: this.props.theme.pickerBackground,
-                      borderWidth: 1,
-                      borderRadius: 20
-                    },
-                    placeholderText: {
-                      color: this.props.theme.fontColor,
-                      left: -110
-                    },
-                    dateText: {
-                      color: this.props.theme.fontColor,
-                      left: -67
+                  }
+                }}
+                onDateChange={(date) => { this.handleDateChange("enddate", date) }}
+              />
+            </View>}
 
-                    }
-                  }}
-                  onDateChange={(date) => { this.handleDateChange("timeFrom", date) }}
-                />
-              </View>
+            {/* AUTHORIZATION MODE */}
+            {this.state.requestCategory === 'AUTHORIZATION' &&
+              <>
+                <View>
+                  <DatePicker
+                    style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                    date={this.state.timeFrom}
+                    mode="time"
+                    iconSource={null}
+                    placeholder={"From..."}
+                    format="H:mm"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginTop: 10,
+                        backgroundColor: this.props.theme.pickerBackground,
+                        borderColor: this.props.theme.pickerBackground,
+                        borderWidth: 1,
+                        borderRadius: 20
+                      },
+                      placeholderText: {
+                        color: 'black',
+                        left: -110, position:'absolute' , left:20
+                      },
+                      dateText: {
+                        color: 'black',
+                        left: -67 , position:'absolute' , left:20
 
-              <View>
-                <DatePicker
-                  style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
-                  date={this.state.timeTo}
-                  mode="time"
-                  iconSource={null}
-                  placeholder={"To..."}
-                  format="H:mm"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginTop: 10,
-                      backgroundColor: this.props.theme.pickerBackground,
-                      borderColor: this.props.theme.pickerBackground,
-                      borderWidth: 1,
-                      borderRadius: 20
-                    },
-                    placeholderText: {
-                      color: this.props.theme.fontColor,
-                      left: -110
-                    },
-                    dateText: {
-                      color: this.props.theme.fontColor,
-                      left: -67
+                      }
+                    }}
+                    onDateChange={(date) => { this.handleDateChange("timeFrom", date) }}
+                  />
+                </View>
 
-                    }
-                  }}
-                  onDateChange={(date) => { this.handleDateChange("timeTo", date) }}
-                />
-              </View>
+                <View>
+                  <DatePicker
+                    style={{ width: 300, alignSelf: 'center', marginBottom: 10 }}
+                    date={this.state.timeTo}
+                    mode="time"
+                    iconSource={null}
+                    placeholder={"To..."}
+                    format="H:mm"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginTop: 10,
+                        backgroundColor: this.props.theme.pickerBackground,
+                        borderColor: this.props.theme.pickerBackground,
+                        borderWidth: 1,
+                        borderRadius: 20
+                      },
+                      placeholderText: {
+                        color: 'black',
+                        left: -110, position:'absolute' , left:20
+                      },
+                      dateText: {
+                        color: 'black',
+                        left: -67, position:'absolute' , left:20
 
-            </>}
+                      }
+                    }}
+                    onDateChange={(date) => { this.handleDateChange("timeTo", date) }}
+                  />
+                </View>
 
-          {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: 'red', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center' }}>
-            <Text>Morning</Text><Radio onPress={() => this.setState({ sessionTo: 1 })} selected={this.state.sessionTo === 1} />
-            <Text>Afternoon</Text><Radio onPress={() => this.setState({ sessionTo: 2 })} selected={this.state.sessionTo === 2} />
-          </View>}
+              </>}
 
-          <View style={{ marginBottom: 50 }}>
-            <Textarea
-              containerStyle={{ ...styles.textareaContainer, backgroundColor: this.props.theme.pickerBackground }}
-              style={{ ...styles.textarea, color: this.props.theme.fontColor }}
-              onChangeText={(text) => this.handleMotifChange(text)}
-              defaultValue={this.state.motif}
-              placeholder={' Motif...'}
-              placeholderTextColor={this.props.theme.fontColor}
-              underlineColorAndroid={'transparent'}
-            // maxLength={300}
-            />
-          </View>
+            {this.state.requestCategory !== 'AUTHORIZATION' && <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#4470B2', width: 300, flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center', borderRadius: 20, height: 40, alignItems: 'center' }}>
+              <Text style={{ color: 'white' }}>Morning</Text><Radio onPress={() => this.setState({ sessionTo: 1 })} selected={this.state.sessionTo === 1} selectedColor={"white"} />
+              <Text style={{ color: 'white' }}>Afternoon</Text><Radio onPress={() => this.setState({ sessionTo: 2 })} selected={this.state.sessionTo === 2} selectedColor={"white"} />
+            </View>}
 
-          {/* <TextInput
+            <View style={{ marginBottom: 20 }}>
+              <Textarea
+                containerStyle={{ ...styles.textareaContainer, backgroundColor: this.props.theme.pickerBackground }}
+                style={{ ...styles.textarea, color: 'black' }}
+                onChangeText={(text) => this.handleMotifChange(text)}
+                defaultValue={this.state.motif}
+                placeholder={' Motif...'}
+                placeholderTextColor={'black'}
+                underlineColorAndroid={'transparent'}
+              // maxLength={300}
+              />
+            </View>
+
+            {/* <TextInput
               onChangeText={(text) => this.handleMotifChange(text)}
               style={styles.textareaContainer}
               placeholder="Motif..."
               placeholderTextColor="white"
               defaultValue={this.state.motif}
             /> */}
-
+          </View>
           <ActionButton
             buttonColor="transparent"
             btnOutRange="transparent"

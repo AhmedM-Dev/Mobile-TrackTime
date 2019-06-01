@@ -5399,6 +5399,13 @@ react-native-app-intro-slider@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-app-intro-slider/-/react-native-app-intro-slider-2.0.1.tgz#947fece38d2332d9cdc5381344b0c47ab822984b"
   integrity sha512-Bg/hQ+fU7IJDaZYXApH7xWW7dxdb0buDZ46GGhOerOmJh6GMq5WIxtimYKP8u1Pumq+hGrbSRFzT1vhYlPkDAw==
 
+react-native-awesome-alerts@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.2.0.tgz#a19b105d5133e92712d865795d532cd3f1e4de2d"
+  integrity sha512-ouxDGJ/porNkuaeqpgxIJA4jAPqHC9bJIsxLA21NA6eZhnEhbqWOprjsNqwI0/7bJxXm9baTzXESCMzwAy3eZw==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-card-list@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-card-list/-/react-native-card-list-0.1.0.tgz#4ebcd81b2f25b39edcb6f508494c374edc75c203"

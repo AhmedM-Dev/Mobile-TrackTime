@@ -11,9 +11,11 @@ export const lightTheme = {
     settingsHeaderColor: '#CECECE',
     cardHeaderColor: '#F7F7F7',
     pickerBackground:'#DADADA',
+    inputsColor:'#DADADA',
+    notif:'#EAEAEA',
     menu: {
         background: '#F7F7F7',
-        activeBackgroundColor: '#74BE9C',
+        activeBackgroundColor: '#C3DBFF',
         activeLabelStyle: '#020B1C',
         inactiveLabelStyle: '#232323',
         fintSize: 20,
@@ -24,7 +26,7 @@ export const lightTheme = {
 
     },
     calendar:{
-        headerColor:'#17739B',
+        headerColor:'#082E76',
         c1:'#EEF4F7',
         c2 :'#DBE7EE',
     }
@@ -39,13 +41,15 @@ export const darkTheme = {
     inputs: '#021630',
     settingContainerColor: '#01152E',
     barColor: '#020B1C',
+    notif:'#001B39',
     pickerBackground:'#DADADA',
     informationsColor: '#8F8E8E',
     cardHeaderColor: '#001B39',
     imageSettingsBorderColor: 'white',
+    inputsColor:'#001B39',
     menu: {
         background: '#020B1C',
-        activeBackgroundColor: '#1A6441',
+        activeBackgroundColor: '#4470B2',
         activeLabelStyle: 'white',
         inactiveLabelStyle: 'white',
         fintSize: 20,
@@ -54,8 +58,8 @@ export const darkTheme = {
 
     },
     calendar:{
-        headerColor:'#2CA96E',
-        c1:'#235F81',
-        c2 :'#104664',
+        headerColor:'#082E76',
+        c1:'#37789C',
+        c2 :'#055A89',
     }
 }

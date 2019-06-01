@@ -238,7 +238,7 @@ class Settings extends Component {
                 borderHide={'Both'}
                 backgroundColor={this.props.theme.settingContainerColor}
               />
-              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} />
+              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} color='red'/>
 
             </SettingsList>
 
@@ -247,7 +247,7 @@ class Settings extends Component {
           </View>
           <Button
             buttonStyle={{
-              backgroundColor: '#2CA96E',
+              backgroundColor: '#4470B2',
               borderRadius: 0,
               width: 300,
               alignSelf: 'center',
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
 
   headerIcon: {
-    backgroundColor: '#2CA96E',
+    backgroundColor: '#4470B2',
     marginRight: -7,
     height: 15, width: 15,
     borderRadius: 100,

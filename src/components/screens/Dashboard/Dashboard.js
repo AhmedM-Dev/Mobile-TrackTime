@@ -3,32 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image ,ScrollView} from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Title } from 'native-base';
-
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
 import companyLogo from '../../../assets/img/proxym.png'
-
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
-import NotificationsBell from "../../ui/NotificationsBell";
-import Speedometer from 'react-native-speedometer-chart';
-
 import AppHeader from '../../ui/AppHeader';
-
 import { getStats ,getUsers} from './actions';
 import { getAvatar } from "../../../store/actions";
-
 import prepareGraphDate from "../../../utils/prepareGraphDate";
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
-import StarRating from './StarRating';
-
 import Star from 'react-native-star-view';
-
-import userPic from '../../../assets/img/userPic.jpg';
-import SimplePicker from 'react-native-simple-picker';
-import click from '../../../assets/img/click.png'
-import { TouchableHighlight } from 'react-native-gesture-handler';
-
 // import {
 //   ContributionGraph,
 // } from 'react-native-chart-kit'

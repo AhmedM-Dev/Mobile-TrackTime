@@ -10,6 +10,7 @@ import axios from "axios";
 import { API_URL } from "../../../../config";
 import DatePicker from 'react-native-datepicker';
 import ActionButton from 'react-native-circular-action-menu';
+import { connect } from 'react-redux';
 
 export class createTravel extends Component {
     constructor() {
@@ -107,6 +108,7 @@ export class createTravel extends Component {
 
                 <Content>
 
+
                     <View style={styles.cardStyle}>
                         <View>
 
@@ -116,7 +118,6 @@ export class createTravel extends Component {
                                 mode="date"
                                 iconSource={null}
                                 placeholder="Select begin date"
-
                                 format="DD-MM-YYYY"
                                 minDate="01-01-2019"
                                 maxDate="31-12-2019"
@@ -129,7 +130,7 @@ export class createTravel extends Component {
                                     },
                                     dateInput: {
                                         marginTop: 10,
-                                        backgroundColor: '#1C1C1C',
+                                        color: this.props.theme.backgroundColor,
                                         borderColor: '#1C1C1C',
                                         borderWidth: 1,
                                         borderRadius: 20
@@ -437,9 +438,20 @@ const styles = StyleSheet.create({
     ButtonIcon: {
         fontSize: 20,
         height: 22,
-        color: '#2CA96E',
+        color: '#4470B2',
     },
 
 });
 
-export default createTravel;
+const mapStateToProps = state => {
+    return {
+      sendingRequest: state.requestsReducer.sendingRequest,
+      theme: state.settingsReducer.theme
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => ({
+  });
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(createTravel);
+  

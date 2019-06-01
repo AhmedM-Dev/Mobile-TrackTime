@@ -6,6 +6,7 @@ import Celebrations from './Celebrations.js'
 import Leaves from './Leaves.js'
 
 export default createMaterialTopTabNavigator({
+  
   Celebrations: { 
     screen: Celebrations
    },
@@ -15,18 +16,18 @@ export default createMaterialTopTabNavigator({
 },
 {
   tabBarOptions: {
-    activeTintColor : 'black',
-    inactiveTintColor:'black',
-    pressColor :'#2CA96E',
+    activeTintColor : 'white',
+    inactiveTintColor:'white',
+    pressColor :'green',
     tabStyle :{
 
     },
     indicatorStyle :{
-      backgroundColor:'#2CA96E'
+      backgroundColor:'green'
     },
   
     style: {
-      backgroundColor:'white'
+      backgroundColor:'#082E76'
     }
   },
 });
