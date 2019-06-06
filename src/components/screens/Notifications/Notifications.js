@@ -112,12 +112,12 @@ class Notifications extends Component {
             <Icon
               name="md-arrow-round-back"
               onPress={() => this.handleGoTo(initialState)}
-              style={{ color: this.props.theme.fontColor, margin: 20 , fontSize:16  }}> </Icon>
+              style={{ color: this.props.theme.fontColor, margin: 20, fontSize: 16 }}> </Icon>
             {
               goTo.category === 'LEAVE' &&
               <>
-                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20 , marginTop:20 }}>
-                  <Text style={{ color: this.props.theme.fontColor ,fontWeight:'bold' , marginBottom:10}}>{goTo.to.title}  </Text> 
+                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+                  <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>{goTo.to.title}  </Text>
                   <Text style={{ color: this.props.theme.fontColor }} >From {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
@@ -128,8 +128,8 @@ class Notifications extends Component {
             {
               goTo.category === 'AUTHORIZATION' &&
               <>
-                <View style={{ backgroundColor: this.props.theme.cardBackground, width:  300, alignSelf: 'center', borderRadius: 20, padding: 20 , marginTop:20}}>
-                  <Text style={{ color: this.props.theme.fontColor , fontWeight:'bold'}}> {goTo.to.title}</Text>
+                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+                  <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}> {goTo.to.title}</Text>
                   <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >Category : {goTo.to.request.leaveCategory}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >From : {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
@@ -139,7 +139,7 @@ class Notifications extends Component {
               </>
             }
 
-            {goTo.category === 'TRAVEL' && <View style={{ backgroundColor: this.props.theme.cardBackground, width:  300, alignSelf: 'center', borderRadius: 20, padding: 20 , marginTop:20}}>
+            {goTo.category === 'TRAVEL' && <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
               <Text style={{ color: this.props.theme.fontColor }}>Employee : {}</Text>
               <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > Category : </Text>
               <Text style={{ color: this.props.theme.fontColor }} >From : </Text>
@@ -147,7 +147,7 @@ class Notifications extends Component {
               <Text style={{ color: this.props.theme.fontColor }} >Motif : </Text>
             </View>}
 
-            {goTo.category === 'ATTENDANCE' && <View style={{ backgroundColor: this.props.theme.cardBackground, width:  3000, alignSelf: 'center', borderRadius: 20, padding: 20 , marginTop:20}}>
+            {goTo.category === 'ATTENDANCE' && <View style={{ backgroundColor: this.props.theme.cardBackground, width: 3000, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
               <Text style={{ color: this.props.theme.fontColor }} > Employee : {}</Text>
               <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > Category : </Text>
               <Text style={{ color: this.props.theme.fontColor }} > From : </Text>
@@ -157,7 +157,7 @@ class Notifications extends Component {
 
             {
               goTo.to.request && goTo.to.request.status === "pending" &&
-              <View style={{ marginTop: 20 , marginBottom:20 }}>
+              <View style={{ marginTop: 20, marginBottom: 20 }}>
                 <Textarea
                   containerStyle={{ ...styles.textareaContainer, backgroundColor: this.props.theme.cardBackground }}
                   style={{ ...styles.textarea, color: this.props.theme.fontColor }}
@@ -199,19 +199,19 @@ class Notifications extends Component {
             alertContainerStyle={{
               backgroundColor: this.props.theme.backgroundColor
             }}
-            contentContainerStyle	={{
-              backgroundColor:this.props.theme.cardBackground
+            contentContainerStyle={{
+              backgroundColor: this.props.theme.cardBackground
             }}
             titleStyle={{
-              color:this.props.theme.fontColor,
-              fontWeight:'bold',
+              color: this.props.theme.fontColor,
+              fontWeight: 'bold',
             }}
             messageStyle={{
-              color:this.props.theme.fontColor
+              color: this.props.theme.fontColor
 
             }}
             cancelButtonColor='#4470B2'
-            cancelButtonTextStyle	={{color:'white'}}
+            cancelButtonTextStyle={{ color: 'white' }}
             onCancelPressed={() => {
               this.handleGoTo(initialState);
             }}
@@ -223,15 +223,15 @@ class Notifications extends Component {
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
           <AppHeader title="Notifications" navigation={this.props.navigation} />
           <Content>
-            <List style={{ backgroundColor: this.props.theme.notif, width: '100%' ,}} >
+            <List style={{ backgroundColor: this.props.theme.notif, width: '100%', }} >
               {
                 this.props.notifications.length > 0 && this.props.notifications.map((notif, id) => {
                   return (
-                    <ListItem style={notif && notif.vues && notif.vues.includes(this.props.user.userId) ? { backgroundColor: this.props.theme.backgroundColor } : null } thumbnail key={id}>
+                    <ListItem style={{ backgroundColor: notif && notif.vues && notif.vues.includes(this.props.user.userId) ? null : this.props.theme.backgroundColor, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail key={id}>
                       <Left>
-                        <Thumbnail square source={this.getLogo(notif.category)}  style={{marginLeft:10}}/>
+                        <Thumbnail square source={this.getLogo(notif.category)} style={{ marginLeft: 10 }} />
                       </Left>
-                      <Body>
+                      <Body style={{ borderBottomWidth: 0 }}>
                         <Text style={{ color: this.props.theme.fontColor, fontSize: 11 }}>{notif.title && notif.title.substring(0, 26)}...</Text>
                         <Text note numberOfLines={1} style={{ color: this.props.theme.fontColor, fontSize: 10 }}>{notif.content && notif.content.substring(0, 35)}...</Text>
                       </Body>
