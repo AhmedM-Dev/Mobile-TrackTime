@@ -61,6 +61,9 @@ class AttendanceTime extends React.Component {
           <AppHeader title="Attendances" navigation={this.props.navigation} />
 
           <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 5 }}>
+            <View>
+              
+            </View>
             <View style={{ marginRight: 5 }}>
 
               <DatePicker
@@ -146,8 +149,8 @@ class AttendanceTime extends React.Component {
                   width: 50,
 
                 }}
-                // onPress={() => this.props.navigation.navigate('New request')}
-                >
+              // onPress={() => this.props.navigation.navigate('New request')}
+              >
                 <Icon name="md-refresh" style={{ color: 'white', fontSize: 18, left: 4 }}></Icon>
               </Button>
 

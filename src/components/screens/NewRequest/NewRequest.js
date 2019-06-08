@@ -1,9 +1,13 @@
 
 import { createMaterialTopTabNavigator } from 'react-navigation';
+import Requests from './Requests';
 import LeaveRequest from './LeaveRequest'
 import AttendanceCorrection from './Attendance correction'
 
 export default createMaterialTopTabNavigator({
+  'Requests': {
+    screen: Requests
+  },
   'New Request': {
     screen: LeaveRequest
   },

@@ -1,15 +1,13 @@
-
 import checkTravels from './checkTravels';
 import createTravel from './createTravel';
 
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
-
 export default createMaterialTopTabNavigator({
   'Check my travels': {
     screen: checkTravels
   },
-  'Create a new travel': {
+  'Request new travel': {
     screen: createTravel
   },
 },
@@ -30,5 +28,3 @@ export default createMaterialTopTabNavigator({
       }
     },
   });
-
-

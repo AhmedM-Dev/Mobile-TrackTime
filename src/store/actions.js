@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
- 
+
 import types from './types';
 import { authenticate } from '../services/services';
 import HttpClient from '../services/HttpClient';
@@ -64,6 +64,22 @@ export const getAvatar = () => dispatch => {
     });
 }
 
+export const getRequests = payload => dispatch => {
+  http.get(`requests${payload.status ? `?status=${payload.status}` : ''}`)
+    .then(response => {
+      dispatch({
+        type: types.GET_REQUESTS,
+        payload: response.data.requests
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: types.ADD_ERROR,
+        error
+      });
+    });
+}
+
 export const createLeaveRequest = payload => dispatch => {
 
   dispatch({ type: types.SEND_LEAVE_REQUEST });
@@ -84,6 +100,32 @@ export const createLeaveRequest = payload => dispatch => {
         { cancelable: false },
       );
 
+    })
+    .catch(error => {
+      dispatch({
+        type: globals.ADD_ERROR,
+        error
+      });
+    });
+}
+
+export const cancelRequest = payload => dispatch => {
+  http.put(`requests/${payload.requestId}/edit`, payload)
+    .then(response => {
+
+      dispatch({
+        type: types.CANCEL_REQUEST,
+        payload: response.data.request
+      })
+
+      Alert.alert(
+        ' ',
+        'Your request has been successfully canceled.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
     .catch(error => {
       dispatch({

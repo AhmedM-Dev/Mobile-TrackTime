@@ -44,7 +44,7 @@ export const vueNotification = payload => dispatch => {
 
 
 export const acceptRequest = payload => dispatch => {
-  http.put(`requests/${payload.request.requestId}`, { note: payload.note, accept: true, notifId: payload.notifId, request: payload.request })
+  http.put(`requests/${payload.request.requestId}/respond`, { note: payload.note, accept: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.ACCEPT_REQUEST
@@ -63,7 +63,7 @@ export const acceptRequest = payload => dispatch => {
 }
 
 export const rejectRequest = payload => dispatch => {
-  http.put(`requests/${payload.request.requestId}`, { note: payload.note, reject: true, notifId: payload.notifId, request: payload.request })
+  http.put(`requests/${payload.request.requestId}/respond`, { note: payload.note, reject: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.REJECT_REQUEST

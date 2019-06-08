@@ -95,6 +95,20 @@ export const requestsReducer = (state = [], action) => {
         requestSuccess: true
       };
 
+    case types.GET_REQUESTS:
+      return {
+        ...state,
+        requests: action.payload
+      }
+
+    case types.CANCEL_REQUEST:
+      return {
+        ...state,
+        requests: [
+          ...state.requests.filter(request => request.requestId !== action.payload.requestId)
+        ]
+      }
+
     default:
       return state;
   }
