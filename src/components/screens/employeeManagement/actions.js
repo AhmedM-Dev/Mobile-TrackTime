@@ -9,8 +9,8 @@ const http = new HttpClient();
 const domain = 'users';
 const groupsDomain = 'groups';
 
-export const getUsers = () => dispatch => {
-  http.get(`${domain}`)
+export const getUsers = (payload = null) => dispatch => {
+  http.get(`${domain}${payload ? `?${payload.filterName}=${payload.filterValue}` : ''}`)
     .then(response => {
       dispatch({
         type: types.GET_USERS,

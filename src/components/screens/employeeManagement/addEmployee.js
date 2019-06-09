@@ -38,7 +38,6 @@ class addEmployee extends Component {
     }
   };
 
-
   handleFirstNAmeChange = (text) => {
     this.setState({
       ...this.state,
@@ -60,7 +59,6 @@ class addEmployee extends Component {
     });
   }
 
-
   handleEmailChange = (text) => {
     this.setState({
       ...this.state,
@@ -74,6 +72,7 @@ class addEmployee extends Component {
       password: text
     });
   }
+
   handleBusinessRoleChange = (text) => {
     this.setState({
       ...this.state,
@@ -101,6 +100,7 @@ class addEmployee extends Component {
   componentDidMount() {
     this.props.getGroups();
   }
+  
   render() {
     return (
       <View style={styles.container} >

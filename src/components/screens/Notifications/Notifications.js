@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { ToastAndroid, Dimensions } from 'react-native';
+import { ToastAndroid, Dimensions, TouchableHighlight } from 'react-native';
 import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon, View } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Textarea from 'react-native-textarea';
-import { orderBy } from 'lodash';
+import { orderBy, pullAt } from 'lodash';
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 
 import AppHeader from '../../ui/AppHeader';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import StyledInput from '../../ui/Input/';
 
 import { vueNotification, acceptRequest, rejectRequest } from './actions';
-import AwesomeAlert from 'react-native-awesome-alerts';
 
 import leaveIcon from '../../../assets/img/leave.png'
 import clockIcon from '../../../assets/img/clock.png'
@@ -41,7 +44,6 @@ showAlert = () => {
 };
 
 
-
 class Notifications extends Component {
 
   state = initialState;
@@ -50,7 +52,17 @@ class Notifications extends Component {
     if (goTo.category === 'EVENT') {
       this.props.vueNotification(this.state.goTo.to);
       this.props.navigation.navigate('Events', { eventId: 'eventtttt' });
-    } else {
+    } else if (goTo.category === 'ATTENDANCE') {
+      this.setState({
+        goTo,
+        attendances: goTo.to.request.attendance.attendances
+      }, () => {
+        this.props.vueNotification(this.state.goTo.to);
+      });
+    }
+
+
+    else {
       this.setState({
         goTo
       }, () => {
@@ -87,6 +99,20 @@ class Notifications extends Component {
       });
 
       this.setState(initialState);
+    } else if (this.state.goTo.category === 'ATTENDANCE') {
+      this.props.acceptRequest({
+        request: {
+          ...this.state.goTo.to.request,
+          attendance: {
+            ...this.state.goTo.to.request.attendance,
+            attendances: this.state.attendances
+          }
+        },
+        note: this.state.note,
+        notifId: this.state.goTo.to.notifId
+      });
+
+      this.setState(initialState);
     }
   }
 
@@ -100,6 +126,28 @@ class Notifications extends Component {
 
       this.setState(initialState);
     }
+  }
+
+  handleDeleteAttendance = (index) => {
+    this.setState({
+      attendances: this.state.attendances.filter((item, i) => i !== index)
+    });
+  }
+
+  handleAddAttendance = () => {
+    this.setState({
+      attendances: [...this.state.attendances, moment().format('HH:mm:ss')]
+    });
+  }
+
+  handleChangeAttendance = (newDate, index) => {
+    let att = this.state.attendances;
+
+    att[index] = newDate;
+
+    this.setState({
+      attendances: att
+    });
   }
 
   render() {
@@ -117,7 +165,8 @@ class Notifications extends Component {
               goTo.category === 'LEAVE' &&
               <>
                 <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
-                  <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>{goTo.to.title}  </Text>
+                  <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>{goTo.to.title}</Text>
+                  <Text></Text>
                   <Text style={{ color: this.props.theme.fontColor }} >From {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
@@ -130,6 +179,7 @@ class Notifications extends Component {
               <>
                 <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
                   <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}> {goTo.to.title}</Text>
+                  <Text></Text>
                   <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >Category : {goTo.to.request.leaveCategory}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >From : {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
@@ -147,13 +197,69 @@ class Notifications extends Component {
               <Text style={{ color: this.props.theme.fontColor }} >Motif : </Text>
             </View>}
 
-            {goTo.category === 'ATTENDANCE' && <View style={{ backgroundColor: this.props.theme.cardBackground, width: 3000, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
-              <Text style={{ color: this.props.theme.fontColor }} > Employee : {}</Text>
-              <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > Category : </Text>
-              <Text style={{ color: this.props.theme.fontColor }} > From : </Text>
-              <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > To : </Text>
-              <Text style={{ color: this.props.theme.fontColor }} > Motif : </Text>
-            </View>}
+            {
+              goTo.category === 'ATTENDANCE' &&
+              <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+                <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{goTo.to.title}</Text>
+                <Text></Text>
+                <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}>Date : {moment(goTo.to.request.attendance.date).format('YYYY-MM-DD')}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}>Motif : {goTo.to.request.motif}</Text>
+              </View>
+            }
+
+            <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
+              {
+                goTo.category === 'ATTENDANCE' && this.state.attendances.map((item, i) => {
+                  return (
+                    <View key={i} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                      <DatePicker
+                        style={{ width: 260, alignSelf: 'center', color: 'white', height: 50 }}
+                        date={item}
+                        mode="time"
+                        iconSource={null}
+                        format="HH:mm:ss"
+                        customStyles={{
+                          dateIcon: {
+                            position: 'absolute',
+                            left: 0,
+                            top: 4,
+                            marginLeft: 0,
+                          },
+                          dateInput: {
+                            marginTop: 10,
+                            backgroundColor: '#072152',
+                            borderColor: 'gray',
+                            borderRadius: 20
+
+                          },
+                          placeholderText: {
+                            color: 'white', position: 'absolute', left: 30
+                          },
+                          dateText: {
+                            color: 'white', position: 'absolute', left: 30
+                          }
+                        }}
+                        onDateChange={(changedDate) => this.handleChangeAttendance(changedDate, i)}
+                      />
+                      <TouchableHighlight style={{
+                        borderRadius: 100,
+                        height: 40,
+                        width: 40,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }} onPress={() => this.handleDeleteAttendance(i)}>
+                        <Text style={{ color: 'red' }}>X</Text>
+                      </TouchableHighlight>
+
+                    </View>
+                  )
+                })
+              }
+              <Button onPress={this.handleAddAttendance} style={{ justifyContent: 'center', width: 300, height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
+                <Text>Add Attendance</Text>
+              </Button>
+            </View>
 
             {
               goTo.to.request && goTo.to.request.status === "pending" &&
@@ -167,8 +273,6 @@ class Notifications extends Component {
                   placeholderTextColor={this.props.theme.fontColor}
                   underlineColorAndroid={'transparent'}
                 />
-
-
               </View>
             }
 
@@ -225,7 +329,7 @@ class Notifications extends Component {
           <Content>
             <List style={{ backgroundColor: this.props.theme.notif, width: '100%', }} >
               {
-                this.props.notifications.length > 0 && this.props.notifications.map((notif, id) => {
+                this.props.notifications.length > 0 ? this.props.notifications.map((notif, id) => {
                   return (
                     <ListItem style={{ backgroundColor: notif && notif.vues && notif.vues.includes(this.props.user.userId) ? null : this.props.theme.backgroundColor, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail key={id}>
                       <Left>
@@ -242,7 +346,7 @@ class Notifications extends Component {
                       </Right>
                     </ListItem>
                   )
-                })
+                }) : <Text>No notification available.</Text>
               }
             </List>
           </Content>

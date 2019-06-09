@@ -1,0 +1,8 @@
+const types = {
+  GET_HOLIDAYS: 'GET_HOLIDAYS',
+  ADD_HOLIDAY: 'ADD_HOLIDAY',
+  EDIT_HOLIDAY: 'EDIT_HOLIDAY',
+  REMOVE_HOLIDAY: 'REMOVE_HOLIDAY'
+}
+
+export default types;

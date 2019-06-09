@@ -49,6 +49,18 @@ class Requests extends React.Component {
     }
   }
 
+  handleSendCancelRequest = (requestId) => {
+    Alert.alert(
+      'Cancel Request',
+      'Are you sure to cancel this request ?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+        { text: 'Yes', onPress: () => this.handleCancelRequest(requestId) }
+      ],
+      { cancelable: true },
+    );
+  }
+
   render() {
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
@@ -71,7 +83,7 @@ class Requests extends React.Component {
                       </Text>
                     </Body>
                     <Right>
-                      <Button transparent onPress={() => this.handleCancelRequest(request.requestId)}>
+                      <Button transparent onPress={() => this.handleSendCancelRequest(request.requestId)}>
                         <Text>Cancel</Text>
                       </Button>
                     </Right>

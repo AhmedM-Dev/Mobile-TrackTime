@@ -92,7 +92,7 @@ export const createLeaveRequest = payload => dispatch => {
       });
 
       Alert.alert(
-        ' ',
+        'Leave Request',
         'Your request has been successfully created.',
         [
           { text: 'OK' },
@@ -119,13 +119,38 @@ export const cancelRequest = payload => dispatch => {
       })
 
       Alert.alert(
-        ' ',
+        'Request Canceled',
         'Your request has been successfully canceled.',
         [
           { text: 'OK' },
         ],
         { cancelable: false },
       );
+    })
+    .catch(error => {
+      dispatch({
+        type: globals.ADD_ERROR,
+        error
+      });
+    });
+}
+
+export const correctAttendanceRequest = payload => dispatch => {
+  http.post("requests", payload)
+    .then(response => {
+      dispatch({
+        type: types.CREATE_ATTENDANCE_REQUEST,
+      });
+
+      Alert.alert(
+        'Attendance Request',
+        'Your attendance correction request has been successfully created.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
+
     })
     .catch(error => {
       dispatch({

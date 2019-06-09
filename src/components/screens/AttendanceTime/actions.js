@@ -12,11 +12,11 @@ const formatDate = (date) => `${new Date(date).getFullYear()}-${new Date(date).g
 
 export const getAttendances = (filters = {}) => dispatch => {
 
-  const { dateFrom, dateTo } = filters;
+  const { dateFrom, dateTo, userId } = filters;
 
   console.log("DATE REQUEST", `${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `&dateTo=${formatDate(dateTo)}` : ''}`);
 
-  http.get(`${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `${!dateFrom ? '?' : '&'}dateTo=${formatDate(dateTo)}` : ''}`)
+  http.get(`${domain}${userId ? `?userId=${userId}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateFrom ? `dateFrom=${formatDate(dateFrom)}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateTo ? `dateTo=${formatDate(dateTo)}` : ''}`)
     .then(response => {
       console.log("ATTENDANCES FROM ACTION:", response.data);
 
