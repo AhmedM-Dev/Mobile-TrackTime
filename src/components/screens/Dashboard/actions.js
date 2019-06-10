@@ -24,6 +24,26 @@ export const getStats = payload => dispatch => {
         });
 }
 
+export const getAllStats = (payload = { year: new Date().getFullYear() }) => dispatch => {
+
+  http.get(`stats?year=${payload.year}&all=true`)
+      .then(response => {
+
+          console.log("RESPONSE FROM GET_STATS ACTION:", response.data);
+
+          dispatch({
+              type: types.GET_ALL_STATS,
+              payload: response.data
+          });
+      })
+      .catch(error => {
+          dispatch({
+              type: globals.ADD_ERROR,
+              error
+          });
+      });
+}
+
 
 export const getUsers = (filter = null) => dispatch => {
     http.get(`${domain}${filter && filter.all ? `?all=${filter.all}` : ''}`)

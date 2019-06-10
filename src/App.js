@@ -38,6 +38,8 @@ import WorkingHoursManagement from './components/screens/WorkingHoursManagement'
 import { logoutWithRedux } from './store/actions';
 import NotificationsBell from './components/ui/NotificationsBell';
 
+import Bulletin from './components/screens/Bulletin';
+
 const AppContext = React.createContext({
   theme: {}
 });
@@ -304,11 +306,11 @@ const AppDrawNavigator = createDrawerNavigator(
 
         drawerIcon: (
           <View style={{ height: 50 }}>
-            <View style={{left:200 , top:10}}>
+            <View style={{ left: 200, top: 10 }}>
               <NotificationsBell />
             </View>
             <AppContext.Consumer>
-              {value => <Icon name="md-notifications" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22, top: -30,left:8}} />}
+              {value => <Icon name="md-notifications" style={{ color: value.theme.menu.activeLabelStyle, fontSize: 22, top: -30, left: 8 }} />}
             </AppContext.Consumer>
           </View>
         ),
@@ -434,6 +436,14 @@ const AppDrawNavigator = createDrawerNavigator(
       screen: Signup,
       navigationOptions: ({ navigation }) => ({
         drawerLockMode: "locked-closed",
+        drawerLabel: () => null,
+      })
+    },
+
+
+    'Bulletin': {
+      screen: Bulletin,
+      navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },

@@ -4,6 +4,7 @@ const types = {
     GET_STATS: "GET_STATS",
     GET_STATS_SUCCESS: "GET_STATS_SUCCESS",
     GET_USERS: 'GET_USERS',
+    GET_ALL_STATS: 'GET_ALL_STATS'
 }
 
 export default types;
