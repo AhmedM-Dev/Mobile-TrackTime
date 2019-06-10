@@ -145,7 +145,7 @@ export default class adminMenu extends Component {
                 color: 'white',
               }}
               title="Score Formula"
-              onPress={() => this.props.navigation.navigate('whm')}
+              onPress={() => console.log('Under development')}
             />
 
           </View>
