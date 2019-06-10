@@ -65,6 +65,9 @@ export const getAvatar = () => dispatch => {
 }
 
 export const getRequests = payload => dispatch => {
+
+  console.log('payload get requests', payload);
+
   http.get(`requests${payload.status ? `?status=${payload.status}` : ''}`)
     .then(response => {
       dispatch({
@@ -99,6 +102,39 @@ export const createLeaveRequest = payload => dispatch => {
         ],
         { cancelable: false },
       );
+
+      dispatch(getRequests({ status: 'pending' }));
+
+    })
+    .catch(error => {
+      dispatch({
+        type: globals.ADD_ERROR,
+        error
+      });
+    });
+}
+
+export const createTravelRequest = payload => dispatch => {
+
+  dispatch({ type: types.SEND_TRAVEl_REQUEST });
+
+  http.post("requests", payload)
+    .then(response => {
+      dispatch({
+        type: types.TRAVEL_REQUEST_SUCCESS,
+        payload: response.data
+      });
+
+      Alert.alert(
+        'Travel Request',
+        'Your travel request has been successfully created.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
+
+      dispatch(getRequests({ status: 'pending' }));
 
     })
     .catch(error => {

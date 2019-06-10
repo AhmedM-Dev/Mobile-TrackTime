@@ -25,8 +25,8 @@ export const getStats = payload => dispatch => {
 }
 
 
-export const getUsers = () => dispatch => {
-    http.get(`${domain}`)
+export const getUsers = (filter = null) => dispatch => {
+    http.get(`${domain}${filter && filter.all ? `?all=${filter.all}` : ''}`)
       .then(response => {
         dispatch({
           type: types.GET_USERS,

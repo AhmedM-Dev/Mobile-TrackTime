@@ -11,6 +11,7 @@ import calendarReducer from "../components/screens/Calendar/reducers";
 import eventReducer from "../components/screens/Events/reducers";
 import historyReducer from "../components/screens/History/reducers";
 import holidaysReducer from '../components/screens/holidaysManagement/reducers';
+import travelsReducer from '../components/screens/Travels/reducers';
 
 
 import types from './types';
@@ -110,6 +111,20 @@ export const requestsReducer = (state = [], action) => {
         ]
       }
 
+    case types.SEND_TRAVEl_REQUEST:
+      return {
+        ...state,
+        sendingRequest: true,
+        requestSuccess: false
+      };
+
+    case types.TRAVEL_REQUEST_SUCCESS:
+      return {
+        ...state,
+        sendingRequest: false,
+        requestSuccess: true
+      };
+
     default:
       return state;
   }
@@ -149,5 +164,6 @@ export default combineReducers({
   requestsReducer,
   eventReducer,
   historyReducer,
-  holidaysReducer
+  holidaysReducer,
+  travelsReducer
 });

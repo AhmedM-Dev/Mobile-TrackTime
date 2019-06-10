@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform, Alert } from 'react-native';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import DatePicker from 'react-native-datepicker';
@@ -12,9 +12,9 @@ import StyledInput from '../../ui/Input/addEventInput';
 import { addHoliday } from './actions';
 
 const initialState = {
-  holidayCategory: 'holidays',
+  category: 'holidays',
   title: '',
-  days: '',
+  days: null,
   date: new Date()
 }
 
@@ -23,7 +23,7 @@ class add extends Component {
 
   handleHolidayCategory = (text) => {
     this.setState({
-      holidayCategory: text
+      category: text
     });
   }
 
@@ -48,7 +48,20 @@ class add extends Component {
   }
 
   handleAddHoliday = () => {
+    if (this.state.category === 'holidays') {
+      if (this.state.title.length > 0 && this.state.days && this.state.date) {
+        this.props.addHoliday({ ...this.state });
+        this.setState(initialState);
+      }
+    } else if (this.state.category === 'celebrations') {
+      if (this.state.title.length > 0 && this.state.days) {
 
+        const { date, ...holiday } = this.state;
+
+        this.props.addHoliday(holiday);
+        this.setState(initialState);
+      }
+    }
   }
 
   render() {
@@ -68,7 +81,7 @@ class add extends Component {
           <View >
             <AdminPickers height={45} width={300} paddingLeft={20} marginTop={40}>
               <Picker
-                selectedValue={this.state.holidayCategory || ''}
+                selectedValue={this.state.category || ''}
                 style={{
                   alignSelf: 'center',
                   marginTop: 10,
@@ -86,7 +99,7 @@ class add extends Component {
             <StyledInput text={'Name'} value={this.state.title} textColor={'white'} keyboardType="email-address" onChange={this.handleTitle} />
             <StyledInput text={'Days number'} value={this.state.days} textColor={'white'} keyboardType="number-pad" onChange={this.handleDays} />
             {/* <StyledInput text={'Date'} textColor={'white'} keyboardType="email-address" onChange={this.handleDate} /> */}
-            {this.state.holidayCategory === 'holidays' && <DatePicker
+            {this.state.category === 'holidays' && <DatePicker
               style={{ width: 300 }}
               date={this.state.date || ''}
               mode="date"
@@ -183,11 +196,13 @@ const mapStateToProps = state => {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
     theme: state.settingsReducer.theme,
+    sendingRequest: state.holidaysReducer.sendingRequest,
+    success: state.holidaysReducer.success
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  addHoliday(holiday) { dispatch(addHoliday(holiday)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(add);

@@ -2,24 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Container, Content, View, Picker, Icon, Text } from 'native-base';
-import { Table, Row } from 'react-native-table-component';
+import { Table, Row, Cell, TableWrapper } from 'react-native-table-component';
 import DatePicker from 'react-native-datepicker';
 import { getUsers } from '../Dashboard/actions';
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
 import { getGroups } from './actions';
 import { Button } from 'react-native-elements';
+import moment from 'moment';
 
 import AppHeader from "../../ui/AppHeader";
+
+const dayOfWeek = (days, format) => {
+  return moment(moment().week(), 'WW').add(days, 'days').format(format)
+}
+
 class Calendar extends React.Component {
   state = {
     group: '',
     connectedUser: {},
-    tableHead: ['Employee', '1', '2', '3', '4', '5', '6', '7'],
+    tableHead: [
+      'Employee',
+      dayOfWeek(0, 'DD'),
+      dayOfWeek(1, 'DD'),
+      dayOfWeek(2, 'DD'),
+      dayOfWeek(3, 'DD'),
+      dayOfWeek(4, 'DD'),
+      dayOfWeek(5, 'DD'),
+      dayOfWeek(6, 'DD'),
+    ],
     widthArr: [160, 35, 35, 35, 35, 35, 35, 35],
+    date: moment(),
+    firstDayCurrentWeek: moment(moment().isoWeek(), 'WW').format('DD-MM-YYYY')
   }
   componentDidMount() {
     this.props.getUsers();
     this.props.getGroups();
+    console.log('week', moment("11-26-2016", "MMDDYYYY").isoWeek());
+    console.log(moment(moment().isoWeek(), 'WW').add(2, 'days').format('DD-MM-YYYY'));
   }
 
 
@@ -29,6 +48,8 @@ class Calendar extends React.Component {
       group: group
     });
   }
+
+
 
   render() {
     const state = this.state;
@@ -113,29 +134,29 @@ class Calendar extends React.Component {
           <View style={{ marginBottom: 10, width: 340, alignSelf: 'center' }}>
 
             <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-              <View style={{ width: 110, height: 25, backgroundColor: '#629FC3', alignItems:'center' }}>
+              <View style={{ width: 110, height: 25, backgroundColor: '#629FC3', alignItems: 'center' }}>
                 <Text style={styles.title}> Week-end</Text>
               </View>
-              <View style={{ width: 110, height: 25, backgroundColor: '#7E2A8B' ,  marginLeft: 5, marginRight: 5, alignItems:'center'  }}>
+              <View style={{ width: 110, height: 25, backgroundColor: '#7E2A8B', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
                 <Text style={styles.title}>Holiday</Text>
               </View>
-              <View style={{  width: 110, height: 25, backgroundColor: 'transparent', alignItems:'center' }}>
-                <Text style={{...styles.title , color:'#629FC3'}}> * Authorization</Text>
+              <View style={{ width: 110, height: 25, backgroundColor: 'transparent', alignItems: 'center' }}>
+                <Text style={{ ...styles.title, color: '#629FC3' }}> * Authorization</Text>
               </View>
             </View>
 
             <View style={{ flexDirection: 'row' }}>
-              <View style={{  width: 125, height: 25, backgroundColor: '#BBA43A' , alignItems:'center' }}>
+              <View style={{ width: 125, height: 25, backgroundColor: '#BBA43A', alignItems: 'center' }}>
                 <Text style={styles.title}>requested leave</Text>
               </View>
 
-              <View style={{  width: 125, height: 25, backgroundColor: 'green', marginLeft: 5, marginRight: 5, alignItems:'center' }}>
+              <View style={{ width: 125, height: 25, backgroundColor: 'green', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
                 <Text style={styles.title} >validated leave</Text>
               </View>
 
-            <View style={{  width: 80, height: 25, backgroundColor: 'red' , alignItems:'center' }}>
-              <Text style={styles.title} >Today</Text>
-            </View>
+              <View style={{ width: 80, height: 25, backgroundColor: 'red', alignItems: 'center' }}>
+                <Text style={styles.title} >Today</Text>
+              </View>
             </View>
 
           </View>
@@ -144,14 +165,14 @@ class Calendar extends React.Component {
         </View>
 
         <Content style={{ paddingLeft: 10, paddingRight: 10 }}>
-          <ScrollView horizontal={true} style={{marginBottom:20}}>
+          <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
             <View>
               <Table borderStyle={{ borderColor: 'transparent' }}>
                 <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor }} textStyle={{ ...styles.text, color: 'white' }} />
               </Table>
               <ScrollView style={styles.dataWrapper}>
                 <Table borderStyle={{ borderColor: 'transparent' }}>
-                  {
+                  {/* {
                     this.props.users && this.props.users.length > 0 && this.props.users.map((user, index) => (
                       <Row
                         key={index}
@@ -160,6 +181,23 @@ class Calendar extends React.Component {
                         style={[{ height: 40, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2 }]}
                         textStyle={{...styles.text , color:this.props.theme.fontColor}}
                       />
+                    ))
+                  } */}
+
+                  {
+                    this.props.users && this.props.users.length > 0 && this.props.users.map((user, index) => (
+                      <TableWrapper key={index} style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
+
+                        <Cell data={`${user.firstName} ${user.lastName}`} style={{ paddingLeft: 15, backgroundColor: 'gray', width: 160, height: 40 }} textStyle={{ color: 'red' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
+
+                      </TableWrapper>
                     ))
                   }
                 </Table>
@@ -187,8 +225,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: 'black',
   },
-  title:{
-   fontSize: 14 , alignSelf:'center', color:'white'
+  title: {
+    fontSize: 14, alignSelf: 'center', color: 'white'
   }
 
 });

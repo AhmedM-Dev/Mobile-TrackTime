@@ -22,9 +22,9 @@ export default class adminMenu extends Component {
             width: 50,
             left: 15,
             top: 15,
-         height:50,
-         width:50
-         }}>
+            height: 50,
+            width: 50
+          }}>
           </Image>
           {/* <Icon
             name="md-menu"
@@ -36,7 +36,7 @@ export default class adminMenu extends Component {
 
         </View>
         <Content>
-          <View style={{ top: 130, alignItems: 'center', marginBottom: 190 }}>
+          <View style={{ top: 80, alignItems: 'center', marginBottom: 100 }}>
             <Text style={{ color: '#05183C', fontSize: 25, fontWeight: 'bold', fontFamily: 'cursive' }}> ADMINISTRATION </Text>
             <Text style={{ color: '#05183C', fontSize: 25, opacity: 0.9, fontFamily: 'cursive' }}> MENU </Text>
           </View>
@@ -113,6 +113,38 @@ export default class adminMenu extends Component {
                 color: 'white',
               }}
               title="Working hours management"
+              onPress={() => console.log('Under development')}
+            />
+
+            <Button
+
+              buttonStyle={{
+                backgroundColor: "#072152",
+                borderRadius: 20,
+                width: 280,
+                height: 50,
+                marginBottom: 10, borderColor: 'gray', borderWidth: 1
+              }}
+              titleStyle={{
+                color: 'white',
+              }}
+              title="Review users statistics"
+              onPress={() => console.log('Under development')}
+            />
+
+            <Button
+
+              buttonStyle={{
+                backgroundColor: "#072152",
+                borderRadius: 20,
+                width: 280,
+                height: 50,
+                marginBottom: 10, borderColor: 'gray', borderWidth: 1
+              }}
+              titleStyle={{
+                color: 'white',
+              }}
+              title="Score Formula"
               onPress={() => this.props.navigation.navigate('whm')}
             />
 

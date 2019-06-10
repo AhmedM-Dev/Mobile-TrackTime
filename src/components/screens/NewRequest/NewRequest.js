@@ -10,10 +10,7 @@ export default createMaterialTopTabNavigator({
   },
   'New Request': {
     screen: LeaveRequest
-  },
-  'Attendance correction Request': {
-    screen: AttendanceCorrection
-  },
+  }
 },
   {
     tabBarOptions: {

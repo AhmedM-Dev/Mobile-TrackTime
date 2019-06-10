@@ -113,11 +113,19 @@ class Notifications extends Component {
       });
 
       this.setState(initialState);
+    } else if (this.state.goTo.category === 'TRAVEL') {
+      this.props.acceptRequest({
+        request: this.state.goTo.to.request,
+        note: this.state.note,
+        notifId: this.state.goTo.to.notifId
+      });
+
+      this.setState(initialState);
     }
   }
 
   handleReject = () => {
-    if (this.state.goTo.category === 'LEAVE' || this.state.goTo.category === 'AUTHORIZATION') {
+    if (this.state.goTo.category === 'LEAVE' || this.state.goTo.category === 'AUTHORIZATION' || this.state.goTo.category === 'ATTENDANCE' || this.state.goTo.category === 'TRAVEL') {
       this.props.rejectRequest({
         request: this.state.goTo.to && this.state.goTo.to.request,
         note: this.state.note,
@@ -136,7 +144,7 @@ class Notifications extends Component {
 
   handleAddAttendance = () => {
     this.setState({
-      attendances: [...this.state.attendances, moment().format('HH:mm:ss')]
+      attendances: this.state.attendances && this.state.attendances.length > 0 ? [...this.state.attendances, moment().format('HH:mm:ss')] : [moment().format('HH:mm:ss')]
     });
   }
 
@@ -189,13 +197,20 @@ class Notifications extends Component {
               </>
             }
 
-            {goTo.category === 'TRAVEL' && <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
-              <Text style={{ color: this.props.theme.fontColor }}>Employee : {}</Text>
-              <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > Category : </Text>
-              <Text style={{ color: this.props.theme.fontColor }} >From : </Text>
-              <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} > To : </Text>
-              <Text style={{ color: this.props.theme.fontColor }} >Motif : </Text>
-            </View>}
+            {
+              goTo.category === 'TRAVEL' &&
+              <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+                <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{goTo.to.title}</Text>
+                <Text></Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>Employee:</Text> {goTo.to.request.fromUserName}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>From:</Text> {`in ${goTo.to.request.travel.startDate} at ${goTo.to.request.travel.startTime}`}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>To:</Text> {`in ${goTo.to.request.travel.endDate} at ${goTo.to.request.travel.endTime}`}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>Conductor:</Text> {`${goTo.to.request.travel.conductor.firstName} ${goTo.to.request.travel.conductor.lastName}`}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>Destination Address:</Text> {goTo.to.request.travel.destinationAdress}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>Travel Type:</Text> {goTo.to.request.travel.travelType}</Text>
+                <Text style={{ color: this.props.theme.fontColor }}><Text style={{ fontWeight: 'bold' }}>Type:</Text> {goTo.to.request.travel.type}</Text>
+              </View>
+            }
 
             {
               goTo.category === 'ATTENDANCE' &&
@@ -210,7 +225,7 @@ class Notifications extends Component {
 
             <View style={{ alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
               {
-                goTo.category === 'ATTENDANCE' && this.state.attendances.map((item, i) => {
+                goTo.category === 'ATTENDANCE' && goTo.to.request.status === 'pending' && this.state.attendances.map((item, i) => {
                   return (
                     <View key={i} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                       <DatePicker
@@ -256,9 +271,9 @@ class Notifications extends Component {
                   )
                 })
               }
-              <Button onPress={this.handleAddAttendance} style={{ justifyContent: 'center', width: 300, height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
+              {goTo.category === 'ATTENDANCE' && goTo.to.request.status === 'pending' && <Button onPress={this.handleAddAttendance} style={{ justifyContent: 'center', width: 300, height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
                 <Text>Add Attendance</Text>
-              </Button>
+              </Button>}
             </View>
 
             {

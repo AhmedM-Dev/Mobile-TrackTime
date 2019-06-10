@@ -18,7 +18,7 @@ import ActionButton from 'react-native-circular-action-menu';
 import Textarea from 'react-native-textarea';
 import moment from 'moment';
 
-import { createLeaveRequest } from '../../../store/actions';
+import { createLeaveRequest, getRequests } from '../../../store/actions';
 
 import styles from './styles';
 
@@ -108,19 +108,19 @@ class LeaveRequest extends React.Component {
         <StatusBar hidden />
         <Content>
 
-          <View style={{ marginTop: 20,  width:340  , borderRadius:20 ,alignItems:'center' , alignSelf:'center' , backgroundColor:this.props.theme.backgroundColor}}>
+          <View style={{ marginTop: 20, width: 340, borderRadius: 20, alignItems: 'center', alignSelf: 'center', backgroundColor: this.props.theme.backgroundColor }}>
             <View style={{
               ...styles.autorisationList,
               backgroundColor: this.props.theme.pickerBackground,
-              borderColor: this.props.theme.pickerBackground, marginTop:20
-            }}> 
+              borderColor: this.props.theme.pickerBackground, marginTop: 20
+            }}>
               <Picker
                 selectedValue={this.state.leaveCategory}
                 style={{
                   color: 'black',
                 }}
                 textStyle={{ color: 'black' }}
-                itemTextStyle={{ color: 'black' ,}}
+                itemTextStyle={{ color: 'black', }}
                 onValueChange={(itemValue, itemIndex) =>
                   this.handleCategoryChange(itemValue)
                 }
@@ -173,11 +173,11 @@ class LeaveRequest extends React.Component {
                   },
                   placeholderText: {
                     color: 'black',
-                    left: -100 , position:'absolute' , left:20
+                    left: -100, position: 'absolute', left: 20
                   },
                   dateText: {
                     color: 'black',
-                    left: -67, position:'absolute' , left:20
+                    left: -67, position: 'absolute', left: 20
 
                   }
                 }}
@@ -219,11 +219,11 @@ class LeaveRequest extends React.Component {
                   },
                   placeholderText: {
                     color: 'black',
-                    left: -110, position:'absolute' , left:20
+                    left: -110, position: 'absolute', left: 20
                   },
                   dateText: {
                     color: 'black',
-                    left: -67, position:'absolute' , left:20
+                    left: -67, position: 'absolute', left: 20
 
                   }
                 }}
@@ -260,11 +260,11 @@ class LeaveRequest extends React.Component {
                       },
                       placeholderText: {
                         color: 'black',
-                        left: -110, position:'absolute' , left:20
+                        left: -110, position: 'absolute', left: 20
                       },
                       dateText: {
                         color: 'black',
-                        left: -67 , position:'absolute' , left:20
+                        left: -67, position: 'absolute', left: 20
 
                       }
                     }}
@@ -298,11 +298,11 @@ class LeaveRequest extends React.Component {
                       },
                       placeholderText: {
                         color: 'black',
-                        left: -110, position:'absolute' , left:20
+                        left: -110, position: 'absolute', left: 20
                       },
                       dateText: {
                         color: 'black',
-                        left: -67, position:'absolute' , left:20
+                        left: -67, position: 'absolute', left: 20
 
                       }
                     }}
@@ -383,6 +383,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   createLeaveRequest(request) { dispatch(createLeaveRequest(request)) },
+  getRequests(payload) { dispatch(getRequests(payload)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaveRequest);

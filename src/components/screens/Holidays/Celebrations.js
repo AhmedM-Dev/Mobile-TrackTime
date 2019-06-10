@@ -3,13 +3,19 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import { Content, Container, Icon } from 'native-base';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
+import { getHolidays } from '../holidaysManagement/actions';
 class Celebrations extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: ['Name', 'Date', 'Days',],
+      tableHead: ['Celebration', 'Date', 'Days'],
     }
+  }
+
+  componentDidMount() {
+    this.props.getHolidays();
   }
 
   render() {
@@ -31,10 +37,10 @@ class Celebrations extends Component {
           </Table>
           <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
             {
-              tableData.map((rowData, index) => (
+              this.props.holidays && this.props.holidays.length > 0 && this.props.holidays.map((holiday, index) => (
                 <Row
                   key={index}
-                  data={rowData}
+                  data={[holiday.title, moment(holiday.date).format('MMMM DD'), holiday.days]}
                   widthArr={state.widthArr}
                   style={[ {height: 50, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
                   textStyle={{...styles.text , color:this.props.theme.fontColor}}
@@ -71,8 +77,13 @@ const mapStateToProps = state => {
   return {
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
+    holidays: state.holidaysReducer.holidays && state.holidaysReducer.holidays.length > 0 ? state.holidaysReducer.holidays.filter(item => item.category === 'celebrations') : state.holidaysReducer.holidays
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  getHolidays() { dispatch(getHolidays()) }
+});
 
-export default connect(mapStateToProps)(Celebrations);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Celebrations);

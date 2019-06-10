@@ -1,7 +1,7 @@
 import types from './types';
 import globals from '../../../store/types';
 import HttpClient from '../../../services/HttpClient';
-import {ToastAndroid} from 'react-native';
+import { Alert } from 'react-native';
 
 const http = new HttpClient();
 const domain = 'holidays';
@@ -23,18 +23,46 @@ export const getHolidays = () => dispatch => {
 }
 
 export const addHoliday = holiday => dispatch => {
+
+  dispatch({
+    type: types.ADD_HOLIDAY
+  });
+
   http.post(`${domain}`, holiday)
     .then(response => {
       dispatch({
-        type: types.ADD_HOLIDAY,
+        type: types.ADD_HOLIDAY_SUCCESS,
         holiday: response.data.holiday
       });
+
+      Alert.alert(
+        'Add Holidays',
+        'Holiday added successfully.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
     .catch(error => {
+
+      dispatch({
+        type: types.ADD_HOLIDAY_FAILED
+      });
+
       dispatch({
         type: globals.ADD_ERROR,
         error
       });
+
+      Alert.alert(
+        'Add Holidays',
+        'Error adding holiday.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     });
 }
 

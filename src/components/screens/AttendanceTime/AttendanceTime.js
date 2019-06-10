@@ -64,7 +64,17 @@ class AttendanceTime extends React.Component {
   }
 
   handleSendCorrectRequest = (attendance) => {
-    if (this.state.selectedUser === this.props.user) {
+    if ((this.props.user.businessRole === 'CEO' || this.props.user.businessRole === 'Pole Lead') && (this.state.selectedUser === this.props.user)) {
+      Alert.alert(
+        moment(attendance.date).format('DD-MM-YYYY'),
+        'Do you want to send a correction request for this attendance ?',
+        [
+          { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+          { text: 'Submit', onPress: () => this.handleAttendanceCorrectRequest(attendance) }
+        ],
+        { cancelable: true },
+      );
+    } else if (this.props.user.businessRole !== 'CEO' && this.props.user.businessRole !== 'Pole Lead') {
       Alert.alert(
         moment(attendance.date).format('DD-MM-YYYY'),
         'Do you want to send a correction request for this attendance ?',
@@ -195,7 +205,7 @@ class AttendanceTime extends React.Component {
                   width: 50,
 
                 }}
-                onPress={() => {this.setState(initialState); this.props.getAttendances();}}
+                onPress={() => { this.setState(initialState); this.props.getAttendances(); }}
               >
                 <Icon name="md-refresh" style={{ color: 'white', fontSize: 18, left: 4 }}></Icon>
               </Button>
@@ -226,7 +236,7 @@ class AttendanceTime extends React.Component {
 
           {/* Check in button */}
           <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-            <Button onLongPress={() => {this.props.checkIn(); this.props.getAttendances();}} style={{ justifyContent: 'center', width: '100%', height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
+            <Button onLongPress={() => { this.props.checkIn(); this.props.getAttendances(); }} style={{ justifyContent: 'center', width: '100%', height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
               <Text>CHECK IN</Text>
             </Button>
           </View>
