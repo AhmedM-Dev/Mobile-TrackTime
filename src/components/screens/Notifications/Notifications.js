@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastAndroid, Dimensions, TouchableHighlight } from 'react-native';
+import { ToastAndroid, Dimensions, TouchableHighlight , Image} from 'react-native';
 import { Container, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon, View } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -168,13 +168,12 @@ class Notifications extends Component {
             <Icon
               name="md-arrow-round-back"
               onPress={() => this.handleGoTo(initialState)}
-              style={{ color: this.props.theme.fontColor, margin: 20, fontSize: 16 }}> </Icon>
+              style={{ color: '#DA7373', margin: 20, fontSize: 16 }}> </Icon>
             {
               goTo.category === 'LEAVE' &&
               <>
-                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+                <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 5 }}>
                   <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold', marginBottom: 10 }}>{goTo.to.title}</Text>
-                  <Text></Text>
                   <Text style={{ color: this.props.theme.fontColor }} >From {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
@@ -214,12 +213,12 @@ class Notifications extends Component {
 
             {
               goTo.category === 'ATTENDANCE' &&
-              <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20, marginTop: 20 }}>
+              <View style={{ backgroundColor: this.props.theme.cardBackground, width: 300, alignSelf: 'center', borderRadius: 20, padding: 20 ,top:-10, marginBottom:5 ,}}>
                 <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>{goTo.to.title}</Text>
                 <Text></Text>
                 <Text style={{ color: this.props.theme.fontColor }}>Employee : {goTo.to.request.fromUserName}</Text>
                 <Text style={{ color: this.props.theme.fontColor }}>Date : {moment(goTo.to.request.attendance.date).format('YYYY-MM-DD')}</Text>
-                <Text style={{ color: this.props.theme.fontColor }}>Motif : {goTo.to.request.motif}</Text>
+                <Text style={{ color: this.props.theme.fontColor  }}>Motif : <Text>i had a duplicate attendance at 13:00 , can you correct this for me please ?{goTo.to.request.motif}</Text></Text>
               </View>
             }
 
@@ -229,7 +228,7 @@ class Notifications extends Component {
                   return (
                     <View key={i} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                       <DatePicker
-                        style={{ width: 260, alignSelf: 'center', color: 'white', height: 50 }}
+                        style={{ width: 260, alignSelf: 'center', color:  'black', height: 50 }}
                         date={item}
                         mode="time"
                         iconSource={null}
@@ -238,21 +237,21 @@ class Notifications extends Component {
                           dateIcon: {
                             position: 'absolute',
                             left: 0,
-                            top: 4,
+                            top: 2,
                             marginLeft: 0,
                           },
                           dateInput: {
                             marginTop: 10,
-                            backgroundColor: '#072152',
-                            borderColor: 'gray',
-                            borderRadius: 20
+                            backgroundColor: this.props.theme.cardBackground,
+                            borderColor: this.props.theme.cardBackground,
+                            borderRadius: 10
 
                           },
                           placeholderText: {
-                            color: 'white', position: 'absolute', left: 30
+                            color: 'black', position: 'absolute', left: 20
                           },
                           dateText: {
-                            color: 'white', position: 'absolute', left: 30
+                            color: 'black', position: 'absolute', left: 20
                           }
                         }}
                         onDateChange={(changedDate) => this.handleChangeAttendance(changedDate, i)}
@@ -264,14 +263,14 @@ class Notifications extends Component {
                         justifyContent: 'center',
                         alignItems: 'center'
                       }} onPress={() => this.handleDeleteAttendance(i)}>
-                        <Text style={{ color: 'red' }}>X</Text>
+                        <Text style={{ color: '#CD4F4F' }}>X</Text>
                       </TouchableHighlight>
 
                     </View>
                   )
                 })
               }
-              {goTo.category === 'ATTENDANCE' && goTo.to.request.status === 'pending' && <Button onPress={this.handleAddAttendance} style={{ justifyContent: 'center', width: 300, height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
+              {goTo.category === 'ATTENDANCE' && goTo.to.request.status === 'pending' && <Button onPress={this.handleAddAttendance} style={{ justifyContent: 'center', width: 300, height: 40, backgroundColor: '#448DB7', marginTop: 10, marginBottom: 10, borderRadius: 10 }}>
                 <Text>Add Attendance</Text>
               </Button>}
             </View>
@@ -339,14 +338,14 @@ class Notifications extends Component {
       )
     } else
       return (
-        <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
+        <Container style={{ backgroundColor: 'this.props.theme.backgroundColor' }} >
           <AppHeader title="Notifications" navigation={this.props.navigation} />
           <Content>
-            <List style={{ backgroundColor: this.props.theme.notif, width: '100%', }} >
+            <List style={{ backgroundColor: 'white', width: '100%', }} >
               {
                 this.props.notifications.length > 0 ? this.props.notifications.map((notif, id) => {
                   return (
-                    <ListItem style={{ backgroundColor: notif && notif.vues && notif.vues.includes(this.props.user.userId) ? null : this.props.theme.backgroundColor, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail key={id}>
+                    <ListItem style={{ backgroundColor: 'white' && notif.vues && notif.vues.includes(this.props.user.userId) ? null : this.props.theme.notif, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail key={id}>
                       <Left>
                         <Thumbnail square source={this.getLogo(notif.category)} style={{ marginLeft: 10 }} />
                       </Left>

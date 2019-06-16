@@ -36,9 +36,9 @@ const AttendanceClock = props => {
         />
       }
       <View style={{ width: 200, height: 200, position: 'absolute', justifyContent: 'center', alignItems: 'center', top: -3, right: -3 }}>
-        <Text style={{color:'#EC8181'}}>{} of delay</Text>
-        <Text style={{color:'#1D8348'}} >{} worked</Text>
-        <Text style={{color:'#7E0953'}} >{} of pause</Text>
+        <Text style={{color:'#EC8181' , fontSize:12}}>0H0M of delay</Text>
+        <Text style={{color:'#1D8348' ,fontSize:12}} >8H12M worked</Text>
+        <Text style={{color:'#7E0953',fontSize:12}} > 1H31M of pause</Text>
       </View>
     </>
   )

@@ -236,7 +236,7 @@ class AttendanceTime extends React.Component {
 
           {/* Check in button */}
           <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-            <Button onLongPress={() => { this.props.checkIn(); this.props.getAttendances(); }} style={{ justifyContent: 'center', width: '100%', height: 40, backgroundColor: '#FAAC58', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
+            <Button onLongPress={() => { this.props.checkIn(); this.props.getAttendances(); }} style={{ justifyContent: 'center', width: '100%', height: 40, backgroundColor: '#448DB7', marginTop: 10, marginBottom: 10, borderRadius: 20 }}>
               <Text>CHECK IN</Text>
             </Button>
           </View>
