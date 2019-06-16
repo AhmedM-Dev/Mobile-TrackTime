@@ -25,7 +25,6 @@ export default class HttpClient {
     });
   }
 
-
   setHeaders(headers) {
     this.headers = headers;
     return this.axiosClient = axios.create({

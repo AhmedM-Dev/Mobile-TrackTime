@@ -31,11 +31,22 @@ const usersReducer = (state = {}, action) => {
         ...state,
         users: action.users
       };
-      case types.GET_GROUPS:
+
+    case types.GET_GROUPS:
       return {
         ...state,
         groups: action.groups
       };
+
+    case types.UPDATE_PROFILE:
+      return {
+        ...state,
+        users: state.users && state.users.length > 0 ? [
+          ...state.users.filter(user => user.userId !== action.user.userId),
+          action.user
+        ] : [action.user]
+      };
+
     default:
       return state;
   }

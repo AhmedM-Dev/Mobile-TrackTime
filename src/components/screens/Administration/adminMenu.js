@@ -116,7 +116,7 @@ export default class adminMenu extends Component {
               onPress={() => console.log('Under development')}
             />
 
-            <Button
+            {/* <Button
 
               buttonStyle={{
                 backgroundColor: "#072152",
@@ -130,7 +130,7 @@ export default class adminMenu extends Component {
               }}
               title="Review users statistics"
               onPress={() => this.props.navigation.navigate('Bulletin')}
-            />
+            /> */}
 
             <Button
 
