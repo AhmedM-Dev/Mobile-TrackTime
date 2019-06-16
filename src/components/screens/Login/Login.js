@@ -27,8 +27,8 @@ class Login extends Component {
   state = {
     check: false,
     loading: false,
-    email: "becka.holden@tracktime.com",
-    // email:"asma.bahmed19@hotmail.com",
+    // email: "becka.holden@tracktime.com",
+    email:"asma.bahmed19@hotmail.com",
     // email:"tibold.temple@tracktime.com",
     pass: "123",
     countClick: 0,

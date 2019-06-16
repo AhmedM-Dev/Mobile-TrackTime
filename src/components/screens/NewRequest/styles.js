@@ -25,8 +25,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 300,
     marginBottom: -20,
-    borderColor: '#1C1C1C',
-    backgroundColor: '#1C1C1C',
     alignSelf: 'center',
     zIndex: 5,
     borderRadius: 20
@@ -46,7 +44,6 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: 'black',
     borderRadius: 20,
-    paddingLeft: 10,
     paddingRight: 10,
     width:300,
     marginBottom:50,

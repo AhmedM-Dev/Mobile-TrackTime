@@ -76,10 +76,8 @@ export class createTravel extends Component {
   handleDateChange = (type, value) => {
     this.setState({
       ...this.state,
-      startDate: type === "startdate" ? value : this.state.startDate,
-      startTime: type === "starttime" ? value : this.state.startTime,
-      endDate: type === "enddate" ? value : this.state.endDate,
-      endTime: type === "endtime" ? value : this.state.endTime
+      startDate: type === "startDate" ? value : this.state.startDate,
+      endDate: type === "endDate" ? value : this.state.endDate,
     })
   }
 
@@ -96,19 +94,18 @@ export class createTravel extends Component {
 
   render() {
     return (
-      <Container style={styles.container} >
+      <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
         <StatusBar hidden />
-        <Content>
-          <View style={styles.cardStyle}>
+        <Content >
+          <View style={{marginTop:50}}>
             <View>
-
               <DatePicker
-                style={{ width: 300, alignSelf: 'center', marginBottom: 5, marginTop: 20, color: 'white' }}
+                style={{ width: 300, alignSelf: 'center', marginBottom: 10, color: 'white', marginTop: 5 }}
                 date={this.state.startDate}
-                mode="date"
+                mode="datetime"
                 iconSource={null}
-                placeholder="Select begin date"
-                format="DD-MM-YYYY"
+                placeholder="From ... "
+                format="DD-MM-YYYY, HH:mm"
                 minDate="01-01-2019"
                 maxDate="31-12-2019"
                 customStyles={{
@@ -120,67 +117,32 @@ export class createTravel extends Component {
                   },
                   dateInput: {
                     marginTop: 10,
-                    color: this.props.theme.backgroundColor,
-                    borderColor: '#1C1C1C',
+                    backgroundColor: this.props.theme.pickerBackground,
+                    borderColor: this.props.theme.pickerBackground,
                     borderWidth: 1,
-                    borderRadius: 20
+                    borderRadius: 20, height:50 , marginBottom:10
+
                   },
                   placeholderText: {
-                    color: 'white'
+                    color: 'black',
+                    left: -100, position: 'absolute', left: 10
                   },
                   dateText: {
-                    color: 'white'
+                    color: 'black',
+                    left: -67, position: 'absolute', left: 10
                   }
                 }}
-                onDateChange={(date) => { this.handleDateChange("startdate", date) }} />
-              <DatePicker
-                style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
-                date={this.state.startTime}
-                placeholder="Select begin time"
-                iconSource={null}
-                mode="time"
-                format="HH:mm"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                minuteInterval={10}
-                headerBackground="red"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    marginTop: 10,
-                    backgroundColor: '#1C1C1C',
-                    borderColor: '#1C1C1C',
-                    borderWidth: 1,
-                    borderRadius: 20
-                  },
-                  placeholderText: {
-                    color: 'white'
-                  },
-                  dateText: {
-                    color: 'white'
-                  }
-                }}
-                onDateChange={(time) => { this.handleDateChange("starttime", time) }}
-              />
-            </View>
-            <View>
+                onDateChange={(startdate) => { this.handleDateChange("startDate", startdate) }} />
 
               <DatePicker
-                style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
+                style={{ width: 300, alignSelf: 'center', marginBottom: 10, color: 'white', marginTop: 5 }}
                 date={this.state.endDate}
-                mode="date"
+                mode="datetime"
                 iconSource={null}
-                placeholder="Select end date"
-                format="DD-MM-YYYY"
+                placeholder="To ... "
+                format="DD-MM-YYYY, HH:mm"
                 minDate="01-01-2019"
                 maxDate="31-12-2019"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
                 customStyles={{
                   dateIcon: {
                     position: 'absolute',
@@ -190,120 +152,104 @@ export class createTravel extends Component {
                   },
                   dateInput: {
                     marginTop: 10,
-                    backgroundColor: '#1C1C1C',
-                    borderColor: '#1C1C1C',
+                    backgroundColor: this.props.theme.pickerBackground,
+                    borderColor: this.props.theme.pickerBackground,
                     borderWidth: 1,
-                    borderRadius: 20
+                    borderRadius: 20 ,height:50 
                   },
                   placeholderText: {
-                    color: 'white'
+                    color: 'black',
+                    left: -100, position: 'absolute', left: 10
                   },
                   dateText: {
-                    color: 'white',
+                    color: 'black',
+                    left: -67, position: 'absolute', left: 10
                   }
                 }}
-                onDateChange={(date) => { this.handleDateChange("enddate", date) }}
-              />
-              <DatePicker
-                style={{ width: 300, alignSelf: 'center', marginBottom: 20 }}
-                date={this.state.endTime}
-                placeholder="Select end time"
-                mode="time"
-                format="HH:mm"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                minuteInterval={10}
-                iconSource={null}
-
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    marginTop: 10,
-                    backgroundColor: '#1C1C1C',
-                    borderColor: '#1C1C1C',
-                    borderWidth: 1,
-                    borderRadius: 20
-                  },
-                  placeholderText: {
-                    color: 'white'
-                  },
-                  dateText: {
-                    color: 'white'
-                  }
-                }}
-                onDateChange={(time) => { this.handleDateChange("endtime", time) }}
-              />
+                onDateChange={(enddate) => { this.handleDateChange("endDate", enddate) }} />
             </View>
-            <View>
-              <Text style={styles.textStyle} >
-                Type
-                             </Text>
-              <View style={styles.list}>
 
+            <View style={{
+              ...styles.autorisationList,
+              backgroundColor: this.props.theme.pickerBackground,
+              borderColor: this.props.theme.pickerBackground, marginTop: 10 , marginBottom:10
+            }}>
                 <Picker
                   selectedValue={this.state.travelType}
-                  style={styles.pickerStyle}
-                  onValueChange={(itemValue, itemIndex) =>
+                  style={{
+                    color: 'black',
+                  }}
+                  textStyle={{ color: 'black' }}
+                  itemTextStyle={{ color: 'black', }}
+                    onValueChange={(itemValue, itemIndex) =>
                     this.handleTravelTypeChange(itemValue)
                   }>
+                  <Picker.Item label="Type" value={null} />
                   <Picker.Item label="Local" value="Local" />
                   <Picker.Item label="Abroad" value="Abroad" />
                 </Picker>
-              </View>
             </View>
 
-            <View>
-              <Text style={styles.textStyle} >
-                Conductor
-                             </Text>
-              <View style={styles.list}>
+            <View style={{
+              ...styles.autorisationList,
+              backgroundColor: this.props.theme.pickerBackground,
+              borderColor: this.props.theme.pickerBackground, marginBottom:10
+            }}>
                 <Picker
                   selectedValue={this.state.conductor}
-                  style={styles.pickerStyle}
-                  onValueChange={(itemValue, itemIndex) =>
+                  style={{
+                    color: 'black',
+                  }}
+                  textStyle={{ color: 'black' }}
+                  itemTextStyle={{ color: 'black', }}
+                                    onValueChange={(itemValue, itemIndex) =>
                     this.handleConductorChange(itemValue)
                   }>
 
                   {
-                    this.props.users && this.props.users.length > 0 && this.props.users.map(user =>
-                      <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} />
+                    this.props.users && this.props.users.length > 0 && [{ fake: true }, ...this.props.users].map(user => {
+                      return (
+                        user.fake ? <Picker.Item  label="Conductor" value={null} /> :
+                          <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} />
+                      )
+                    }
                     )
                   }
                 </Picker>
               </View>
-            </View>
 
-            <View>
-              <Text style={styles.textStyle} >
-                Type
-                             </Text>
-              <View style={styles.list}>
+
+              <View style={{
+              ...styles.autorisationList,
+              backgroundColor: this.props.theme.pickerBackground,
+              borderColor: this.props.theme.pickerBackground, marginBottom:10
+            }}>
+           
                 <Picker
                   selectedValue={this.state.type}
-                  style={styles.pickerStyle}
-                  onValueChange={(itemValue, itemIndex) =>
+                  style={{
+                    color: 'black',
+                  }}
+                  textStyle={{ color: 'black' }}
+                  itemTextStyle={{ color: 'black', }}
+                          onValueChange={(itemValue, itemIndex) =>
                     this.handleTypeChange(itemValue)
                   }>
+                  <Picker.Item label="Type" value={null} />
                   <Picker.Item label="Administration" value="Administration" />
                   <Picker.Item label="Customer" value="Customer" />
                   <Picker.Item label="Business development" value="Business development" />
                   <Picker.Item label="Visa" value="Visa" />
                   <Picker.Item label="Other" value="Other" />
                 </Picker>
-              </View>
-            </View>
+          </View>
 
             <TextInput
               name="destinationAdres"
               onChangeText={(text) => this.handleDestinationAdressChange(text)} defaultValue={this.state.text}
               style={styles.textareaContainer}
               placeholder="Destination adress"
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               defaultValue={this.state.destinationAdress}
             />
 
@@ -386,13 +332,7 @@ const styles = StyleSheet.create({
   },
 
 
-  pickerStyle: {
-    height: 50,
-    width: 300,
-    color: 'white',
-    backgroundColor: 'transparent',
-    zIndex: 5
-  },
+
   textStyle: {
     color: 'white',
     marginTop: 10,
@@ -406,16 +346,15 @@ const styles = StyleSheet.create({
   textareaContainer: {
     borderWidth: 1,
     width: 300,
-    height: 40,
-    borderColor: '#1C1C1C',
-    backgroundColor: '#1C1C1C',
+    height: 50,
+    borderColor: '#DADADA',
+    backgroundColor: '#DADADA',
     alignSelf: 'center',
-    color: 'white',
     paddingLeft: 10,
     marginBottom: 120,
-    marginTop: 5,
     borderWidth: 1,
-    borderRadius: 20
+    borderRadius: 20,
+    fontSize:16
 
   },
   actionButtonIcon: {
@@ -428,6 +367,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: '#4470B2',
+  },
+
+  autorisationList: {
+    borderWidth: 1,
+    width: 300,
+    marginBottom: -20,
+    alignSelf: 'center',
+    zIndex: 5,
+    borderRadius: 20
   },
 
 });
