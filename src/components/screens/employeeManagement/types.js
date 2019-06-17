@@ -3,7 +3,8 @@ const types = {
   ADD_USER: 'ADD_USER',
   UPDATE_USER: 'UPDATE_USER',
   DELETE_USER: 'DELETE_USER',
-  GET_GROUPS: 'GET_GROUPS'
+  GET_GROUPS: 'GET_GROUPS',
+  UPDATE_PROFILE: "UPDATE_PROFILE"
 }
 
 export default types;

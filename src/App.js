@@ -183,6 +183,17 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
+    'Bulletin': {
+      screen: Bulletin,
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <AppContext.Consumer>
+            {value => <Icon name="md-settings" style={{ color: value.theme.menu.activeLabelStyle, fontSize: value.theme.menu.fontSize }} />}
+          </AppContext.Consumer>
+        )
+      })
+    },
+
     'About TrackTime': {
       screen: AppIntro,
       navigationOptions: ({ navigation }) => ({
@@ -441,12 +452,7 @@ const AppDrawNavigator = createDrawerNavigator(
     },
 
 
-    'Bulletin': {
-      screen: Bulletin,
-      navigationOptions: ({ navigation }) => ({
-        drawerLabel: () => null,
-      })
-    },
+
   },
 
   {

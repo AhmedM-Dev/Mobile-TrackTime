@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Alert } from 'react-native';
 import SettingsList from 'react-native-setting-list';
 import { Container, Header, Content, Icon, Switch, Title } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
-import { changeTheme } from "./actions";
+import { changeTheme, changeUserProfile } from "./actions";
 
 import { Button } from 'react-native-elements';
 
@@ -28,6 +28,7 @@ class Settings extends Component {
       email: this.props.user && this.props.user.email,
       lastPass: '',
       newPass: '',
+      changed: false
     }
   }
 
@@ -69,26 +70,52 @@ class Settings extends Component {
   }
 
 
-  handleEmailChange = (text) => {
+  handleEmailChange = (email) => {
+    console.log('new email', email);
     this.setState({
       ...this.state,
-      email: text
+      email
     });
   }
 
 
-  handleNewPassChange = (text) => {
+  handleNewPassChange = (newPass) => {
     this.setState({
       ...this.state,
-      newPass: text
+      newPass
     });
   }
 
-  handleLastPassChange = (text) => {
+  handleLastPassChange = (lastPass) => {
     this.setState({
       ...this.state,
-      lastPass: text
+      lastPass
     });
+  }
+
+  handleChangeProfileRequest = () => {
+    if (this.state.lastPass && this.state.lastPass.length > 0) {
+      const email = (this.state.email !== this.props.user.email) && (this.state.email.length > 3) ? this.state.email : null;
+      const pass = this.state.newPass.length > 0 ? this.state.newPass : null;
+
+      if (email || pass) {
+        this.props.changeUserProfile({
+          userId: this.props.user.userId,
+          oldPass: this.state.lastPass,
+          email,
+          password: pass
+        });
+      }
+    } else {
+      Alert.alert(
+        'Error',
+        'You must enter your current password.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
+    }
   }
 
   render() {
@@ -155,7 +182,7 @@ class Settings extends Component {
                   left: 20, zIndex: 1000
 
                 }}
-                onChangeText={(text) => this.handleLastPassChange()}
+                onChangeText={(lastPass) => this.handleLastPassChange(lastPass)}
                 // value={this.state.text}
                 placeholder='Please set your last password here '
                 placeholderTextColor={this.props.theme.informationsColor}
@@ -187,7 +214,7 @@ class Settings extends Component {
                   left: 20, zIndex: 1000
 
                 }}
-                onChangeText={(text) => this.handleEmailChange()}
+                onChangeText={(email) => this.handleEmailChange(email)}
                 // value={this.state.text}
                 placeholder={this.props.user && this.props.user.email}
                 placeholderTextColor={this.props.theme.informationsColor}
@@ -217,7 +244,7 @@ class Settings extends Component {
                   left: 20, zIndex: 1000
 
                 }}
-                onChangeText={(text) => this.handleNewPassChange()}
+                onChangeText={(newPass) => this.handleNewPassChange(newPass)}
                 // value={this.state.text}
                 placeholder='New one'
                 placeholderTextColor={this.props.theme.informationsColor}
@@ -238,7 +265,7 @@ class Settings extends Component {
                 borderHide={'Both'}
                 backgroundColor={this.props.theme.settingContainerColor}
               />
-              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} color='red'/>
+              <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} color='red' />
 
             </SettingsList>
 
@@ -259,7 +286,7 @@ class Settings extends Component {
               top: -1,
             }}
             title="Save"
-          // onPress={() => _signOutAsync()}
+            onPress={this.handleChangeProfileRequest}
           />
         </Content>
       </Container>
@@ -300,6 +327,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   changeTheme(value) { dispatch(changeTheme(value)) },
+  changeUserProfile(payload) { dispatch(changeUserProfile(payload)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
