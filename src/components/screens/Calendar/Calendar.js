@@ -30,9 +30,10 @@ class Calendar extends React.Component {
       dayOfWeek(5, 'DD'),
       dayOfWeek(6, 'DD'),
     ],
-    widthArr: [160, 35, 35, 35, 35, 35, 35, 35],
+    widthArr: [160, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35],
     date: moment(),
-    firstDayCurrentWeek: moment(moment().isoWeek(), 'WW').format('DD-MM-YYYY')
+    firstDayCurrentWeek: moment(moment().isoWeek(), 'WW').format('DD-MM-YYYY'),
+    currentMonth: moment().month()
   }
   componentDidMount() {
     this.props.getUsers();
