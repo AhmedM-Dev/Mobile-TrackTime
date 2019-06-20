@@ -16,23 +16,31 @@ const dayOfWeek = (days, format) => {
   return moment(moment().week(), 'WW').add(days, 'days').format(format)
 }
 
-const cellColor = cell => {
+const tableHead = (date = moment().format()) => {
+  let days = []
+  for (let day = parseInt(moment(date).startOf('month').format('D')); day <= parseInt(moment(date).endOf('month').format('D')); day++) {
+    days.push(day);
+  }
+  return days;
+}
+
+const cellColor = (cell, index) => {
   switch (cell) {
     case 'W':
       return '#629FC3';
     case 'H':
       return 'yellow';
     case 'N':
-      return '#e9f0f4';
+      return index % 2 === 0 ? '#e9f0f4' : '#cbdbe5';
     case 'L':
       return '#43d516';
     case 'T':
       return 'purple';
     case 'A':
-      return '#e9f0f4';
+      return index % 2 === 0 ? '#e9f0f4' : '#cbdbe5';
 
     default:
-      return '#e9f0f4';
+      return index % 2 === 0 ? '#e9f0f4' : '#cbdbe5';
   }
 }
 
@@ -40,37 +48,50 @@ class Calendar extends React.Component {
   state = {
     group: '',
     connectedUser: {},
-    tableHead: [
-      'Employee',
-      dayOfWeek(0, 'DD'),
-      dayOfWeek(1, 'DD'),
-      dayOfWeek(2, 'DD'),
-      dayOfWeek(3, 'DD'),
-      dayOfWeek(4, 'DD'),
-      dayOfWeek(5, 'DD'),
-      dayOfWeek(6, 'DD'),
-    ],
-    widthArr: [160, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35],
+    tableHead: ['Employee', ...tableHead()],
+    widthArr: [160, ...new Array(tableHead().length).fill(35)],
     date: moment(),
     firstDayCurrentWeek: moment(moment().isoWeek(), 'WW').format('DD-MM-YYYY'),
-    currentMonth: moment().month()
+    currentDate: moment().format('YYYY-MM-DD')
   }
 
   componentDidMount() {
     this.props.getUsers();
     this.props.getGroups();
-    this.props.getCalendarData(moment().format());
+
+    this.props.getCalendarData({ dateFilter: this.state.currentDate, groupId: this.props.groups && this.props.groups.length > 0 && this.props.groups[0].groupId });
 
     console.log('week', moment("11-26-2016", "MMDDYYYY").isoWeek());
     console.log(moment(moment().isoWeek(), 'WW').add(2, 'days').format('DD-MM-YYYY'));
   }
 
 
-  handleGroupChange = (group) => {
+  handleGroupChange = (groupId) => {
     this.setState({
       ...this.state,
-      group: group
+      group: groupId
+    }, () => this.props.getCalendarData({ dateFilter: this.state.currentDate, groupId }));
+  }
+
+  updateThings = () => {
+    this.setState({
+      tableHead: ['Employee', ...tableHead(this.state.currentDate)],
+      widthArr: [160, ...new Array(tableHead(this.state.currentDate).length).fill(35)]
     });
+    this.props.getCalendarData({ dateFilter: this.state.currentDate, groupId: this.state.group });
+  }
+
+  handleDateChange = (type) => {
+    console.log();
+    if (type === 'next') {
+      this.setState({
+        currentDate: moment(this.state.currentDate).add(1, 'months').format('YYYY-MM-DD')
+      }, () => this.updateThings());
+    } else if (type === 'prev') {
+      this.setState({
+        currentDate: moment(this.state.currentDate).subtract(1, 'months').format('YYYY-MM-DD')
+      }, () => this.updateThings());
+    }
   }
 
   render() {
@@ -99,7 +120,7 @@ class Calendar extends React.Component {
               }}
               name="group"
               onValueChange={this.handleGroupChange}>
-              {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group.name} />)}
+              {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group.groupId} />)}
             </Picker>
           </CustumPicker>
 
@@ -124,7 +145,7 @@ class Calendar extends React.Component {
                 top: -1,
               }}
               title="Previous week"
-            // onPress={() => _signOutAsync()}
+              onPress={() => this.handleDateChange('prev')}
             />
 
             <Button
@@ -146,7 +167,7 @@ class Calendar extends React.Component {
                 left: -20,
               }}
               title="Next week"
-            // onPress={() => _signOutAsync()}
+              onPress={() => this.handleDateChange('next')}
             />
 
           </View>
@@ -159,8 +180,8 @@ class Calendar extends React.Component {
               <View style={{ width: 110, height: 25, backgroundColor: '#629FC3', alignItems: 'center' }}>
                 <Text style={styles.title}> Week-end</Text>
               </View>
-              <View style={{ width: 110, height: 25, backgroundColor: '#7E2A8B', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
-                <Text style={styles.title}>Holiday</Text>
+              <View style={{ width: 110, height: 25, backgroundColor: 'yellow', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
+                <Text style={{...styles.title, color: 'black'}}>Holiday</Text>
               </View>
               <View style={{ width: 110, height: 25, backgroundColor: 'transparent', alignItems: 'center' }}>
                 <Text style={{ ...styles.title, color: '#629FC3' }}> * Authorization</Text>
@@ -168,8 +189,8 @@ class Calendar extends React.Component {
             </View>
 
             <View style={{ flexDirection: 'row' }}>
-              <View style={{ width: 125, height: 25, backgroundColor: '#BBA43A', alignItems: 'center' }}>
-                <Text style={styles.title}>requested leave</Text>
+              <View style={{ width: 125, height: 25, backgroundColor: '#7E2A8B', alignItems: 'center' }}>
+                <Text style={styles.title}>Travel</Text>
               </View>
 
               <View style={{ width: 125, height: 25, backgroundColor: 'green', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
@@ -187,6 +208,9 @@ class Calendar extends React.Component {
         </View>
 
         <Content style={{ paddingLeft: 10, paddingRight: 10 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
+              <Text style={{ fontWeight: 'bold' }}>{moment(this.state.currentDate).format('MMMM YYYY')}</Text>
+          </View>
           <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
             <View>
               <Table borderStyle={{ borderColor: 'transparent' }}>
@@ -194,26 +218,14 @@ class Calendar extends React.Component {
               </Table>
               <ScrollView style={styles.dataWrapper}>
                 {this.props.data && this.props.data.length && <Table borderStyle={{ borderColor: 'transparent' }}>
-                  {/* {
-                    this.props.users && this.props.users.length > 0 && this.props.users.map((user, index) => (
-                      <Row
-                        key={index}
-                        data={[`${user.firstName} ${user.lastName}`, 1, 1, 1, 1, 1, 1, 1]}
-                        widthArr={state.widthArr}
-                        style={[{ height: 40, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2 }]}
-                        textStyle={{...styles.text , color:this.props.theme.fontColor}}
-                      />
-                    ))
-                  } */}
-
                   {
                     this.props.data.map((item, index) => (
                       <TableWrapper key={index} style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
                         {
                           item && item.length > 0 && item.map((cell, i) =>
-                            i === 0 ? <Cell data={cell} style={{ paddingLeft: 15, backgroundColor: '#e9f0f4', width: 160, height: 40 }} textStyle={{ color: 'black' }} />
+                            i === 0 ? <Cell data={cell} style={{ paddingLeft: 15, backgroundColor: index % 2 === 0 ? '#e9f0f4' : '#cbdbe5', width: 160, height: 40 }} textStyle={{ color: 'black' }} />
                               :
-                              <Cell data={cell === 'A' ? '*' : ''} style={{ backgroundColor: cellColor(cell), width: 35, height: 40, borderColor: cell === 'W' ? 'white' : '#d0e1e3' }} textStyle={{ color: 'blue', textAlign: 'center' }} />
+                              <Cell data={cell === 'A' ? '*' : ''} style={{ backgroundColor: cellColor(cell, index), width: 35, height: 40, borderColor: cell === 'W' ? 'white' : '#d0e1e3' }} textStyle={{ color: 'blue', textAlign: 'center' }} />
                           )
                         }
                       </TableWrapper>

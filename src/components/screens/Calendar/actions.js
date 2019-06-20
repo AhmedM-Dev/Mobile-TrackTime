@@ -39,14 +39,21 @@ export const getGroups = () => dispatch => {
 }
 
 export const getCalendarData = params => dispatch => {
-  http.get(`calendar`)
-  .then(response => {
+  console.log('Params', params);
 
-    console.log('DATATATATAT', response.data);
+  return new Promise((resolve, reject) => {
+    http.get(`calendar${params.dateFilter ? `?dateFilter=${params.dateFilter}` : ''}${params.groupId ? (params.dateFilter ? `&groupId=${params.groupId}` : `?groupId=${params.groupId}`) : '' } `)
+    .then(response => {
 
-    dispatch(({
-      type: types.GET_CALENDAR_DATA,
-      data: response.data.calendar
-    }))
-  })
+      dispatch({
+        type: types.GET_CALENDAR_DATA,
+        data: response.data.calendar
+      });
+
+      resolve(response.data.calendar);
+    })
+    .catch(error => {
+      reject(error);
+    });
+  });
 }
