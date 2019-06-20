@@ -6,7 +6,7 @@ import { Table, Row, Cell, TableWrapper } from 'react-native-table-component';
 import DatePicker from 'react-native-datepicker';
 import { getUsers } from '../Dashboard/actions';
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
-import { getGroups } from './actions';
+import { getGroups, getCalendarData } from './actions';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 
@@ -14,6 +14,26 @@ import AppHeader from "../../ui/AppHeader";
 
 const dayOfWeek = (days, format) => {
   return moment(moment().week(), 'WW').add(days, 'days').format(format)
+}
+
+const cellColor = cell => {
+  switch (cell) {
+    case 'W':
+      return '#629FC3';
+    case 'H':
+      return 'yellow';
+    case 'N':
+      return '#e9f0f4';
+    case 'L':
+      return '#43d516';
+    case 'T':
+      return 'purple';
+    case 'A':
+      return '#e9f0f4';
+
+    default:
+      return '#e9f0f4';
+  }
 }
 
 class Calendar extends React.Component {
@@ -35,9 +55,12 @@ class Calendar extends React.Component {
     firstDayCurrentWeek: moment(moment().isoWeek(), 'WW').format('DD-MM-YYYY'),
     currentMonth: moment().month()
   }
+
   componentDidMount() {
     this.props.getUsers();
     this.props.getGroups();
+    this.props.getCalendarData(moment().format());
+
     console.log('week', moment("11-26-2016", "MMDDYYYY").isoWeek());
     console.log(moment(moment().isoWeek(), 'WW').add(2, 'days').format('DD-MM-YYYY'));
   }
@@ -49,8 +72,6 @@ class Calendar extends React.Component {
       group: group
     });
   }
-
-
 
   render() {
     const state = this.state;
@@ -172,7 +193,7 @@ class Calendar extends React.Component {
                 <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor }} textStyle={{ ...styles.text, color: 'white' }} />
               </Table>
               <ScrollView style={styles.dataWrapper}>
-                <Table borderStyle={{ borderColor: 'transparent' }}>
+                {this.props.data && this.props.data.length && <Table borderStyle={{ borderColor: 'transparent' }}>
                   {/* {
                     this.props.users && this.props.users.length > 0 && this.props.users.map((user, index) => (
                       <Row
@@ -186,22 +207,19 @@ class Calendar extends React.Component {
                   } */}
 
                   {
-                    this.props.users && this.props.users.length > 0 && this.props.users.map((user, index) => (
+                    this.props.data.map((item, index) => (
                       <TableWrapper key={index} style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
-
-                        <Cell data={`${user.firstName} ${user.lastName}`} style={{ paddingLeft: 15, backgroundColor: 'gray', width: 160, height: 40 }} textStyle={{ color: 'red' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-                        <Cell data={null} style={{ backgroundColor: 'gray', width: 35, height: 40, borderColor: 'white' }} textStyle={{ color: 'red', textAlign: 'center' }} />
-
+                        {
+                          item && item.length > 0 && item.map((cell, i) =>
+                            i === 0 ? <Cell data={cell} style={{ paddingLeft: 15, backgroundColor: '#e9f0f4', width: 160, height: 40 }} textStyle={{ color: 'black' }} />
+                              :
+                              <Cell data={cell === 'A' ? '*' : ''} style={{ backgroundColor: cellColor(cell), width: 35, height: 40, borderColor: cell === 'W' ? 'white' : '#d0e1e3' }} textStyle={{ color: 'blue', textAlign: 'center' }} />
+                          )
+                        }
                       </TableWrapper>
                     ))
                   }
-                </Table>
+                </Table>}
               </ScrollView>
             </View>
           </ScrollView>
@@ -239,13 +257,15 @@ const mapStateToProps = state => {
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
     users: state.usersReducer.users,
-    groups: state.groupsReducer.groups
+    groups: state.groupsReducer.groups,
+    data: state.calendarReducer.data
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getUsers() { dispatch(getUsers()) },
   getGroups() { dispatch(getGroups()) },
+  getCalendarData(params) { dispatch(getCalendarData(params)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
