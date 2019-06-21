@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform , ToastAndroid} from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
-import { Icon, Content, View,  } from 'native-base'
+import { Icon, Content, View, } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
 import StyledInput from '../../ui/Input/addEventInput';
 
@@ -12,12 +12,12 @@ class Add extends Component {
   constructor() {
     super();
     this.state = {
-      periodName :'',
+      periodName: '',
       dateFrom: null,
       dateTo: null,
-      maxWorkingHours: '' ,
-      allawedDelay : '', 
-      maxDelayTime : ''
+      maxWorkingHours: '',
+      allowedDelay: '',
+      maxDelayTime: ''
     }
   };
 
@@ -28,7 +28,7 @@ class Add extends Component {
       dateTo: type === "dateTo" ? value : this.state.dateTo,
     })
   }
-  
+
   handleMaxWorkingHoursChange = (maxWorkingHours) => {
     this.setState({
       maxWorkingHours
@@ -41,9 +41,9 @@ class Add extends Component {
     });
   }
 
-  handleallawedDelayChange = (allawedDelay) => {
+  handleallowedDelayChange = (allowedDelay) => {
     this.setState({
-      allawedDelay
+      allowedDelay
     });
   }
 
@@ -63,22 +63,22 @@ class Add extends Component {
     return (
       <View style={styles.container} >
         <Content>
-      <Icon
-          name="md-arrow-round-back"
-          style={{
-            color: '#DA7373',
-            margin:30,
-            fontSize: 18,
-            left:20
-          }}
-          onPress={() => this.props.navigation.navigate('Administration')} />
+          <Icon
+            name="md-arrow-round-back"
+            style={{
+              color: '#DA7373',
+              margin: 30,
+              fontSize: 18,
+              left: 20
+            }}
+            onPress={() => this.props.navigation.navigate('Administration')} />
 
-            <View style={{marginBottom:80}}>
+          <View style={{ marginBottom: 80 }}>
 
 
             <StyledInput text={'Period name'} textColor={'white'} onChange={this.handlePeriodNameChange} />
 
-            
+
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
               date={this.state.dateFrom}
@@ -104,10 +104,10 @@ class Add extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white', position:'absolute', left:35
+                  color: 'white', position: 'absolute', left: 35
                 },
                 dateText: {
-                  color: 'white',position:'absolute', left:35
+                  color: 'white', position: 'absolute', left: 35
                 }
               }}
               onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
@@ -140,24 +140,20 @@ class Add extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white',position:'absolute', left:35
+                  color: 'white', position: 'absolute', left: 35
                 },
                 dateText: {
-                  color: 'white',position:'absolute', left:35
+                  color: 'white', position: 'absolute', left: 35
                 }
               }}
               onDateChange={(dateT) => { this.handleDateChange("dateTo", dateT) }}
             />
 
-<StyledInput text={'Max working hours'} textColor={'white'} onChange={this.handleMaxWorkingHoursChange} />
-<StyledInput text={'Allawed delay'} textColor={'white'} onChange={this.handleallawedDelayChange} />
-<StyledInput text={'Max delay time '} textColor={'white'} onChange={this.handleMaxDelayTimeChange} />
+            <StyledInput text={'Max working hours'} textColor={'white'} onChange={this.handleMaxWorkingHoursChange} />
+            <StyledInput text={'Allowed delay'} textColor={'white'} onChange={this.handleallowedDelayChange} />
+            <StyledInput text={'Max delay time'} textColor={'white'} onChange={this.handleMaxDelayTimeChange} />
 
-            </View>
-
-
-
-        
+          </View>
 
           <ActionButton
             buttonColor="#9C9C9C"
@@ -180,8 +176,8 @@ class Add extends Component {
             <ActionButton.Item
               buttonColor='#006B4C'
               title="Save"
-              // onPress={this.handleDeleteUser}
-              >
+            // onPress={this.handleDeleteUser}
+            >
               <Icon
                 name="md-done-all"
                 style={styles.actionButtonIcon}
@@ -211,12 +207,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    
+
   }
 }
 
 const mapDispatchToProps = dispatch => ({
- 
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

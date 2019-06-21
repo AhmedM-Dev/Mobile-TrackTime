@@ -112,25 +112,9 @@ export default class adminMenu extends Component {
               titleStyle={{
                 color: 'white',
               }}
-              title="Working hours management"
-              onPress={() => console.log('Under development')}
+              title="Working Hours Management"
+              onPress={() => this.props.navigation.navigate('whm')}
             />
-
-            {/* <Button
-
-              buttonStyle={{
-                backgroundColor: "#072152",
-                borderRadius: 20,
-                width: 280,
-                height: 50,
-                marginBottom: 10, borderColor: 'gray', borderWidth: 1
-              }}
-              titleStyle={{
-                color: 'white',
-              }}
-              title="Review users statistics"
-              onPress={() => this.props.navigation.navigate('Bulletin')}
-            /> */}
 
             <Button
 
