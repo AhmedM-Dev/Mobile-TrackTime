@@ -49,8 +49,11 @@ class Notifications extends Component {
   state = initialState;
 
   handleGoTo = (goTo) => {
+
+    console.log('goTo', goTo);
+
     if (goTo.category === 'EVENT') {
-      this.props.vueNotification(this.state.goTo.to);
+      this.props.vueNotification(goTo.to);
       this.props.navigation.navigate('Events', { eventId: 'eventtttt' });
     } else if (goTo.category === 'ATTENDANCE') {
       this.setState({

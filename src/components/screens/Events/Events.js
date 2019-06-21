@@ -10,7 +10,7 @@ import {
   Content,
   Badge, Card, CardItem, Thumbnail, Button, Left, Body
 } from 'native-base';
-import { map, split } from 'lodash';
+import { orderBy } from 'lodash';
 import { getEvents } from './actions';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
@@ -102,8 +102,7 @@ const mapStateToProps = state => {
     user: state.authReducer.user,
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
-    eventsList: state.eventReducer.eventsList,
-
+    eventsList: orderBy(state.eventReducer.eventsList, 'createdAtTimestamp', 'desc'),
   }
 }
 

@@ -25,6 +25,9 @@ export const getNotifications = () => dispatch => {
 }
 
 export const vueNotification = payload => dispatch => {
+
+  console.log('vueNotification payload', payload);
+
   if (payload) {
     http.put(`${domain}/${payload.notifId}`)
       .then(response => {
