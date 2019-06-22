@@ -1,33 +1,33 @@
 
 import React from 'react';
-import { Text, View,Button } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 import add from './Add'
-import update from './Update'
+import view from './Update'
 
 export default createMaterialTopTabNavigator({
-  Add: { 
+  Add: {
     screen: add
-   },
-  Update: { 
-    screen: update
+  },
+  View: {
+    screen: view
   },
 },
-{
-  tabBarOptions: {
-    activeTintColor : 'white',
-    inactiveTintColor:'white',
-    pressColor :'#4470B2',
-    tabStyle :{
+  {
+    tabBarOptions: {
+      activeTintColor: 'white',
+      inactiveTintColor: 'white',
+      pressColor: '#4470B2',
+      tabStyle: {
 
+      },
+      indicatorStyle: {
+        backgroundColor: '#4470B2'
+      },
+
+      style: {
+        backgroundColor: '#082E76'
+      },
     },
-    indicatorStyle :{
-      backgroundColor:'#4470B2'
-    },
-  
-    style: {
-      backgroundColor:'#082E76'
-    },
-  },
-});
+  });
 

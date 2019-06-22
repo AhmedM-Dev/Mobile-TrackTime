@@ -181,7 +181,7 @@ class Calendar extends React.Component {
                 <Text style={styles.title}> Week-end</Text>
               </View>
               <View style={{ width: 110, height: 25, backgroundColor: 'yellow', marginLeft: 5, marginRight: 5, alignItems: 'center' }}>
-                <Text style={{...styles.title, color: 'black'}}>Holiday</Text>
+                <Text style={{ ...styles.title, color: 'black' }}>Holiday</Text>
               </View>
               <View style={{ width: 110, height: 25, backgroundColor: 'transparent', alignItems: 'center' }}>
                 <Text style={{ ...styles.title, color: '#629FC3' }}> * Authorization</Text>
@@ -209,12 +209,25 @@ class Calendar extends React.Component {
 
         <Content style={{ paddingLeft: 10, paddingRight: 10 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
-              <Text style={{ fontWeight: 'bold' }}>{moment(this.state.currentDate).format('MMMM YYYY')}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{moment(this.state.currentDate).format('MMMM YYYY')}</Text>
           </View>
           <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
             <View>
               <Table borderStyle={{ borderColor: 'transparent' }}>
-                <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor }} textStyle={{ ...styles.text, color: 'white' }} />
+                {/* <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor }} textStyle={{ ...styles.text, color: 'white' }} /> */}
+
+                <TableWrapper style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
+                  {
+                    this.state.tableHead && this.state.tableHead.length > 0 && this.state.tableHead.map((item, index) =>
+                      <Cell data={item} style={{
+                        backgroundColor: moment(this.state.currentDate).format('YYYYMMDD') === moment().format('YYYYMMDD') && item === moment(this.state.currentDate).date() ? 'red' : this.props.theme.calendar.headerColor,
+                        width: this.state.widthArr[index], height: 50
+                      }}
+                        textStyle={{ ...styles.text, color: 'white' }}
+                      />
+                    )
+                  }
+                </TableWrapper>
               </Table>
               <ScrollView style={styles.dataWrapper}>
                 {this.props.data && this.props.data.length && <Table borderStyle={{ borderColor: 'transparent' }}>

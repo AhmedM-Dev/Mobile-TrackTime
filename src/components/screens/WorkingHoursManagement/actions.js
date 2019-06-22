@@ -8,7 +8,7 @@ const domain = 'hoursplan';
 
 export const setHoursPlan = payload => dispatch => {
   http.post(domain, payload)
-  .then(response => {
+  .then(() => {
     dispatch({
       type: types.SET_HOURS_PLAN
     });

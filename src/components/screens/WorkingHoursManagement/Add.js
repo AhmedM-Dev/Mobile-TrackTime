@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon, Content, View, } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment';
+
 import StyledInput from '../../ui/Input/addEventInput';
 
-import DatePicker from 'react-native-datepicker';
+import { setHoursPlan } from './actions';
+
+const initialState = {
+  periodName: '',
+  dateFrom: null,
+  dateTo: null,
+  requiredWorkingHours: null,
+  allowedDelaysPerMonth: null,
+  beginTime: '',
+  beginTimeMax: '',
+}
 
 class Add extends Component {
-  constructor() {
-    super();
-    this.state = {
-      periodName: '',
-      dateFrom: null,
-      dateTo: null,
-      maxWorkingHours: '',
-      allowedDelay: '',
-      maxDelayTime: ''
-    }
-  };
+  state = initialState;
 
   handleDateChange = (type, value) => {
     this.setState({
@@ -29,34 +31,42 @@ class Add extends Component {
     })
   }
 
-  handleMaxWorkingHoursChange = (maxWorkingHours) => {
-    this.setState({
-      maxWorkingHours
-    });
+  handleRequiredWorkingHoursChange = (requiredWorkingHours) => {
+    this.setState({ requiredWorkingHours });
   }
 
   handlePeriodNameChange = (periodName) => {
-    this.setState({
-      periodName
-    });
+    this.setState({ periodName });
   }
 
-  handleallowedDelayChange = (allowedDelay) => {
-    this.setState({
-      allowedDelay
-    });
+  handleAllowedDelaysPerMonthChange = (allowedDelaysPerMonth) => {
+    this.setState({ allowedDelaysPerMonth });
   }
 
-  handleMaxDelayTimeChange = (maxDelayTime) => {
-    this.setState({
-      maxDelayTime
-    });
+  handleBeginTimeChange = (type, time) => {
+    this.setState({ [type]: time });
   }
 
-  handleMaxDelayTimeChange = (maxDelayTime) => {
-    this.setState({
-      maxDelayTime
-    });
+  handleSubmitPlan = () => {
+    const { allowedDelaysPerMonth, beginTime, beginTimeMax, dateFrom, dateTo, periodName, requiredWorkingHours } = this.state;
+
+    if (dateFrom && dateTo && periodName.length > 0 && requiredWorkingHours && allowedDelaysPerMonth && moment(beginTime).format() && moment(beginTimeMax).format()) {
+      this.props.setHoursPlan({ ...this.state });
+      this.handleClear();
+    } else {
+      Alert.alert(
+        'Hours Plan',
+        'All fields are required.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
+    }
+  }
+
+  handleClear = () => {
+    this.setState(initialState);
   }
 
   render() {
@@ -76,82 +86,70 @@ class Add extends Component {
           <View style={{ marginBottom: 80 }}>
 
 
-            <StyledInput text={'Period name'} textColor={'white'} onChange={this.handlePeriodNameChange} />
+            <StyledInput text={'Period name'} value={this.state.periodName} textColor={'white'} onChange={this.handlePeriodNameChange} />
 
 
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 5, color: 'white', marginTop: 5 }}
               date={this.state.dateFrom}
-              mode="datetime"
+              mode="date"
               iconSource={null}
-              placeholder="From ... "
+              placeholder="From date... "
 
-              format="DD-MM-YYYY, HH:mm"
+              format="YYYY-MM-DD"
               minDate="01-01-2019"
               maxDate="31-12-2019"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: '#072152',
-                  borderColor: 'gray',
-                  borderRadius: 20
-
-                },
-                placeholderText: {
-                  color: 'white', position: 'absolute', left: 35
-                },
-                dateText: {
-                  color: 'white', position: 'absolute', left: 35
-                }
-              }}
+              customStyles={{ ...datePicker }}
               onDateChange={(dateF) => { this.handleDateChange("dateFrom", dateF) }} />
 
             <DatePicker
               style={{ width: 300, alignSelf: 'center', marginBottom: 30 }}
               date={this.state.dateTo}
-              placeholder="To ... "
-              mode="datetime"
-              format="DD-MM-YYYY, HH:mm"
+              placeholder="To date... "
+              mode="date"
+              format="YYYY-MM-DD"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               minuteInterval={10}
               iconSource={null}
 
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0,
-                  borderRadius: 20
-
-                },
-                dateInput: {
-                  marginTop: 10,
-                  backgroundColor: '#072152',
-                  borderColor: 'gray',
-                  borderRadius: 20
-
-                },
-                placeholderText: {
-                  color: 'white', position: 'absolute', left: 35
-                },
-                dateText: {
-                  color: 'white', position: 'absolute', left: 35
-                }
-              }}
+              customStyles={{ ...datePicker }}
               onDateChange={(dateT) => { this.handleDateChange("dateTo", dateT) }}
             />
 
-            <StyledInput text={'Max working hours'} textColor={'white'} onChange={this.handleMaxWorkingHoursChange} />
-            <StyledInput text={'Allowed delay'} textColor={'white'} onChange={this.handleallowedDelayChange} />
-            <StyledInput text={'Max delay time'} textColor={'white'} onChange={this.handleMaxDelayTimeChange} />
+            <DatePicker
+              style={{ width: 300, alignSelf: 'center', marginBottom: 5 }}
+              date={this.state.beginTime}
+              placeholder="Begin work time at..."
+              mode="time"
+              format="HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              minuteInterval={10}
+              iconSource={null}
+
+              customStyles={{ ...datePicker }}
+              onDateChange={(beginTime) => { this.handleBeginTimeChange("beginTime", beginTime) }}
+            />
+
+            <DatePicker
+              style={{ width: 300, alignSelf: 'center', marginBottom: 30 }}
+              date={this.state.beginTimeMax}
+              placeholder="Begin work time max at..."
+              mode="time"
+              format="HH:mm"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              minuteInterval={10}
+              iconSource={null}
+
+              customStyles={{ ...datePicker }}
+              onDateChange={(beginTimeMax) => { this.handleBeginTimeChange("beginTimeMax", beginTimeMax) }}
+            />
+
+            <StyledInput value={this.state.requiredWorkingHours} text={'Required working hours'} textColor={'white'} onChange={this.handleRequiredWorkingHoursChange} />
+            <StyledInput value={this.state.allowedDelaysPerMonth} text={'Allowed delays per month'} textColor={'white'} onChange={this.handleAllowedDelaysPerMonthChange} />
+            {/* <StyledInput value={this.state.maxDelayTime} text={'Max delay allowed time'} textColor={'white'} onChange={this.handleMaxDelayTimeChange} /> */}
 
           </View>
 
@@ -164,19 +162,16 @@ class Add extends Component {
             radius={50}
             outRangeScale={0.5}
           >
-
             <ActionButton.Item
               buttonColor='#A9A91C'
               title="Reset"
-              onPress={() => alert('refresh')} >
-              <Icon
-                name="md-refresh"
-                style={styles.actionButtonIcon} />
+              onPress={this.handleClear} >
+              <Icon name="md-refresh" style={styles.actionButtonIcon} />
             </ActionButton.Item>
             <ActionButton.Item
               buttonColor='#006B4C'
               title="Save"
-            // onPress={this.handleDeleteUser}
+              onPress={this.handleSubmitPlan}
             >
               <Icon
                 name="md-done-all"
@@ -202,8 +197,29 @@ const styles = StyleSheet.create({
     color: 'white',
 
   },
-
 });
+
+const datePicker = {
+  dateIcon: {
+    position: 'absolute',
+    left: 0,
+    top: 4,
+    marginLeft: 0,
+  },
+  dateInput: {
+    marginTop: 10,
+    backgroundColor: '#072152',
+    borderColor: 'gray',
+    borderRadius: 20
+
+  },
+  placeholderText: {
+    color: 'white', position: 'absolute', left: 35
+  },
+  dateText: {
+    color: 'white', position: 'absolute', left: 35
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -212,7 +228,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  setHoursPlan(payload) { dispatch(setHoursPlan(payload)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);
