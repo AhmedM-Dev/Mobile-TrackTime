@@ -147,8 +147,8 @@ class Add extends Component {
               onDateChange={(beginTimeMax) => { this.handleBeginTimeChange("beginTimeMax", beginTimeMax) }}
             />
 
-            <StyledInput value={this.state.requiredWorkingHours} text={'Required working hours'} textColor={'white'} onChange={this.handleRequiredWorkingHoursChange} />
-            <StyledInput value={this.state.allowedDelaysPerMonth} text={'Allowed delays per month'} textColor={'white'} onChange={this.handleAllowedDelaysPerMonthChange} />
+            <StyledInput value={this.state.requiredWorkingHours} text={'Required working hours'} keyboardType="number-pad" textColor={'white'} onChange={this.handleRequiredWorkingHoursChange} />
+            <StyledInput value={this.state.allowedDelaysPerMonth} text={'Allowed delays per month'} keyboardType="number-pad" textColor={'white'} onChange={this.handleAllowedDelaysPerMonthChange} />
             {/* <StyledInput value={this.state.maxDelayTime} text={'Max delay allowed time'} textColor={'white'} onChange={this.handleMaxDelayTimeChange} /> */}
 
           </View>

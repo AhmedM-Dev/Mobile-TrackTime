@@ -180,6 +180,7 @@ class Notifications extends Component {
                   <Text style={{ color: this.props.theme.fontColor }} >From {goTo.to.request.dateFrom} {goTo.to.request.sessionFrom === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor, marginBottom: 10, marginTop: 10 }} >To {goTo.to.request.dateTo} {goTo.to.request.sessionTo === 1 ? 'morning' : 'afternoon'}</Text>
                   <Text style={{ color: this.props.theme.fontColor }} >Motif : {goTo.to.request.motif}</Text>
+                  <Text style={{ color: this.props.theme.fontColor }} >Remaining leave credit : {goTo.to.request.userCredit} days</Text>
                 </View>
               </>
             }
