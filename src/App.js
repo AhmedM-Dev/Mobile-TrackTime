@@ -37,6 +37,7 @@ import addWorkingHours from './components/screens/WorkingHoursManagement/Add'
 import WorkingHoursManagement from './components/screens/WorkingHoursManagement'
 import { logoutWithRedux } from './store/actions';
 import NotificationsBell from './components/ui/NotificationsBell';
+import ScoreFormula from './components/screens/ScoreFormula';
 
 import Bulletin from './components/screens/Bulletin';
 
@@ -286,8 +287,6 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-
-
     'Holidays': {
       screen: Holidays,
       navigationOptions: ({ navigation }) => ({
@@ -343,9 +342,6 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-
-
-
     'Avatar': {
       screen: Avatar,
       navigationOptions: ({ navigation }) => ({
@@ -361,7 +357,6 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
-
 
     'EmployeeManagement': {
       screen: EmployeeManagement,
@@ -396,6 +391,7 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
+
     'EventsManagement': {
       screen: EventsManagement,
       navigationOptions: ({ navigation }) => ({
@@ -409,6 +405,7 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
+
     'GroupsManagement': {
       screen: GroupsManagement,
       navigationOptions: ({ navigation }) => ({
@@ -416,16 +413,12 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-
-
-
     'updateEvent': {
       screen: updateEvent,
       navigationOptions: ({ navigation }) => ({
         drawerLabel: () => null,
       })
     },
-
 
     'addEvent': {
       screen: addEvent,
@@ -441,7 +434,12 @@ const AppDrawNavigator = createDrawerNavigator(
       })
     },
 
-
+    'ScoreFormula': {
+      screen: ScoreFormula,
+      navigationOptions: ({ navigation }) => ({
+        drawerLabel: () => null,
+      })
+    },
 
     'Signup': {
       screen: Signup,
@@ -450,8 +448,6 @@ const AppDrawNavigator = createDrawerNavigator(
         drawerLabel: () => null,
       })
     },
-
-
 
   },
 

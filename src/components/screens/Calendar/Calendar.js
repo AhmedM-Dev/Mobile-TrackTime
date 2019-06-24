@@ -144,7 +144,7 @@ class Calendar extends React.Component {
                 color: this.props.theme.fontColor,
                 top: -1,
               }}
-              title="Previous week"
+              title="Previous month"
               onPress={() => this.handleDateChange('prev')}
             />
 
@@ -166,7 +166,7 @@ class Calendar extends React.Component {
                 top: -1,
                 left: -20,
               }}
-              title="Next week"
+              title="Next month"
               onPress={() => this.handleDateChange('next')}
             />
 

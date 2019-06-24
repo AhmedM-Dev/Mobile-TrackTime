@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Image, TextInput } from 'react-native';
 
 export default StyledInput = (props) => {
+  const style = props.style ? props.style : {};
+
+  console.log("Style prop", props.style);
+
   return (
 
-    <View style={styles.inputContainer}>
+    <View style={{ ...styles.inputContainer, ...style }}>
       <Image style={styles.inputIcon} source={props.image} />
       <TextInput
         name={props.name}
@@ -17,7 +21,6 @@ export default StyledInput = (props) => {
         secureTextEntry={props.secureTextEntry}
       />
     </View>
-
 
   );
 }
@@ -33,13 +36,13 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 20,
-    alignSelf:'center'
+    alignSelf: 'center'
   },
 
   inputs: {
     flex: 1,
     color: 'white',
-    paddingLeft:-15
+    paddingLeft: -15
   },
 
   inputIcon: {

@@ -129,7 +129,7 @@ export default class adminMenu extends Component {
                 color: 'white',
               }}
               title="Score Formula"
-              onPress={() => console.log('Under development')}
+              onPress={() => this.props.navigation.navigate('ScoreFormula')}
             />
 
           </View>
