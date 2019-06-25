@@ -9,13 +9,15 @@ import { toUpper } from 'lodash';
 // import { setHoursPlan } from './actions';
 
 const initialState = {
-  MB: null,
+  WT: null,
+  ME: null,
   ET: null,
   WW: null,
   AB: null,
   DL: null,
   LT: null,
-  formula: ''
+  formula: '',
+  total: 0
 }
 
 int = (value) => isNaN(parseFloat(value)) ? 0 : parseFloat(value);
@@ -76,13 +78,16 @@ class ScoreFormula extends Component {
   }
 
   handleCoefChange = (field, value) => {
-    this.setState({ [field]: value }, () => {
-      const { MB, ET, WW, AB, LT, DL } = this.state;
-      this.setState({ total: int(MB) + int(ET) + int(WW) + int(AB) + int(LT) + int(DL) });
+    this.setState({ [field]: field === 'DL' || field === 'LT' ? -Math.abs(value) : value }, () => {
+      const { WT, ME, ET, WW, LT, DL } = this.state;
+      this.setState({ total: int(WT) + int(ME) + int(ET) + int(WW) });
     });
   }
 
   render() {
+
+    console.log('STAT', this.state);
+
     return (
       <View style={styles.container} >
         <Content>
@@ -96,51 +101,58 @@ class ScoreFormula extends Component {
             }}
             onPress={() => this.props.navigation.navigate('Administration')} />
 
-          <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#E3F6CE', padding: 10, borderRadius: 10 }}>
-
+          <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#FAFAFA', padding: 10, borderRadius: 10 }}>
+            <Text style={{ ...styles.title, backgroundColor: '#FAFAFA' }}>Work Score</Text>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Morning Entry Bonus (MB)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. MB' keyboardType="number-pad" onChangeText={() => this.handleCoefChange('MB')} />
+              <Text style={{ flex: 9 }}>Working Time (WT)</Text>
+              <Input style={styles.inputStyle} placeholder='Coef. WT' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('WT', text)} />
             </View>
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Extra Time (ET)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. ET' keyboardType="number-pad" onChangeText={null} />
-            </View>
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Weekend Work (WW)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. WW' keyboardType="number-pad" onChangeText={null} />
-            </View>
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Total</Text>
-              <Input value={this.state.total} style={styles.inputStyle} disabled />
-            </View>
-            
           </View>
 
-          <View style={{ marginBottom: 40, marginLeft: 20, marginRight: 20, backgroundColor: '#F6D8CE', padding: 10, borderRadius: 10 }}>
+          <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#E3F6CE', padding: 10, borderRadius: 10 }}>
+            <Text style={{ ...styles.title, backgroundColor: '#E3F6CE' }}>Bonus</Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ flex: 9 }}>Morning Entry Bonus (ME)</Text>
+              <Input style={styles.inputStyle} placeholder='Coef. MB' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('MB', text)} />
+            </View>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Absence (AB)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. AB' keyboardType="number-pad" onChangeText={null} />
+              <Text style={{ flex: 9 }}>Extra Time Bonus (ET)</Text>
+              <Input style={styles.inputStyle} placeholder='Coef. ET' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('ET', text)} />
             </View>
+
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ flex: 9 }}>Weekend Work Bonus (WW)</Text>
+              <Input style={styles.inputStyle} placeholder='Coef. WW' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('WW', text)} />
+            </View>
+
+          </View>
+
+          <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#F6D8CE', padding: 10, borderRadius: 10 }}>
+            <Text style={{ ...styles.title, backgroundColor: '#F6D8CE' }}>Penalties</Text>
+            {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ flex: 9 }}>Absence (AB)</Text>
+              <Input style={styles.inputStyle} placeholder='Coef. AB' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('AB', text)} />
+            </View> */}
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Delay (DL)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. DL' keyboardType="number-pad" onChangeText={null} />
+              <Input style={styles.inputStyle} placeholder='Coef. DL' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('DL', text)} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Less Work Time (LT)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. LT' keyboardType="number-pad" onChangeText={null} />
+              <Input style={styles.inputStyle} placeholder='Coef. LT' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('LT', text)} />
             </View>
 
-            {/* <StyledInput value={this.state.requiredWorkingHours} text={'Required working hours'} keyboardType="number-pad" textColor={'white'} onChange={this.handleRequiredWorkingHoursChange} />
-            <StyledInput value={this.state.allowedDelaysPerMonth} text={'Allowed delays per month'} keyboardType="number-pad" textColor={'white'} onChange={this.handleAllowedDelaysPerMonthChange} /> */}
-            {/* <StyledInput value={this.state.maxDelayTime} text={'Max delay allowed time'} textColor={'white'} onChange={this.handleMaxDelayTimeChange} /> */}
+          </View>
 
+          <View style={{ marginBottom: 40, marginLeft: 20, marginRight: 20, backgroundColor: '#CEE3F6', padding: 10, borderRadius: 10 }}>
+            <Text style={{ ...styles.title, backgroundColor: '#CEE3F6' }}>Coefficient</Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ flex: 9 }}>Total</Text>
+              <Input value={`${this.state.total}`} style={styles.inputStyle} disabled />
+            </View>
           </View>
 
           <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#BDBDBD', padding: 10, borderRadius: 10 }}>
@@ -170,7 +182,6 @@ class ScoreFormula extends Component {
               <Icon
                 name="md-done-all"
                 style={styles.actionButtonIcon}
-
               />
             </ActionButton.Item>
           </ActionButton>
@@ -196,6 +207,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     margin: 2,
+    height: 30,
+    paddingTop: 2,
+    paddingBottom: 2,
+  },
+
+  title: {
+    flex: 12,
+    position: 'absolute',
+    alignSelf: 'center',
+    top: -14,
+    fontSize: 20,
+    borderRadius: 14,
+    paddingRight: 10,
+    paddingLeft: 10
   }
 });
 
