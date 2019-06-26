@@ -6,6 +6,8 @@ import companyLogo from '../../../assets/img/proxym.png'
 
 import { getUserFromAsyncStorageToStore } from '../../../store/actions';
 
+import { API_URL } from '../../../../config';
+
 class AuthenticationLoading extends React.Component {
     constructor(props) {
         super(props);
@@ -15,6 +17,11 @@ class AuthenticationLoading extends React.Component {
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
         const user = await AsyncStorage.getItem('user');
+        const urlFromAsyncStorage = await AsyncStorage.getItem('API_URL');
+
+        console.log("urlFromAsyncStorage:", typeof urlFromAsyncStorage);
+
+        global.API_URL = urlFromAsyncStorage ? urlFromAsyncStorage : API_URL;
 
         if(user) {
             this.props.getUserFromAsyncStorageToStore();

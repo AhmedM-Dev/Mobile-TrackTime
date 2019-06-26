@@ -3,11 +3,11 @@ import globals from '../../../store/types';
 import HttpClient from '../../../services/HttpClient';
 import { Alert } from 'react-native';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 const domain = 'holidays';
 
 export const getHolidays = () => dispatch => {
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       dispatch({
         type: types.GET_HOLIDAYS,
@@ -28,7 +28,7 @@ export const addHoliday = holiday => dispatch => {
     type: types.ADD_HOLIDAY
   });
 
-  http.post(`${domain}`, holiday)
+  new HttpClient().post(`${domain}`, holiday)
     .then(response => {
       dispatch({
         type: types.ADD_HOLIDAY_SUCCESS,
@@ -67,7 +67,7 @@ export const addHoliday = holiday => dispatch => {
 }
 
 export const editHoliday = holiday => dispatch => {
-  http.put(`${domain}/${holiday.holidayId}`, holiday)
+  new HttpClient().put(`${domain}/${holiday.holidayId}`, holiday)
     .then(response => {
       dispatch({
         type: types.EDIT_HOLIDAY,
@@ -83,7 +83,7 @@ export const editHoliday = holiday => dispatch => {
 }
 
 export const removeHoliday = holidayId => dispatch => {
-  http.delete(`${domain}/${holidayId}`)
+  new HttpClient().delete(`${domain}/${holidayId}`)
     .then(response => {
       dispatch({
         type: types.REMOVE_HOLIDAY,

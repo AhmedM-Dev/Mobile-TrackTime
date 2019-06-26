@@ -3,12 +3,12 @@ import globals from '../../../store/types';
 import HttpClient from '../../../services/HttpClient';
 import {ToastAndroid} from 'react-native'
 
-const http = new HttpClient();
+// const http = new HttpClient();
 const domain = 'users';
 const groupsdomain = 'groups';
 
 export const getUsers = () => dispatch => {
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       dispatch({
         type: types.GET_USERS,
@@ -24,7 +24,7 @@ export const getUsers = () => dispatch => {
 }
 
 export const getGroups = () => dispatch => {
-  http.get(`${groupsdomain}`)
+  new HttpClient().get(`${groupsdomain}`)
     .then(response => {
       dispatch({
         type: types.GET_GROUPS,
@@ -40,7 +40,7 @@ export const getGroups = () => dispatch => {
 }
 
 export const deleteGroup = groupId => dispatch => {
-  http.delete(`${groupsdomain}/${groupId}`)
+  new HttpClient().delete(`${groupsdomain}/${groupId}`)
     .then(response => {
       dispatch({
         type: types.DELETE_GROUP,
@@ -57,7 +57,7 @@ export const deleteGroup = groupId => dispatch => {
 }
 
 export const addGroup = payload => dispatch => {
-  http.post(`${groupsdomain}`, payload)
+  new HttpClient().post(`${groupsdomain}`, payload)
     .then(response => {
       dispatch({
         type: types.ADD_GROUP,

@@ -5,12 +5,12 @@ import globals from '../../../store/types';
 
 import HttpClient from '../../../services/HttpClient';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 const domain = 'users';
 const groupsDomain = 'groups';
 
 export const getUsers = (payload = null) => dispatch => {
-  http.get(`${domain}${payload ? `?${payload.filterName}=${payload.filterValue}` : ''}`)
+  new HttpClient().get(`${domain}${payload ? `?${payload.filterName}=${payload.filterValue}` : ''}`)
     .then(response => {
       dispatch({
         type: types.GET_USERS,
@@ -26,7 +26,7 @@ export const getUsers = (payload = null) => dispatch => {
 }
 
 export const addUser = payload => dispatch => {
-  http.post(`${domain}`, payload)
+  new HttpClient().post(`${domain}`, payload)
     .then(response => {
       dispatch({
         type: types.ADD_USER,
@@ -46,7 +46,7 @@ export const addUser = payload => dispatch => {
 }
 
 export const updateUser = payload => dispatch => {
-  http.put(`${domain}/${payload.userId}`, payload)
+  new HttpClient().put(`${domain}/${payload.userId}`, payload)
     .then(response => {
       dispatch({
         type: types.UPDATE_USER,
@@ -62,7 +62,7 @@ export const updateUser = payload => dispatch => {
 }
 
 export const deleteUser = userId => dispatch => {
-  http.delete(`${domain}/${userId}`)
+  new HttpClient().delete(`${domain}/${userId}`)
     .then(response => {
       dispatch({
         type: types.DELETE_USER,
@@ -81,7 +81,7 @@ export const deleteUser = userId => dispatch => {
 
 
 export const getGroups = () => dispatch => {
-  http.get(`${groupsDomain}`)
+  new HttpClient().get(`${groupsDomain}`)
     .then(response => {
       dispatch({
         type: types.GET_GROUPS,

@@ -267,6 +267,23 @@ class Settings extends Component {
               />
               <Switch onValueChange={this.handleThemeChange} value={this.props.theme.preset === 'dark' ? false : true} style={{ top: -30 }} color='red' />
 
+              <TextInput
+                style={{
+                  height: 40, marginBottom: -40, top: -20, color: this.props.theme.informationsColor,
+                  borderColor: this.props.theme.settingContainerColor,
+                  width: 250,
+                  left: 20, zIndex: 1000
+
+                }}
+                onChangeText={(newPass) => this.handleNewPassChange(newPass)}
+                // value={this.state.text}
+                placeholder='New one'
+                placeholderTextColor={this.props.theme.informationsColor}
+                secureTextEntry={true}
+                value={global.API_URL}
+                name="new password"
+              />
+
             </SettingsList>
 
 

@@ -2,11 +2,11 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 const domain = 'users';
 export const getStats = payload => dispatch => {
 
-    http.get(`stats?year=${payload.year}`)
+    new HttpClient().get(`stats?year=${payload.year}`)
         .then(response => {
 
             console.log("RESPONSE FROM GET_STATS ACTION:", response.data);
@@ -26,7 +26,7 @@ export const getStats = payload => dispatch => {
 
 export const getAllStats = (payload = { year: new Date().getFullYear() }) => dispatch => {
 
-  http.get(`stats?year=${payload.year}&all=true`)
+  new HttpClient().get(`stats?year=${payload.year}&all=true`)
       .then(response => {
 
           console.log("RESPONSE FROM GET_STATS ACTION:", response.data);
@@ -46,7 +46,7 @@ export const getAllStats = (payload = { year: new Date().getFullYear() }) => dis
 
 
 export const getUsers = (filter = null) => dispatch => {
-    http.get(`${domain}${filter && filter.all ? `?all=${filter.all}` : ''}`)
+    new HttpClient().get(`${domain}${filter && filter.all ? `?all=${filter.all}` : ''}`)
       .then(response => {
         dispatch({
           type: types.GET_USERS,

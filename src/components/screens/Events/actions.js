@@ -2,7 +2,7 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 const domain = 'events';
 
@@ -13,7 +13,7 @@ export const getEvents = (filters = {}) => dispatch => {
 
   console.log("DATE REQUEST", `${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `&dateTo=${formatDate(dateTo)}` : ''}`);
   
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       console.log("EVENTS FROM ACTION:", response.data);
 

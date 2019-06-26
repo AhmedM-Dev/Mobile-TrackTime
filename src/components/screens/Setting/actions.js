@@ -4,7 +4,7 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 export const changeTheme = theme => ({
   type: types.CHANGE_THEME,
@@ -12,7 +12,7 @@ export const changeTheme = theme => ({
 });
 
 export const changeUserProfile = payload => dispatch => {
-  http.put(`profile/${payload.userId}`, payload)
+  new HttpClient().put(`profile/${payload.userId}`, payload)
     .then(response => {
       dispatch({
         type: types.UPDATE_PROFILE,

@@ -2,10 +2,10 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 export const getNotifications = () => dispatch => {
-    http.get('notifications')
+    new HttpClient().get('notifications')
     .then(response => {
         dispatch({
             type: types.GET_NOTIFICATIONS,

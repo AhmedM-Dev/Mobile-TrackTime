@@ -47,8 +47,6 @@ class LeaveRequest extends React.Component {
     } else if (this.state.requestCategory === 'AUTHORIZATION') {
       const { sessionFrom, sessionTo, dateFrom, dateTo, ...request } = this.state;
 
-      console.log('fff', request);
-
       this.props.createLeaveRequest({
         ...request,
         date: dateFrom
@@ -90,7 +88,7 @@ class LeaveRequest extends React.Component {
   }
 
   handleRadioChange = (value) => {
-    console.log('ffff', value);
+    
   }
 
   setModalVisible(visible) {

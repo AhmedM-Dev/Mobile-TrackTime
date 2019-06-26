@@ -2,12 +2,12 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+
 const domain = 'users';
 const groupsDomain = 'groups';
 
 export const getUsers = () => dispatch => {
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       dispatch({
         type: types.GET_USERS,
@@ -23,7 +23,7 @@ export const getUsers = () => dispatch => {
 }
 
 export const getGroups = () => dispatch => {
-  http.get(`${groupsDomain}`)
+  new HttpClient().get(`${groupsDomain}`)
     .then(response => {
       dispatch({
         type: types.GET_GROUPS,
@@ -42,7 +42,7 @@ export const getCalendarData = params => dispatch => {
   console.log('Params', params);
 
   return new Promise((resolve, reject) => {
-    http.get(`calendar${params.dateFilter ? `?dateFilter=${params.dateFilter}` : ''}${params.groupId ? (params.dateFilter ? `&groupId=${params.groupId}` : `?groupId=${params.groupId}`) : '' } `)
+    new HttpClient().get(`calendar${params.dateFilter ? `?dateFilter=${params.dateFilter}` : ''}${params.groupId ? (params.dateFilter ? `&groupId=${params.groupId}` : `?groupId=${params.groupId}`) : '' } `)
     .then(response => {
 
       dispatch({

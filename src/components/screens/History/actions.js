@@ -2,7 +2,7 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 const domain = 'requests';
 
@@ -11,7 +11,7 @@ export const getRequests = (filters = {}) => dispatch => {
 
 
   
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       console.log("HISTORY FROM ACTION:", response.data);
 

@@ -24,7 +24,6 @@ class removeEvent extends Component {
   handleRemoveEvent = () => {
     const { selectedEvent } = this.state;
     if (selectedEvent !== null) {
-      console.log("EEEE", selectedEvent);
       this.props.deleteEvent(selectedEvent.eventId);
       this.setState({
         selectedEvent: null

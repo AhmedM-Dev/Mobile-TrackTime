@@ -4,12 +4,12 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 const domain = 'notifications';
 
 export const getNotifications = () => dispatch => {
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       dispatch({
         type: types.GET_NOTIFICATIONS,
@@ -29,7 +29,7 @@ export const vueNotification = payload => dispatch => {
   console.log('vueNotification payload', payload);
 
   if (payload) {
-    http.put(`${domain}/${payload.notifId}`)
+    new HttpClient().put(`${domain}/${payload.notifId}`)
       .then(response => {
         dispatch({
           type: types.VUE_NOTIFICATION,
@@ -47,7 +47,7 @@ export const vueNotification = payload => dispatch => {
 
 
 export const acceptRequest = payload => dispatch => {
-  http.put(`requests/${payload.request.requestId}/respond`, { note: payload.note, accept: true, notifId: payload.notifId, request: payload.request })
+  new HttpClient().put(`requests/${payload.request.requestId}/respond`, { note: payload.note, accept: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.ACCEPT_REQUEST
@@ -66,7 +66,7 @@ export const acceptRequest = payload => dispatch => {
 }
 
 export const rejectRequest = payload => dispatch => {
-  http.put(`requests/${payload.request.requestId}/respond`, { note: payload.note, reject: true, notifId: payload.notifId, request: payload.request })
+  new HttpClient().put(`requests/${payload.request.requestId}/respond`, { note: payload.note, reject: true, notifId: payload.notifId, request: payload.request })
     .then(() => {
       dispatch({
         type: types.REJECT_REQUEST

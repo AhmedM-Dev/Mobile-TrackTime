@@ -85,9 +85,6 @@ class ScoreFormula extends Component {
   }
 
   render() {
-
-    console.log('STAT', this.state);
-
     return (
       <View style={styles.container} >
         <Content>
@@ -103,6 +100,7 @@ class ScoreFormula extends Component {
 
           <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#FAFAFA', padding: 10, borderRadius: 10 }}>
             <Text style={{ ...styles.title, backgroundColor: '#FAFAFA' }}>Work Score</Text>
+
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Working Time (WT)</Text>
               <Input style={styles.inputStyle} placeholder='Coef. WT' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('WT', text)} />
@@ -111,6 +109,7 @@ class ScoreFormula extends Component {
 
           <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#E3F6CE', padding: 10, borderRadius: 10 }}>
             <Text style={{ ...styles.title, backgroundColor: '#E3F6CE' }}>Bonus</Text>
+
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Morning Entry Bonus (ME)</Text>
               <Input style={styles.inputStyle} placeholder='Coef. MB' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('MB', text)} />
@@ -125,15 +124,10 @@ class ScoreFormula extends Component {
               <Text style={{ flex: 9 }}>Weekend Work Bonus (WW)</Text>
               <Input style={styles.inputStyle} placeholder='Coef. WW' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('WW', text)} />
             </View>
-
           </View>
 
           <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#F6D8CE', padding: 10, borderRadius: 10 }}>
             <Text style={{ ...styles.title, backgroundColor: '#F6D8CE' }}>Penalties</Text>
-            {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ flex: 9 }}>Absence (AB)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. AB' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('AB', text)} />
-            </View> */}
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Delay (DL)</Text>
@@ -144,11 +138,11 @@ class ScoreFormula extends Component {
               <Text style={{ flex: 9 }}>Less Work Time (LT)</Text>
               <Input style={styles.inputStyle} placeholder='Coef. LT' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('LT', text)} />
             </View>
-
           </View>
 
           <View style={{ marginBottom: 40, marginLeft: 20, marginRight: 20, backgroundColor: '#CEE3F6', padding: 10, borderRadius: 10 }}>
             <Text style={{ ...styles.title, backgroundColor: '#CEE3F6' }}>Coefficient</Text>
+
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Total</Text>
               <Input value={`${this.state.total}`} style={styles.inputStyle} disabled />

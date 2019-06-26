@@ -5,13 +5,13 @@ import globals from '../../../store/types';
 
 import HttpClient from '../../../services/HttpClient';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 const domain = "events";
 
 export const deleteEvent = eventId => dispatch => {
   console.log("PAYLOAD", eventId);
-  http.delete(`${domain}/${eventId}`)
+  new HttpClient().delete(`${domain}/${eventId}`)
     .then(response => {
       dispatch({
         type: types.DELETE_EVENT,
@@ -28,7 +28,7 @@ export const deleteEvent = eventId => dispatch => {
 }
 
 export const getEvents = () => dispatch => {
-  http.get(`${domain}`)
+  new HttpClient().get(`${domain}`)
     .then(response => {
       dispatch({
         type: types.GET_EVENTS,
@@ -44,7 +44,7 @@ export const getEvents = () => dispatch => {
 }
 
 export const updateEvent = payload => dispatch => {
-  http.put(`${domain}`, payload)
+  new HttpClient().put(`${domain}`, payload)
     .then(response => {
       dispatch({
         type: types.UPDATE_EVENT,
@@ -60,7 +60,7 @@ export const updateEvent = payload => dispatch => {
 }
 
 export const createEvent = payload => dispatch => {
-  http.post(`${domain}`, payload)
+  new HttpClient().post(`${domain}`, payload)
     .then(response => {
       dispatch({
         type: types.ADD_EVENT,

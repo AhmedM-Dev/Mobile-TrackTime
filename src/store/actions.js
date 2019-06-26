@@ -5,7 +5,7 @@ import types from './types';
 import { authenticate } from '../services/services';
 import HttpClient from '../services/HttpClient';
 
-const http = new HttpClient();
+// const http = new HttpClient();
 
 export const authenticateWithRedux = payload => dispatch => {
   dispatch({
@@ -49,7 +49,7 @@ export const getUserFromAsyncStorageToStore = () => dispatch => {
 }
 
 export const getAvatar = () => dispatch => {
-  http.get("avatar")
+  new HttpClient().get("avatar")
     .then(response => {
       dispatch({
         type: types.GET_AVATAR,
@@ -68,7 +68,7 @@ export const getRequests = payload => dispatch => {
 
   console.log('payload get requests', payload);
 
-  http.get(`requests${payload.status ? `?status=${payload.status}` : ''}`)
+  new HttpClient().get(`requests${payload.status ? `?status=${payload.status}` : ''}`)
     .then(response => {
       dispatch({
         type: types.GET_REQUESTS,
@@ -87,7 +87,7 @@ export const createLeaveRequest = payload => dispatch => {
 
   dispatch({ type: types.SEND_LEAVE_REQUEST });
 
-  http.post("requests", payload)
+  new HttpClient().post("requests", payload)
     .then(response => {
       dispatch({
         type: types.LEAVE_REQUEST_SUCCESS,
@@ -118,7 +118,7 @@ export const createTravelRequest = payload => dispatch => {
 
   dispatch({ type: types.SEND_TRAVEl_REQUEST });
 
-  http.post("requests", payload)
+  new HttpClient().post("requests", payload)
     .then(response => {
       dispatch({
         type: types.TRAVEL_REQUEST_SUCCESS,
@@ -146,7 +146,7 @@ export const createTravelRequest = payload => dispatch => {
 }
 
 export const cancelRequest = payload => dispatch => {
-  http.put(`requests/${payload.requestId}/edit`, payload)
+  new HttpClient().put(`requests/${payload.requestId}/edit`, payload)
     .then(response => {
 
       dispatch({
@@ -172,7 +172,7 @@ export const cancelRequest = payload => dispatch => {
 }
 
 export const correctAttendanceRequest = payload => dispatch => {
-  http.post("requests", payload)
+  new HttpClient().post("requests", payload)
     .then(response => {
       dispatch({
         type: types.CREATE_ATTENDANCE_REQUEST,

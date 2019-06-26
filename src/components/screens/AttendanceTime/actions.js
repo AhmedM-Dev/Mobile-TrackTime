@@ -4,19 +4,17 @@ import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
 import types from './types';
 
-const http = new HttpClient();
-
 const domain = 'attendances';
 
 const formatDate = (date) => `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`;
 
 export const getAttendances = (filters = {}) => dispatch => {
-
+  // const http = new HttpClient();
   const { dateFrom, dateTo, userId } = filters;
 
   console.log("DATE REQUEST", `${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `&dateTo=${formatDate(dateTo)}` : ''}`);
 
-  http.get(`${domain}${userId ? `?userId=${userId}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateFrom ? `dateFrom=${formatDate(dateFrom)}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateTo ? `dateTo=${formatDate(dateTo)}` : ''}`)
+  new HttpClient().get(`${domain}${userId ? `?userId=${userId}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateFrom ? `dateFrom=${formatDate(dateFrom)}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateTo ? `dateTo=${formatDate(dateTo)}` : ''}`)
     .then(response => {
       console.log("ATTENDANCES FROM ACTION:", response.data);
 
@@ -34,7 +32,8 @@ export const getAttendances = (filters = {}) => dispatch => {
 }
 
 export const checkIn = () => dispatch => {
-  http.post(`${domain}`)
+  // const http = new HttpClient();
+  new HttpClient().post(`${domain}`)
     .then(response => {
       dispatch({
         type: types.CHECK_IN,
