@@ -41,19 +41,11 @@ import ScoreFormula from './components/screens/ScoreFormula';
 
 import Bulletin from './components/screens/Bulletin';
 
-import AsyncStorage from '@react-native-community/async-storage';
-
-import { API_URL } from '../config';
-
 const AppContext = React.createContext({
   theme: {}
 });
 
 export default class App extends React.Component {
-
-  componentDidMount() {
-    AsyncStorage.setItem('API_URL', API_URL);
-  }
   
   render() {
     // console.log("store", store.getState().settingsReducer);

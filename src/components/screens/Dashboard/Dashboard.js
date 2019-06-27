@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image ,ScrollView} from 'react-native';
+import { PermissionsAndroid, StyleSheet, StatusBar, ActivityIndicator, Switch, Image, ScrollView } from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Right, View, Picker, Footer, FooterTab, Badge, Icon, Title } from 'native-base';
 import PureChart from 'react-native-pure-chart';
 import wifi from 'react-native-android-wifi';
@@ -9,7 +9,7 @@ import companyLogo from '../../../assets/img/proxym.png'
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
 import AppHeader from '../../ui/AppHeader';
-import { getStats ,getUsers} from './actions';
+import { getStats, getUsers } from './actions';
 import { getAvatar } from "../../../store/actions";
 import prepareGraphDate from "../../../utils/prepareGraphDate";
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
       console.log(bssid);
     });
   }
-  
+
   ratingCompleted(rating) {
     console.log("Rating is: " + rating)
   }
@@ -111,20 +111,16 @@ class Dashboard extends React.Component {
       }
 
     ]
-  
-    if (!this.props.stats) {
-      return (
-        <View style={styles.container}>
-          <Image source={companyLogo} style={{ marginBottom: 50 }}></Image>
-          <ActivityIndicator size={80} color="#0000ff" />
-          <StatusBar hidden={true} />
-        </View>
-      )
-    } else if (this.props.stats && this.props.stats.perMonth.length > 0) {
+
+    const loading = this.props.loading;
+
+    // if (loading) {
+
+    if (!loading || (!loading && this.props.stats && this.props.stats.perMonth.length > 0)) {
       return (
 
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
-        
+
           <AppHeader title="Dashboard" navigation={this.props.navigation} />
 
           <Content style={{ padding: 10 }} >
@@ -145,22 +141,22 @@ class Dashboard extends React.Component {
             </CustumPicker>
             <View  >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, marginTop: 10 }}>
-                <ButtonWithBadge style={{ flex: 6 }} text="Hours worked" data={this.props.stats.totalHours.toFixed(2)} badgeColor="#3F7930" />
-                <ButtonWithBadge style={{ flex: 6 }} text="Days worked" data={this.props.stats.totalDays} badgeColor="#3F7930" />
+                <ButtonWithBadge style={{ flex: 6 }} text="Hours worked" data={this.props.stats && this.props.stats.totalHours && this.props.stats.totalHours.toFixed(2)} badgeColor="#3F7930" />
+                <ButtonWithBadge style={{ flex: 6 }} text="Days worked" data={this.props.stats && this.props.stats.totalDays} badgeColor="#3F7930" />
               </View>
 
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <ButtonWithBadge style={{ flex: 8 }} text="Average working hours" data={this.props.stats.averageWorkingHours.toFixed(2)} badgeColor="#3F7930" />
-                <ButtonWithBadge style={{ flex: 4 }} text="Delays" data={this.props.stats.totalDelays} badgeColor="#E82C2C" />
+                <ButtonWithBadge style={{ flex: 8 }} text="Average working hours" data={this.props.stats && this.props.stats.averageWorkingHours && this.props.stats.averageWorkingHours.toFixed(2)} badgeColor="#3F7930" />
+                <ButtonWithBadge style={{ flex: 4 }} text="Delays" data={this.props.stats && this.props.stats.totalDelays} badgeColor="#E82C2C" />
               </View>
 
               <CustomCard>
                 <View style={{ flex: 1, left: -10 }}>
-                  <PureChart data={prepareGraphDate(this.props.stats.perMonth)}
+                  {this.props.stats && this.props.stats.perMonth && <PureChart data={prepareGraphDate(this.props.stats.perMonth)}
                     type='bar'
                     backgroundColor={this.props.theme.cardBackground}
                     height={150}
-                  />
+                  />}
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -180,10 +176,10 @@ class Dashboard extends React.Component {
                 paddingBottom: 5, paddingTop: 10,
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
-                paddingLeft:20,
+                paddingLeft: 20,
                 left: -20,
                 backgroundColor: this.props.theme.cardHeaderColor,
-                fontFamily:'cursive' , fontWeight:'bold'
+                fontFamily: 'cursive', fontWeight: 'bold'
               }}>Authorizations</Text>
               <View style={{ flex: 1, alignItems: 'center', marginTop: 10 }}>
                 <PureChart data={sampleDataa} type='pie' />
@@ -191,8 +187,8 @@ class Dashboard extends React.Component {
             </CustomCard>
 
             <CustomCard>
-              
-            <Text style={{
+
+              <Text style={{
                 fontSize: 18,
                 color: this.props.theme.fontColor,
                 width: '114%',
@@ -200,12 +196,12 @@ class Dashboard extends React.Component {
                 paddingBottom: 5, paddingTop: 10,
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
-                paddingLeft:20,
+                paddingLeft: 20,
                 left: -20,
                 backgroundColor: this.props.theme.cardHeaderColor,
-                fontFamily:'cursive' , fontWeight:'bold'
+                fontFamily: 'cursive', fontWeight: 'bold'
               }}>
-              Average grade</Text>
+                Average grade</Text>
               <View style={{ margin: 10 }}>
                 <Text style={{
                   alignSelf: 'center',
@@ -228,6 +224,14 @@ class Dashboard extends React.Component {
             </CustomCard> */}
           </Content>
         </Container>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <Image source={companyLogo} style={{ marginBottom: 50 }}></Image>
+          <ActivityIndicator size={80} color="#0000ff" />
+          <StatusBar hidden={true} />
+        </View>
       )
     }
   }

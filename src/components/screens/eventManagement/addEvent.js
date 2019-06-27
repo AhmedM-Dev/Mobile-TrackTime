@@ -15,8 +15,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
-  maxWidth: 200,
-  maxHeight: 200
+  maxWidth: 1366,
+  maxHeight: 768
 };
 
 

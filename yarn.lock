@@ -5520,6 +5520,11 @@ react-native-ratings@^6.3.0, react-native-ratings@^6.3.1:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
+react-native-restart@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.10.tgz#b86d866de08622bc8ae55f60fb919d845617a9c1"
+  integrity sha512-1cjx/dauCz8q2pP2TeZ9MjE+o0HVsjAZgaZGqV5xUYyFz9/xOQUfwJWYkfRdBEZfUQOeGihBRBojLodICGDvag==
+
 react-native-root-siblings@^3.1.7:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-3.2.0.tgz#f6a09f1b800181be647058f09e52442fafbd20af"

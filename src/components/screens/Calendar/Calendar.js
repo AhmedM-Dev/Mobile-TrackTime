@@ -95,15 +95,6 @@ class Calendar extends React.Component {
   }
 
   render() {
-    const state = this.state;
-    const tableData = [];
-    for (let i = 0; i < 30; i += 1) {
-      const rowData = [];
-      for (let j = 0; j < 9; j += 1) {
-        rowData.push(`${i}${j}`);
-      }
-      tableData.push(rowData);
-    }
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
 
@@ -120,7 +111,7 @@ class Calendar extends React.Component {
               }}
               name="group"
               onValueChange={this.handleGroupChange}>
-              {this.props.groups && this.props.groups.length > 0 && this.props.groups.map(group => <Picker.Item label={`${group.name}`} value={group.groupId} />)}
+              {this.props.groups && this.props.groups.length > 0 && this.props.groups.map((group, i) => <Picker.Item key={i} label={`${group.name}`} value={group.groupId} />)}
             </Picker>
           </CustumPicker>
 
@@ -204,7 +195,6 @@ class Calendar extends React.Component {
 
           </View>
 
-
         </View>
 
         <Content style={{ paddingLeft: 10, paddingRight: 10 }}>
@@ -219,7 +209,7 @@ class Calendar extends React.Component {
                 <TableWrapper style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
                   {
                     this.state.tableHead && this.state.tableHead.length > 0 && this.state.tableHead.map((item, index) =>
-                      <Cell data={item} style={{
+                      <Cell key={index} data={item} style={{
                         backgroundColor: moment(this.state.currentDate).format('YYYYMMDD') === moment().format('YYYYMMDD') && item === moment(this.state.currentDate).date() ? 'red' : this.props.theme.calendar.headerColor,
                         width: this.state.widthArr[index], height: 50
                       }}
@@ -236,9 +226,9 @@ class Calendar extends React.Component {
                       <TableWrapper key={index} style={{ flexDirection: 'row', backgroundColor: '#FFF1C1' }}>
                         {
                           item && item.length > 0 && item.map((cell, i) =>
-                            i === 0 ? <Cell data={cell} style={{ paddingLeft: 15, backgroundColor: index % 2 === 0 ? '#e9f0f4' : '#cbdbe5', width: 160, height: 40 }} textStyle={{ color: 'black' }} />
+                            i === 0 ? <Cell key={i} data={cell} style={{ paddingLeft: 15, backgroundColor: index % 2 === 0 ? '#e9f0f4' : '#cbdbe5', width: 160, height: 40 }} textStyle={{ color: 'black' }} />
                               :
-                              <Cell data={cell === 'A' ? '*' : ''} style={{ backgroundColor: cellColor(cell, index), width: 35, height: 40, borderColor: cell === 'W' ? 'white' : '#d0e1e3' }} textStyle={{ color: 'blue', textAlign: 'center' }} />
+                              <Cell key={i} data={cell === 'A' ? '*' : ''} style={{ backgroundColor: cellColor(cell, index), width: 35, height: 40, borderColor: cell === 'W' ? 'white' : '#d0e1e3' }} textStyle={{ color: 'blue', textAlign: 'center' }} />
                           )
                         }
                       </TableWrapper>

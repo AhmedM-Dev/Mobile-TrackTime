@@ -255,7 +255,7 @@ class AttendanceTime extends React.Component {
                       </View>
                       <View style={{ flex: 7 }}>
                         <Image source={this.props.theme.preset === 'light' ? clockB : clock} style={styles.clockAlign} ></Image>
-                        {item.attendances.length >= 4 && item.attendances.length % 2 === 0 && <AttendanceClock attendances={item.attendances} />}
+                        <AttendanceClock data={item} attendances={item.attendances} />
                       </View>
                     </Card>
                   </TouchableNativeFeedback>

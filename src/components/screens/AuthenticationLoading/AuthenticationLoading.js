@@ -19,7 +19,7 @@ class AuthenticationLoading extends React.Component {
         const user = await AsyncStorage.getItem('user');
         const urlFromAsyncStorage = await AsyncStorage.getItem('API_URL');
 
-        console.log("urlFromAsyncStorage:", typeof urlFromAsyncStorage);
+        console.log("urlFromAsyncStorage:", urlFromAsyncStorage);
 
         global.API_URL = urlFromAsyncStorage ? urlFromAsyncStorage : API_URL;
 

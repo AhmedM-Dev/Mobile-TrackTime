@@ -67,7 +67,7 @@ export const authReducer = (state = { user: {} }, action) => {
     case types.UPLOAD_AVATAR:
       return {
         ...state,
-        avatar: action.payload
+        avatar: action.avatar
       }
 
     case types.GET_USER_FROM_ASYNCSTORAGE_TO_STORE:

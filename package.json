@@ -29,6 +29,7 @@
     "react-native-popup-dialog": "^0.18.2",
     "react-native-pure-chart": "^0.0.24",
     "react-native-ratings": "^6.3.1",
+    "react-native-restart": "^0.0.10",
     "react-native-searchable-dropdown": "^1.0.6",
     "react-native-setting-list": "^2.0.1",
     "react-native-simple-picker": "^3.1.1",

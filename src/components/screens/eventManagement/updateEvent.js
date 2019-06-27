@@ -18,8 +18,8 @@ const options = {
   title: '',
   takePhotoButtonTitle: 'Take photo',
   chooseFromLibraryButtonTitle: 'Choose from library',
-  maxWidth: 500,
-  maxHeight: 500
+  maxWidth: 1366,
+  maxHeight: 768
 };
 class updateEvents extends Component {
   constructor(props) {

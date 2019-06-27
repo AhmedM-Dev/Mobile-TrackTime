@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { orderBy } from 'lodash';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
+import { Image, StyleSheet, ToastAndroid, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
@@ -11,6 +11,7 @@ import PasswordIcon from '../../../assets/img/password.png';
 import groupIcon from '../../../assets/img/group.png';
 import jobLogo from '../../../assets/img/jobLogo.png';
 import logoName from '../../../assets/img/name.png';
+import defaultAvatar from '../../../assets/img/user.png';
 
 import { updateUser, getUsers, getGroups } from './actions';
 import AdminPickers from '../../../components/ui/AdminPickers/AdminPickers'
@@ -150,7 +151,7 @@ class UpdateEmployee extends Component {
             onPress={() => this.props.navigation.navigate('Administration')} />
           <View style={{
             backgroundColor: '#9C9C9C',
-            marginBottom: 20,
+            marginBottom: 10,
             flexDirection: 'row',
             borderColor: '#9C9C9C',
             borderWidth: 1,
@@ -173,6 +174,24 @@ class UpdateEmployee extends Component {
               onValueChange={this.handleSelectUser}>
               {this.props.users && this.props.users.length > 0 && orderBy(this.props.users, 'firstName', 'asc').map(user => <Picker.Item label={`${user.firstName} ${user.lastName}`} value={user} color="#021630" />)}
             </Picker>
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
+            <TouchableHighlight style={{
+              borderRadius: 100,
+              height: 100,
+              width: 100,
+              top: 10
+            }}>
+              <Image source={this.state.selectedUser && this.state.selectedUser.photo ? { uri: this.state.selectedUser.photo } : defaultAvatar}
+                style={{
+                  borderRadius: 100,
+                  height: 100,
+                  width: 100,
+                  borderWidth: 2,
+                  borderColor: this.props.theme.imageSettingsBorderColor,
+                }}></Image>
+            </TouchableHighlight>
           </View>
 
           <View style={styles.inputPos}>
@@ -266,10 +285,10 @@ const mapStateToProps = state => {
   return {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
+    avatar: state.authReducer.avatar,
     users: state.usersReducer.users,
     theme: state.settingsReducer.theme,
     groups: state.groupsReducer.groups
-
   }
 }
 
