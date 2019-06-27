@@ -12,6 +12,7 @@ import eventReducer from "../components/screens/Events/reducers";
 import historyReducer from "../components/screens/History/reducers";
 import holidaysReducer from '../components/screens/holidaysManagement/reducers';
 import travelsReducer from '../components/screens/Travels/reducers';
+import formulaReducer from '../components/screens/ScoreFormula/reducers';
 
 
 import types from './types';
@@ -165,5 +166,6 @@ export default combineReducers({
   eventReducer,
   historyReducer,
   holidaysReducer,
-  travelsReducer
+  travelsReducer,
+  formulaReducer
 });

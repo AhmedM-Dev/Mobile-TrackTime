@@ -6,17 +6,16 @@ import ActionButton from 'react-native-circular-action-menu';
 import moment from 'moment';
 import { toUpper } from 'lodash';
 
-// import { setHoursPlan } from './actions';
+import { setFormula } from './actions';
 
 const initialState = {
   WT: null,
   ME: null,
   ET: null,
   WW: null,
-  AB: null,
   DL: null,
   LT: null,
-  formula: '',
+  formula: 'Formula',
   total: 0
 }
 
@@ -78,10 +77,18 @@ class ScoreFormula extends Component {
   }
 
   handleCoefChange = (field, value) => {
-    this.setState({ [field]: field === 'DL' || field === 'LT' ? -Math.abs(value) : value }, () => {
+    this.setState({ [field]: value }, () => {
       const { WT, ME, ET, WW, LT, DL } = this.state;
-      this.setState({ total: int(WT) + int(ME) + int(ET) + int(WW) });
+      this.setState({
+        total: int(WT) + int(ME) + int(ET) + int(WW),
+        formula: `( ((WT * ${int(WT)}) + (ME * ${int(ME)}) + (ET * ${int(ET)}) + (WW * ${int(WW)}) - (DL * ${int(DL)}) - (LT * ${int(LT)})) * 20 ) / ${int(WT) + int(ME) + int(ET) + int(WW)}`,
+        displayFormula: `((WT * ${int(WT)}) + (ME * ${int(ME)}) + (ET * ${int(ET)}) + (WW * ${int(WW)}) - (DL * ${int(DL)}) - (LT * ${int(LT)})) * 20\n________________________________\n${int(WT) + int(ME) + int(ET) + int(WW)}`
+      });
     });
+  }
+
+  handleSubmitScore = () => {
+    this.props.setFormula(this.state);
   }
 
   render() {
@@ -112,7 +119,7 @@ class ScoreFormula extends Component {
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ flex: 9 }}>Morning Entry Bonus (ME)</Text>
-              <Input style={styles.inputStyle} placeholder='Coef. MB' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('MB', text)} />
+              <Input style={styles.inputStyle} placeholder='Coef. ME' keyboardType="number-pad" onChangeText={(text) => this.handleCoefChange('ME', text)} />
             </View>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -150,7 +157,7 @@ class ScoreFormula extends Component {
           </View>
 
           <View style={{ marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: '#BDBDBD', padding: 10, borderRadius: 10 }}>
-            <Textarea value={this.state.formula} rowSpan={2} placeholder="Textarea" onChangeText={this.handleFormulaChange} />
+            <Textarea disabled style={{ fontWeight: 'bold', textAlign: 'center' }} value={this.state.displayFormula || 'Formula'} rowSpan={4} placeholder="Textarea" onChangeText={this.handleFormulaChange} />
           </View>
 
           <ActionButton
@@ -171,7 +178,7 @@ class ScoreFormula extends Component {
             <ActionButton.Item
               buttonColor='#006B4C'
               title="Save"
-              onPress={this.handleSubmitPlan}
+              onPress={this.handleSubmitScore}
             >
               <Icon
                 name="md-done-all"
@@ -221,12 +228,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-
+    formula: state.formulaReducer.formula
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  // setHoursPlan(payload) { dispatch(setHoursPlan(payload)) }
+  setFormula(payload) { dispatch(setFormula(payload)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScoreFormula);

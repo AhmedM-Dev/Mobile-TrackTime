@@ -5,19 +5,17 @@ import globals from '../../../store/types';
 
 import HttpClient from '../../../services/HttpClient';
 
-// const http = new HttpClient();
-
 const domain = "formula";
 
-export const setFormula = eventId => dispatch => {
+export const setFormula = payload => dispatch => {
 
-  new HttpClient().post(`${domain}/${eventId}`)
+  new HttpClient().post(`${domain}`, payload)
     .then(response => {
       dispatch({
         type: types.SET_FORMULA,
-        payload: eventId
+        payload: response.data
       });
-      // ToastAndroid.show("Event deleted successfully", ToastAndroid.LONG);
+      // ToastAndroid.show("Formula added successfully.", ToastAndroid.LONG);
     })
     .catch(error => {
       dispatch({
