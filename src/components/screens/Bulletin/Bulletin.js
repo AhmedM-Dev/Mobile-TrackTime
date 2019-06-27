@@ -8,7 +8,7 @@ import { getUsers } from '../Dashboard/actions';
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
 import { Button } from 'react-native-elements';
 
-import { find } from 'lodash';
+import { find, random } from 'lodash';
 
 import { getAllStats } from '../Dashboard/actions';
 
@@ -17,7 +17,7 @@ class Bulletin extends React.Component {
   state = {
     group: '',
     connectedUser: {},
-    tableHead: ['Employee', 'Avg Work Hours', 'Max Work Hours', 'Total Days Worked', 'Total Hours Worked', 'Total Delays'],
+    tableHead: ['Employee', 'Avg Work Hours', 'Total Days Worked', 'Total Hours Worked', 'Total Delays', 'Note'],
     widthArr: [160, 125, 125, 125, 125, 125],
   }
   componentDidMount() {
@@ -35,19 +35,12 @@ class Bulletin extends React.Component {
 
   userData = (selectedUserId) => {
     const stats = find(this.props.allStats, ['userId', selectedUserId]);
-    return stats ? [(stats.averageWorkingHours).toFixed(2), stats.maxHours.toFixed(2), stats.totalDays.toFixed(2), stats.totalHours.toFixed(2), stats.totalDelays.toFixed(2)] : [];
+    return stats ? [(stats.averageWorkingHours) && (stats.averageWorkingHours).toFixed(2), stats.totalDays && stats.totalDays.toFixed(2), stats.totalHours && stats.totalHours.toFixed(2), stats.totalDelays && stats.totalDelays.toFixed(2), random(7.3, 18.3).toFixed(2)] : [];
   }
 
   render() {
     const state = this.state;
-    const tableData = [];
-    for (let i = 0; i < 30; i += 1) {
-      const rowData = [];
-      for (let j = 0; j < 9; j += 1) {
-        rowData.push(`${i}${j}`);
-      }
-      tableData.push(rowData);
-    }
+
     return (
       <View>
         <ScrollView horizontal={true} style={{ marginBottom: 20 }}>

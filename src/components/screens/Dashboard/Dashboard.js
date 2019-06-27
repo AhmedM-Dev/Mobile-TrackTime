@@ -90,33 +90,40 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    let sampleDataa = [
-      {
-        value: 50,
-        label: 'Refused',
-        color: '#D94949',
-      }, {
-        value: 40,
-        label: 'Canceled',
-        color: '#E5DC6F'
-      }, {
-        value: 25,
-        label: 'Accepted',
-        color: '#5AC26B'
-      },
-      {
-        value: 10,
-        label: 'On hold',
-        color: '#5AAAC2'
-      }
-
-    ]
-
     const loading = this.props.loading;
 
-    // if (loading) {
-
     if (!loading || (!loading && this.props.stats && this.props.stats.perMonth.length > 0)) {
+
+      const rejected = this.props.stats && this.props.stats.rejected !== 0 && this.props.stats.rejected || 1;
+      const canceled = this.props.stats && this.props.stats.canceled !== 0 && this.props.stats.canceled || 1;
+      const accepted = this.props.stats && this.props.stats.accepted !== 0 && this.props.stats.accepted || 1;
+      const onHold = this.props.stats && this.props.stats.onHold !== 0 && this.props.stats.onHold || 1;
+
+      const sampleData = [
+        {
+          value: accepted,
+          label: 'Accepted',
+          color: '#5AC26B'
+        },
+        {
+          value: canceled,
+          label: 'Canceled',
+          color: '#E5DC6F'
+        },
+        {
+          value: onHold,
+          label: 'On hold',
+          color: '#5AAAC2'
+        },
+        {
+          value: rejected,
+          label: 'Refused',
+          color: '#D94949',
+        },
+      ];
+
+      console.log('sampleData', sampleData);
+
       return (
 
         <Container style={{ backgroundColor: this.props.theme.backgroundColor }}>
@@ -180,9 +187,9 @@ class Dashboard extends React.Component {
                 left: -20,
                 backgroundColor: this.props.theme.cardHeaderColor,
                 fontFamily: 'cursive', fontWeight: 'bold'
-              }}>Authorizations</Text>
+              }}>Requests</Text>
               <View style={{ flex: 1, alignItems: 'center', marginTop: 10 }}>
-                <PureChart data={sampleDataa} type='pie' />
+                <PureChart data={sampleData} type='pie' />
               </View>
             </CustomCard>
 
@@ -212,16 +219,6 @@ class Dashboard extends React.Component {
               <Star score={14.7} style={styles.starStyle} totalScore={20} />
             </CustomCard>
 
-            {/* <CustomCard>
-              <ContributionGraph
-                values={commitsData}
-                endDate={new Date('2017-04-01')}
-                numDays={105}
-                width={200}
-                height={220}
-                chartConfig={chartConfig}
-              />
-            </CustomCard> */}
           </Content>
         </Container>
       )
