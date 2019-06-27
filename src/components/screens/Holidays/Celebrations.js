@@ -30,26 +30,26 @@ class Celebrations extends Component {
     ]
 
     return (
-      <Container style={{...styles.container , backgroundColor:this.props.theme.backgroundColor}}>
+      <Container style={{ ...styles.container, backgroundColor: this.props.theme.backgroundColor }}>
         <Content>
           <Table borderStyle={{ borderColor: 'transparent' }}>
-            <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor , borderTopLeftRadius:20, borderTopRightRadius:20 }} textStyle={{ ...styles.text, color: 'white' }} />
+            <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} textStyle={{ ...styles.text, color: 'white' }} />
           </Table>
-          <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
+          {this.props.holidays && this.props.holidays.length > 0 && <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
             {
-              this.props.holidays && this.props.holidays.length > 0 && this.props.holidays.map((holiday, index) => (
+              this.props.holidays.map((holiday, index) => (
                 <Row
                   key={index}
                   data={[holiday.title, moment(holiday.date).format('MMMM DD'), holiday.days]}
                   widthArr={state.widthArr}
-                  style={[ {height: 50, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2}]}
-                  textStyle={{...styles.text , color:this.props.theme.fontColor}}
+                  style={[{ height: 50, backgroundColor: this.props.theme.calendar.c1 }, index % 2 && { backgroundColor: this.props.theme.calendar.c2 }]}
+                  textStyle={{ ...styles.text, color: this.props.theme.fontColor }}
                 />
               ))
             }
-          </Table>
+          </Table>}
 
-         
+
         </Content>
       </Container>
     )

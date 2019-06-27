@@ -21,6 +21,12 @@ export const statsReducer = (state = {}, action) => {
         allStats: action.payload
       };
 
+    case types.GET_AVAILABLE_YEARS:
+      return {
+        ...state,
+        years: action.payload
+      };
+
     default:
       return state;
   }

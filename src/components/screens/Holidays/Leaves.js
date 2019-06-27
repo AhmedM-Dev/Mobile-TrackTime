@@ -26,15 +26,6 @@ class Leaves extends Component {
 
   render() {
     const state = this.state;
-    const tableData = [
-      ['Paternity leave', '2', '2'],
-      ['Maternity leave', '22', '10'],
-      ['Wedding', '3', '3'],
-      ['Circumcision', '1', '1'],
-      ['Death', '3', '3'],
-      ['sick leave', '17', '12'],
-      ['Total', '38', '12'],
-    ]
 
     return (
       <Container style={{ ...styles.container, backgroundColor: this.props.theme.backgroundColor }}>
@@ -43,9 +34,9 @@ class Leaves extends Component {
           <Table borderStyle={{ borderColor: 'transparent' }}>
             <Row data={state.tableHead} widthArr={state.widthArr} style={{ height: 50, backgroundColor: this.props.theme.calendar.headerColor, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} textStyle={{ ...styles.text, color: 'white' }} />
           </Table>
-          <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
+          {this.props.holidays && this.props.holidays.length > 0 && <Table borderStyle={{ borderColor: 'transparent' }} style={{ marginBottom: 100 }}>
             {
-              this.props.holidays && this.props.holidays.length > 0 && this.props.holidays.map((holiday, index) => (
+              this.props.holidays.map((holiday, index) => (
                 <Row
                   key={index}
                   data={[holiday.title, holiday.days]}
@@ -55,7 +46,7 @@ class Leaves extends Component {
                 />
               ))
             }
-          </Table>
+          </Table>}
 
           <ActionButton
             buttonColor="transparent"

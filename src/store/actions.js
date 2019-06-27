@@ -83,6 +83,23 @@ export const getRequests = payload => dispatch => {
     });
 }
 
+export const getLeaves = () => dispatch => {
+
+  new HttpClient().get(`holidays?category=holiday`)
+    .then(response => {
+      dispatch({
+        type: types.GET_LEAVES,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: types.ADD_ERROR,
+        error
+      });
+    });
+}
+
 export const createLeaveRequest = payload => dispatch => {
 
   dispatch({ type: types.SEND_LEAVE_REQUEST });

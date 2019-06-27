@@ -18,7 +18,7 @@ import ActionButton from 'react-native-circular-action-menu';
 import Textarea from 'react-native-textarea';
 import moment from 'moment';
 
-import { createLeaveRequest, getRequests } from '../../../store/actions';
+import { createLeaveRequest, getRequests, getLeaves } from '../../../store/actions';
 
 import styles from './styles';
 

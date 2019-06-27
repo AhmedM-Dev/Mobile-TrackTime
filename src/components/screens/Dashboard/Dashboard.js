@@ -9,48 +9,12 @@ import companyLogo from '../../../assets/img/proxym.png'
 import CustomCard from "../../ui/CustomCard";
 import ButtonWithBadge from "../../ui/ButtonWithBadge";
 import AppHeader from '../../ui/AppHeader';
-import { getStats, getUsers } from './actions';
+import { getStats, getUsers, getAvailableYears } from './actions';
 import { getAvatar } from "../../../store/actions";
 import prepareGraphDate from "../../../utils/prepareGraphDate";
 import CustumPicker from '../../../components/ui/CustomPicker/CustumPicker'
 import Star from 'react-native-star-view';
-// import {
-//   ContributionGraph,
-// } from 'react-native-chart-kit'
 
-// const chartConfig = {
-//   backgroundGradientFrom: '#1E2923',
-//   backgroundGradientTo: '#08130D',
-//   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-//   strokeWidth: 2 // optional, default 3
-// }
-
-// const commitsData = [
-//   { date: '2017-01-02', count: 1 },
-//   { date: '2017-01-03', count: 2 },
-//   { date: '2017-01-04', count: 3 },
-//   { date: '2017-01-05', count: 4 },
-//   { date: '2017-01-06', count: 5 },
-//   { date: '2017-01-30', count: 2 },
-//   { date: '2017-01-31', count: 3 },
-//   { date: '2017-03-01', count: 2 },
-//   { date: '2017-04-02', count: 4 },
-//   { date: '2017-03-05', count: 2 },
-//   { date: '2017-02-30', count: 4 }
-// ]
-// option = {
-//   xAxis: {
-//     type: 'category',
-//     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-//   },
-//   yAxis: {
-//     type: 'value'
-//   },
-//   series: [{
-//     data: [820, 932, 901, 934, 1290, 1330, 1320],
-//     type: 'line'
-//   }]
-// };
 
 const languages = ['English', 'Frensh'];
 
@@ -72,10 +36,11 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getStats({ year: this.state.year });
     this.props.getAvatar();
+    this.props.getAvailableYears();
 
-    wifi.getBSSID((bssid) => {
-      console.log(bssid);
-    });
+    // wifi.getBSSID((bssid) => {
+    //   console.log(bssid);
+    // });
   }
 
   ratingCompleted(rating) {
@@ -133,7 +98,7 @@ class Dashboard extends React.Component {
           <Content style={{ padding: 10 }} >
             <CustumPicker >
               <Picker
-                selectedValue={this.state.year}
+                selectedValue={this.state.year || new Date().getFullYear()}
                 style={{
                   height: 50, width: 300, color: this.props.theme.fontColor,
                 }}
@@ -144,6 +109,12 @@ class Dashboard extends React.Component {
                 <Picker.Item label="2017" value="2017" color="#021630" />
                 <Picker.Item label="2016" value="2016" color="#021630" />
                 <Picker.Item label="All years" value={null} color="#021630" />
+
+                {/* {
+                  this.props.years.map((item, index) => {
+                    <Picker.Item key={index} label="All years" value={null} color="#021630" />
+                  })
+                } */}
               </Picker>
             </CustumPicker>
             <View  >
@@ -288,12 +259,14 @@ const mapStateToProps = state => {
     stats: state.dashboardReducer.statsReducer.stats,
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
+    years: state.dashboardReducer.statsReducer.years
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getStats(year) { dispatch(getStats(year)) },
   getAvatar() { dispatch(getAvatar()) },
+  getAvailableYears() { dispatch(getAvailableYears()) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
