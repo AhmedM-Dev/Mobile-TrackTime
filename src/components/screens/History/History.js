@@ -7,14 +7,17 @@ import {
   Button,
   View,
   Picker,
-  Icon
+  Icon,
+  List,
+  ListItem,
+  Body, Right
 } from 'native-base';
 import ActionButton from 'react-native-circular-action-menu';
 import style from '../NewRequest/styles';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { map, split } from 'lodash';
+import { startCase, toLower } from 'lodash';
 import { getRequests } from './actions';
 
 import AppHeader from '../../ui/AppHeader';
@@ -24,22 +27,39 @@ class History extends React.Component {
   constructor() {
     super();
     this.state = {
-      year: 'All years',
-      status: 'All status',
-      category: 'All categories',
+      year: null,
+      status: 'all',
+      category: 'all',
       languageSelected: 'English'
-
     }
-
   };
 
   componentDidMount() {
-    this.props.getRequests();
+    this.props.getRequests({});
+  }
+
+  handleFilter = () => {
+    this.props.getRequests({
+      year: this.state.year || null,
+      status: this.state.status === 'all' ? null : this.state.status,
+      category: this.state.category === 'all' ? null : this.state.category
+    });
+  }
+
+  handleChange = (field, value) => {
+    this.setState({ [field]: value })
+  }
+
+  handleClear = () => {
+    this.setState({
+      year: null,
+      status: 'all',
+      category: 'all',
+      languageSelected: 'English'
+    });
   }
 
   render() {
-
-
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
         <AppHeader title="History" navigation={this.props.navigation} />
@@ -56,9 +76,11 @@ class History extends React.Component {
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ year: itemValue })
               }>
-              <Picker.Item label="All years" value="All years" />
-              <Picker.Item label="2019" value="2018" />
+              <Picker.Item label="All years" value="all" />
+              <Picker.Item label="2019" value="2019" />
+              <Picker.Item label="2018" value="2018" />
               <Picker.Item label="2017" value="2017" />
+              <Picker.Item label="2016" value="2016" />
 
             </Picker>
           </CustumPicker>
@@ -74,11 +96,11 @@ class History extends React.Component {
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ status: itemValue })
               }>
-              <Picker.Item label="All status" value="All status" />
-              <Picker.Item label="On hold" value="Waiting" />
-              <Picker.Item label="Accepted" value="Accepted" />
-              <Picker.Item label="Declined" value="Declined" />
-              <Picker.Item label="Canceled" value="Canceled" />
+              <Picker.Item label="All status" value="all" />
+              <Picker.Item label="On hold" value="pending" />
+              <Picker.Item label="Accepted" value="accepted" />
+              <Picker.Item label="Declined" value="rejected" />
+              <Picker.Item label="Canceled" value="canceled" />
             </Picker>
           </CustumPicker>
         </View>
@@ -91,7 +113,7 @@ class History extends React.Component {
             onValueChange={(itemValue, itemIndex) =>
               this.setState({ category: itemValue })
             }>
-            <Picker.Item label="All categories" value="All" />
+            <Picker.Item label="All categories" value="all" />
             <Picker.Item label="Paid leave" value="Paid leave" />
             <Picker.Item label="Additional days" value="Additional days" />
             <Picker.Item label="Unpaid leave" value="Unpaid leave" />
@@ -109,67 +131,72 @@ class History extends React.Component {
             <Picker.Item label="Other" value="Other" />
           </Picker>
 
-         
-
-
         </CustumPicker>
         <Content>
-          {
-            this.props.requestsList && this.props.requestsList.length > 0 &&
-            <FlatList
-              // ItemSeparatorComponent={Platform.OS !== 'android' && ({highlighted}) => (
-              //   <View style={[style.separator, highlighted && {marginLeft: 0}]} />
-              // )}
-              // onScroll={this.handleLazyLoading}
-
-              scrollEventThrottle={2}
-              data={this.props.requestsList}
-              renderItem={({ item }) => (
-                <Card style={{ ...styles.cardStyle, backgroundColor: this.props.theme.cardBackground, borderColor: this.props.theme.cardBackground }}>
-                  <View style={{ flex: 5, justifyContent: 'space-between' }}>
-                    <Text style={{ color: this.props.theme.fontColor, fontWeight: 'bold' }}>
-                      Status : {item.status}
-                    </Text>
-
-                  </View>
-
-                </Card>
-              )}
-            />
-          }
+          <List style={{ backgroundColor: this.props.theme.notif, width: '100%', }} >
+            {
+              this.props.history && this.props.history.length > 0 ? this.props.history.map(request => {
+                return (
+                  <ListItem style={{ backgroundColor: this.props.theme.backgroundColor, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail>
+                    <Body style={{ borderBottomWidth: 0 }}>
+                      <Text style={{ color: this.props.theme.fontColor, fontSize: 12, fontWeight: 'bold' }}>
+                        {request.requestCategory === 'LEAVE' ? startCase(toLower(request.leaveCategory)) : startCase(toLower(request.requestCategory))} Request
+                      </Text>
+                      <Text note style={{ color: this.props.theme.fontColor, fontSize: 10, includeFontPadding: true, paddingLeft: 10 }}>
+                        {request.motif || (request.attendance && request.attendance.date && `Correction request for ${moment(request.attendance.date).format('dddd DD MMMM YYYY')}.\n`)}
+                      </Text>
+                      <Text note numberOfLines={1} style={{ color: this.props.theme.fontColor, fontSize: 10 }}>
+                        Created at: {request.createdAt}
+                      </Text>
+                    </Body>
+                    <Right>
+                      {request.status === "accepted" && <Text style={{ color: 'green' }}>Accepted</Text>}
+                      {request.status === "canceled" && <Text style={{ color: 'orange' }}>Canceled</Text>}
+                      {request.status === "rejected" && <Text style={{ color: 'red' }}>Declined</Text>}
+                      {request.status === "pending" && <Text style={{ color: 'brown' }}>On Hold</Text>}
+                    </Right>
+                  </ListItem>
+                )
+              })
+                :
+                <View style={{ padding: 10 }}>
+                  <Text>No data.</Text>
+                </View>
+            }
+          </List>
         </Content>
         <ActionButton
-            buttonColor={this.props.theme.cardBackground}
-            btnOutRange={this.props.theme.cardBackground}
-            icon={<Icon name='md-arrow-dropup' style={style.ButtonIcon} />}
-            degrees={135}
-            size={40}
-            radius={50}
-            position="right"
-          outRangeScale={0.5}       
+          buttonColor={this.props.theme.cardBackground}
+          btnOutRange={this.props.theme.cardBackground}
+          icon={<Icon name='md-arrow-dropup' style={style.ButtonIcon} />}
+          degrees={135}
+          size={40}
+          radius={50}
+          position="right"
+          outRangeScale={0.5}
+        >
+
+          <ActionButton.Item
+            buttonColor='green'
+            title="Save"
+            onPress={this.handleFilter}
           >
+            <Icon
+              name="md-done-all"
+              style={style.actionButtonIcon}
 
-            <ActionButton.Item
-              buttonColor='green'
-              title="Save"
-              // onPress={() => this.handleCreateRequest()}
-              >
-              <Icon
-                name="md-done-all"
-                style={style.actionButtonIcon}
-
-              />
-            </ActionButton.Item>
-            <ActionButton.Item
-              buttonColor='red'
-              title="Reset"
-              // onPress={() => this.resetAll()}
-                >
-              <Icon
-                name="md-refresh"
-                style={style.actionButtonIcon} />
-            </ActionButton.Item>
-          </ActionButton>
+            />
+          </ActionButton.Item>
+          <ActionButton.Item
+            buttonColor='red'
+            title="Reset"
+            onPress={this.handleClear}
+          >
+            <Icon
+              name="md-refresh"
+              style={style.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       </Container>
     );
   }
@@ -195,7 +222,7 @@ const mapStateToProps = state => {
   return {
     loading: state.loadingReducer.loading,
     user: state.authReducer.user,
-    requestsList: state.historyReducer.requestsList,
+    history: state.historyReducer.history,
     theme: state.settingsReducer.theme,
     avatar: state.authReducer.avatar,
   }
