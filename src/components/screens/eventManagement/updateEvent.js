@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, ImageBackground, Image, StyleSheet, Platform ,ToastAndroid } from 'react-native';
+import { StatusBar, ImageBackground, Image, StyleSheet, Platform, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Icon, Container, Content, View, Text, Picker } from 'native-base'
 import ActionButton from 'react-native-circular-action-menu';
@@ -12,7 +12,7 @@ import Textarea from 'react-native-textarea'
 
 import { connect } from 'react-redux';
 
-import { getEvents , updateEvent} from './actions';
+import { getEvents, updateEvent } from './actions';
 
 const options = {
   title: '',
@@ -28,6 +28,7 @@ class updateEvents extends Component {
       selectedEvent: null,
     }
   }
+
   selectPhoto = () => {
     ImagePicker.showImagePicker(options, (response) => {
 
@@ -42,96 +43,126 @@ class updateEvents extends Component {
       else {
         this.setState({
           selectedEvent: {
-          photo: response.data,
-          photoFileName: response.fileName}
+            photo: response.data,
+            photoFileName: response.fileName
+          }
         });
       }
     });
   }
 
-  
-  
+
+
   uploadPic = () => {
     console.log("PIC", this.state.pic);
     // RNFetchBlob.fetch('POST', 'https://unentertaining-sect.000webhostapp.com/war/upload.php', {
-      //   Authorization: "Bearer access-token",
-      //   otherHeader: "foo",
-      //   'Content-Type': 'multipart/form-data',
-      // }, [
-        //     { name: 'image', filename: 'avatar.png', data: this.state.pic }
-        //   ]).then((resp) => {
-          //     console.log('your image uploaded successfully');
-          //     this.setState({ avatarSource: null })
-          //   })
-        }
-        
-        componentDidMount() {
-          this.props.getEvents();
-        }
-      
-        handleSelectEvent = (event) => {
-          this.setState({
-            selectedEvent: event
-          });
-        }
+    //   Authorization: "Bearer access-token",
+    //   otherHeader: "foo",
+    //   'Content-Type': 'multipart/form-data',
+    // }, [
+    //     { name: 'image', filename: 'avatar.png', data: this.state.pic }
+    //   ]).then((resp) => {
+    //     console.log('your image uploaded successfully');
+    //     this.setState({ avatarSource: null })
+    //   })
+  }
 
-        handleChangeTitle = (text) => {
-          this.setState({
-            selectedEvent: {
-              ...this.state.selectedEvent,
-              title: text
-            }
-          });
-        }
+  componentDidMount() {
+    this.props.getEvents();
+  }
 
-        handleChangeDetails = (text) => {
-          this.setState({
-            selectedEvent: {
-              ...this.state.selectedEvent,
-              details: text
-            }
-          });
-        }
+  handleSelectEvent = (event) => {
+    this.setState({
+      selectedEvent: event
+    });
+  }
 
+  handleChangeTitle = (text) => {
+    this.setState({
+      selectedEvent: {
+        ...this.state.selectedEvent,
+        title: text
+      }
+    });
+  }
 
-        handleChangedateFrom= (time) => {
-          this.setState({
-            selectedEvent: {
-              ...this.state.selectedEvent,
-              dateFrom: time
-            }
-          });
-        }
-
-        handleChangeDateTo = (time) => {
-          this.setState({
-            selectedEvent: {
-              ...this.state.selectedEvent,
-              dateTo: time
-            }
-          });
-        }
+  handleChangeDetails = (text) => {
+    this.setState({
+      selectedEvent: {
+        ...this.state.selectedEvent,
+        details: text
+      }
+    });
+  }
 
 
-        submitEvent = () => {
-          const { photo,title,details,dateFrom,dateTo , eventId} = this.state.selectedEvent;
-      
-          if (photo !== '' && title !== '' && details !== '' && dateFrom !== '' && dateTo !== '' ) {
-            this.props.updateEvent({
-              eventId,
-              ...this.state.selectedEvent
-            });
-            ToastAndroid.show("Event updated successfully", ToastAndroid.LONG);
-      
-          } else {
-            ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
-      
-          }
-        }
+  handleChangedateFrom = (time) => {
+    this.setState({
+      selectedEvent: {
+        ...this.state.selectedEvent,
+        dateFrom: time
+      }
+    });
+  }
 
-        render() {
-          return (
-            <View style={styles.container} >
+  handleChangeDateTo = (time) => {
+    this.setState({
+      selectedEvent: {
+        ...this.state.selectedEvent,
+        dateTo: time
+      }
+    });
+  }
+
+
+  submitEvent = () => {
+    // const { photo, title, details, dateFrom, dateTo, eventId } = this.state.selectedEvent;
+    // if (photo !== '' && title !== '' && details !== '' && dateFrom !== '' && dateTo !== '') {
+    //   this.props.updateEvent({
+    //     eventId,
+    //     ...this.state.selectedEvent
+    //   });
+    //   ToastAndroid.show("Event updated successfully", ToastAndroid.LONG);
+
+    // } else {
+    //   ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+
+    // }
+
+    const { title, logoName, dateFrom, dateTo, details, photoFileName } = this.state;
+    if (title !== '' && logoName !== '' && dateFrom !== '' && dateTo !== '' && details !== '' && photoFileName !== '') {
+      this.props.updateEvent(this.state.selectedEvent);
+      // ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
+    } else {
+      // ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+    }
+  }
+
+  selectLogo = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+
+      console.log("RESPONSE IMAGE", response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('Image Picker Error: ', response.error);
+      }
+      else {
+        let source = { uri: response.uri };
+        this.setState({
+          logo: `data:${response.type};base64,${response.data}`,
+          logoName: response.fileName
+        });
+      }
+    });
+  }
+
+
+  render() {
+    return (
+      <View style={styles.container} >
         <Content>
           <Icon
             name="md-arrow-round-back"
@@ -153,7 +184,7 @@ class updateEvents extends Component {
             alignSelf: 'center',
             height: 45, width: 300,
 
-              paddingLeft:10
+            paddingLeft: 10
           }}>
             <Picker
               selectedValue={this.state.selectedEvent || ''}
@@ -165,7 +196,7 @@ class updateEvents extends Component {
               }}
               name="event"
               onValueChange={this.handleSelectEvent}>
-              {this.props && this.props.events && this.props.events.length > 0 && this.props.events.map(event => <Picker.Item label={`${event.title}`} value={event} color="#021630" />)}
+              {this.props && this.props.events && this.props.events.length > 0 && this.props.events.map((event, index) => <Picker.Item key={index} label={`${event.title}`} value={event} color="#021630" />)}
             </Picker>
           </View>
           <View>
@@ -180,11 +211,37 @@ class updateEvents extends Component {
                 marginBottom: 5,
               }}
               titleStyle={{
-                color: 'white', 
+                color: 'white',
               }}
               title={this.state.selectedEvent && this.state.selectedEvent.photoFileName}
               onPress={this.selectPhoto}
             />
+
+            <View>
+              <Button
+                buttonStyle={{
+                  backgroundColor: '#072152',
+                  borderRadius: 20,
+                  borderColor: 'gray',
+                  borderWidth: 1,
+                  width: 300,
+                  alignSelf: 'center',
+                  marginBottom: 5,
+
+                }}
+                titleStyle={{
+                  color: 'white',
+
+                }}
+                title={this.state.logoName || "logo"}
+                onPress={this.selectLogo}
+              />
+              <Icon name="md-download"
+                onPress={this.myfun}
+                style={{ position: "absolute", top: 120, color: "white", left: 260, opacity: 0.7 }} />
+
+            </View>
+
             <StyledInput textColor={'white'} onChange={this.handleChangeTitle} value={this.state.selectedEvent && this.state.selectedEvent.title} />
             <Textarea
               containerStyle={styles.textareaContainer}
@@ -220,10 +277,10 @@ class updateEvents extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white',position:'absolute' , left:30
+                  color: 'white', position: 'absolute', left: 30
                 },
                 dateText: {
-                  color: 'white',position:'absolute' , left:30
+                  color: 'white', position: 'absolute', left: 30
                 }
               }}
               onDateChange={(dateF) => { this.handleChangedateFrom(dateF) }} />
@@ -256,20 +313,16 @@ class updateEvents extends Component {
 
                 },
                 placeholderText: {
-                  color: 'white',position:'absolute' , left:30
+                  color: 'white', position: 'absolute', left: 30
                 },
                 dateText: {
-                  color: 'white',position:'absolute' , left:30
+                  color: 'white', position: 'absolute', left: 30
                 }
               }}
-              onDateChange={(dateT) => { this.handleChangeDateTo(dateT)}}
+              onDateChange={(dateT) => { this.handleChangeDateTo(dateT) }}
             />
 
           </View>
-
-
-
-
 
           <ActionButton
             buttonColor="#9C9C9C"

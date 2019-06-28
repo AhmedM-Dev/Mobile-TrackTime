@@ -1,4 +1,4 @@
-import { ToastAndroid } from 'react-native';
+import { Alert } from 'react-native';
 
 import types from './types';
 import globals from '../../../store/types';
@@ -17,13 +17,30 @@ export const deleteEvent = eventId => dispatch => {
         type: types.DELETE_EVENT,
         payload: eventId
       });
-      ToastAndroid.show("Event deleted successfully", ToastAndroid.LONG);
+
+      Alert.alert(
+        'Event',
+        'Event deleted successfully.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
     .catch(error => {
       dispatch({
         type: globals.ADD_ERROR,
         error
       });
+
+      Alert.alert(
+        'Error',
+        'Error deleting the event.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     });
 }
 
@@ -44,18 +61,39 @@ export const getEvents = () => dispatch => {
 }
 
 export const updateEvent = payload => dispatch => {
-  new HttpClient().put(`${domain}`, payload)
+
+  const { eventId, ...body } = payload;
+
+  new HttpClient().put(`${domain}/${eventId}`, body)
     .then(response => {
       dispatch({
         type: types.UPDATE_EVENT,
-        payload: response.data.user
+        payload: response.data.event
       });
+
+      Alert.alert(
+        'Event',
+        'Event updated successfully.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
     .catch(error => {
       dispatch({
         type: globals.ADD_ERROR,
         error
       });
+
+      Alert.alert(
+        'Error',
+        'Error updating the event.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     });
 }
 
@@ -64,9 +102,17 @@ export const createEvent = payload => dispatch => {
     .then(response => {
       dispatch({
         type: types.ADD_EVENT,
-        payload: response.data
+        payload: response.data.event
       });
-      ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
+
+      Alert.alert(
+        'Event',
+        'Event added successfully.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
 
     })
     .catch(error => {
@@ -74,5 +120,14 @@ export const createEvent = payload => dispatch => {
         type: globals.ADD_ERROR,
         error
       });
+
+      Alert.alert(
+        'Error',
+        'Error creating the event.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     });
 }

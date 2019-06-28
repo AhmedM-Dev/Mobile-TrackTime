@@ -8,21 +8,31 @@ const groupReducers = (state = {}, action) => {
         groups: action.payload
       };
 
-      case types.GET_USERS:
+    case types.ADD_GROUP:
+      return {
+        ...state,
+        groups: [
+          ...state.groups,
+          action.payload
+        ]
+      };
+
+    case types.GET_USERS:
       return {
         ...state,
         users: action.users
-      }; 
-      case types.GET_GROUPS:
+      };
+
+    case types.GET_GROUPS:
       return {
         ...state,
         groups: action.groups
       };
 
-      case types.DELETE_GROUP:
+    case types.DELETE_GROUP:
       return {
         ...state,
-        users: state.groups.filter(group => group.groupId !== action.payload)
+        groups: state.groups.filter(group => group.groupId !== action.payload)
       };
 
     default:

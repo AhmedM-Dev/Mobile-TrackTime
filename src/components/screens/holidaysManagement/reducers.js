@@ -20,7 +20,7 @@ const holidaysReducer = (state = {}, action) => {
         ...state,
         sendingRequest: false,
         success: true,
-        // holidays: [...state.holidays, action.holiday]
+        holidays: [...state.holidays, action.holiday]
       };
 
     case types.ADD_HOLIDAY_FAILED:

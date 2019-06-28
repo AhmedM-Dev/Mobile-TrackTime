@@ -98,7 +98,7 @@ class LeaveRequest extends React.Component {
   render() {
     return (
       <Container style={{ backgroundColor: this.props.theme.backgroundColor }} >
-        {this.props.sendingRequest && !this.props.requestSuccess &&
+        {this.props.sendingRequest && 
           <View style={styles.loading}>
             <ActivityIndicator size={80} color="#F2F2F2" />
           </View>

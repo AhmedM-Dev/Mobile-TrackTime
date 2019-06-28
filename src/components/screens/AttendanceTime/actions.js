@@ -10,11 +10,23 @@ const formatDate = (date) => `${new Date(date).getFullYear()}-${new Date(date).g
 
 export const getAttendances = (filters = {}) => dispatch => {
   // const http = new HttpClient();
-  const { dateFrom, dateTo, userId } = filters;
+  const { dateFrom, dateTo } = filters;
+
+  let list = [];
+
+  if (dateFrom) {
+    list.push(dateFrom);
+  }
+
+  if (dateTo) {
+    list.push(dateTo);
+  }
+
+  console.log('sdfsdfsdf', filters);
 
   console.log("DATE REQUEST", `${domain}${dateFrom ? `?dateFrom=${formatDate(dateFrom)}` : ''}${dateTo ? `&dateTo=${formatDate(dateTo)}` : ''}`);
 
-  new HttpClient().get(`${domain}${userId ? `?userId=${userId}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateFrom ? `dateFrom=${formatDate(dateFrom)}` : ''}${Object.keys(filters).length > 1 ? '&' : '?'}${dateTo ? `dateTo=${formatDate(dateTo)}` : ''}`)
+  new HttpClient().get(`${domain}${dateFrom ? `?dateFrom=${dateFrom}` : ''}${dateTo ? list.length > 1 ? `&dateTo=${dateTo}` : `?dateTo=${dateTo}` : ''}`)
     .then(response => {
       console.log("ATTENDANCES FROM ACTION:", response.data);
 
@@ -56,8 +68,8 @@ export const checkIn = () => dispatch => {
       });
 
       Alert.alert(
-        'Info',
-        response.data,
+        'Error',
+        'An error occured while checking in.',
         [
           { text: 'OK' },
         ],

@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import ActionButton from 'react-native-circular-action-menu';
 import Textarea from 'react-native-textarea';
 import moment from 'moment';
-import { camelCase } from 'lodash';
+import { startCase, toLower, orderBy } from 'lodash';
 
 import { getRequests, cancelRequest } from '../../../store/actions';
 
@@ -73,10 +73,10 @@ class Requests extends React.Component {
                   <ListItem style={{ backgroundColor: this.props.theme.backgroundColor, marginLeft: 0, paddingLeft: 15, borderBottomWidth: 0.5 }} thumbnail>
                     <Body style={{ borderBottomWidth: 0 }}>
                       <Text style={{ color: this.props.theme.fontColor, fontSize: 12, fontWeight: 'bold' }}>
-                        {camelCase(request.requestCategory)} Request
+                        {request.requestCategory === 'LEAVE' ? startCase(toLower(request.leaveCategory)) : startCase(toLower(request.requestCategory))} Request
                       </Text>
                       <Text note style={{ color: this.props.theme.fontColor, fontSize: 10, includeFontPadding: true, paddingLeft: 10 }}>
-                        {request.motif}
+                        {request.motif || (request.attendance && request.attendance.date && `Correction request for ${moment(request.attendance.date).format('dddd DD MMMM YYYY')}.\n`)}
                       </Text>
                       <Text note numberOfLines={1} style={{ color: this.props.theme.fontColor, fontSize: 10 }}>
                         Created at: {request.createdAt}
@@ -89,7 +89,7 @@ class Requests extends React.Component {
                     </Right>
                   </ListItem>
                 )
-              }) : <Text>No pending requests available.</Text>
+              }) : <Text>No requests on hold.</Text>
             }
           </List>
         </Content>
@@ -100,7 +100,7 @@ class Requests extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    requests: state.requestsReducer.requests,
+    requests: orderBy(state.requestsReducer.requests, 'createdAtTimestamp', 'desc'),
     theme: state.settingsReducer.theme
   }
 }

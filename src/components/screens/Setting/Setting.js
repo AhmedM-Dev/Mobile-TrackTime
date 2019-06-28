@@ -116,9 +116,9 @@ class Settings extends Component {
             email,
             password: pass
           });
+          this.handleClear();
         }
 
-        this.handleClear();
       } else {
         Alert.alert(
           'Error',

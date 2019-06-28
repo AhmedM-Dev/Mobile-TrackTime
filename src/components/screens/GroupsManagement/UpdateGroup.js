@@ -22,7 +22,8 @@ class UpdateGroup extends Component {
     super();
     this.state = {
       selectedGroup: '',
-      poleLead: ''
+      poleLead: '',
+      shortName: '',
     }
   }
 
@@ -31,7 +32,8 @@ class UpdateGroup extends Component {
   handleSelectGroup = (group) => {
     this.setState({
       selectedGroup: group,
-      poleLead: group.poleLead
+      poleLead: group.poleLead,
+      shortName: group.shortName
     });
   }
 
@@ -65,7 +67,7 @@ class UpdateGroup extends Component {
     });
   }
   handleAddGroup = () => {
-    const { name, poleLead } = this.state;
+    const { name, poleLead, shortName } = this.state;
     if (name !== '' && shortName !== '' && poleLead !== '') {
       this.props.addGroup(this.state);
       ToastAndroid.show("Group updated successfully", ToastAndroid.LONG);

@@ -44,15 +44,6 @@ class UpdateEmployee extends Component {
     });
   }
 
-  componentWillMount() {
-    AsyncStorage.getItem("user").then(user => {
-
-      this.setState({
-        connectedUser: JSON.parse(user)
-      });
-    })
-  }
-
   componentDidMount() {
     this.props.getUsers();
   }

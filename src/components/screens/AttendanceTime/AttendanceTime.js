@@ -47,7 +47,9 @@ class AttendanceTime extends React.Component {
   }
 
   handleFilterAttendances = () => {
-    this.props.getAttendances({ ...this.state });
+    const { dateFrom, dateTo } = this.state;
+
+    this.props.getAttendances({ dateFrom, dateTo });
   }
 
   handleLazyLoading = () => {

@@ -5,7 +5,10 @@ const eventsReducer = (state = [], action) => {
     case types.ADD_EVENT:
       return {
         ...state,
-        event: action.payload
+        events: [
+          ...state.events,
+          action.payload
+        ]
       };
 
     case types.GET_EVENTS:
@@ -18,6 +21,16 @@ const eventsReducer = (state = [], action) => {
       return {
         ...state,
         events: state.events.filter(event => event.eventId !== action.payload)
+      };
+
+    case types.UPDATE_EVENT:
+      return {
+        ...state,
+        events: [
+          ...state.events.filter(event => event.eventId !== action.payload),
+          action.payload
+        ],
+
       };
 
     default:

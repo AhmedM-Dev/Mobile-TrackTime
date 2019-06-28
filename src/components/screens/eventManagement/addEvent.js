@@ -104,9 +104,9 @@ class AddEvent extends Component {
     const { title, logoName, dateFrom, dateTo, details, photoFileName } = this.state;
     if (title !== '' && logoName !== '' && dateFrom !== '' && dateTo !== '' && details !== '' && photoFileName !== '') {
       this.props.createEvent(this.state);
-      ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
+      // ToastAndroid.show("Event added successfully", ToastAndroid.LONG);
     } else {
-      ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
+      // ToastAndroid.show("All infos are required.", ToastAndroid.LONG);
     }
   }
 

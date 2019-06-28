@@ -1,4 +1,5 @@
 import { ToastAndroid } from 'react-native';
+import { Alert } from 'react-native';
 
 import HttpClient from '../../../services/HttpClient';
 import globals from '../../../store/types';
@@ -19,13 +20,33 @@ export const changeUserProfile = payload => dispatch => {
       dispatch({
         type: types.UPDATE_PROFILE,
         user: response.data
-      })
+      });
+
+      Alert.alert(
+        'Updated',
+        'Profile updated successfully.',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
     .catch(error => {
+      console.log('ERRRRRRR', JSON.stringify());
+
       dispatch({
         type: globals.ADD_ERROR,
         error
       });
+
+      Alert.alert(
+        'Error',
+        error.response && error.response.data && error.response.data.error,
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     })
 }
 

@@ -125,7 +125,7 @@ export const createLeaveRequest = payload => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: globals.ADD_ERROR,
+        type: types.ADD_ERROR,
         error
       });
     });
@@ -156,7 +156,7 @@ export const createTravelRequest = payload => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: globals.ADD_ERROR,
+        type: types.ADD_ERROR,
         error
       });
     });
@@ -182,7 +182,7 @@ export const cancelRequest = payload => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: globals.ADD_ERROR,
+        type: types.ADD_ERROR,
         error
       });
     });
@@ -207,7 +207,7 @@ export const correctAttendanceRequest = payload => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: globals.ADD_ERROR,
+        type: types.ADD_ERROR,
         error
       });
     });
